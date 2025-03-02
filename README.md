@@ -1,1 +1,2 @@
 # MindScribe
+A Personal Journaling App, built as a side proejct which allows users to write their thoughts, feelings, and emotions in a safe and secure environment. and also provides a way to track their mood over time.
