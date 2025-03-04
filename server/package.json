@@ -1,0 +1,44 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "mindScribe ai powered journaling web app",
+  "keywords": [
+    "diary",
+    "journaling",
+    "ai"
+  ],
+  "homepage": "https://github.com/Nathanim1919/MindScribe#readme",
+  "bugs": {
+    "url": "https://github.com/Nathanim1919/MindScribe/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nathanim1919/MindScribe.git"
+  },
+  "license": "MIT",
+  "author": "Nathanim Tadele",
+  "type": "module",
+  "main": "index.ts",
+  "scripts": {
+    "build": "tsc",
+    "dev": "nodemon src/server.ts",
+    "start": "node dist/server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "body-parser": "^1.20.3",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.12.0"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.13.9",
+    "nodemon": "^3.1.9",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.2"
+  }
+}
