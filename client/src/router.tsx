@@ -8,19 +8,19 @@ import { LoginPage } from './pages/LoginPage';
 import { RegistrationPage } from './pages/RegistrationPage';
 import { PublicLayout } from './layout/PublicLayout';
 import { AuthenticatedLayout } from './layout/PrivateLayout';
+import { DashboardPage } from './components/dashboard/dashboardPage';
 
 // Create a root route
 const rootRoute = createRootRoute({
-  component: () => <Outlet/>,
+  component: () => <Outlet />,
 });
-
 
 // Public routes
 const publicRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: '/',
-  component: PublicLayout
-})
+  component: PublicLayout,
+});
 
 const loginRoute = createRoute({
   getParentRoute: () => publicRoute,
@@ -45,13 +45,10 @@ const registerRoute = createRoute({
 //   },
 // });
 
-
-
-
 // Authenticated routes
 const authenticatedRoute = createRoute({
   getParentRoute: () => rootRoute,
-  path: '/app',
+  path: '/in',
   component: AuthenticatedLayout,
   beforeLoad: () => {
     // if (!isAuthenticated()) {
@@ -60,13 +57,11 @@ const authenticatedRoute = createRoute({
   },
 });
 
-
 const dashboardRoute = createRoute({
   getParentRoute: () => authenticatedRoute,
   path: '/',
-  // component: DashboardPage,
+  component: DashboardPage,
 });
-
 
 // Create the route tree
 const routeTree = rootRoute.addChildren([
