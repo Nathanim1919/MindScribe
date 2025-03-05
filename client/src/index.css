@@ -6,16 +6,16 @@
 @layer base {
   /* Global Styles */
   :root {
-    --background: #F8FAFC; /* Soft Light Gray */
-    --card: #FFFFFF; /* Pure White */
-    --text-primary: #1E293B; /* Dark Grayish Blue */
-    --text-secondary: #64748B; /* Cool Gray */
-    --positive: #22C55E; /* Emerald Green */
-    --neutral: #EAB308; /* Amber Yellow */
-    --negative: #EF4444; /* Bright Red */
-    --ai: #3B82F6; /* Professional Blue */
-    --divider: #E2E8F0; /* Cool Light Gray */
-    --active: #2563EB; /* Deep Blue */
+    --background: #f8fafc; /* Soft Light Gray */
+    --card: #ffffff; /* Pure White */
+    --text-primary: #1e293b; /* Dark Grayish Blue */
+    --text-secondary: #64748b; /* Cool Gray */
+    --positive: #22c55e; /* Emerald Green */
+    --neutral: #eab308; /* Amber Yellow */
+    --negative: #ef4444; /* Bright Red */
+    --ai: #3b82f6; /* Professional Blue */
+    --divider: #e2e8f0; /* Cool Light Gray */
+    --active: #2563eb; /* Deep Blue */
     --font-sans: 'Inter', 'Poppins', sans-serif;
     --font-heading-main: 28px;
     --font-heading-sub: 20px;
@@ -27,7 +27,8 @@
     --font-medium: 500;
     --font-regular: 400;
     --font-light: 300;
-    --box-shadow-soft: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.05);
+    --box-shadow-soft:
+      0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.05);
     --border-radius-smooth: 12px;
   }
 }
@@ -42,10 +43,9 @@
     border-radius: var(--border-radius-smooth);
     box-shadow: var(--box-shadow-soft);
   }
-.new_entry_button:hover {
-    background-color: #16A34A;
-}
-
+  .new_entry_button:hover {
+    background-color: #16a34a;
+  }
 }
 
 @layer utilities {
