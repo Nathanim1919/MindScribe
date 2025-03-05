@@ -1,11 +1,9 @@
+import { RouterProvider } from '@tanstack/react-router';
 import './App.css';
+import { router } from './router';
 
 function App() {
-  return (
-    <div className="text-ava">
-      <h1>HELLO, VITE + REACT + TAILWINDCSS!</h1>
-    </div>
-  );
+  return  <RouterProvider router={router} />
 }
 
 export default App;

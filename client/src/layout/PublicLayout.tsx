@@ -1,16 +1,13 @@
-import React from 'react';
-import { Header } from '../components/Header';
-import { Footer } from '../components/Footer';
+import { Outlet } from '@tanstack/react-router';
 
-export const PublicLayout: React.FC<{ children: React.ReactNode }> = ({
-  children,
-}) => {
+export function PublicLayout() {
   return (
-    <div className="text-ava">
-      <Header />
+    <div>
+      <header>Public Header</header>
       <main>
-        {children}</main>
-      <Footer />
+        <Outlet /> {/* Renders the matched route */}
+      </main>
+      <footer>Public Footer</footer>
     </div>
   );
-};
+}
