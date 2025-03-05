@@ -4,12 +4,14 @@ import { Sidebar } from '../components/Sidebar';
 
 export function AuthenticatedLayout() {
   return (
-    <div>
-      <Header />
+    <div className='flex flex-col'>
+        <Header />
+      <div className='flex'>
       <Sidebar />
-      <main>
-        <Outlet /> {/* Renders the matched route */}
-      </main>
+        <main className='flex-1 bg-amber-200'>
+          <Outlet /> {/* Renders the matched route */}
+        </main>
+      </div>
     </div>
   );
 }
