@@ -1,1 +1,80 @@
-@import "tailwindcss";
+/* src/styles.css */
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+@layer base {
+  /* Global Styles */
+  :root {
+    --background: #F8FAFC; /* Soft Light Gray */
+    --card: #FFFFFF; /* Pure White */
+    --text-primary: #1E293B; /* Dark Grayish Blue */
+    --text-secondary: #64748B; /* Cool Gray */
+    --positive: #22C55E; /* Emerald Green */
+    --neutral: #EAB308; /* Amber Yellow */
+    --negative: #EF4444; /* Bright Red */
+    --ai: #3B82F6; /* Professional Blue */
+    --divider: #E2E8F0; /* Cool Light Gray */
+    --active: #2563EB; /* Deep Blue */
+    --font-sans: 'Inter', 'Poppins', sans-serif;
+    --font-heading-main: 28px;
+    --font-heading-sub: 20px;
+    --font-body: 16px;
+    --font-secondary: 14px;
+    --font-cta: 16px;
+    --font-stats: 24px;
+    --font-bold: 700;
+    --font-medium: 500;
+    --font-regular: 400;
+    --font-light: 300;
+    --box-shadow-soft: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.05);
+    --border-radius-smooth: 12px;
+  }
+}
+
+@layer components {
+  /* Component Styles */
+  .new_entry_button {
+    background-color: var(--positive);
+    color: white;
+    font-size: var(--font-body);
+    padding: 10px 20px;
+    border-radius: var(--border-radius-smooth);
+    box-shadow: var(--box-shadow-soft);
+  }
+.new_entry_button:hover {
+    background-color: #16A34A;
+}
+
+}
+
+@layer utilities {
+  /* Utility Classes */
+  .font-sans {
+    font-family: var(--font-sans);
+  }
+  .text-heading-main {
+    font-size: var(--font-heading-main);
+    font-weight: var(--font-bold);
+  }
+  .text-heading-sub {
+    font-size: var(--font-heading-sub);
+    font-weight: var(--font-medium);
+  }
+  .text-body {
+    font-size: var(--font-body);
+    font-weight: var(--font-regular);
+  }
+  .text-secondary {
+    font-size: var(--font-secondary);
+    font-weight: var(--font-light);
+  }
+  .text-cta {
+    font-size: var(--font-cta);
+    font-weight: var(--font-medium);
+  }
+  .text-stats {
+    font-size: var(--font-stats);
+    font-weight: var(--font-bold);
+  }
+}
