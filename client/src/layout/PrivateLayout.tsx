@@ -5,8 +5,8 @@ import { Sidebar } from '../components/Sidebar';
 export function AuthenticatedLayout() {
   return (
     <div>
-     <Header/>
-     <Sidebar/>
+      <Header />
+      <Sidebar />
       <main>
         <Outlet /> {/* Renders the matched route */}
       </main>

@@ -1,5 +1,5 @@
 /* src/styles.css */
-@import "tailwindcss";
+@import 'tailwindcss';
 
 @layer base {
   /* Global Styles */
