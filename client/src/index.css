@@ -1,6 +1,7 @@
 /* src/styles.css */
 @import 'tailwindcss';
 
+
 @layer base {
   /* Global Styles */
   :root {
