@@ -5,12 +5,12 @@ import { Userstats } from './Userstats';
 
 export const DashboardPage: React.FC = () => {
   return (
-    <div className="grid grid-cols-[.7fr_.3fr] gap-4">
+    <div className="grid grid-cols-[.7fr_.3fr]">
       <div>
         <Greeting />
         <RecentEntries />
       </div>
-      <div className="h-full p-4">
+      <div className="h-full p-10">
         <Aipromptcard />
         <Userstats />
       </div>

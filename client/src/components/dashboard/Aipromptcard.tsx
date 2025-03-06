@@ -2,9 +2,9 @@ import { RiGeminiLine } from 'react-icons/ri';
 
 export const Aipromptcard: React.FC = () => {
   return (
-    <div className="bg-white p-8 rounded-sm grid grid-cols-1 gap-4">
+    <div className="bg-gradient-to-br from-blue-300 border border-sky-400 to-white p-8 rounded-sm grid grid-cols-1 gap-4">
       <div className='grid gap-4'>
-        <h2 className='font-bold text-3xl flex items-center gap-2'><RiGeminiLine className='w-10 h-10 grid place-items-center rounded-full bg-gray-300 p-1'/>Daily Writing Prompt</h2>
+        <h2 className='font-bold text-2xl flex items-center gap-2'><RiGeminiLine className='w-10 h-10 grid place-items-center rounded-full bg-gray-300 p-1'/>Daily Writing Prompt</h2>
         <p>Write about a challenge you overcame.</p>
       </div>
       <div className='flex items-center gap-2'>

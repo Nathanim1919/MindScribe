@@ -1,20 +1,16 @@
 export const Userstats: React.FC = () => {
   return (
-    <div>
-      <h2>Journal Entry</h2>
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Et quaerat
-        nesciunt voluptate autem dolorem fugit non, dolore dignissimos fuga,
-        corporis iure numquam voluptates sapiente enim eveniet reprehenderit,
-        praesentium commodi esse? Quasi, rem, fugiat accusamus temporibus, autem
-        doloribus iusto deserunt iste sit magni suscipit voluptas odio totam
-        expedita fuga accusantium? Accusamus maiores corrupti expedita,
-        molestiae repudiandae earum qui ullam cupiditate, laboriosam ad,
-        perspiciatis accusantium sunt quaerat ipsam. Repellat placeat obcaecati,
-        illo laboriosam sed sint in voluptas facilis libero atque saepe unde
-        sequi at ut. Sequi expedita distinctio a quae tenetur ullam quibusdam
-        quaerat corporis adipisci, aliquid magnam dolores rem eligendi hic.
+    <div className="py-6 grid gap-6">
+        <div className="flex flex-col gap-2">
+      <h2 className="font-bold text-2xl">AI Summary</h2>
+      <p className="text-sm text-gray-600">
+      Your recent entries indicate increased motivation and optimism. You often mention ‘excited,’ ‘progress,’ and ‘opportunity.’ However, on tougher days, words like ‘overwhelmed’ and ‘tired’ appear more frequently.
       </p>
+        </div>
+        <div className="flex flex-col gap-2">
+            <h2 className="font-bold text-2xl">AI Suggestion</h2>
+            <p className="text-sm text-gray-600">Try reflecting on your daily wins to maintain your positive momentum! 🚀</p>
+        </div>
     </div>
   );
 };
