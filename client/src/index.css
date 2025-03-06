@@ -1,7 +1,6 @@
 /* src/styles.css */
 @import 'tailwindcss';
 
-
 @layer base {
   /* Global Styles */
   :root {
@@ -16,7 +15,7 @@
     --divider: #e2e8f0; /* Cool Light Gray */
     --active: #2563eb; /* Deep Blue */
     --font-sans: 'Inter', 'Poppins', sans-serif;
-    --font-heading-main: 28px;
+    --font-heading-main: 2rem;
     --font-heading-sub: 20px;
     --font-body: 16px;
     --font-secondary: 14px;
@@ -35,15 +34,18 @@
 @layer components {
   /* Component Styles */
   .new_entry_button {
-    background-color: var(--positive);
-    color: white;
+    background-color: var(--background);
+    color: #333;
+    display: flex;
+    align-items: center;
+    gap: 2;
     font-size: var(--font-body);
-    padding: 10px 20px;
+    padding:7px 14px;
     border-radius: var(--border-radius-smooth);
-    box-shadow: var(--box-shadow-soft);
+    /* box-shadow: var(--box-shadow-soft); */
   }
   .new_entry_button:hover {
-    background-color: #16a34a;
+    background-color: #74eef0;
   }
 }
 

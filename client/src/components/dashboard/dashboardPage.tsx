@@ -10,7 +10,7 @@ export const DashboardPage: React.FC = () => {
         <Greeting />
         <RecentEntries />
       </div>
-      <div className="h-full p-10">
+      <div className="h-full p-6">
         <Aipromptcard />
         <Userstats />
       </div>

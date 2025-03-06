@@ -1,13 +1,15 @@
 export const Greeting: React.FC = () => {
   return (
-    <div className="p-4 flex flex-col items-center justify-center">
-      <h1 className="text-4xl font-bold">Good Morning, Nathan</h1>
-      <p>
-        What would you like to write about today?
-      </p>
-      <span>
-        12-Jan-2025
-      </span>
+    <div className="flex items-center justify-between px-4 py-4">
+      <div>
+        <h1 className="text-heading-main">
+         Good Evening, Nathan
+        </h1>
+        <p className="text-md text-gray-500">
+          Reflect, grow, and express yourself. What’s on your mind today?
+        </p>
+      </div>
+        <span className="text-sm font-medium bg-gray-200 border border-gray-300 p-2 rounded-full">Monday, 12 January 2025</span>
     </div>
   );
 };
