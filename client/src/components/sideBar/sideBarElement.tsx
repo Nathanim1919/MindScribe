@@ -22,7 +22,7 @@ export const SidebarElement: React.FC<{ metadata: SidebarElementPropType }> = ({
         <Link
           to={redirectTo}
           onClick={handleClick}
-          className="flex group relative items-center p-2 justify-center hover:text-gray-400 transition-colors"
+          className="flex group relative items-center p-2 justify-center hover:text-gray-400 dark:text-white transition-colors"
           aria-label={title}
         >
           <span className="">{icon}</span>
@@ -37,7 +37,7 @@ export const SidebarElement: React.FC<{ metadata: SidebarElementPropType }> = ({
       <li className="mb-4">
         <button
           onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-          className="flex cursor-pointer group relative items-center p-2 justify-center hover:text-gray-400 transition-colors"
+          className="flex cursor-pointer group relative items-center p-2 justify-center hover:text-gray-400 dark:text-white transition-colors"
           aria-label={title}
         >
           <span className="">{icon}</span>

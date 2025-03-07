@@ -1,6 +1,6 @@
 export const Header: React.FC = () => {
   return (
-    <div className="flex justify-between items-center p-4 bg-white shadow-sm">
+    <div className="flex justify-between items-center p-4 bg-white dark:bg-black shadow-sm">
       <div>
         <h2 className="font-bold text-2xl text-gray-800">
           mind<span className="text-blue-600">Scribe</span>

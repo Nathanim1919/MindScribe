@@ -32,9 +32,9 @@ export const Entriecard: React.FC<EntriecardPropType> = ({ entries }) => {
   }
 
   return (
-    <div className="entrie_card dark:bg-red-500">
+    <div className="entrie_card dark:bg-gray-950">
       <div className="flex px-4 py-2 items-center justify-between">
-        <span className="bg-gray-200 rounded-3xl p-[2px] border border-gray-300 px-3 flex items-center gap-1">
+        <span className="bg-gray-200 dark:bg-gray-800 dark:text-white rounded-3xl p-[2px] border border-gray-300 dark:border-gray-700 px-3 flex items-center gap-1">
           <BsEmojiSmileFill />
           {mood}
         </span>
@@ -43,10 +43,10 @@ export const Entriecard: React.FC<EntriecardPropType> = ({ entries }) => {
         </button>
       </div>
       <div className="px-4">
-        <h3 className="text-1xl font-bold">{title}</h3>
+        <h3 className="text-1xl font-bold dark:text-white">{title}</h3>
         <p className="text-[14px] text-gray-600 w-full">{content}</p>
       </div>
-      <div className="flex px-4 bg-gray-100 py-2 justify-between items-center border-t border-gray-200">
+      <div className="flex px-4 bg-gray-100 dark:bg-gray-900 py-2 justify-between items-center border-t border-gray-200">
         <span className="w-full text-[14px] text-gray-500 flex items-center gap-1">
           <CiCalendarDate />
           {date}

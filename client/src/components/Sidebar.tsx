@@ -10,14 +10,14 @@ import { RiBarChartLine } from 'react-icons/ri';
 
 export const Sidebar: React.FC = () => {
   return (
-    <nav className="bg-[#f2f3f5] w-20 h-screen flex flex-col gap-4 py-2 relative items-center">
+    <nav className="bg-[#f2f3f5] dark:bg-gray-800 w-20 h-screen flex flex-col gap-4 py-2 relative items-center">
       <RiBarChartLine />
-      <ul className="flex flex-col bg-white border border-gray-300 items-center gap-2 rounded-lg">
+      <ul className="flex flex-col bg-white dark:bg-black border border-gray-300 dark:border-gray-600 items-center gap-2 rounded-lg">
         {TopsidebarElements.map((element, index) => (
           <SidebarElement key={index} metadata={element} />
         ))}
       </ul>
-      <ul className="flex flex-col bg-white border border-gray-300 items-center gap-2 rounded-lg">
+      <ul className="flex flex-col bg-white dark:bg-black border border-gray-300 dark:border-gray-600 items-center gap-2 rounded-lg">
         {BottomSidebarElements.map((element, index) => (
           <SidebarElement key={index} metadata={element} />
         ))}
