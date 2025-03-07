@@ -6,163 +6,205 @@ export const RecentEntries: React.FC = () => {
   const diaries = [
     {
       id: 1,
-      title: 'A Fresh Start',
+      title: 'The Great Sock Mystery',
       content:
-        'Woke up feeling motivated today! Started a new morning routine and I already feel the difference.',
+        'Lost a sock in the laundry today. Not a pair, just one. Where do they even go? Is there a secret sock dimension?',
       date: '2025-03-07',
-      mood: 'positive',
+      mood: 'neutral',
     },
     {
       id: 2,
-      title: 'Rainy Days',
+      title: 'When Coffee Betrayed Me',
       content:
-        'The rain has been pouring all day. It’s cozy, but I also feel a bit melancholic.',
+        'Spilled coffee on my white shirt this morning. Now I look like a modern art masterpiece. Abstract coffee stains are in, right?',
       date: '2025-03-06',
-      mood: 'neutral',
+      mood: 'negative',
     },
     {
       id: 3,
-      title: 'Unexpected Challenges',
+      title: 'The Day I Became a Plant Parent',
       content:
-        "Things didn't go as planned at work today. Had to remind myself that setbacks are just part of the journey.",
+        'Bought a plant today. Named it Steve. Steve is already judging me for forgetting to water him. Steve, I’m doing my best!',
       date: '2025-03-05',
-      mood: 'negative',
+      mood: 'positive',
     },
     {
       id: 4,
-      title: 'Coffee & Creativity',
+      title: 'Why Do I Always Forget My Password?',
       content:
-        'Tried a new coffee shop today and got lost in my thoughts. Ended up brainstorming some amazing ideas!',
+        'Forgot my password again. Why does every website need a unique password? I’m not a secret agent!',
       date: '2025-03-04',
-      mood: 'positive',
-    },
-    {
-      id: 5,
-      title: 'Silent Reflection',
-      content:
-        'Some days, silence is the best company. Just sitting and thinking about life, no distractions.',
-      date: '2025-03-03',
       mood: 'neutral',
     },
     {
-      id: 6,
-      title: 'Anxiety & Overthinking',
+      id: 5,
+      title: 'The Battle of the Couch Cushions',
       content:
-        'Overthinking again… I wish my brain had an off switch sometimes.',
-      date: '2025-03-02',
+        'Spent 20 minutes rearranging the couch cushions. They still don’t look right. Is there a degree for this?',
+      date: '2025-03-03',
       mood: 'negative',
+    },
+    {
+      id: 6,
+      title: 'The Time I Tried to Adult',
+      content:
+        'Tried to adult today. Paid bills, cleaned the kitchen, and even meal prepped. I’m exhausted. Being a grown-up is overrated.',
+      date: '2025-03-02',
+      mood: 'neutral',
     },
     {
       id: 7,
-      title: 'Sunset Magic',
+      title: 'The Curious Case of the Missing Remote',
       content:
-        "Watched the sunset today, and it was breathtaking. A reminder that nature's beauty is unmatched.",
+        'Lost the TV remote. Searched everywhere. Found it in the fridge. No, I don’t have an explanation.',
       date: '2025-03-01',
-      mood: 'positive',
+      mood: 'neutral',
     },
     {
       id: 8,
-      title: 'A Difficult Conversation',
+      title: 'The Day I Realized I’m a Cat Person',
       content:
-        'Had a tough talk with a friend today. It was uncomfortable but necessary.',
-      date: '2025-02-29',
-      mood: 'negative',
-    },
-    {
-      id: 9,
-      title: 'The Little Wins',
-      content:
-        'Managed to complete my to-do list today! It feels great to be productive.',
+        'Realized today that my cat owns me, not the other way around. She just sits there, judging my life choices.',
       date: '2025-02-28',
       mood: 'positive',
     },
     {
-      id: 10,
-      title: 'Dreams & Reality',
-      content: 'Had a dream that felt so real… Woke up wishing it was.',
+      id: 9,
+      title: 'The Great Toaster Incident',
+      content:
+        'Tried to make toast. The toaster burned it. I think it’s personal at this point.',
       date: '2025-02-27',
+      mood: 'negative',
+    },
+    {
+      id: 10,
+      title: 'The Night I Became a Chef (Sort Of)',
+      content:
+        'Attempted to cook dinner. Ended up ordering pizza. At least I tried, right?',
+      date: '2025-02-26',
       mood: 'neutral',
     },
     {
       id: 11,
-      title: 'Lazy But Happy',
-      content: 'Did nothing productive today and I have no regrets.',
-      date: '2025-02-26',
-      mood: 'positive',
-    },
-    {
-      id: 12,
-      title: 'Social Burnout',
+      title: 'The Day I Argued with Google Maps',
       content:
-        'Too many social interactions today. I need some alone time to recharge.',
+        'Google Maps took me on a ‘shortcut’ today. Ended up in a field. Thanks, Google.',
       date: '2025-02-25',
       mood: 'negative',
     },
     {
-      id: 13,
-      title: 'Music Therapy',
+      id: 12,
+      title: 'The Time I Tried Yoga',
       content:
-        'Put on my favorite playlist and suddenly, everything felt a little better.',
+        'Tried yoga for the first time. Fell over. Twice. Namaste in bed instead.',
       date: '2025-02-24',
-      mood: 'positive',
+      mood: 'neutral',
     },
     {
-      id: 14,
-      title: 'Random Nostalgia',
+      id: 13,
+      title: 'The Mystery of the Disappearing Pens',
       content:
-        'A song came on, and suddenly I was back in 2015. Funny how memories work.',
+        'Why do pens disappear the moment I need them? Do they have a secret meeting place?',
       date: '2025-02-23',
       mood: 'neutral',
     },
     {
-      id: 15,
-      title: 'Imposter Syndrome',
+      id: 14,
+      title: 'The Day I Discovered I’m Allergic to Productivity',
       content:
-        'That nagging feeling that I’m not good enough hit hard today. Trying to push through.',
+        'Tried to be productive today. Ended up scrolling through memes for three hours. Oops.',
       date: '2025-02-22',
       mood: 'negative',
     },
     {
-      id: 16,
-      title: 'A Small Act of Kindness',
+      id: 15,
+      title: 'The Great Laundry Escape',
       content:
-        'Helped a stranger today, and their smile made my whole day better.',
+        'Did laundry today. One sock escaped. It’s out there living its best life without me.',
       date: '2025-02-21',
+      mood: 'neutral',
+    },
+    {
+      id: 16,
+      title: 'The Time I Tried to Fix My Wi-Fi',
+      content:
+        'Tried to fix my Wi-Fi. Unplugged it, plugged it back in. It worked. I’m basically a tech genius now.',
+      date: '2025-02-20',
       mood: 'positive',
     },
     {
       id: 17,
-      title: 'Overwhelmed But Grateful',
+      title: 'The Day I Realized I’m a Snack Hoarder',
       content:
-        'Life is busy and exhausting, but I’m grateful for everything I have.',
-      date: '2025-02-20',
-      mood: 'neutral',
-    },
-    {
-      id: 18,
-      title: 'Tired But Determined',
-      content:
-        'Exhausted, but I know I need to keep going. One step at a time.',
+        'Realized today that I have a snack drawer. It’s like a treasure chest, but for chips and chocolate.',
       date: '2025-02-19',
-      mood: 'negative',
-    },
-    {
-      id: 19,
-      title: 'Spontaneous Adventures',
-      content: 'Took an unplanned trip today. Best decision ever.',
-      date: '2025-02-18',
       mood: 'positive',
     },
     {
-      id: 20,
-      title: 'Lessons from Failure',
+      id: 18,
+      title: 'The Night I Became a Karaoke Star',
       content:
-        'Messed up something big today. But at least I learned something valuable from it.',
+        'Tried karaoke last night. My neighbors are now questioning their life choices.',
+      date: '2025-02-18',
+      mood: 'neutral',
+    },
+    {
+      id: 19,
+      title: 'The Time I Tried to Be a Morning Person',
+      content:
+        'Attempted to be a morning person. Woke up at noon. Close enough.',
       date: '2025-02-17',
       mood: 'negative',
     },
+    {
+      id: 20,
+      title: 'The Day I Realized I’m a Blanket Burrito',
+      content:
+        'Wrapped myself in a blanket like a burrito. It’s my new favorite hobby.',
+      date: '2025-02-16',
+      mood: 'positive',
+    },
+    {
+      id: 21,
+      title: 'The Great Nap Rebellion',
+      content:
+        'Took a nap today. Woke up feeling like a new person. Naps are the real heroes.',
+      date: '2025-02-15',
+      mood: 'positive',
+    },
+    {
+      id: 22,
+      title: 'The Time I Tried to Organize My Life',
+      content:
+        'Tried to organize my life. Made a to-do list. Lost the list. Life remains chaotic.',
+      date: '2025-02-14',
+      mood: 'neutral',
+    },
+    {
+      id: 23,
+      title: 'The Day I Realized I’m a Professional Procrastinator',
+      content:
+        'Realized today that I’m a professional procrastinator. I’ll start working on that tomorrow.',
+      date: '2025-02-13',
+      mood: 'neutral',
+    },
+    {
+      id: 24,
+      title: 'The Night I Became a Meme Connoisseur',
+      content:
+        'Spent the night scrolling through memes. Laughed so hard I cried. Memes are my therapy.',
+      date: '2025-02-12',
+      mood: 'positive',
+    },
+    {
+      id: 25,
+      title: 'The Time I Tried to Be Fancy',
+      content:
+        'Tried to be fancy today. Wore a suit. Spilled spaghetti on it. Fancy fail.',
+      date: '2025-02-11',
+      mood: 'neutral',
+    },
   ];
-
   return (
     <div>
       <div className="flex px-8 justify-between items-center">

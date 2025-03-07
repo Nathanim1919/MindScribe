@@ -32,7 +32,7 @@ export const Entriecard: React.FC<EntriecardPropType> = ({ entries }) => {
   }
 
   return (
-    <div className="entrie_card">
+    <div className="entrie_card dark:bg-red-500">
       <div className="flex px-4 py-2 items-center justify-between">
         <span className="bg-gray-200 rounded-3xl p-[2px] border border-gray-300 px-3 flex items-center gap-1">
           <BsEmojiSmileFill />
@@ -51,10 +51,18 @@ export const Entriecard: React.FC<EntriecardPropType> = ({ entries }) => {
           <CiCalendarDate />
           {date}
         </span>
-        <button onClick={editEntry} aria-label="Edit" className="rounded-full border-gray-300">
+        <button
+          onClick={editEntry}
+          aria-label="Edit"
+          className="rounded-full border-gray-300"
+        >
           <CiEdit className="icon" />
         </button>
-        <button onClick={deleteEntry} aria-label="Delete" className="rounded-full border-gray-300">
+        <button
+          onClick={deleteEntry}
+          aria-label="Delete"
+          className="rounded-full border-gray-300"
+        >
           <MdDeleteOutline className="icon" />
         </button>
       </div>

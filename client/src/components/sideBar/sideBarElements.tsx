@@ -39,7 +39,6 @@ export const BottomSidebarElements = [
   {
     title: 'Theme',
     icon: <CiLight />,
-    redirectTo: '/theme',
   },
   {
     title: 'Settings',
