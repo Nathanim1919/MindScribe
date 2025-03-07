@@ -24,10 +24,17 @@ export default [
     },
     rules: {
       'react/react-in-jsx-scope': 'off', // Disable the rule that requires React in scope
+      'react/prop-types': 'off', // Disable prop-types validation
     },
   },
   pluginJs.configs.recommended,
   ...tseslint.configs.recommended,
-  pluginReact.configs.flat.recommended,
+  {
+    ...pluginReact.configs.flat.recommended,
+    rules: {
+      ...pluginReact.configs.flat.recommended.rules,
+      'react/prop-types': 'off', // Ensure prop-types is disabled in the recommended config
+    },
+  },
   pluginReact.configs.flat['jsx-runtime'], // Ensures compatibility with React 17+
 ];

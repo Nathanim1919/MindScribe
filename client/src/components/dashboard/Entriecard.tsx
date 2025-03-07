@@ -17,7 +17,19 @@ type EntriecardPropType = {
 };
 
 export const Entriecard: React.FC<EntriecardPropType> = ({ entries }) => {
-  const { id, title, content, date, mood } = entries;
+  const { title, content, date, mood } = entries;
+
+  function deleteEntry() {
+    console.log('Delete button clicked');
+  }
+
+  function editEntry() {
+    console.log('Edit button clicked');
+  }
+
+  function likeEntry() {
+    console.log('Like button clicked');
+  }
 
   return (
     <div className="entrie_card">
@@ -26,9 +38,9 @@ export const Entriecard: React.FC<EntriecardPropType> = ({ entries }) => {
           <BsEmojiSmileFill />
           {mood}
         </span>
-        <span>
+        <button onClick={likeEntry} aria-label="Like">
           <IoIosHeartEmpty className="icon" />
-        </span>
+        </button>
       </div>
       <div className="px-4">
         <h3 className="text-1xl font-bold">{title}</h3>
@@ -39,10 +51,10 @@ export const Entriecard: React.FC<EntriecardPropType> = ({ entries }) => {
           <CiCalendarDate />
           {date}
         </span>
-        <button className="rounded-full border-gray-300">
+        <button onClick={editEntry} aria-label="Edit" className="rounded-full border-gray-300">
           <CiEdit className="icon" />
         </button>
-        <button className="rounded-full border-gray-300">
+        <button onClick={deleteEntry} aria-label="Delete" className="rounded-full border-gray-300">
           <MdDeleteOutline className="icon" />
         </button>
       </div>

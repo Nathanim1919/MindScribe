@@ -2,6 +2,7 @@ import { render, screen } from '@testing-library/react';
 import { Aipromptcard } from '../components/dashboard/Aipromptcard';
 import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom';
+import { vi } from 'vitest';
 
 describe('Aipromptcard Component', () => {
   it('renders the title and buttom correctly', () => {
@@ -19,13 +20,11 @@ describe('Aipromptcard Component', () => {
   });
 
   it('calls the correct function when the buttons are clicked', async () => {
-    const consoleSpy = jest.spyOn(console, 'log');
-    render(<Aipromptcard/>);
+    const consoleSpy = vi.spyOn(console, 'log');
+    render(<Aipromptcard />);
 
-
-    const startEntryBtn = screen.getByRole('button', {name:"Start Entry"});
-    const regenerateBtn = screen.getByRole('button', {name:"Regenerate"});
-
+    const startEntryBtn = screen.getByRole('button', { name: 'Start Entry' });
+    const regenerateBtn = screen.getByRole('button', { name: 'Regenerate' });
 
     await userEvent.click(startEntryBtn);
     await userEvent.click(regenerateBtn);
