@@ -15,11 +15,11 @@ export const SidebarElement: React.FC<{ metadata: SidebarElementPropType }> = ({
   };
 
   return (
-    <li className="mb-2">
+    <li className="mb-4">
       <Link
         to={redirectTo}
         onClick={handleClick}
-        className="flex group relative items-center p-2 justify-center hover:bg-gray-200 transition-colors"
+        className="flex group relative items-center p-2 justify-center hover:text-gray-400 transition-colors"
         aria-label={title}
       >
         <span className="">{icon}</span>
