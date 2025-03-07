@@ -6,7 +6,7 @@ export const Header: React.FC = () => {
           mind<span className="text-blue-600">Scribe</span>
         </h2>
       </div>
-      <div className="flex items-center gap-3 bg-gray-50 p-2 rounded-full border border-gray-200 hover:bg-gray-100 transition-all cursor-pointer">
+      <div className="flex items-center gap-2 bg-gray-50 px-1 py-1 rounded-full border border-gray-200 hover:bg-gray-100 transition-all cursor-pointer">
         <div className="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center">
           <span className="text-sm font-semibold text-gray-700">N</span>
         </div>

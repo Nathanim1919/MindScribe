@@ -3,8 +3,12 @@ import { FiUser, FiSettings, FiLogOut } from 'react-icons/fi';
 import { SidebarElementPropType } from '../../types/sideBar.type';
 import { RiGeminiLine } from 'react-icons/ri';
 import { TfiLayoutMediaCenterAlt } from 'react-icons/tfi';
+import { CiLight } from "react-icons/ci";
+import { AiOutlineSetting } from "react-icons/ai";
+import { FaBook } from "react-icons/fa";
 
-export const sidebarElements: SidebarElementPropType[] = [
+
+export const TopsidebarElements: SidebarElementPropType[] = [
   {
     title: 'Dashboard',
     icon: <GoHome />,
@@ -16,9 +20,10 @@ export const sidebarElements: SidebarElementPropType[] = [
     redirectTo: '/profile',
   },
   {
-    title: 'Settings',
-    icon: <FiSettings />,
-    redirectTo: '/settings',
+    title: 'Entries',
+    icon: <FaBook />,
+    redirectTo:
+      '/entries',
   },
   {
     title: 'Chat',
@@ -29,6 +34,19 @@ export const sidebarElements: SidebarElementPropType[] = [
     title: 'Media',
     icon: <TfiLayoutMediaCenterAlt />,
     redirectTo: '/media-center',
+  },
+];
+
+export const BottomSidebarElements = [
+  {
+    title: 'Theme',
+    icon: <CiLight />,
+    redirectTo: '/theme',
+  },
+  {
+    title: 'Settings',
+    icon: <AiOutlineSetting />,
+    redirectTo: '/settings',
   },
   {
     title: 'Logout',

@@ -19,11 +19,11 @@ export const SidebarElement: React.FC<{ metadata: SidebarElementPropType }> = ({
       <Link
         to={redirectTo}
         onClick={handleClick}
-        className="flex items-center justify-center p-2 hover:bg-gray-700 rounded transition-colors"
+        className="flex group relative items-center p-2 justify-center hover:bg-gray-200 transition-colors"
         aria-label={title}
       >
-        <span className="mr-2">{icon}</span>
-        {/* <span>{title}</span> */}
+        <span className="">{icon}</span>
+        <span className='absolute left-0 bg-white py-[4px] px-2 border border-gray-400 shadow-2xl rounded-[4px] hidden  group-hover:block group-hover:left-10 transform transition-left duration-200 ease-in-out'>{title}</span>
       </Link>
     </li>
   );

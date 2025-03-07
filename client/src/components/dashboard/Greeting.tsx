@@ -3,7 +3,7 @@ export const Greeting: React.FC = () => {
     <div className="flex items-center justify-between px-4 py-4">
       <div>
         <h1 className="text-heading-main">
-         Good Evening, Nathan
+         Good Morning, Nathan
         </h1>
         <p className="text-md text-gray-500">
           Reflect, grow, and express yourself. What’s on your mind today?

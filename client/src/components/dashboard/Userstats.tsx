@@ -9,13 +9,16 @@ export const Userstats: React.FC = () => {
           tougher days, words like ‘overwhelmed’ and ‘tired’ appear more
           frequently.
         </p>
+        <button className="border border-gray-300 py-1 px-2 rounded-md cursor-pointer text-sm text-gray-500 self-end">Read more</button>
       </div>
+
       <div className="flex flex-col gap-2">
         <h2 className="font-bold text-2xl">AI Suggestion</h2>
         <p className="text-sm text-gray-600">
           Try reflecting on your daily wins to maintain your positive momentum!
-          🚀
         </p>
+        <button className="border border-gray-300 py-1 px-2 rounded-md cursor-pointer text-sm text-gray-500 self-end">Read more</button>
+
       </div>
     </div>
   );
