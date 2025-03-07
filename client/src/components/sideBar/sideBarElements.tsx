@@ -1,12 +1,11 @@
 import { GoHome } from 'react-icons/go';
-import { FiUser, FiSettings, FiLogOut } from 'react-icons/fi';
+import { FiUser, FiLogOut } from 'react-icons/fi';
 import { SidebarElementPropType } from '../../types/sideBar.type';
 import { RiGeminiLine } from 'react-icons/ri';
 import { TfiLayoutMediaCenterAlt } from 'react-icons/tfi';
-import { CiLight } from "react-icons/ci";
-import { AiOutlineSetting } from "react-icons/ai";
-import { FaBook } from "react-icons/fa";
-
+import { CiLight } from 'react-icons/ci';
+import { AiOutlineSetting } from 'react-icons/ai';
+import { FaBook } from 'react-icons/fa';
 
 export const TopsidebarElements: SidebarElementPropType[] = [
   {
@@ -22,8 +21,7 @@ export const TopsidebarElements: SidebarElementPropType[] = [
   {
     title: 'Entries',
     icon: <FaBook />,
-    redirectTo:
-      '/entries',
+    redirectTo: '/entries',
   },
   {
     title: 'Chat',

@@ -16,7 +16,7 @@
     --divider: #e2e8f0; /* Cool Light Gray */
     --active: #2563eb; /* Deep Blue */
     --font-sans: 'Gabarito', 'Poppins', sans-serif;
-
+    --card_border_color: #d1d5dc;
     --font-heading-main: 2rem;
     --font-heading-sub: 20px;
     --font-body: 16px;
@@ -30,6 +30,7 @@
     --box-shadow-soft:
       0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.05);
     --border-radius-smooth: 12px;
+    --primary-btn-border-radius: 7px;
   }
 }
 
@@ -42,25 +43,56 @@
     align-items: center;
     cursor: pointer;
     gap: 2;
-    border:1px solid rgb(0, 0, 0);
-    font-size: var(--font-body);
-    padding:7px 10px;
+    border: 1px solid rgb(0, 0, 0);
+    font-size: var(--font-cta);
+    padding: 7px 10px;
     font-weight: bold;
     gap: 4px;
-    border-radius: var(--border-radius-smooth);
+    border-radius: var(--primary-btn-border-radius);
   }
-  
-  .new_entry_button > *:nth-child(1){
+
+  .new_entry_button > *:nth-child(1) {
     width: 22px;
     height: 22px;
-    background-color: rgb(89, 86, 86);
+    background-color: rgb(83, 78, 78);
     border-radius: 50%;
     padding: 2px;
   }
   .new_entry_button:hover {
     box-shadow: var(--box-shadow-soft);
-    border:1px solid #333;
-    background-color: #333333dd;
+    border: 1px solid #333;
+    background-color: #242424dd;
+  }
+
+  .entrie_card {
+    border: 1px solid var(--card_border_color);
+    background-color: var(--card);
+    overflow: hidden;
+    display: grid;
+    gap: 16px;
+    border-radius: var(--border-radius-smooth);
+    cursor: pointer;
+  }
+
+  .entrie_card:hover {
+    border-color: #333;
+  }
+
+  .icon {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #eee;
+    color: #333;
+    cursor: pointer;
+    padding: 4px;
+  }
+
+  .icon:hover {
+    background-color: #e4e3e3;
   }
 }
 

@@ -1,6 +1,9 @@
 import React from 'react';
 import { SidebarElement } from './sideBar/sideBarElement';
-import { BottomSidebarElements, TopsidebarElements } from './sideBar/sideBarElements';
+import {
+  BottomSidebarElements,
+  TopsidebarElements,
+} from './sideBar/sideBarElements';
 import { RiBarChartLine } from 'react-icons/ri';
 
 // Define the type for sidebar elements
