@@ -47,7 +47,7 @@ export const Entriecard: React.FC<EntriecardPropType> = ({ entries }) => {
         <p className="text-[14px] text-dark-400 w-full">{content}</p>
       </div>
       <div className="flex px-4 bg-gray-100 dark:bg-dark-100 py-2 justify-between items-center border-t border-gray-200 dark:border-dark-100">
-        <span className="w-full text-[14px] text-gray-500 flex items-center gap-1">
+        <span className="text-[13px] w-full text-gray-500 flex items-center gap-1">
           <CiCalendarDate />
           {date}
         </span>

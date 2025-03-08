@@ -8,7 +8,7 @@ export function AuthenticatedLayout() {
       <Header />
       <div className="flex overflow-hidden">
         <Sidebar />
-        <main className="flex-1 bg-[--bac] dark:bg-dark-base">
+        <main className="flex-1 bg-light-100 dark:bg-dark-base">
           <Outlet /> {/* Renders the matched route */}
         </main>
       </div>
