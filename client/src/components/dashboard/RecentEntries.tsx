@@ -208,16 +208,16 @@ export const RecentEntries: React.FC = () => {
   return (
     <div>
       <div className="flex px-8 justify-between items-center">
-        <h2 className="flex items-center gap-1">
+        <h2 className="flex items-center gap-1 dark:text-white">
           <FaBook />
           Entiries
         </h2>
-        <button className="new_entry_button">
-          <BiPlus />
+        <button className="new_entry_button dark:bg-dark-500 dark:text-black rounded-lg p-2 flex items-center gap-1">
+          <BiPlus className="dark:bg-dark-600" />
           New Entry
         </button>
       </div>
-      <div className="grid grid-cols-3 gap-2 rounded-sm p-4 max-h-[75vh] overflow-y-auto">
+      <div className="grid grid-cols-3 gap-2 rounded-sm p-4 max-h-[75vh] overflow-y-auto scrollb">
         {diaries.map((entry) => (
           <Entriecard key={entry.id} entries={entry} />
         ))}

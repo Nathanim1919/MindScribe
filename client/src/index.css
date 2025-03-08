@@ -4,10 +4,42 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
+@import 'tailwindcss';
+
+@theme {
+  /* Light Theme Colors */
+  --color-light-base: #ffffff;
+  --color-light-50: #fafafa;
+  --color-light-100: #f5f5f5;
+  --color-light-200: #e5e5e5;
+  --color-light-300: #d4d4d4;
+  --color-light-400: #a3a3a3;
+  --color-light-500: #737373;
+  --color-light-600: #525252;
+  --color-light-700: #404040;
+  --color-light-800: #262626;
+  --color-light-900: #171717;
+  --color-light-950: #0a0a0a;
+
+  /* Dark Theme Colors */
+  --color-dark-base: #000000;
+  --color-dark-50: #0a0a0a;
+  --color-dark-100: #171717;
+  --color-dark-200: #262626;
+  --color-dark-300: #373737;
+  --color-dark-400: #525252;
+  --color-dark-500: #8a8a8a;
+  --color-dark-600: #a3a3a3;
+  --color-dark-700: #d4d4d4;
+  --color-dark-800: #e5e5e5;
+  --color-dark-900: #f5f5f5;
+  --color-dark-950: #fafafa;
+}
+
 @layer base {
   /* Global Styles */
   :root {
-    --background: #f8fafc; /* Soft Light Gray */
+    --background: #f2f3f5; /* Soft Light Gray */
     --card: #ffffff; /* Pure White */
     --text-primary: #1e293b; /* Dark Grayish Blue */
     --text-secondary: #64748b; /* Cool Gray */
@@ -127,4 +159,24 @@
     font-size: var(--font-stats);
     font-weight: var(--font-bold);
   }
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 0px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: rgb(16, 16, 16);
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }

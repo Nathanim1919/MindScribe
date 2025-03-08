@@ -2,16 +2,20 @@ export const Header: React.FC = () => {
   return (
     <div className="flex justify-between items-center p-4 bg-white dark:bg-black shadow-sm">
       <div>
-        <h2 className="font-bold text-2xl text-gray-800">
+        <h2 className="font-bold text-2xl text-gray-800 dark:text-dark-950">
           mind<span className="text-blue-600">Scribe</span>
         </h2>
       </div>
-      <div className="flex items-center gap-2 bg-gray-50 px-1 py-1 rounded-full border border-gray-200 hover:bg-gray-100 transition-all cursor-pointer">
-        <div className="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center">
-          <span className="text-sm font-semibold text-gray-700">N</span>
+      <div className="flex items-center gap-2 bg-gray-50 dark:bg-dark-50 px-1 pr-2 py-1 rounded-full border border-gray-200 dark:border-dark-200 hover:bg-gray-100 transition-all cursor-pointer">
+        <div className="w-10 h-10 bg-gray-200 dark:bg-dark-100 rounded-full flex items-center justify-center">
+          <span className="text-sm font-semibold text-gray-700 dark:text-dark-500">
+            N
+          </span>
         </div>
         <div className="flex flex-col text-sm">
-          <h2 className="font-medium text-gray-800">Nathan</h2>
+          <h2 className="font-medium text-gray-800 dark:text-dark-500">
+            Nathan
+          </h2>
           <p className="text-xs text-gray-500">nathanim@gmail.com</p>
         </div>
       </div>
