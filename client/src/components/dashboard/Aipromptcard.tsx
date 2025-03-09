@@ -23,13 +23,13 @@ export const Aipromptcard: React.FC = () => {
       <div className="flex items-center gap-4">
         <button
           onClick={enterNewEntrie}
-          className="cursor-pointer bg-light-800 dark:bg-dark-200 text-gray-300 dark:text-gray-200 font-semibold px-6 py-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-all"
+          className="cursor-pointer bg-light-800 dark:bg-dark-200 text-gray-300 dark:text-gray-200 font-semibold px-6 py-2 rounded-full hover:bg-dark-300 transition-all"
         >
           Start Entry
         </button>
         <button
           onClick={regenratePrompt}
-          className="cursor-pointer border border-violet-500/45 bg-transparent text-violet-500 dark:bg-dark-50 font-semibold px-6 py-2 rounded-full flex items-center gap-2 hover:bg-violet-500 dark:hover:bg-gray-700 transition-all"
+          className="cursor-pointer border border-violet-500/45 bg-transparent text-violet-500 dark:bg-dark-50 font-semibold px-6 py-2 rounded-full flex items-center gap-2 hover:bg-violet-500/15 transition-all"
         >
           <RiGeminiLine className="w-6 h-6 text-violet-500 dark:text-gray-400" />
           Regenerate
