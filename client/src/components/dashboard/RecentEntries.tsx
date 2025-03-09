@@ -247,13 +247,13 @@ export const RecentEntries: React.FC = () => {
   ];
   return (
     <div>
-      <div className="flex px-8 justify-between items-center">
+      <div className="flex px-4 justify-between items-center">
         <h2 className="flex items-center gap-1 dark:text-white">
           <FaBook />
           Entiries
         </h2>
-        <button className="new_entry_button dark:bg-dark-500 dark:text-black rounded-lg p-2 flex items-center gap-1">
-          <BiPlus className="dark:bg-dark-600" />
+        <button className="new_entry_button dark:bg-dark-200 hover:dark:bg-dark-100 dark:text-dark-700 rounded-lg p-2 flex items-center gap-1">
+          <BiPlus className="dark:bg-dark-300" />
           New Entry
         </button>
       </div>

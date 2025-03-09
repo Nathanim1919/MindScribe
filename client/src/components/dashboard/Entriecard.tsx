@@ -32,7 +32,7 @@ export const Entriecard: React.FC<EntriecardPropType> = ({ entries }) => {
   }
 
   return (
-    <div className="entrie_card dark:border-dark-100 dark:bg-dark-50">
+    <div className="entrie_card hover:dark:border-dark-300 dark:border-dark-100 dark:bg-dark-50">
       <div className="flex px-4 py-2 items-center justify-between">
         <span className="bg-gray-200 dark:bg-dark-100 dark:text-dark-700 rounded-3xl p-[2px] border border-gray-300 dark:border-dark-200 px-3 flex items-center gap-1">
           <BsEmojiSmileFill />
