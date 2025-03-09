@@ -44,7 +44,9 @@ export const Entriecard: React.FC<EntriecardPropType> = ({ entries }) => {
       </div>
       <div className="px-4 grid gap-1">
         <h3 className="text-1xl font-bold dark:text-dark-700">{title}</h3>
-        <p className="text-[14px] text-light-600 dark:text-dark-500 w-full">{content}</p>
+        <p className="text-[14px] text-light-600 dark:text-dark-500 w-full">
+          {content}
+        </p>
       </div>
       <div className="flex px-4 bg-gray-100 dark:bg-dark-100 py-2 justify-between items-center border-t border-gray-200 dark:border-dark-100">
         <span className="text-[13px] w-full text-light-600 flex items-center gap-1">

@@ -5,29 +5,37 @@ import '@testing-library/jest-dom';
 import { vi } from 'vitest';
 
 describe('Aipromptcard Component', () => {
-  it('renders the title and buttom correctly', () => {
+  async function findByText(text: string) {
+    const element = await screen.findByText(text);
+    expect(element).toBeInTheDocument();
+  }
+
+  async function clickButton(name: string) {
+    const element = await screen.findByRole('button', { name });
+    expect(element).toBeInTheDocument();
+    await userEvent.click(element);
+  }
+
+  it('renders the title and buttom correctly', async () => {
     render(<Aipromptcard />);
 
     // Check if the title is rendered
-    expect(screen.getByText('Daily Writing Prompt')).toBeInTheDocument();
+    await findByText('Daily Writing Prompt');
+    await findByText(
+      'Write about a challenge you overcame and how it shaped you.',
+    );
 
     // Check if the buttons are rendered
-    const NewEntryBtn = screen.getByRole('button', { name: 'Start Entry' });
-    const RegenerateBtn = screen.getByRole('button', { name: 'Regenerate' });
-
-    expect(NewEntryBtn).toBeInTheDocument();
-    expect(RegenerateBtn).toBeInTheDocument();
+    await clickButton('Start Entry');
+    await clickButton('Regenerate');
   });
 
   it('calls the correct function when the buttons are clicked', async () => {
     const consoleSpy = vi.spyOn(console, 'log');
     render(<Aipromptcard />);
 
-    const startEntryBtn = screen.getByRole('button', { name: 'Start Entry' });
-    const regenerateBtn = screen.getByRole('button', { name: 'Regenerate' });
-
-    await userEvent.click(startEntryBtn);
-    await userEvent.click(regenerateBtn);
+    await clickButton('Start Entry');
+    await clickButton('Regenerate');
 
     expect(consoleSpy).toHaveBeenCalledTimes(2);
 

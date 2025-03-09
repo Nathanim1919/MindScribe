@@ -4,7 +4,18 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 describe('Entriecard Component', () => {
-  it('renders the title and content correctly', () => {
+  async function clickButton(name: string) {
+    const element = await screen.findByRole('button', { name });
+    expect(element).toBeInTheDocument();
+    await userEvent.click(element);
+  }
+
+  async function findByText(text: string) {
+    const element = await screen.findByText(text);
+    expect(element).toBeInTheDocument();
+  }
+
+  it('renders the title and content correctly', async () => {
     const entry = {
       id: 1,
       title: 'Title',
@@ -14,10 +25,12 @@ describe('Entriecard Component', () => {
     };
 
     render(<Entriecard entries={entry} />);
-    expect(screen.getByText('Title')).toBeInTheDocument();
-    expect(screen.getByText('Content')).toBeInTheDocument();
-    expect(screen.getByText('2021-09-01')).toBeInTheDocument();
-    expect(screen.getByText('Happy')).toBeInTheDocument();
+
+    // Check if the title and content are rendered
+    await findByText('Title');
+    await findByText('Content');
+    await findByText('2021-09-01');
+    await findByText('Happy');
   });
 
   it('calls the correct function when the buttons are clicked', async () => {
@@ -36,15 +49,9 @@ describe('Entriecard Component', () => {
     // Render the Entriecard component
     render(<Entriecard entries={entry} />);
 
-    // Get the buttons using their aria-label attributes
-    const deleteBtn = screen.getByRole('button', { name: 'Delete' });
-    const editBtn = screen.getByRole('button', { name: 'Edit' });
-    const likeBtn = screen.getByRole('button', { name: 'Like' });
-
-    // Click the buttons
-    await userEvent.click(deleteBtn);
-    await userEvent.click(editBtn);
-    await userEvent.click(likeBtn);
+    await clickButton('Delete');
+    await clickButton('Edit');
+    await clickButton('Like');
 
     // Check if the console.log function was called with the correct arguments and number of times
     expect(consoleSpy).toHaveBeenCalledWith('Delete button clicked');
