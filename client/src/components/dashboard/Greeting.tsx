@@ -1,6 +1,6 @@
 export const Greeting: React.FC = () => {
   return (
-    <div className="flex items-center justify-between px-4 py-4">
+    <div className="flex items-center justify-between px-4 py-0">
       <div>
         <h1 className="text-heading-main dark:text-dark-950">
           Good Morning, <span className="text-purple-500">Nathan</span>

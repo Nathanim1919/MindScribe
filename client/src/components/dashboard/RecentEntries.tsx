@@ -257,7 +257,7 @@ export const RecentEntries: React.FC = () => {
           New Entry
         </button>
       </div>
-      <div className="grid grid-cols-3 gap-2 rounded-sm p-4 max-h-[75vh] overflow-y-auto scrollb">
+      <div className="grid grid-cols-3 gap-2 rounded-sm p-4 max-h-[80vh] overflow-y-auto scrollb">
         {diaries.map((entry) => (
           <Entriecard key={entry.id} entries={entry} />
         ))}

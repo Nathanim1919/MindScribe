@@ -1,5 +1,5 @@
 import { GoHome } from 'react-icons/go';
-import { FiUser } from 'react-icons/fi';
+import { FiArrowUpRight, FiLogOut, FiSettings, FiUser } from 'react-icons/fi';
 import { SidebarElementPropType } from '../../types/sideBar.type';
 import { RiGeminiLine } from 'react-icons/ri';
 import { TfiLayoutMediaCenterAlt } from 'react-icons/tfi';
@@ -30,5 +30,34 @@ export const TopsidebarElements: SidebarElementPropType[] = [
     title: 'Media',
     icon: <TfiLayoutMediaCenterAlt />,
     redirectTo: '/media-center',
+  },
+];
+
+const handleLogout = () => {
+  console.log('User logged out');
+  // Add actual logout logic here
+};
+
+export const UserMenuElements = [
+  {
+    title: 'Profile',
+    icon: <FiUser />,
+    to: '/profile',
+  },
+  {
+    title: 'Settings',
+    icon: <FiSettings />,
+    to: '/settings',
+  },
+  {
+    title: 'Upgrade',
+    icon: <FiArrowUpRight />,
+    to: '/upgrade',
+  },
+  {
+    title: 'Logout',
+    icon: <FiLogOut />,
+    to: '/logout',
+    onClick: handleLogout,
   },
 ];

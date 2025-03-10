@@ -10,7 +10,7 @@ export const Aipromptcard: React.FC = () => {
   }
 
   return (
-    <div className="bg-light-950 dark:bg-dark-50 border border-gray-300 dark:border-dark-100 shadow-lg p-5 rounded-xl grid grid-cols-1 gap-6">
+    <div className="bg-light-950 dark:bg-dark-50 border border-gray-300 dark:border-dark-100 shadow-lg p-3 rounded-xl grid grid-cols-1 gap-6">
       <div className="grid gap-4">
         <h2 className="font-bold text-3xl text-violet-500 flex items-center gap-3">
           <RiGeminiLine className="w-12 h-12 grid place-items-center rounded-full bg-white/10 dark:bg-dark-200 p-2  text-purple-600 shadow-lg" />
