@@ -8,6 +8,7 @@ interface LinkProps {
   ariaLabel?: string;
   icon?: React.ReactNode;
   isLink?: boolean;
+  isUserMenu?: boolean;
 }
 
 export const LinkElement: React.FC<LinkProps> = ({
@@ -18,6 +19,7 @@ export const LinkElement: React.FC<LinkProps> = ({
   ariaLabel = title,
   icon,
   isLink = true,
+  isUserMenu = false,
 }) => {
   const handleClick = () => {
     if (onClick) {
@@ -26,12 +28,16 @@ export const LinkElement: React.FC<LinkProps> = ({
   };
 
   return isLink && to ? (
-    <li className="mb-4">
+    <li className={`${!isUserMenu&&"mb-4"} list-none`}>
       <Link to={to} onClick={handleClick} className={`group relative ${className}`} aria-label={ariaLabel}>
         <span>{icon}</span>
+        {isUserMenu?
+        <span className=" ">
+          {title}
+        </span>:
         <span className="absolute left-0 bg-white dark:bg-dark-50 dark:text-dark-900 py-[4px] px-2 border border-gray-400 dark:border-dark-200 shadow-2xl rounded-[4px] hidden group-hover:block group-hover:left-10 transition duration-200 ease-in-out">
           {title}
-        </span>
+        </span>}
       </Link>
     </li>
   ) : (
@@ -41,9 +47,10 @@ export const LinkElement: React.FC<LinkProps> = ({
       aria-label={ariaLabel}
     >
       <span>{icon}</span>
-      <span className="absolute left-0 bg-white dark:bg-dark-50 dark:text-dark-900 py-[4px] px-2 border border-gray-400 dark:border-dark-200 shadow-2xl rounded-[4px] hidden group-hover:block group-hover:left-10 transition duration-200 ease-in-out">
+     { <span className="absolute left-0 bg-white dark:bg-dark-50 dark:text-dark-900 py-[4px] px-2 border border-gray-400 dark:border-dark-200 shadow-2xl rounded-[4px] hidden group-hover:block group-hover:left-10 transition duration-200 ease-in-out">
         {title}
-      </span>
+      </span>}
+
     </button>
   );
 };
