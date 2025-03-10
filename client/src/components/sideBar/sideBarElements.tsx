@@ -1,10 +1,8 @@
 import { GoHome } from 'react-icons/go';
-import { FiUser, FiLogOut } from 'react-icons/fi';
+import { FiUser } from 'react-icons/fi';
 import { SidebarElementPropType } from '../../types/sideBar.type';
 import { RiGeminiLine } from 'react-icons/ri';
 import { TfiLayoutMediaCenterAlt } from 'react-icons/tfi';
-import { CiLight } from 'react-icons/ci';
-import { AiOutlineSetting } from 'react-icons/ai';
 import { FaBook } from 'react-icons/fa';
 
 export const TopsidebarElements: SidebarElementPropType[] = [
@@ -32,26 +30,5 @@ export const TopsidebarElements: SidebarElementPropType[] = [
     title: 'Media',
     icon: <TfiLayoutMediaCenterAlt />,
     redirectTo: '/media-center',
-  },
-];
-
-export const BottomSidebarElements = [
-  {
-    title: 'Theme',
-    icon: <CiLight />,
-  },
-  {
-    title: 'Settings',
-    icon: <AiOutlineSetting />,
-    redirectTo: '/settings',
-  },
-  {
-    title: 'Logout',
-    icon: <FiLogOut />,
-    redirectTo: '/logout',
-    onClick: () => {
-      // Handle logout logic here
-      console.log('User logged out');
-    },
   },
 ];
