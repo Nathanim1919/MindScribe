@@ -9,7 +9,10 @@ export const UserMenu: React.FC<UserMenuProps> = ({ display }) => {
   if (!display) return null;
 
   return (
-    <div className="absolute top-14 right-4 shadow-lg rounded-md flex flex-col bg-light-50 dark:bg-dark-base border dark:border-dark-100 border-light-200">
+    <div
+      role="menu"
+      className="absolute top-14 right-4 shadow-lg rounded-md flex flex-col bg-light-50 dark:bg-dark-base border dark:border-dark-100 border-light-200"
+    >
       {UserMenuElements.map(({ title, icon, to, onClick }) => (
         <LinkElement
           key={title} // Use title as a stable key

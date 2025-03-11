@@ -23,7 +23,7 @@ export const Aipromptcard: React.FC = () => {
       <div className="flex items-center gap-4">
         <button
           onClick={enterNewEntrie}
-          className="cursor-pointer bg-light-800 dark:bg-dark-200 text-gray-300 dark:text-gray-200 font-semibold px-6 py-2 rounded-full hover:bg-dark-300 transition-all"
+          className="cursor-pointer bg-light-800 dark:bg-dark-100 text-gray-300 dark:text-gray-200 font-semibold px-6 py-2 rounded-full hover:bg-dark-300 transition-all"
         >
           Start Entry
         </button>
