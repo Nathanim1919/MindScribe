@@ -5,9 +5,7 @@ import { vi } from 'vitest';
 
 // Import your components and sidebar element definitions
 import { Sidebar } from '../components/Sidebar';
-import {
-  TopsidebarElements,
-} from '../components/sideBar/sideBarElements';
+import { TopsidebarElements } from '../components/sideBar/sideBarElements';
 
 // Import ThemeContext and its Theme type (assuming Theme is defined as 'light' | 'dark')
 import ThemeContext, { Theme } from '../contexts/ThemeContext';
@@ -61,8 +59,7 @@ describe('Sidebar Component', () => {
 
   it('renders the correct number of sidebar elements', () => {
     renderWithProviders(<Sidebar />);
-    const expectedCount =
-      TopsidebarElements.length;
+    const expectedCount = TopsidebarElements.length;
     // SidebarElement renders as <li> items.
     expect(screen.getAllByRole('listitem')).toHaveLength(expectedCount);
   });

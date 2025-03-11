@@ -20,9 +20,9 @@
   "type": "module",
   "main": "index.ts",
   "scripts": {
-    "build": "tsc",
-    "dev": "nodemon src/server.ts",
-    "start": "node dist/server.js",
+    "build": "node api.js && tsc",
+    "dev": "node api.js && nodemon src/server.ts",
+    "start": "node api.js && node dist/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {

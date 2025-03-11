@@ -9,7 +9,7 @@ export const Greeting: React.FC = () => {
           Reflect, grow, and express yourself. What’s on your mind today?
         </p>
       </div>
-      <span className="text-sm font-medium bg-gray-200 dark:bg-dark-100 dark:text-dark-500 border border-gray-300 dark:border-dark-200 p-2 rounded-full">
+      <span className="text-[12px] font-medium bg-gray-200 dark:bg-dark-100 dark:text-dark-500 border border-gray-300 dark:border-dark-200 py-1 px-2 rounded-full">
         Monday, 12 January 2025
       </span>
     </div>
