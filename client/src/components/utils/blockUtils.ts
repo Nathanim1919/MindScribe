@@ -7,7 +7,7 @@ import {
     ListBlock,
     ImageBlock,
     DividerBlock,
-} from "../blocks/types";
+} from "../EditorSpace/types";
 
 // Helper type to map block types to their additional properties
 type AdditionalProps<T extends BlockType["type"]> =
@@ -32,16 +32,16 @@ export function createBlock<T extends BlockType["type"]>(
             return ParagraphBlock.create(content);
         case "quote":
             return QuoteBlock.create(content);
-        case "list":
-            return ListBlock.create(
-                (additionalProps as AdditionalProps<"list">).style,
-                (additionalProps as AdditionalProps<"list">).items,
-            );
-        case "image":
-            return ImageBlock.create(
-                (additionalProps as AdditionalProps<"image">).url,
-                (additionalProps as AdditionalProps<"image">).caption
-            );
+        // case "list":
+        //     return ListBlock.create(
+        //         (additionalProps as AdditionalProps<"list">).style,
+        //         (additionalProps as AdditionalProps<"list">).items,
+        //     );
+        // case "image":
+        //     return ImageBlock.create(
+        //         (additionalProps as AdditionalProps<"image">).url,
+        //         (additionalProps as AdditionalProps<"image">).caption
+        //     );
         case "divider":
             return DividerBlock.create();
         default:

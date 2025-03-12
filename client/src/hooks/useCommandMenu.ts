@@ -1,54 +1,21 @@
-import { useEffect, useState } from 'react';
-import { BlockType } from '../types/block.interface';
+import { useState } from "react";
+import { BlockType } from "../types/block.interface";
 
-// Hooks to handle keyboard shorcuts and command menu
-export function useCommand(
-  addBlock: (
-    type: BlockType['type'],
-    content?: string,
-    additionalProps?: any,
-  ) => void,
-) {
+export function useCommand(addBlock: (block:BlockType) => void) {
   const [isCommandMenuVisible, setIsCommandMenuVisible] = useState(false);
-  const [commandFilter, setCommandFilter] = useState('');
+  const [commandFilter, setCommandFilter] = useState("");
 
-  // Show command menu when '/ is typed
-  useEffect(() => {
-    const handleSlash = (e: KeyboardEvent) => {
-      if (e.key === '/') {
-        setIsCommandMenuVisible(true);
-      }
-    };
-
-    window.addEventListener('keydown', handleSlash);
-    return () => window.removeEventListener('keydown', handleSlash);
-  }, []);
-
-  // Hide command menu when 'Esc' is pressed
-  useEffect(() => {
-    const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
-        setIsCommandMenuVisible(false);
-        setCommandFilter('');
-      }
-    };
-
-    window.addEventListener('keydown', handleEscape);
-    return () => window.removeEventListener('keydown', handleEscape);
-  }, []);
-
-  // Handle command menu selection
-  const handleCommandSelection = (type: BlockType['type']) => {
-    addBlock(type);
-    setIsCommandMenuVisible(false);
-    setCommandFilter('');
+  const handleCommandSelect = (type: "header" | "paragraph" | "quote" | "list" | "image" | "divider") => {
+    addBlock({ type } as BlockType); // Add the selected block type
+    setIsCommandMenuVisible(false); // Hide the command menu
+    setCommandFilter(""); // Reset the filter
   };
 
   return {
     isCommandMenuVisible,
-    setIsCommandMenuVisible,
     commandFilter,
     setCommandFilter,
-    handleCommandSelection,
+    handleCommandSelect,
+    setIsCommandMenuVisible
   };
 }

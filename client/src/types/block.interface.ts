@@ -7,7 +7,7 @@ export interface IBlock {
 // Interface for header blocks
 export interface IHeaderBlock extends IBlock {
   type: 'header'; // Type of the block
-  level: number; // Level of the header (1 for h1, 2 for h2, etc.)
+  level?: number; // Level of the header (1 for h1, 2 for h2, etc.)
 }
 
 // Interface for paragraph blocks
