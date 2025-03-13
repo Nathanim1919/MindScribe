@@ -4,9 +4,6 @@ import {
     HeaderBlock,
     ParagraphBlock,
     QuoteBlock,
-    ListBlock,
-    ImageBlock,
-    DividerBlock,
 } from "../EditorSpace/types";
 
 // Helper type to map block types to their additional properties
@@ -32,18 +29,6 @@ export function createBlock<T extends BlockType["type"]>(
             return ParagraphBlock.create(content);
         case "quote":
             return QuoteBlock.create(content);
-        // case "list":
-        //     return ListBlock.create(
-        //         (additionalProps as AdditionalProps<"list">).style,
-        //         (additionalProps as AdditionalProps<"list">).items,
-        //     );
-        // case "image":
-        //     return ImageBlock.create(
-        //         (additionalProps as AdditionalProps<"image">).url,
-        //         (additionalProps as AdditionalProps<"image">).caption
-        //     );
-        case "divider":
-            return DividerBlock.create();
         default:
             throw new Error(`Unknown block type: ${type}`);
     }
@@ -52,6 +37,6 @@ export function createBlock<T extends BlockType["type"]>(
 // Validate a block
 export function validateBlock(block: BlockType): boolean {
     if (!block.type) throw new Error("Block must have a type");
-    if (!block.content && block.type !== "divider") throw new Error("Block must have content");
+    // if (!block.content && block.type !== "divider") throw new Error("Block must have content");
     return true;
 }

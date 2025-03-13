@@ -1,7 +1,6 @@
 import { IParagraphBlock } from "../../../types/block.interface";
 
-interface ParagraphBlockProps extends IParagraphBlock {}
 
-export function ParagraphBlock({ content }: ParagraphBlockProps) {
+export function ParagraphBlock({ content }: IParagraphBlock) {
   return <p className="text-orange-400">{content}</p>;
 }

@@ -20,30 +20,8 @@ export interface IQuoteBlock extends IBlock {
   type: 'quote'; // Type of the block
 }
 
-// Interface for list blocks
-export interface IListBlock extends IBlock  {
-  type: 'list';
-  style: 'bullet' | 'numbered';
-  items: string[];
-}
-
-// Interface for image blocks
-export interface IImageBlock extends IBlock {
-  type: 'image'; // Type of the block
-  url: string; // URL of the image
-  caption?: string; // Caption for the image
-}
-
-// Interface for divider blocks
-export interface IDividerBlock extends IBlock {
-  type: 'divider'; // Type of the block
-}
-
 // Interface for all block types
 export type BlockType =
   | IHeaderBlock
   | IParagraphBlock
   | IQuoteBlock
-  | IListBlock
-  | IImageBlock
-  | IDividerBlock;

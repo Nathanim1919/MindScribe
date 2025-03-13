@@ -9,6 +9,7 @@ import { RegistrationPage } from './pages/RegistrationPage';
 import { PublicLayout } from './layout/PublicLayout';
 import { AuthenticatedLayout } from './layout/PrivateLayout';
 import { DashboardPage } from './components/dashboard/dashboardPage';
+import { Editor } from './components/EditorSpace/Editor';
 
 // Create a root route
 const rootRoute = createRootRoute({
@@ -63,10 +64,17 @@ const dashboardRoute = createRoute({
   component: DashboardPage,
 });
 
+
+const EditorRoute = createRoute({
+  getParentRoute: () => authenticatedRoute,
+  path: '/new',
+  component: Editor
+});
+
 // Create the route tree
 const routeTree = rootRoute.addChildren([
   publicRoute.addChildren([loginRoute, registerRoute]),
-  authenticatedRoute.addChildren([dashboardRoute]),
+  authenticatedRoute.addChildren([dashboardRoute, EditorRoute]),
 ]);
 
 // Create the router

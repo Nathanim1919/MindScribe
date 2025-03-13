@@ -13,7 +13,7 @@ export function useBlocks(initialBlocks: BlockType[] = [{
   const addBlock = (block: BlockType, index?: number) => {
     const { type, content, ...additionalProps } = block;
     console.log(type, content, additionalProps);
-    const newBlock: BlockType = createBlock("quote", content);
+    const newBlock: BlockType = createBlock(block.type, content);
     if (index !== undefined) {
       console.log("Index is: ",index);
       const newBlocks = [...blocks]; // Copy the blocks array

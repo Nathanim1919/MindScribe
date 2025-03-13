@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 
 interface CommandMenuProps {
   filter: string;
@@ -16,11 +16,14 @@ const blockTypes = [
 ];
 
 export function CommandMenu({ filter, onFilterChange, onSelect }: CommandMenuProps) {
-  const filteredBlocks = blockTypes.filter((block) =>
-    block.label.toLowerCase().includes(filter.toLowerCase())
-  );
-
   
+  const filteredBlocks = useMemo(() => 
+    blockTypes.filter((block) =>
+      block.label.toLowerCase().includes(filter.toLowerCase())
+    ), [filter]);
+  
+
+
 
   return (
     <div className="command-menu">
