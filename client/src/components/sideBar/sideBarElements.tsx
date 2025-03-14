@@ -9,7 +9,7 @@ export const TopsidebarElements: SidebarElementPropType[] = [
   {
     title: 'Dashboard',
     icon: <GoHome />,
-    redirectTo: '/dashboard',
+    redirectTo: '/in',
   },
   {
     title: 'Profile',

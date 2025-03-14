@@ -92,24 +92,42 @@ export function Editor() {
           // Optional: if it's the first block, do default behavior
         }
       }
-    }
-
-    // 🔹 Enter (new block logic)
-    else if (e.key === 'Enter') {
+    } else if (e.key === 'Enter') {
       e.preventDefault();
       const blockDiv = e.currentTarget;
       const cursorPosition = getCursorPosition(blockDiv);
       const content = blockDiv.innerText;
 
-      if (content.length === 0 || cursorPosition === content.length) {
-        // if (
-        addNewBlock('paragraph', index + 1);
-      } else if (cursorPosition === 0) {
+      // If the block is empty, or caret is at the very end,
+      // insert the new block right below the current block.
+      if (content.trim() === '' || cursorPosition === content.length) {
+        // Insert the new block immediately after the current block
+        const newIndex = index + 1;
+        addNewBlock('paragraph', newIndex);
+        setFocusedBlockIndex(newIndex);
+      }
+      // If caret is at the very beginning, insert a new block above the current one.
+      else if (cursorPosition === 0) {
         addNewBlock('paragraph', index);
-      } else {
+        setFocusedBlockIndex(index);
+      }
+      // Otherwise, split the content into two parts:
+      // current block keeps the first part, new block gets the remainder.
+      else {
         const [firstPart, secondPart] = splitContentAtCursor(blockDiv);
         updateBlock(index, { ...blocks[index], content: firstPart });
+        // Insert the new block immediately after the current block
         addNewBlock('paragraph', index + 1, secondPart);
+        setFocusedBlockIndex(index + 1);
+        // Place the caret at the end of the new block (with a slight delay)
+        setTimeout(() => {
+          const newBlockDiv = document.querySelector(
+            `[data-block-index="${index + 1}"]`,
+          ) as HTMLElement;
+          if (newBlockDiv) {
+            placeCaretAtEnd(newBlockDiv);
+          }
+        }, 0);
       }
     }
 
@@ -139,6 +157,7 @@ export function Editor() {
   const handleInput = (index: number, e: React.FormEvent<HTMLDivElement>) => {
     const content = e.currentTarget.innerText.trim();
     updateBlock(index, { ...blocks[index], content });
+    console.log(blocks)
   };
 
   const handleBlockClick = (index: number) => {
@@ -147,7 +166,7 @@ export function Editor() {
 
   const handleCommandSelection = (type: string) => {
     if (focusedBlockIndex === null) return;
-    addNewBlock(type as BlockType['type'], focusedBlockIndex + 1);
+    addNewBlock(type as BlockType['type'], focusedBlockIndex);
     setIsCommandMenuVisible(false);
     setCommandFilter('');
     setFocusedBlockIndex(null);
@@ -157,7 +176,7 @@ export function Editor() {
   const addNewBlock = (
     type: BlockType['type'],
     index: number,
-    content = 'Write here!!',
+    content = '',
   ) => {
     const newBlock = createBlock(type, content);
     addBlock(newBlock, index);
@@ -179,26 +198,51 @@ export function Editor() {
     }
   }, [blocks, focusedBlockIndex]);
 
+
+  const activeBlockInformation = (index: number) => {
+    const block = blocks[index];
+  
+    // For header blocks, show placeholder ("Head 1" or custom value) if empty.
+    if (block.type === 'header') {
+      return block.content?.trim() === '' ? 'Head 1' : '';
+    }
+  
+    // For other blocks, only show placeholder if this block is focused and empty.
+    if (focusedBlockIndex === index && block.content?.trim() === '') {
+      return 'Write something, press "/" for commands';
+    }
+  
+    return '';
+  };
+
   return (
     <div ref={editorRef} className="bg-dark-base">
       {/* 📌 Render Blocks */}
       {blocks.map((block, index) => (
-        <div
-          key={index}
-          aria-label={`Editable block ${index}`}
-          contentEditable
-          onClick={() => handleBlockClick(index)}
-          onKeyDown={(e) => handleKeyDown(e, index)}
-          onBlur={(e) => handleInput(index, e)}
-          className={`relative w-full outline-none border-none font-bold break-words
-            ${block.type === 'header' ? 'text-dark-900 text-4xl' : 'text-dark-500 text-base'}
-            before:absolute before:top-0 before:left-0 before:text-gray-500 before:opacity-50
-            before:pointer-events-none empty:before:content-[attr(data-placeholder)]
-          `}
-          data-placeholder={
-            block.type === 'header' ? 'Heading...' : 'Write something...'
-          }
-        ></div>
+       <div
+       key={index}
+       aria-label={`Editable block ${index}`}
+       contentEditable
+       onClick={() => handleBlockClick(index)}
+       onKeyDown={(e) => handleKeyDown(e, index)}
+       onInput={(e) => handleInput(index, e)}
+       className={`relative w-full outline-none border-none break-words font-sans
+         ${block.type === 'header'
+           ? 'text-dark-900 text-4xl py-2'
+           : 'text-dark-700 text-[18px] leading-[1.2em]'
+         }
+         before:absolute before:top-0 before:left-0 before:text-gray-500 before:opacity-50 
+         before:pointer-events-none before:content-[attr(data-placeholder)]
+         ${
+           block.type === 'header'
+             ? block.content?.trim() === ''
+               ? 'before:block'
+               : 'before:hidden'
+             : 'before:hidden focus:before:block'
+         }
+       `}
+       data-placeholder={activeBlockInformation(index)}
+     ></div>
       ))}
 
       {/* 📌 Command Menu */}
