@@ -11,16 +11,20 @@ export function useBlocks(initialBlocks: BlockType[] = []) {
     const { type, content, ...additionalProps } = block;
     console.log(type, content, additionalProps);
     const newBlock: BlockType = createBlock(block.type, content);
+  
     if (index !== undefined) {
-      console.log("Index is: ",index);
+      console.log("Index is: ", index);
+      if (index < 0 || index > blocks.length) {
+        console.error("Invalid index:", index);
+        return;
+      }
       const newBlocks = [...blocks]; // Copy the blocks array
       newBlocks.splice(index, 0, newBlock); // Insert the new block at the specified index
       setBlocks(newBlocks);
     } else {
-      console.log("fuck,.... Index is not defined");
+      console.log("Index is not defined, appending to the end");
       setBlocks([...blocks, newBlock]);
     }
-    console.log(blocks);
   };
 
   // Delete a block from the list by index
@@ -29,11 +33,13 @@ export function useBlocks(initialBlocks: BlockType[] = []) {
   };
 
   // Update a block by index
-  const updateBlock = (index: number, newBlock: BlockType) => {
-    const newBlocks = [...blocks];
-    newBlocks[index] = newBlock;
-    setBlocks(newBlocks);
-  };
+ const updateBlock = (index: number, updatedBlock: BlockType) => {
+  setBlocks((prevBlocks) => {
+    const newBlocks = [...prevBlocks]; // Create a new array to trigger re-render
+    newBlocks[index] = updatedBlock; // Update the specific block
+    return newBlocks;
+  });
+};
 
   // Reorder blocks
   const reorderBlocks = (startIndex: number, endeIndex: number) => {

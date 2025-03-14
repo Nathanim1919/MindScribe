@@ -19,7 +19,7 @@ export const EmptyCollectionBoard: React.FC = () => {
             your first entry and unlock the power of reflection and growth.
           </p>
         </div>
-        <Link to='/in/new' className="new_entry_button bg-light-800 hover:bg-light-700 dark:bg-dark-100 hover:dark:bg-dark-100 dark:text-dark-700 rounded-lg p-2 flex items-center gap-1">
+        <Link to='/in/board/new' className="new_entry_button bg-light-800 hover:bg-light-700 dark:bg-dark-100 hover:dark:bg-dark-100 dark:text-dark-700 rounded-lg p-2 flex items-center gap-1">
           <BiPlus className="dark:bg-dark-200" />
           Create Your First Entry
         </Link>

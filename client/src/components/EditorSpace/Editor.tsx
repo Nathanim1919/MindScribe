@@ -36,6 +36,7 @@ export function Editor() {
   const splitContentAtCursor = (element: HTMLElement): [string, string] => {
     const cursorPosition = getCursorPosition(element);
     const content = element.innerText;
+    console.log("Splitting content:", content, "at position:", cursorPosition); // Debugging
     return [content.slice(0, cursorPosition), content.slice(cursorPosition)];
   };
 
@@ -115,10 +116,15 @@ export function Editor() {
       // current block keeps the first part, new block gets the remainder.
       else {
         const [firstPart, secondPart] = splitContentAtCursor(blockDiv);
+
         updateBlock(index, { ...blocks[index], content: firstPart });
         // Insert the new block immediately after the current block
         addNewBlock('paragraph', index + 1, secondPart);
         setFocusedBlockIndex(index + 1);
+
+        console.log('Updated block:', blocks[index]);
+
+        console.log('Added new block:', blocks[index + 1]);
         // Place the caret at the end of the new block (with a slight delay)
         setTimeout(() => {
           const newBlockDiv = document.querySelector(
@@ -147,9 +153,12 @@ export function Editor() {
     // 🔹 Slash (open command menu)
     else if (e.key === '/') {
       e.preventDefault();
-      alert('Slash key pressed');
       setIsCommandMenuVisible(true);
-      setFocusedBlockIndex(index);
+      if (blocks[index].content?.trim() === '') {
+        setFocusedBlockIndex(index);
+      } else {
+        setFocusedBlockIndex(index + 1);
+      }
     }
   };
 
@@ -157,7 +166,7 @@ export function Editor() {
   const handleInput = (index: number, e: React.FormEvent<HTMLDivElement>) => {
     const content = e.currentTarget.innerText.trim();
     updateBlock(index, { ...blocks[index], content });
-    console.log(blocks)
+    console.log(blocks);
   };
 
   const handleBlockClick = (index: number) => {
@@ -198,20 +207,19 @@ export function Editor() {
     }
   }, [blocks, focusedBlockIndex]);
 
-
   const activeBlockInformation = (index: number) => {
     const block = blocks[index];
-  
+
     // For header blocks, show placeholder ("Head 1" or custom value) if empty.
     if (block.type === 'header') {
       return block.content?.trim() === '' ? 'Head 1' : '';
     }
-  
+
     // For other blocks, only show placeholder if this block is focused and empty.
     if (focusedBlockIndex === index && block.content?.trim() === '') {
       return 'Write something, press "/" for commands';
     }
-  
+
     return '';
   };
 
@@ -219,17 +227,18 @@ export function Editor() {
     <div ref={editorRef} className="bg-dark-base">
       {/* 📌 Render Blocks */}
       {blocks.map((block, index) => (
-       <div
-       key={index}
-       aria-label={`Editable block ${index}`}
-       contentEditable
-       onClick={() => handleBlockClick(index)}
-       onKeyDown={(e) => handleKeyDown(e, index)}
-       onInput={(e) => handleInput(index, e)}
-       className={`relative w-full outline-none border-none break-words font-sans
-         ${block.type === 'header'
-           ? 'text-dark-900 text-4xl py-2'
-           : 'text-dark-700 text-[18px] leading-[1.2em]'
+        <div
+          key={index}
+          aria-label={`Editable block ${index}`}
+          contentEditable
+          onClick={() => handleBlockClick(index)}
+          onKeyDown={(e) => handleKeyDown(e, index)}
+          onInput={(e) => handleInput(index, e)}
+          className={`relative w-full outline-none border-none break-words font-sans
+         ${
+           block.type === 'header'
+             ? 'text-dark-900 text-4xl py-2'
+             : 'text-dark-700 text-[18px] leading-[1.2em]'
          }
          before:absolute before:top-0 before:left-0 before:text-gray-500 before:opacity-50 
          before:pointer-events-none before:content-[attr(data-placeholder)]
@@ -241,8 +250,8 @@ export function Editor() {
              : 'before:hidden focus:before:block'
          }
        `}
-       data-placeholder={activeBlockInformation(index)}
-     ></div>
+          data-placeholder={activeBlockInformation(index)}
+        ></div>
       ))}
 
       {/* 📌 Command Menu */}

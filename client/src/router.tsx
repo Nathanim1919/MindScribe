@@ -10,6 +10,7 @@ import { PublicLayout } from './layout/PublicLayout';
 import { AuthenticatedLayout } from './layout/PrivateLayout';
 import { DashboardPage } from './components/dashboard/dashboardPage';
 import { Editor } from './components/EditorSpace/Editor';
+import { Board } from './components/dashboard/board';
 
 // Create a root route
 const rootRoute = createRootRoute({
@@ -60,21 +61,28 @@ const authenticatedRoute = createRoute({
 
 const dashboardRoute = createRoute({
   getParentRoute: () => authenticatedRoute,
-  path: '/',
+  path: '/board',
   component: DashboardPage,
 });
 
+const BoardRoute = createRoute({
+  getParentRoute: () => dashboardRoute,
+  path: '/',
+  component: Board, // Board will be rendered at /in
+});
 
 const EditorRoute = createRoute({
-  getParentRoute: () => authenticatedRoute,
+  getParentRoute: () => dashboardRoute,
   path: '/new',
-  component: Editor
+  component: Editor, // Editor will be rendered at /in/new
 });
 
 // Create the route tree
 const routeTree = rootRoute.addChildren([
   publicRoute.addChildren([loginRoute, registerRoute]),
-  authenticatedRoute.addChildren([dashboardRoute, EditorRoute]),
+  authenticatedRoute.addChildren([
+    dashboardRoute.addChildren([BoardRoute, EditorRoute]),
+  ]),
 ]);
 
 // Create the router
