@@ -3,18 +3,16 @@ import { useBlocks, useCommand } from '../../hooks';
 import { CommandMenu } from './CommandMenu';
 import { createBlock } from '../utils/blockUtils';
 import { BlockType } from '../../types/block.interface';
-import { HeaderBlock, ParagraphBlock } from './Blocks';
 
 export function Editor() {
   const { blocks, addBlock, updateBlock, deleteBlock } = useBlocks([
-    { type: 'header', content: 'Hey, How are you doing, buddy!' },
+    { type: 'header', content: '' },
   ]);
 
   const {
     isCommandMenuVisible,
     setIsCommandMenuVisible,
     commandFilter,
-    handleCommandSelect,
     setCommandFilter,
   } = useCommand(addBlock);
 
@@ -23,204 +21,187 @@ export function Editor() {
     null,
   );
 
-  // Get the cursor position in a contenteditable div
+  // 📌 Helper Functions: Cursor & Selection
   const getCursorPosition = (element: HTMLElement): number => {
-    const selection = window.getSelection(); // Get the selection, which is the cursor position
-    if (!selection || selection.rangeCount === 0) return 0; // Return 0 if there is no selection or range(which is the cursor position)
+    const selection = window.getSelection();
+    if (!selection || selection.rangeCount === 0) return 0;
 
-    const range = selection.getRangeAt(0); // Get the range of the selection
-    const preCaretRange = range.cloneRange(); // Clone the range, means copy the range
-    preCaretRange.selectNodeContents(element); // Select the node contents of the element
-    preCaretRange.setEnd(range.endContainer, range.endOffset); // Set the end of the range to the end of the selection
-    return preCaretRange.toString().length; // Return the length of the range
+    const range = selection.getRangeAt(0);
+    const preCaretRange = range.cloneRange();
+    preCaretRange.selectNodeContents(element);
+    preCaretRange.setEnd(range.endContainer, range.endOffset);
+    return preCaretRange.toString().length;
   };
 
-  // Spilit the content of a block at the cursor position
-  const spliteContentAtCursor = (element: HTMLElement): [string, string] => {
-    const cursorPosition = getCursorPosition(element); // Get the cursor position
-    const content = element.innerText; // Get the content of the element
-    return [content.slice(0, cursorPosition), content.slice(cursorPosition)]; // Return the content before and after the cursor position
+  const splitContentAtCursor = (element: HTMLElement): [string, string] => {
+    const cursorPosition = getCursorPosition(element);
+    const content = element.innerText;
+    return [content.slice(0, cursorPosition), content.slice(cursorPosition)];
   };
 
-  // Focus the first block when the editor loads
-  useEffect(() => {
-    if (editorRef.current) {
-      // firstBlockDiv is the first block in the editor, which is always a paragraph block
-      const firstBlockDiv = editorRef.current.querySelector(
-        '[contenteditable]',
-      ) as HTMLDivElement;
-      if (firstBlockDiv) {
-        firstBlockDiv.focus(); // Focus the first block
-        placeCaretAtEnd(firstBlockDiv); // Move the cursor to the end of the block
-      }
-    }
-  }, []);
-
-  // Helper function to place the caret at the end of a contenteditable div
   const placeCaretAtEnd = (element: HTMLElement) => {
     const range = document.createRange();
     const selection = window.getSelection();
     range.selectNodeContents(element);
-    range.collapse(false); // Collapse the range to the end
+    range.collapse(false);
     selection?.removeAllRanges();
     selection?.addRange(range);
   };
 
-  // Handle keydown events in the contenteditable div
+  // 📌 Lifecycle: Focus First Block on Load
+  useEffect(() => {
+    if (editorRef.current) {
+      const firstBlock = editorRef.current.querySelector(
+        '[contenteditable]',
+      ) as HTMLDivElement;
+      if (firstBlock) {
+        firstBlock.focus();
+        placeCaretAtEnd(firstBlock);
+      }
+    }
+  }, []);
+
+  // 📌 Handlers: Key Press Events
   const handleKeyDown = (
     e: React.KeyboardEvent<HTMLDivElement>,
     index: number,
   ) => {
-    const selection = window.getSelection();
-    const cursorPosition = selection?.anchorOffset || 0;
-    const cursorLine = selection?.anchorNode?.parentElement;
+    const currentBlockDiv = e.currentTarget;
+    const cursorPosition = getCursorPosition(currentBlockDiv);
+    const currentContent = currentBlockDiv.innerText;
 
-    // if the user presses backspace at the beginning of a block, merge it with the previous block and remove the current block
-    if (e.key === 'Backspace' && cursorPosition === 0) {
-      e.preventDefault(); // Prevent default behavior (e.g., navigate to the previous page)
+    // 🔹 Backspace at start of block (merge with previous)
+    if (e.key === 'Backspace') {
+      // If at the beginning or block is empty
+      if (cursorPosition === 0 || currentContent.trim() === '') {
+        // If it is not the first block
+        if (index > 0) {
+          e.preventDefault();
+          const previousBlock: BlockType = blocks[index - 1];
+          const currentBlock: BlockType = blocks[index];
 
-      if (index > 0) {
-        const block = blocks[index];
-        const previousBlock = blocks[index - 1];
-        const updatedBlock = {
-          ...previousBlock,
-          content: `${previousBlock.content}${block.content}`,
-        };
-        updateBlock(index - 1, updatedBlock);
-        // Remove the current block
-        deleteBlock(index);
+          // Merge the current block with the previous block
+          updateBlock(index - 1, {
+            ...previousBlock,
+            content:
+              (previousBlock.content ?? '') + (currentBlock.content ?? ''),
+          });
+          deleteBlock(index);
+          setFocusedBlockIndex(index - 1);
+        } else {
+          // Optional: if it's the first block, do default behavior
+        }
       }
     }
 
-    if (e.key === 'Enter') {
-      e.preventDefault(); // Prevent default behavior (new line)
+    // 🔹 Enter (new block logic)
+    else if (e.key === 'Enter') {
+      e.preventDefault();
       const blockDiv = e.currentTarget;
       const cursorPosition = getCursorPosition(blockDiv);
       const content = blockDiv.innerText;
 
-
-      // Case 1: Block is empty or cursor is at the end
-      if(content.length === 0 || cursorPosition === content.length){
-        const newBlock = createBlock('paragraph', "new paragraph block");
-        addBlock(newBlock, index + 1); // Insert the new block after the current block
-        setFocusedBlockIndex(index + 1); // Set the focus to the new block
-      }
-
-
-      // Case 2: Cursor is at the beginning
-      else if (cursorPosition === 0){
-        const newBlock = createBlock('paragraph', "new paragraph block");
-        addBlock(newBlock, index); // Insert the new block before the current block
-        setFocusedBlockIndex(index); // Set the focus to the new block
-      }  
-
-      // Case 3: Cursor is in the middle
-      else {
-        const [firstPart, secondPart] = spliteContentAtCursor(blockDiv);
-
-        // Update the current block with the first part
+      if (content.length === 0 || cursorPosition === content.length) {
+        // if (
+        addNewBlock('paragraph', index + 1);
+      } else if (cursorPosition === 0) {
+        addNewBlock('paragraph', index);
+      } else {
+        const [firstPart, secondPart] = splitContentAtCursor(blockDiv);
         updateBlock(index, { ...blocks[index], content: firstPart });
-
-        // create new block with the second part
-        const newBlock = createBlock('paragraph', secondPart);
-        addBlock(newBlock, index + 1); // Insert the new block after the current block
-        setFocusedBlockIndex(index + 1); // Set the focus to the new block
+        addNewBlock('paragraph', index + 1, secondPart);
       }
     }
 
-    if (
-      e.key === '/' &&
-      (cursorPosition === 0 ||
-        cursorLine?.textContent?.[cursorPosition - 1] === ' ')
-    ) {
-      e.preventDefault(); // Show command menu if "/" is pressed
+    // down arrow and up arrow to navigate between blocks
+    else if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      if (index < blocks.length - 1) {
+        setFocusedBlockIndex(index + 1);
+      }
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      if (index > 0) {
+        setFocusedBlockIndex(index - 1);
+      }
+    }
+
+    // 🔹 Slash (open command menu)
+    else if (e.key === '/') {
+      e.preventDefault();
+      alert('Slash key pressed');
       setIsCommandMenuVisible(true);
       setFocusedBlockIndex(index);
     }
   };
 
-  // Handle command selection
+  // 📌 Handlers: Input & Click Events
+  const handleInput = (index: number, e: React.FormEvent<HTMLDivElement>) => {
+    const content = e.currentTarget.innerText.trim();
+    updateBlock(index, { ...blocks[index], content });
+  };
+
+  const handleBlockClick = (index: number) => {
+    setFocusedBlockIndex(index);
+  };
+
   const handleCommandSelection = (type: string) => {
     if (focusedBlockIndex === null) return;
-
-    const newBlock = createBlock(type as BlockType['type'], 'Write here!!');
-    // Insert the new block after the focused block or at the start of the editor if no block is focused
-    addBlock(newBlock, focusedBlockIndex !== null ? focusedBlockIndex + 1 : 0);
-
-    // const newBlock = createBlock(type as BlockType['type'], 'Write here!!');
-    // addBlock(newBlock, focusedBlockIndex + 1); // Insert the new block after the focused block
-
-    // Hide the command menu
+    addNewBlock(type as BlockType['type'], focusedBlockIndex + 1);
     setIsCommandMenuVisible(false);
     setCommandFilter('');
     setFocusedBlockIndex(null);
   };
 
-  // Handle input changes in a block
-  const handleInput = (index: number, e: React.FormEvent<HTMLDivElement>) => {
-    const content = e.currentTarget.innerText;
-    console.log('The content is: ', content);
-    const updatedBlock = { ...blocks[index], content };
-    updateBlock(index, updatedBlock);
+  // 📌 Utility: Add New Block
+  const addNewBlock = (
+    type: BlockType['type'],
+    index: number,
+    content = 'Write here!!',
+  ) => {
+    const newBlock = createBlock(type, content);
+    addBlock(newBlock, index);
+    setFocusedBlockIndex(index);
   };
 
- // Focus the newly added block
- useEffect(() => {
-  if (focusedBlockIndex !== null && editorRef.current) {
-    setTimeout(() => {
-      const blockDivs = editorRef.current.querySelectorAll("[contenteditable]");
-      if (blockDivs[focusedBlockIndex]) {
-        const newBlockDiv = blockDivs[focusedBlockIndex] as HTMLDivElement;
-        newBlockDiv.focus();
-        placeCaretAtEnd(newBlockDiv);
-      }
-    }, 0);
-  }
-}, [blocks, focusedBlockIndex]);
-
-  const renderBlockContent = (block: BlockType) => {
-    switch (block.type) {
-      case 'header':
-        return <HeaderBlock {...block} />;
-      case 'paragraph':
-        return <ParagraphBlock {...block} />;
-      case 'quote':
-        return <blockquote>{block.content}</blockquote>;
-      default:
-        return <p>{block.content}</p>;
+  // 📌 Focus New Block When Added
+  useEffect(() => {
+    if (focusedBlockIndex !== null && editorRef.current) {
+      setTimeout(() => {
+        const blockDivs =
+          editorRef.current.querySelectorAll('[contenteditable]');
+        if (blockDivs[focusedBlockIndex]) {
+          const newBlockDiv = blockDivs[focusedBlockIndex] as HTMLDivElement;
+          newBlockDiv.focus();
+          placeCaretAtEnd(newBlockDiv);
+        }
+      }, 0);
     }
-  };
+  }, [blocks, focusedBlockIndex]);
 
   return (
-    <div ref={editorRef} className="bg-dark-200">
-      {/* Render blocks */}
-      {blocks.map((block, index) => {
-        const renderedContent = renderBlockContent(block);
-        console.log(renderedContent);
-        return (
-          <div
-            key={index}
-            aria-label={`Editable block ${index}`}
-            contentEditable
-            dangerouslySetInnerHTML={{ __html: block.content }}
-            onKeyDown={(e) => handleKeyDown(e, index)}
-            onBlur={(e) => handleInput(index, e)}
-            style={{
-              color: 'gray',
-              textAlign: 'left',
-              fontSize: `${block.type === 'header' ? 44 : 16}px`,
-              padding: '8px',
-              outline: 'none',
-              border: 'none',
-              width: '100%',
-              overflowWrap: 'break-word',
-            }}
-            dir="ltr"
-          ></div>
-        );
-      })}
+    <div ref={editorRef} className="bg-dark-base">
+      {/* 📌 Render Blocks */}
+      {blocks.map((block, index) => (
+        <div
+          key={index}
+          aria-label={`Editable block ${index}`}
+          contentEditable
+          onClick={() => handleBlockClick(index)}
+          onKeyDown={(e) => handleKeyDown(e, index)}
+          onBlur={(e) => handleInput(index, e)}
+          className={`relative w-full outline-none border-none font-bold break-words
+            ${block.type === 'header' ? 'text-dark-900 text-4xl' : 'text-dark-500 text-base'}
+            before:absolute before:top-0 before:left-0 before:text-gray-500 before:opacity-50
+            before:pointer-events-none empty:before:content-[attr(data-placeholder)]
+          `}
+          data-placeholder={
+            block.type === 'header' ? 'Heading...' : 'Write something...'
+          }
+        ></div>
+      ))}
 
-      {/* Command menu */}
+      {/* 📌 Command Menu */}
       {isCommandMenuVisible && (
         <CommandMenu
           filter={commandFilter}

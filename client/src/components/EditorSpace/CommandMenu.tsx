@@ -26,7 +26,7 @@ export function CommandMenu({ filter, onFilterChange, onSelect }: CommandMenuPro
 
 
   return (
-    <div className="command-menu">
+    <div className="command-menu bg-dark-700 text-dark-100">
       <div className="command-list">
         {filteredBlocks.map((block) => (
           <div

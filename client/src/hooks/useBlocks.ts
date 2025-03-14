@@ -3,10 +3,7 @@ import { BlockType } from '../types/block.interface';
 import { createBlock } from '../components/utils/blockUtils';
 
 // Hook to manage block state
-export function useBlocks(initialBlocks: BlockType[] = [{
-  type: "paragraph",
-  content: "Start typing... and type '/' for commands",
-}]) {
+export function useBlocks(initialBlocks: BlockType[] = []) {
   const [blocks, setBlocks] = useState<BlockType[]>(initialBlocks);
 
   // Add a new block to the list
