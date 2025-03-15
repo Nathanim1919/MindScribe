@@ -32,6 +32,11 @@ export function useBlocks(initialBlocks: BlockType[] = []) {
     setBlocks(blocks.filter((_, i) => i !== index));
   };
 
+
+  const updateBlocksWithNewSetOfBlocks = (newBlocks: BlockType[]) => {
+    setBlocks(newBlocks);
+  };
+
   // Update a block by index
  const updateBlock = (index: number, updatedBlock: BlockType) => {
   setBlocks((prevBlocks) => {
@@ -55,5 +60,6 @@ export function useBlocks(initialBlocks: BlockType[] = []) {
     deleteBlock,
     updateBlock,
     reorderBlocks,
+    updateBlocksWithNewSetOfBlocks
   };
 }

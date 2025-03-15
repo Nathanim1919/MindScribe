@@ -5,7 +5,7 @@ import { createBlock } from '../utils/blockUtils';
 import { BlockType } from '../../types/block.interface';
 
 export function Editor() {
-  const { blocks, addBlock, updateBlock, deleteBlock } = useBlocks([
+  const { blocks, addBlock, updateBlock, deleteBlock, updateBlocksWithNewSetOfBlocks } = useBlocks([
     { type: 'header', content: '' },
   ]);
 
@@ -20,6 +20,8 @@ export function Editor() {
   const [focusedBlockIndex, setFocusedBlockIndex] = useState<number | null>(
     null,
   );
+  const [selectedBlocks, setSelectedBlocks] = useState<Set<number>>(new Set());
+  const [copiedBlocks, setCopiedBlocks] = useState<BlockType[]>([]);
 
   // 📌 Helper Functions: Cursor & Selection
   const getCursorPosition = (element: HTMLElement): number => {
@@ -36,7 +38,7 @@ export function Editor() {
   const splitContentAtCursor = (element: HTMLElement): [string, string] => {
     const cursorPosition = getCursorPosition(element);
     const content = element.innerText;
-    console.log("Splitting content:", content, "at position:", cursorPosition); // Debugging
+    console.log('Splitting content:', content, 'at position:', cursorPosition); // Debugging
     return [content.slice(0, cursorPosition), content.slice(cursorPosition)];
   };
 
@@ -192,6 +194,10 @@ export function Editor() {
     setFocusedBlockIndex(index);
   };
 
+  // const introBox = () => {
+  //   const box = 'heading /heading and text /text';
+  // };
+
   // 📌 Focus New Block When Added
   useEffect(() => {
     if (focusedBlockIndex !== null && editorRef.current) {
@@ -205,7 +211,7 @@ export function Editor() {
         }
       }, 0);
     }
-  }, [blocks, focusedBlockIndex]);
+  }, [blocks]);
 
   const activeBlockInformation = (index: number) => {
     const block = blocks[index];
@@ -223,23 +229,82 @@ export function Editor() {
     return '';
   };
 
+  const handleBlockSelection = (index: number) => {
+    const newSelectedBlocks = new Set(selectedBlocks);
+    if (newSelectedBlocks.has(index)) {
+      newSelectedBlocks.delete(index); // Deselect if already selected
+    } else {
+      newSelectedBlocks.add(index); // Select if not already selected
+    }
+    setSelectedBlocks(newSelectedBlocks);
+  };
+
+  const handleCopy = (e: React.ClipboardEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    if (selectedBlocks.size > 0) {
+      const copied = Array.from(selectedBlocks).map((index) => blocks[index]);
+      setCopiedBlocks(copied);
+      console.log('Copied blocks:', copied);
+    }
+  };
+
+  const handleCut = (e: React.ClipboardEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    if (selectedBlocks.size > 0) {
+      const copied = Array.from(selectedBlocks).map((index) => blocks[index]);
+      setCopiedBlocks(copied);
+
+      // Remove the selected blocks
+      const newBlocks = blocks.filter((_, index) => !selectedBlocks.has(index));
+      updateBlocksWithNewSetOfBlocks(newBlocks);
+
+      setSelectedBlocks(new Set()); // Clear selection
+      console.log('Cut blocks:', copied);
+    }
+  };
+
+  const handlePaste = (e: React.ClipboardEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    if (copiedBlocks.length > 0) {
+      const pasteIndex =
+        focusedBlockIndex !== null ? focusedBlockIndex + 1 : blocks.length;
+      const newBlocks = [...blocks];
+      newBlocks.splice(pasteIndex, 0, ...copiedBlocks); // Insert copied blocks
+      updateBlocksWithNewSetOfBlocks(newBlocks);
+      console.log('Pasted blocks at index:', pasteIndex);
+    }
+  };
+
   return (
-    <div ref={editorRef} className="bg-dark-base">
+    <div
+      onCopy={handleCopy}
+      onCut={handleCut}
+      onPaste={handlePaste}
+      ref={editorRef}
+      className="bg-light-50 dark:bg-dark-50 h-[90vh] overflow-hidden overflow-y-auto mt-2 rounded-md border border-light-200 dark:border-dark-100"
+    >
       {/* 📌 Render Blocks */}
-      {blocks.map((block, index) => (
-        <div
-          key={index}
-          aria-label={`Editable block ${index}`}
-          contentEditable
-          onClick={() => handleBlockClick(index)}
-          onKeyDown={(e) => handleKeyDown(e, index)}
-          onInput={(e) => handleInput(index, e)}
-          className={`relative w-full outline-none border-none break-words font-sans
+      <div className="relative w-[60%] m-auto">
+        {blocks.map((block, index) => (
+          <div
+            key={index}
+            data-block-index={index} // Add this attribute
+            aria-label={`Editable block ${index}`}
+            contentEditable
+            onClick={() => {handleBlockClick(index); handleBlockSelection(index);}}
+            onKeyDown={(e) => handleKeyDown(e, index)}
+            onInput={(e) => handleInput(index, e)}
+            className={`relative w-full outline-none border-none break-words font-sans
          ${
            block.type === 'header'
-             ? 'text-dark-900 text-4xl py-2'
-             : 'text-dark-700 text-[18px] leading-[1.2em]'
+             ? 'text-light-950 dark:text-dark-900 text-4xl py-2 before:text-center'
+             : 'text-light-600 dark:text-dark-500 text-[18px] leading-[1.2em]'
          }
+         ${
+          selectedBlocks.has(index)
+            ? 'border-2 border-blue-500' // Add a border for selected blocks
+            : ''
+        }
          before:absolute before:top-0 before:left-0 before:text-gray-500 before:opacity-50 
          before:pointer-events-none before:content-[attr(data-placeholder)]
          ${
@@ -250,18 +315,20 @@ export function Editor() {
              : 'before:hidden focus:before:block'
          }
        `}
-          data-placeholder={activeBlockInformation(index)}
-        ></div>
-      ))}
+            data-placeholder={activeBlockInformation(index)}
+          ></div>
+        ))}
 
-      {/* 📌 Command Menu */}
-      {isCommandMenuVisible && (
-        <CommandMenu
-          filter={commandFilter}
-          onFilterChange={setCommandFilter}
-          onSelect={handleCommandSelection}
-        />
-      )}
+        {/* 📌 Command Menu */}
+        {isCommandMenuVisible && (
+          <CommandMenu
+            filter={commandFilter}
+            onFilterChange={setCommandFilter}
+            onSelect={handleCommandSelection}
+            position={focusedBlockIndex !== null ? focusedBlockIndex : 0}
+          />
+        )}
+      </div>
     </div>
   );
 }
