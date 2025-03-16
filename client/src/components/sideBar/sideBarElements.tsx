@@ -14,7 +14,7 @@ export const TopsidebarElements: SidebarElementPropType[] = [
   {
     title: 'Profile',
     icon: <FiUser />,
-    redirectTo: '/profile',
+    redirectTo: '/in/home/profile',
   },
   {
     title: 'Entries',

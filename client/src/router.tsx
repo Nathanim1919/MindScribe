@@ -13,6 +13,7 @@ import { Editor } from './components/EditorSpace/Editor';
 import { Board } from './components/dashboard/board';
 import { RecentEntries } from './components/dashboard/RecentEntries';
 import { EmptyCollectionBoard } from './components/dashboard/EmptyCollection';
+import { Profile } from './components/dashboard/Profile';
 
 // Create a root route
 const rootRoute = createRootRoute({
@@ -86,11 +87,18 @@ const AllEntriesPage = createRoute({
   component: RecentEntries
 })
 
+
+const ProfilePage = createRoute({
+  getParentRoute: () => dashboardRoute,
+  path:'/profile',
+  component: Profile
+})
+
 // Create the route tree
 const routeTree = rootRoute.addChildren([
   publicRoute.addChildren([loginRoute, registerRoute]),
   authenticatedRoute.addChildren([
-    dashboardRoute.addChildren([BoardRoute, EditorRoute, AllEntriesPage]),
+    dashboardRoute.addChildren([BoardRoute, EditorRoute, AllEntriesPage, ProfilePage]),
   ]),
 ]);
 
