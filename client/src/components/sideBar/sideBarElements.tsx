@@ -9,7 +9,7 @@ export const TopsidebarElements: SidebarElementPropType[] = [
   {
     title: 'Dashboard',
     icon: <GoHome />,
-    redirectTo: '/in/board',
+    redirectTo: '/in/home',
   },
   {
     title: 'Profile',
@@ -19,7 +19,7 @@ export const TopsidebarElements: SidebarElementPropType[] = [
   {
     title: 'Entries',
     icon: <FaBook />,
-    redirectTo: '/entries',
+    redirectTo: '/in/home/entries',
   },
   {
     title: 'Chat',

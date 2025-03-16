@@ -1,4 +1,7 @@
-import React, { useMemo, useEffect, useRef, useState } from "react";
+import { useMemo, useRef, useState, useLayoutEffect } from "react";
+import { PiTextHBold } from "react-icons/pi";
+import { RiText } from "react-icons/ri";
+
 
 interface CommandMenuProps {
   filter: string;
@@ -8,12 +11,8 @@ interface CommandMenuProps {
 }
 
 const blockTypes = [
-  { type: "header", label: "Header" },
-  { type: "paragraph", label: "Paragraph" },
-  { type: "quote", label: "Quote" },
-  { type: "list", label: "List" },
-  { type: "image", label: "Image" },
-  { type: "divider", label: "Divider" },
+  { type: "header", label: "Heading" },
+  { type: "paragraph", label: "Text" },
 ];
 
 export function CommandMenu({
@@ -29,17 +28,17 @@ export function CommandMenu({
   const commandMenuRef = useRef<HTMLDivElement>(null);
   console.log("The current passed Focused Block Index is: ", position);
 
-  // Calculate the position of the block
-  useEffect(() => {
+  // Replace useEffect with useLayoutEffect
+  useLayoutEffect(() => {
     if (commandMenuRef.current) {
       const blockElement = document.querySelector(
         `[data-block-index="${position}"]`
       ) as HTMLElement;
-
+  
       if (blockElement) {
         const blockRect = blockElement.getBoundingClientRect();
         const menuHeight = commandMenuRef.current.offsetHeight;
-
+  
         // Position the menu below the block
         setMenuPosition({
           top: blockRect.bottom + window.scrollY, // Add a small offset
@@ -47,8 +46,6 @@ export function CommandMenu({
         });
       }
     }
-
-    console.log(menuPosition);
   }, [position]);
 
   // Filter block types based on the filter input
@@ -63,19 +60,21 @@ export function CommandMenu({
   return (
     <div
       ref={commandMenuRef}
-      className="command-menu bg-dark-100 border border-dark-200 rounded-sm text-light-600 max-w-[100px] absolute z-50"
+      className="command-menu bg-dark-100 border border-dark-200 rounded-sm text-light-600 max-w-full p-2 absolute z-50"
       style={{
         top: `${menuPosition.top}px`,
         left: `${menuPosition.left}px`,
       }}
     >
-      <div className="command-list">
+      <div className="command-list grid gap-3">
+        <span className="">Basic Blocks</span>
         {filteredBlocks.map((block) => (
           <div
             key={block.type}
-            className="command-item p-1 hover:bg-dark-50 cursor-pointer"
+            className="command-item  flex text-[20px] items-center gap-2 rounded-md hover:bg-dark-200 text-light-100 cursor-pointer"
             onClick={() => onSelect(block.type)}
           >
+            {block.type === "header" ? <PiTextHBold className="text-light-400" /> : <RiText className="text-light-400" />}
             {block.label}
           </div>
         ))}

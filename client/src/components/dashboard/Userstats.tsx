@@ -1,6 +1,6 @@
 export const Userstats: React.FC = () => {
   return (
-    <div className="py-6 grid gap-6">
+    <div className="p-6 grid gap-6 mt-2 bg-light-base border dark:border-dark-200 border-light-300 dark:bg-dark-50 rounded-2xl">
       <div className="flex flex-col gap-2">
         <h2 className="font-bold text-2xl dark:text-dark-600">AI Summary</h2>
         <p className="text-md text-gray-600 dark:text-dark-400">

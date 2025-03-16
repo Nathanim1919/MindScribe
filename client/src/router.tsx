@@ -11,6 +11,8 @@ import { AuthenticatedLayout } from './layout/PrivateLayout';
 import { DashboardPage } from './components/dashboard/dashboardPage';
 import { Editor } from './components/EditorSpace/Editor';
 import { Board } from './components/dashboard/board';
+import { RecentEntries } from './components/dashboard/RecentEntries';
+import { EmptyCollectionBoard } from './components/dashboard/EmptyCollection';
 
 // Create a root route
 const rootRoute = createRootRoute({
@@ -61,7 +63,7 @@ const authenticatedRoute = createRoute({
 
 const dashboardRoute = createRoute({
   getParentRoute: () => authenticatedRoute,
-  path: '/board',
+  path: '/home',
   component: DashboardPage,
 });
 
@@ -77,11 +79,18 @@ const EditorRoute = createRoute({
   component: Editor, // Editor will be rendered at /in/new
 });
 
+
+const AllEntriesPage = createRoute({
+  getParentRoute: () => dashboardRoute,
+  path:'/entries',
+  component: RecentEntries
+})
+
 // Create the route tree
 const routeTree = rootRoute.addChildren([
   publicRoute.addChildren([loginRoute, registerRoute]),
   authenticatedRoute.addChildren([
-    dashboardRoute.addChildren([BoardRoute, EditorRoute]),
+    dashboardRoute.addChildren([BoardRoute, EditorRoute, AllEntriesPage]),
   ]),
 ]);
 
