@@ -44,7 +44,6 @@ export function Editor() {
     }
   }, []);
 
-
   // 📌 Handlers: Key Press Events
   const handleKeyDown = (
     e: React.KeyboardEvent<HTMLDivElement>,
@@ -61,7 +60,6 @@ export function Editor() {
     });
   };
 
-
   // 📌 Handlers: Input & Click Events
   const handleInput = (index: number, e: React.FormEvent<HTMLDivElement>) => {
     setIsCommandMenuVisible(false);
@@ -70,21 +68,19 @@ export function Editor() {
     console.log(blocks);
   };
 
-
   const handleBlockClick = (index: number) => {
     setFocusedBlockIndex(index);
     setIsCommandMenuVisible(false);
   };
 
-
   const handleCommandSelection = (type: string) => {
+
     if (focusedBlockIndex === null) return;
     addNewBlock(type as BlockType['type'], focusedBlockIndex);
     setIsCommandMenuVisible(false);
     setCommandFilter('');
     setFocusedBlockIndex(null);
   };
-
 
   // 📌 Utility: Add New Block
   const addNewBlock = (
@@ -96,7 +92,6 @@ export function Editor() {
     addBlock(newBlock, index);
     setFocusedBlockIndex(index);
   };
-
 
   // 📌 Focus New Block When Added
   useEffect(() => {
@@ -113,7 +108,6 @@ export function Editor() {
     }
   }, [focusedBlockIndex]);
 
-
   const activeBlockInformation = (index: number) => {
     const block = blocks[index];
 
@@ -129,7 +123,6 @@ export function Editor() {
 
     return '';
   };
-
 
   return (
     <div
