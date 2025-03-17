@@ -5,73 +5,73 @@ import { EmptyCollectionBoard } from './EmptyCollection';
 import { Link } from '@tanstack/react-router';
 
 export const RecentEntries: React.FC = () => {
-  const diaries: any[] = [
+  const diaries = [
     {
       id: 1,
-      title: 'The day i started to be mature',
+      title: "A New Beginning",
       content:
-      'This was the fucking day i was lived for a while, This was the fucking day i was lived for a while, This was the fucking day i was lived for a while, This was the fucking day i was lived for a while',
-
-      date: 'jan 25, 2025',
-      mood: 'Happy',
+        "Today, I finally decided to take a leap of faith. I resigned from my job to start my own business. It’s scary, but I know this is what I want. Here’s to new beginnings!",
+      date: "March 10, 2025",
+      mood: "Excited",
     },
     {
-      id: 1,
-      title: 'The day i started to be mature',
+      id: 2,
+      title: "A Rainy Afternoon",
       content:
-        'This was the fucking day i was lived for a while, This was the fucking day i was lived for a while',
-      date: 'jan 25, 2025',
-      mood: 'Happy',
+        "It rained all day. I sat by the window with a cup of coffee, watching the raindrops race down the glass. It was peaceful. I needed this kind of stillness.",
+      date: "March 12, 2025",
+      mood: "Calm",
     },
     {
-      id: 1,
-      title: 'The day i started to be mature',
+      id: 3,
+      title: "A Tough Day at Work",
       content:
-        'This was the fucking day i was lived for a while, This was the fucking day i was lived for a while',
-      date: 'jan 25, 2025',
-      mood: 'Happy',
+        "Work was exhausting today. Deadlines are piling up, and I feel like I’m drowning. I need to find a better work-life balance. Maybe a short trip this weekend?",
+      date: "March 14, 2025",
+      mood: "Stressed",
     },
     {
-      id: 1,
-      title: 'The day i started to be mature',
+      id: 4,
+      title: "A Small Victory",
       content:
-        'This was the fucking day i was lived for a while, This was the fucking day i was lived for a while',
-      date: 'jan 25, 2025',
-      mood: 'Happy',
+        "I finally completed the project I had been struggling with for weeks. It feels amazing to see everything come together. Hard work does pay off!",
+      date: "March 16, 2025",
+      mood: "Proud",
     },
     {
-      id: 1,
-      title: 'The day i started to be mature',
+      id: 5,
+      title: "A Walk Down Memory Lane",
       content:
-        'This was the fucking day i was lived for a while, This was the fucking day i was lived for a while',
-      date: 'jan 25, 2025',
-      mood: 'Happy',
+        "I visited my childhood home today. It’s strange how everything feels smaller now. Nostalgia hit me hard, but it was a beautiful trip down memory lane.",
+      date: "March 18, 2025",
+      mood: "Nostalgic",
     },
     {
-      id: 1,
-      title: 'The day i started to be mature',
+      id: 6,
+      title: "A Heartfelt Conversation",
       content:
-        'This was the fucking day i was lived for a while, This was the fucking day i was lived for a while',
-      date: 'jan 25, 2025',
-      mood: 'Happy',
+        "Had a deep conversation with an old friend. We talked about life, struggles, and dreams. It reminded me how important genuine connections are.",
+      date: "March 20, 2025",
+      mood: "Grateful",
     },
     {
-      id: 1,
-      title: 'The day i started to be mature',
+      id: 7,
+      title: "A Lazy Sunday",
       content:
-        'This was the fucking day i was lived for a while, This was the fucking day i was lived for a while, This was the fucking day i was lived for a while, This was the fucking day i was lived for a while',
-      date: 'jan 25, 2025',
-      mood: 'Happy',
+        "Did absolutely nothing today, and it felt great. Sometimes, you just need a break to recharge.",
+      date: "March 23, 2025",
+      mood: "Relaxed",
     },
     {
-      id: 1,
-      title: 'The day i started to be mature',
+      id: 8,
+      title: "A Lesson in Patience",
       content:
-        'This was the fucking day i was lived for a while, This was the fucking day i was lived for a while',
-      date: 'jan 25, 2025',
-      mood: 'Happy',
+        "Life has been testing my patience lately. I’m learning that some things take time, and rushing won’t help. Trying to embrace the process.",
+      date: "March 25, 2025",
+      mood: "Reflective",
     },
   ];
+  
   return (
     <div>
       {diaries.length === 0 ? (
