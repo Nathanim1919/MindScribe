@@ -11,7 +11,7 @@ export const UserMenu: React.FC<UserMenuProps> = ({ display }) => {
   return (
     <div
       role="menu"
-      className="absolute top-14 right-4 shadow-lg rounded-md flex flex-col bg-light-50 dark:bg-dark-base border dark:border-dark-100 border-light-200"
+      className="absolute top-14 z-10 right-4 shadow-lg rounded-md flex flex-col bg-light-50 dark:bg-dark-base border dark:border-dark-100 border-light-200"
     >
       {UserMenuElements.map(({ title, icon, to, onClick }) => (
         <LinkElement

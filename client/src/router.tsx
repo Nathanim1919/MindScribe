@@ -14,6 +14,7 @@ import { Board } from './components/dashboard/board';
 import { RecentEntries } from './components/dashboard/RecentEntries';
 import { EmptyCollectionBoard } from './components/dashboard/EmptyCollection';
 import { Profile } from './components/dashboard/Profile';
+import { ProfileSkeleton } from './components/LoadingSkeletons/UserProfilePageSkeleton';
 
 // Create a root route
 const rootRoute = createRootRoute({
@@ -91,7 +92,8 @@ const AllEntriesPage = createRoute({
 const ProfilePage = createRoute({
   getParentRoute: () => dashboardRoute,
   path:'/profile',
-  component: Profile
+  // component: Profile
+  component:ProfileSkeleton
 })
 
 // Create the route tree

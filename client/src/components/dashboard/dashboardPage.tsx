@@ -1,6 +1,8 @@
 import { Outlet } from '@tanstack/react-router';
 import { Aipromptcard } from './Aipromptcard';
 import { Userstats } from './Userstats';
+import { AipromptcardSkeleton } from '../LoadingSkeletons/AiPromptCardSkeleton';
+import { AiSummerySkeleton } from '../LoadingSkeletons/AiSummerySkeleton';
 
 export const DashboardPage: React.FC = () => {
   return (
@@ -9,8 +11,10 @@ export const DashboardPage: React.FC = () => {
         <Outlet/>
       </div>
       <div className="h-full p-2">
-        <Aipromptcard />
-        <Userstats />
+        <AipromptcardSkeleton/>
+        <AiSummerySkeleton/>
+        {/* <Aipromptcard /> */}
+        {/* <Userstats /> */}
       </div>
     </div>
   );

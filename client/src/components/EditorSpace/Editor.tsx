@@ -7,6 +7,7 @@ import { Block } from './Block';
 import { handleCopy, handleCut, handlePaste } from '../utils/selectionUtils';
 import { handleKeyPress } from '../utils/keyPressHandlers';
 import { placeCaretAtEnd } from '../utils/cursorUtils';
+import { HiOutlineCalendarDateRange } from "react-icons/hi2";
 
 export function Editor() {
   const {
@@ -76,7 +77,11 @@ export function Editor() {
   const handleCommandSelection = (type: string) => {
 
     if (focusedBlockIndex === null) return;
-    addNewBlock(type as BlockType['type'], focusedBlockIndex);
+    if (type === 'header'){
+      addNewBlock(type as BlockType['type'], focusedBlockIndex + 3);
+    } else {
+      addNewBlock(type as BlockType['type'], focusedBlockIndex);
+    }
     setIsCommandMenuVisible(false);
     setCommandFilter('');
     setFocusedBlockIndex(null);
@@ -150,7 +155,7 @@ export function Editor() {
       className="bg-light-50 dark:bg-dark-50 h-[90vh] overflow-hidden overflow-y-auto mt-2 rounded-md border border-light-200 dark:border-dark-100"
     >
       <div className="sticky top-0 p-4 flex items-center justify-between text-light-500 dark:text-dark-500">
-        <span>Jan 25, 2025</span>
+        <span className='flex items-center gap-1 font-extralight text-[13px]'><HiOutlineCalendarDateRange/> Jan 25, 2025</span>
         <span>Save</span>
       </div>
       {/* 📌 Render Blocks */}
