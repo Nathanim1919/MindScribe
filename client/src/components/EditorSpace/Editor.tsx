@@ -28,6 +28,7 @@ export function Editor() {
   const editorRef = useRef<HTMLDivElement>(null);
   const [selectedBlocks, setSelectedBlocks] = useState<Set<number>>(new Set());
   const [copiedBlocks, setCopiedBlocks] = useState<BlockType[]>([]);
+  const [isFocused, setIsFocused] = useState(false); // Track focus state
   const [focusedBlockIndex, setFocusedBlockIndex] = useState<number | null>(
     null,
   );
@@ -61,11 +62,49 @@ export function Editor() {
     });
   };
 
+
+  // Save the cursor position before updating the content
+  const saveCursorPosition = () => {
+    const selection = window.getSelection();
+    if (selection.rangeCount > 0) {
+      const range = selection.getRangeAt(0);
+      return range.endContainer;
+    }
+    return null;
+  };
+
+  // Set the cursor position after updating the content
+  const setCursorToEnd = (node) => {
+    const selection = window.getSelection();
+    const range = document.createRange();
+    range.selectNodeContents(node);
+    range.collapse(false); // Move cursor to the end
+    selection.removeAllRanges();
+    selection.addRange(range);
+  };
+
+   // Focus the block programmatically
+   const focusEditor = () => {
+    if (editorRef.current) {
+      editorRef.current.focus(); // Focus the editor block
+    }
+  };
+
   // 📌 Handlers: Input & Click Events
   const handleInput = (index: number, e: React.FormEvent<HTMLDivElement>) => {
+    const cursorPosition = saveCursorPosition();
     setIsCommandMenuVisible(false);
     const content = e.currentTarget.innerText.trim();
     updateBlock(index, { ...blocks[index], content });
+     // After content update, set the cursor to the end and maintain focus
+     setTimeout(() => {
+      if (editorRef.current) {
+        setCursorToEnd(editorRef.current); // Move cursor to the end
+        if (!isFocused) {
+          focusEditor(); // Ensure block is focused
+        }
+      }
+    }, 0);
   };
 
   const handleBlockClick = (index: number) => {

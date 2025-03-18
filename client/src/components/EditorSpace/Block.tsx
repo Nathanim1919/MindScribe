@@ -27,6 +27,11 @@ export function Block({
   
   return (
     <div
+    style={{
+      direction: 'ltr',              // Forces LTR direction
+      textAlign: 'left',             // Align text to the left
+      unicodeBidi: 'plaintext',      // Prevent any inherent RTL from being applied
+    }}
       data-block-index={index}
       aria-label={`Editable block ${index}`}
       dangerouslySetInnerHTML={{ __html: block.content }}
@@ -34,6 +39,7 @@ export function Block({
       onClick={onClick}
       onKeyDown={onKeyDown}
       onInput={onInput}
+      dir="ltr"  // 💡 This forces LTR direction
       className={`relative before:block w-full outline-none border-none break-words font-sans
         ${
           block.type === 'header'

@@ -20,7 +20,7 @@ export const EmptyCollectionBoard: React.FC = () => {
           <EmptyCardSkeleton />
         </div>
       </div>
-      <div className="flex backdrop-blur-2xl flex-col gap-6 items-center relative z-1000">
+      <div className="flex bg-gradient-to-t dark:from-dark-base from-light-100 to-transparent flex-col gap-6 items-center relative z-1000">
         <div className="flex flex-col items-center gap">
           <h1 className="text-heading-main dark:text-dark-500">
             Welcome to{' '}
