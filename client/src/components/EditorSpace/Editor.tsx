@@ -15,8 +15,8 @@ export function Editor() {
     addBlock,
     updateBlock,
     deleteBlock,
-    updateBlocksWithNewSetOfBlocks,
-  } = useBlocks([{ type: 'header', content: '' }]);
+    // updateBlocksWithNewSetOfBlocks,
+  } = useBlocks([{ type: 'header', content: 'Header' }, { type: 'paragraph', content: 'Paragraph' }, { type: 'paragraph', content: '' },{ type: 'paragraph', content: 'new apapapap' }]);
 
   const {
     isCommandMenuVisible,
@@ -66,7 +66,6 @@ export function Editor() {
     setIsCommandMenuVisible(false);
     const content = e.currentTarget.innerText.trim();
     updateBlock(index, { ...blocks[index], content });
-    console.log(blocks);
   };
 
   const handleBlockClick = (index: number) => {
@@ -113,6 +112,11 @@ export function Editor() {
     }
   }, [focusedBlockIndex]);
 
+  useEffect(() => {
+    console.log("🔥 Blocks updated in UI:", blocks);
+  }, [blocks]);
+  
+
   const activeBlockInformation = (index: number) => {
     const block = blocks[index];
 
@@ -131,26 +135,26 @@ export function Editor() {
 
   return (
     <div
-      onCopy={(e) => handleCopy(e, selectedBlocks, blocks, setCopiedBlocks)}
-      onCut={(e) =>
-        handleCut(
-          e,
-          selectedBlocks,
-          blocks,
-          setCopiedBlocks,
-          updateBlocksWithNewSetOfBlocks,
-          setSelectedBlocks,
-        )
-      }
-      onPaste={(e) =>
-        handlePaste(
-          e,
-          copiedBlocks,
-          focusedBlockIndex,
-          blocks,
-          updateBlocksWithNewSetOfBlocks,
-        )
-      }
+      // onCopy={(e) => handleCopy(e, selectedBlocks, blocks, setCopiedBlocks)}
+      // onCut={(e) =>
+      //   handleCut(
+      //     e,
+      //     selectedBlocks,
+      //     blocks,
+      //     setCopiedBlocks,
+          // updateBlocksWithNewSetOfBlocks,
+      //     setSelectedBlocks,
+      //   )
+      // }
+      // onPaste={(e) =>
+      //   handlePaste(
+      //     e,
+      //     copiedBlocks,
+      //     focusedBlockIndex,
+      //     blocks,
+          // updateBlocksWithNewSetOfBlocks,
+      //   )
+      // }
       ref={editorRef}
       className="bg-light-50 dark:bg-dark-50 h-[90vh] overflow-hidden overflow-y-auto mt-2 rounded-md border border-light-200 dark:border-dark-100"
     >
@@ -164,7 +168,7 @@ export function Editor() {
           <Block
             key={index}
             index={index}
-            block={block}
+            block={{ ...block }}  // Force new reference
             isSelected={selectedBlocks.has(index)}
             onKeyDown={(e) => handleKeyDown(e, index)}
             onClick={() => handleBlockClick(index)}

@@ -14,8 +14,19 @@ export const splitContentAtCursor = (
 ): [string, string] => {
   const cursorPosition = getCursorPosition(element);
   const content = element.innerText;
-  return [content.slice(0, cursorPosition), content.slice(cursorPosition)];
+  
+  console.log("Before Split - Content: ", content);
+  console.log("Before Split - Cursor Position: ", cursorPosition);
+  
+  const beforeCursor = content.slice(0, cursorPosition);
+  const afterCursor = content.slice(cursorPosition);
+  
+  console.log("After Split - Before Cursor: ", beforeCursor);
+  console.log("After Split - After Cursor: ", afterCursor);
+  
+  return [beforeCursor, afterCursor];
 };
+
 
 export const placeCaretAtEnd = (element: HTMLElement) => {
   const range = document.createRange();

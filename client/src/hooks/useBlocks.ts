@@ -1,61 +1,29 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { BlockType } from '../types/block.interface';
 import { createBlock } from '../components/utils/blockUtils';
 
 // Hook to manage block state
-export function useBlocks(
-  initialBlocks: BlockType[] = [
-    { type: 'header', content: 'new `blcok' },
-
-    { type: 'paragraph', content: 'new papa' },
-
-    { type: 'paragraph', content: '' },
-
-    { type: 'paragraph', content: '' },
-
-    { type: 'paragraph', content: '' },
-
-    { type: 'paragraph', content: '' },
-
-    { type: 'paragraph', content: '' },
-
-    { type: 'paragraph', content: '' },
-
-    { type: 'paragraph', content: '' },
-
-    { type: 'paragraph', content: '' },
-
-    { type: 'paragraph', content: '' },
-
-    { type: 'paragraph', content: '' },
-
-    { type: 'paragraph', content: '' },
-
-    { type: 'paragraph', content: 'new para 1' },
-  ],
-) {
+export function useBlocks(initialBlocks: BlockType[] = []) {
   const [blocks, setBlocks] = useState<BlockType[]>(initialBlocks);
 
   // Add a new block to the list
   const addBlock = (block: BlockType, index?: number) => {
-    const { type, content, ...additionalProps } = block;
-    console.log(type, content, additionalProps);
-    const newBlock: BlockType = createBlock(block.type, content);
+    const newBlock: BlockType = createBlock(block.type);
+    console.log("🚀 Adding block:", newBlock);
 
     if (index !== undefined) {
-      console.log('Index is: ', index);
       if (index < 0 || index > blocks.length) {
         console.error('Invalid index:', index);
         return;
       }
+      console.log("🚀 Inserting block at index:", index);
+      console.log("🚀 Before insert:", blocks);
+    
       const newBlocks = [...blocks]; // Copy the blocks array
       newBlocks.splice(index, 0, newBlock); // Insert the new block at the specified index
-      console.log('Blocks after adding:', newBlocks); // Debugging
       setBlocks(newBlocks);
     } else {
-      console.log('Index is not defined, appending to the end');
       const newBlocks = [...blocks, newBlock]; // Append to the end
-      console.log('Blocks after appending:', newBlocks); // Debugging
       setBlocks(newBlocks);
     }
   };
@@ -69,14 +37,32 @@ export function useBlocks(
     setBlocks(newBlocks);
   };
 
-  // Update a block by index
-  const updateBlock = (index: number, updatedBlock: BlockType) => {
-    setBlocks((prevBlocks) => {
-      const newBlocks = [...prevBlocks]; // Create a new array to trigger re-render
-      newBlocks[index] = updatedBlock; // Update the specific block
-      return newBlocks;
-    });
-  };
+// Update a block by index
+const updateBlock = (index: number, updatedBlock: BlockType) => {
+  setBlocks((prevBlocks) => {
+    console.log("🛠️ Before update:", prevBlocks);
+    
+    const newBlocks = prevBlocks.map((block, i) =>
+      i === index ? { ...block, content: updatedBlock.content } : block
+    );
+
+    console.log("✅ After update:", newBlocks);
+    return [...newBlocks];  
+  });
+
+  setTimeout(() => {
+    console.log("🚨 Blocks after state update (delayed check):", blocks);
+  }, 100);
+};
+
+
+
+
+// Monitor block changes with useEffect
+useEffect(() => {
+  console.log("Blocks after state update:", blocks); // This will log the updated blocks after re-render
+}, [blocks]); // Trigger when blocks change
+
 
   // Reorder blocks
   const reorderBlocks = (startIndex: number, endeIndex: number) => {

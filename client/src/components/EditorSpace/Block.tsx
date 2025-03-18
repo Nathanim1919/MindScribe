@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BlockType } from '../../types/block.interface';
 
 interface BlockProps {
@@ -20,15 +20,21 @@ export function Block({
   onInput,
   placeholder,
 }: BlockProps) {
+
+  useEffect(() => {
+    console.log('Blocks state updated:', block);
+  }, [block]);
+  
   return (
     <div
       data-block-index={index}
       aria-label={`Editable block ${index}`}
+      dangerouslySetInnerHTML={{ __html: block.content }}
       contentEditable
       onClick={onClick}
       onKeyDown={onKeyDown}
       onInput={onInput}
-      className={`relative w-full outline-none border-none break-words font-sans
+      className={`relative before:block w-full outline-none border-none break-words font-sans
         ${
           block.type === 'header'
             ? 'text-light-950 font-bold dark:text-dark-900 text-4xl py-2 before:text-center'
@@ -41,8 +47,8 @@ export function Block({
           block.type === 'header'
             ? block.content?.trim() === ''
               ? 'before:block'
-              : 'before:hidden'
-            : 'before:hidden focus:before:block'
+              : 'before:block'
+            : 'before:block focus:before:block'
         }
       `}
       data-placeholder={placeholder}
