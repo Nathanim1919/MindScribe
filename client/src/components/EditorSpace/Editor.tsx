@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect, useLayoutEffect } from 'react';
 import { useBlocks, useCommand } from '../../hooks';
 import { CommandMenu } from './CommandMenu';
 import { createBlock } from '../utils/blockUtils';
@@ -6,8 +6,8 @@ import { BlockType } from '../../types/block.interface';
 import { Block } from './Block';
 import { handleCopy, handleCut, handlePaste } from '../utils/selectionUtils';
 import { handleKeyPress } from '../utils/keyPressHandlers';
-import { placeCaretAtEnd } from '../utils/cursorUtils';
-import { HiOutlineCalendarDateRange } from "react-icons/hi2";
+import { placeCaretAtEnd, placeCaretAtPosition } from '../utils/cursorUtils';
+import { HiOutlineCalendarDateRange } from 'react-icons/hi2';
 
 export function Editor() {
   const {
@@ -16,7 +16,12 @@ export function Editor() {
     updateBlock,
     deleteBlock,
     // updateBlocksWithNewSetOfBlocks,
-  } = useBlocks([{ type: 'header', content: 'Header' }, { type: 'paragraph', content: 'Paragraph' }, { type: 'paragraph', content: '' },{ type: 'paragraph', content: 'new apapapap' }]);
+  } = useBlocks([
+    { type: 'header', content: 'Header' },
+    { type: 'paragraph', content: 'Paragraph' },
+    { type: 'paragraph', content: '' },
+    { type: 'paragraph', content: 'new apapapap' },
+  ]);
 
   const {
     isCommandMenuVisible,
@@ -32,6 +37,7 @@ export function Editor() {
   const [focusedBlockIndex, setFocusedBlockIndex] = useState<number | null>(
     null,
   );
+  const [cursorPosition, setCursorPosition] = useState<number>(0);
 
   // 📌 Lifecycle: Focus First Block on Load
   useEffect(() => {
@@ -62,50 +68,53 @@ export function Editor() {
     });
   };
 
-
   // Save the cursor position before updating the content
   const saveCursorPosition = () => {
     const selection = window.getSelection();
     if (selection.rangeCount > 0) {
       const range = selection.getRangeAt(0);
+      console.log('🔥 Range: ', range);
+      console.log('🔥 Range Start Container: ', range.startContainer);
       return range.endContainer;
     }
     return null;
   };
 
-  // Set the cursor position after updating the content
-  const setCursorToEnd = (node) => {
-    const selection = window.getSelection();
-    const range = document.createRange();
-    range.selectNodeContents(node);
-    range.collapse(false); // Move cursor to the end
-    selection.removeAllRanges();
-    selection.addRange(range);
+  const handleBlur = (index: number, e: React.FormEvent<HTMLDivElement>) => {
+    const content = e.currentTarget.innerText;
+    updateBlock(index, { ...blocks[index], content });
   };
 
-   // Focus the block programmatically
-   const focusEditor = () => {
-    if (editorRef.current) {
-      editorRef.current.focus(); // Focus the editor block
-    }
+  const getCursorPosition = (element: HTMLElement): number => {
+    const selection = window.getSelection();
+    if (!selection || selection.rangeCount === 0) return 0;
+
+    const range = selection.getRangeAt(0);
+    let preCaretRange = range.cloneRange();
+    preCaretRange.selectNodeContents(element);
+    preCaretRange.setEnd(range.startContainer, range.startOffset);
+
+    return preCaretRange.toString().length; // Returns the correct cursor position
   };
 
   // 📌 Handlers: Input & Click Events
   const handleInput = (index: number, e: React.FormEvent<HTMLDivElement>) => {
-    const cursorPosition = saveCursorPosition();
     setIsCommandMenuVisible(false);
-    const content = e.currentTarget.innerText.trim();
+    const content = e.currentTarget.innerText;
+    // Save cursor position
+    setCursorPosition(getCursorPosition(e.currentTarget));
+
     updateBlock(index, { ...blocks[index], content });
-     // After content update, set the cursor to the end and maintain focus
-     setTimeout(() => {
-      if (editorRef.current) {
-        setCursorToEnd(editorRef.current); // Move cursor to the end
-        if (!isFocused) {
-          focusEditor(); // Ensure block is focused
-        }
-      }
-    }, 0);
   };
+
+  useLayoutEffect(() => {
+    if (focusedBlockIndex !== null && editorRef.current) {
+      const blockDivs = editorRef.current.querySelectorAll('[contenteditable]');
+      if (blockDivs[focusedBlockIndex]) {
+        placeCaretAtPosition(blockDivs[focusedBlockIndex] as HTMLElement, cursorPosition);
+      }
+    }
+  }, [blocks]); // Runs after every block update
 
   const handleBlockClick = (index: number) => {
     setFocusedBlockIndex(index);
@@ -113,9 +122,8 @@ export function Editor() {
   };
 
   const handleCommandSelection = (type: string) => {
-
     if (focusedBlockIndex === null) return;
-    if (type === 'header'){
+    if (type === 'header') {
       addNewBlock(type as BlockType['type'], focusedBlockIndex + 3);
     } else {
       addNewBlock(type as BlockType['type'], focusedBlockIndex);
@@ -152,9 +160,8 @@ export function Editor() {
   }, [focusedBlockIndex]);
 
   useEffect(() => {
-    console.log("🔥 Blocks updated in UI:", blocks);
+    console.log('🔥 Blocks updated in UI:', blocks);
   }, [blocks]);
-  
 
   const activeBlockInformation = (index: number) => {
     const block = blocks[index];
@@ -181,7 +188,7 @@ export function Editor() {
       //     selectedBlocks,
       //     blocks,
       //     setCopiedBlocks,
-          // updateBlocksWithNewSetOfBlocks,
+      // updateBlocksWithNewSetOfBlocks,
       //     setSelectedBlocks,
       //   )
       // }
@@ -191,14 +198,16 @@ export function Editor() {
       //     copiedBlocks,
       //     focusedBlockIndex,
       //     blocks,
-          // updateBlocksWithNewSetOfBlocks,
+      // updateBlocksWithNewSetOfBlocks,
       //   )
       // }
       ref={editorRef}
       className="bg-light-50 dark:bg-dark-50 h-[90vh] overflow-hidden overflow-y-auto mt-2 rounded-md border border-light-200 dark:border-dark-100"
     >
       <div className="sticky top-0 p-4 flex items-center justify-between text-light-500 dark:text-dark-500">
-        <span className='flex items-center gap-1 font-extralight text-[13px]'><HiOutlineCalendarDateRange/> Jan 25, 2025</span>
+        <span className="flex items-center gap-1 font-extralight text-[13px]">
+          <HiOutlineCalendarDateRange /> Jan 25, 2025
+        </span>
         <span>Save</span>
       </div>
       {/* 📌 Render Blocks */}
@@ -207,11 +216,12 @@ export function Editor() {
           <Block
             key={index}
             index={index}
-            block={{ ...block }}  // Force new reference
+            block={{ ...block }} // Force new reference
             isSelected={selectedBlocks.has(index)}
             onKeyDown={(e) => handleKeyDown(e, index)}
             onClick={() => handleBlockClick(index)}
             onInput={(e) => handleInput(index, e)}
+            onBlur={(e) => handleBlur(index, e)}
             placeholder={activeBlockInformation(index)}
           />
         ))}

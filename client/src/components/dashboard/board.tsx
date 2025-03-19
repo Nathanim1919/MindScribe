@@ -6,8 +6,8 @@ export const Board: React.FC = () => {
   return (
     <div>
       <div>
-        {/* <Greeting /> */}
-        <GreetingSkeleton/>
+        <Greeting />
+        {/* <GreetingSkeleton/> */}
         <RecentEntries />
       </div>
     </div>

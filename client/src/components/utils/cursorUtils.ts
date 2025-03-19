@@ -36,3 +36,33 @@ export const placeCaretAtEnd = (element: HTMLElement) => {
   selection?.removeAllRanges();
   selection?.addRange(range);
 };
+
+
+export const placeCaretAtStart = (element: HTMLElement) => {
+  const range = document.createRange();
+  const selection = window.getSelection();
+  range.selectNodeContents(element);
+  range.collapse(true);
+  selection?.removeAllRanges();
+  selection?.addRange(range);
+
+};
+
+
+export const placeCaretAtPosition = (element: HTMLElement, position: number) => {
+  const range = document.createRange();
+  const selection = window.getSelection();
+
+  if (!selection) return;
+
+  // Ensure position is within bounds
+  const textNode = element.firstChild;
+  const validPosition = textNode ? Math.min(position, textNode.textContent?.length || 0) : 0;
+
+  if (textNode) {
+    range.setStart(textNode, validPosition);
+    range.setEnd(textNode, validPosition);
+    selection.removeAllRanges();
+    selection.addRange(range);
+  }
+};

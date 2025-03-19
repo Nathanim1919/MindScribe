@@ -9,15 +9,12 @@ export function useBlocks(initialBlocks: BlockType[] = []) {
   // Add a new block to the list
   const addBlock = (block: BlockType, index?: number) => {
     const newBlock: BlockType = createBlock(block.type);
-    console.log("🚀 Adding block:", newBlock);
 
     if (index !== undefined) {
       if (index < 0 || index > blocks.length) {
         console.error('Invalid index:', index);
         return;
       }
-      console.log("🚀 Inserting block at index:", index);
-      console.log("🚀 Before insert:", blocks);
     
       const newBlocks = [...blocks]; // Copy the blocks array
       newBlocks.splice(index, 0, newBlock); // Insert the new block at the specified index
@@ -40,19 +37,13 @@ export function useBlocks(initialBlocks: BlockType[] = []) {
 // Update a block by index
 const updateBlock = (index: number, updatedBlock: BlockType) => {
   setBlocks((prevBlocks) => {
-    console.log("🛠️ Before update:", prevBlocks);
     
     const newBlocks = prevBlocks.map((block, i) =>
       i === index ? { ...block, content: updatedBlock.content } : block
     );
 
-    console.log("✅ After update:", newBlocks);
     return [...newBlocks];  
   });
-
-  setTimeout(() => {
-    console.log("🚨 Blocks after state update (delayed check):", blocks);
-  }, 100);
 };
 
 

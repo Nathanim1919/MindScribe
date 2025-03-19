@@ -3,6 +3,7 @@ import {
   getCursorPosition,
   splitContentAtCursor,
   placeCaretAtEnd,
+  placeCaretAtStart,
 } from './cursorUtils';
 
 interface KeyPressHandlersProps {
@@ -74,7 +75,17 @@ export const handleKeyPress = (
       );
 
       addBlock({ type: 'paragraph', content: '' }, index);
-      setFocusedBlockIndex(index);
+      // setFocusedBlockIndex(index + 1);
+
+      // set the cursr at the beginning of index + 1 block
+      setTimeout(() => {
+        const newBlockDiv = document.querySelector(
+          `[data-block-index="${index + 1}"]`,
+        ) as HTMLElement;
+        if (newBlockDiv) {
+          placeCaretAtStart(newBlockDiv);
+        }
+      }, 0);
     }
     // 3️⃣ Case: Cursor is in the middle of text → Split the content into two blocks
     else {
