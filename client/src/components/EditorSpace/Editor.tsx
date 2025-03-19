@@ -117,9 +117,30 @@ export function Editor() {
   }, [blocks]); // Runs after every block update
 
   const handleBlockClick = (index: number) => {
-    setFocusedBlockIndex(index);
-    setIsCommandMenuVisible(false);
+    if (focusedBlockIndex !== index) {
+      setFocusedBlockIndex(index);
+      setIsCommandMenuVisible(false);
+    }
   };
+
+  // useLayoutEffect(() => {
+  //   if (focusedBlockIndex !== null) {
+  //     const blockDivs = editorRef.current?.querySelectorAll('[contenteditable]');
+  //     if (blockDivs && blockDivs[focusedBlockIndex]) {
+  //       const element = blockDivs[focusedBlockIndex] as HTMLElement;
+  //       element.focus();
+  
+  //       // Move cursor to the end
+  //       const range = document.createRange();
+  //       const selection = window.getSelection();
+  //       range.selectNodeContents(element);
+  //       range.collapse(false); // Move to end
+  //       selection?.removeAllRanges();
+  //       selection?.addRange(range);
+  //     }
+  //   }
+  // }, [focusedBlockIndex]); // Only runs when focus changes
+  
 
   const handleCommandSelection = (type: string) => {
     if (focusedBlockIndex === null) return;
@@ -168,7 +189,7 @@ export function Editor() {
 
     // For header blocks, show placeholder ("Head 1" or custom value) if empty.
     if (block.type === 'header') {
-      return block.content?.trim() === '' ? 'Head 1' : '';
+      return block.content?.trim() === '' ? 'Hello, Nathanim, What are up to...' : '';
     }
 
     // For other blocks, only show placeholder if this block is focused and empty.

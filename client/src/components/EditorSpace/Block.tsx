@@ -35,7 +35,7 @@ export function Block({
       onInput={onInput}
       onBlur={onBlur}
       dir="ltr"  // 💡 This forces LTR direction
-      className={`relative before:block w-full outline-none border-none break-words font-sans
+      className={`relative before:block w-full outline-none border-none break-words font-sans overflow-hidden
         ${
           block.type === 'header'
             ? 'text-light-950 font-bold dark:text-dark-900 text-4xl py-2 before:text-center'

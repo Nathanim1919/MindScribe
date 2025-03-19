@@ -4,6 +4,7 @@ import {
   splitContentAtCursor,
   placeCaretAtEnd,
   placeCaretAtStart,
+  insertTextAtCaret,
 } from './cursorUtils';
 
 interface KeyPressHandlersProps {
@@ -34,6 +35,8 @@ export const handleKeyPress = (
   const currentBlockDiv = e.currentTarget;
   const cursorPosition = getCursorPosition(currentBlockDiv);
   const currentContent = currentBlockDiv.innerText;
+  
+  
 
   // 🔹 Backspace at start of block (merge with previous)
   if (e.key === 'Backspace') {
@@ -53,7 +56,14 @@ export const handleKeyPress = (
       }
     }
     console.log('after removed: ', blocks); // Debugging
-  } else if (e.key === 'Enter') {
+  } 
+  // if space is pressed
+  else if (e.key === ' ') {
+    e.preventDefault();
+    insertTextAtCaret('\u00A0'); // Insert a non-breaking space (safe for all browsers)
+    console.log('Space is pressed');
+  }
+  else if (e.key === 'Enter') {
     e.preventDefault(); 
     const blockDiv = e.currentTarget;
     const cursorPosition = getCursorPosition(blockDiv);

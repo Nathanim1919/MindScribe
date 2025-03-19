@@ -92,8 +92,8 @@ const AllEntriesPage = createRoute({
 const ProfilePage = createRoute({
   getParentRoute: () => dashboardRoute,
   path:'/profile',
-  // component: Profile
-  component:ProfileSkeleton
+  component: Profile
+  // component:ProfileSkeleton
 })
 
 // Create the route tree
