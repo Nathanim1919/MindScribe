@@ -12,26 +12,14 @@ import { IoMdAdd } from 'react-icons/io';
 import { getCurrentDate } from '../utils/dateUtils';
 
 export function Editor() {
-  const {
-    blocks,
-    addBlock,
-    updateBlock,
-    deleteBlock,
-    updateBlocksWithNewSetOfBlocks,
-  } = useBlocks([
+  const { blocks, addBlock, updateBlock, deleteBlock } = useBlocks([
     {
       type: 'header',
       content: 'Your very first Entrie..',
     },
     {
       type: 'paragraph',
-      content:
-        'Today, I finally decided to take a leap of faith. I resigned from my job to start my own business. It’s scary, but I know this is what I want. Here’s to new beginnings!',
-    },
-    {
-      type: 'paragraph',
-      content:
-        'It rained all day. I sat by the window with a cup of coffee, watching the rain drops',
+      content: getCurrentDate(),
     },
   ]);
 
@@ -41,6 +29,9 @@ export function Editor() {
     commandFilter,
     setCommandFilter,
   } = useCommand(addBlock);
+
+
+  
 
   const editorRef = useRef<HTMLDivElement>(null);
   const [focusedBlockIndex, setFocusedBlockIndex] = useState<number | null>(
@@ -184,13 +175,7 @@ export function Editor() {
   };
 
   const handleAddButtonClicked = () => {
-    // commandMenu is visible
-    if (isCommandMenuVisible) {
-      setIsCommandMenuVisible(false);
-      return;
-    } else {
-      setIsCommandMenuVisible(true);
-    }
+    setIsCommandMenuVisible(!isCommandMenuVisible);
   };
 
   return (
