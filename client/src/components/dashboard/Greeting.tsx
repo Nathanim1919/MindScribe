@@ -1,4 +1,5 @@
 import { CiCalendarDate } from 'react-icons/ci';
+import { getCurrentDate } from '../utils/dateUtils';
 
 export const Greeting: React.FC = () => {
   return (
@@ -12,7 +13,7 @@ export const Greeting: React.FC = () => {
         </p>
       </div>
       <span className="text-[12px] flex items-center gap-1  font-medium bg-gray-200 dark:bg-dark-100 dark:text-dark-500 border border-gray-300 dark:border-dark-200 py-1 px-2 rounded-full">
-        <CiCalendarDate className='text-[18px]'/>Monday, 12 January 2025
+        <CiCalendarDate className='text-[18px]'/>{getCurrentDate()}
       </span>
     </div>
   );

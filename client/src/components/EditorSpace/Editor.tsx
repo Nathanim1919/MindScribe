@@ -9,6 +9,7 @@ import { handleKeyPress } from '../utils/keyPressHandlers';
 import { placeCaretAtEnd, placeCaretAtPosition } from '../utils/cursorUtils';
 import { HiOutlineCalendarDateRange } from 'react-icons/hi2';
 import { TbDragDrop2 } from 'react-icons/tb';
+import { getCurrentDate } from '../utils/dateUtils';
 
 export function Editor() {
   const {
@@ -211,11 +212,10 @@ export function Editor() {
       ref={editorRef}
       className="bg-light-50 dark:bg-dark-50 h-[90vh] overflow-hidden overflow-y-auto mt-2 rounded-md border border-light-200 dark:border-dark-100"
     >
-      <div className="sticky top-0 p-4 flex items-center justify-between text-light-500 dark:text-dark-500">
-        <span className="flex items-center gap-1 font-extralight text-[13px]">
-          <HiOutlineCalendarDateRange /> Jan 25, 2025
+      <div className="sticky top-0 flex items-center justify-end text-light-500 dark:text-dark-500">
+        <span className="flex items-center font-extralight gap-1 p-3 py-2 border border-dark-100 border-t-0 border-r-0 rounded-bl-2xl bg-dark-base text-[13px]">
+          <HiOutlineCalendarDateRange /> {getCurrentDate()}
         </span>
-        <span>Save</span>
       </div>
       {/* 📌 Render Blocks */}
       <div className="relative w-[70%] m-auto">
@@ -225,9 +225,7 @@ export function Editor() {
             data-block-index={index}
             className="flex  gap-2 group"
           >
-            {block?.content !== '' && (
-              <TbDragDrop2 className="opacity-0 group-hover:opacity-100 dark:text-dark-400 cursor-grab text-2xl" />
-            )}
+            <TbDragDrop2 className="opacity-0 group-hover:opacity-100 dark:text-dark-400 cursor-grab text-2xl" />
             <Block
               key={index}
               index={index}
