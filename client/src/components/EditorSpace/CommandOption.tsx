@@ -24,31 +24,31 @@ export const CommandOption: React.FC<CommandOptionPropType> = ({
 }) => {
 
   return (
-    <div>
-      <h1> Basic Options</h1>
-      <div className="flex flex-row">
-        <div className="flex flex-col items-center justify-center">
-          <IoMdCopy className="text-2xl" />
+    <div className='bg-dark-100 overflow-hidden border w-[150px] border-dark-200 absolute shadow-sm rounded-lg grid place-items-center'>
+      <h2 className='font-bold text-[18px] p-2 border-b dark:border-dark-300 dark:text-dark-700'> Basic Options</h2>
+      <div className="grid w-full gap-1">
+        <div className="flex px-2 py-1 items-center gap-2 dark:text-dark-500 w-full hover:dark:text-dark-800 hover:dark:bg-dark-200 cursor-pointer rouneded-sm">
+          <IoMdCopy className="text-[20px]" />
           <p>Copy</p>
         </div>
-        <div className="flex flex-col items-center justify-center">
-          <IoMdCut className="text-2xl" />
+        <div className="flex px-2 py-1 items-center gap-2 dark:text-dark-500 w-full hover:dark:text-dark-800 hover:dark:bg-dark-200 cursor-pointer rouneded-sm">
+          <IoMdCut className="text-[20px]" />
           <p>Cut</p>
         </div>
-        <div className="flex flex-col items-center justify-center">
-          <IoMdTrash className="text-2xl" />
+        <div className="flex px-2 py-1 items-center gap-2 dark:text-dark-500 w-full hover:dark:text-dark-800 hover:dark:bg-dark-200 cursor-pointer rouneded-sm">
+          <IoMdTrash className="text-[20px]" />
           <p>Delete</p>
         </div>
-        <div className="flex flex-col items-center justify-center">
-          <IoMdUndo className="text-2xl" />
+        {/* <div className="flex px-2 py-1 items-center gap-2 dark:text-dark-500 w-full hover:dark:text-dark-800 hover:dark:bg-dark-200 cursor-pointer rouneded-sm">
+          <IoMdUndo className="text-[20px]" />
           <p>Undo</p>
         </div>
-        <div className="flex flex-col items-center justify-center">
-          <IoMdRedo className="text-2xl" />
+        <div className="flex px-2 py-1 items-center gap-2 dark:text-dark-500 w-full hover:dark:text-dark-800 hover:dark:bg-dark-200 cursor-pointer rouneded-sm">
+          <IoMdRedo className="text-[20px]" />
           <p>Redo</p>
-        </div>
-        <div className="flex flex-col items-center justify-center">
-          <IoDuplicateOutline className="text-2xl" />
+        </div> */}
+        <div className="flex px-2 py-1 items-center gap-2 dark:text-dark-500 w-full hover:dark:text-dark-800 hover:dark:bg-dark-200 cursor-pointer rouneded-sm">
+          <IoDuplicateOutline className="text-[20px]" />
           <p>Duplicate</p>
         </div>
       </div>
