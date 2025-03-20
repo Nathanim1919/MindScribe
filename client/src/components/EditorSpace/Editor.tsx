@@ -31,7 +31,7 @@ export function Editor() {
     null,
   );
   const [cursorPosition, setCursorPosition] = useState<number>(0);
-  
+
   const {
     isCommandMenuVisible,
     setIsCommandMenuVisible,
@@ -43,6 +43,7 @@ export function Editor() {
     isCommandOptionVisible,
     setIsCommandOptionVisible,
     handleCopy,
+    handlePaste,
     handleCut,
     handleDelete,
     handleDuplicate,
@@ -248,6 +249,7 @@ export function Editor() {
         {isCommandOptionVisible && (
           <CommandOption
             handleCopy={handleCopy}
+            handlePaste={handlePaste}
             handleCut={handleCut}
             handleDelete={handleDelete}
             handleDuplicate={handleDuplicate}

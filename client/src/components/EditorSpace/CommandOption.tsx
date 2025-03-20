@@ -1,9 +1,11 @@
-import { IoMdCopy, IoMdCut, IoMdTrash } from "react-icons/io";
-import { IoMdUndo, IoMdRedo } from "react-icons/io";
-import { IoDuplicateOutline } from "react-icons/io5";
+import { IoMdCopy, IoMdCut, IoMdTrash } from 'react-icons/io';
+import { IoMdUndo, IoMdRedo } from 'react-icons/io';
+import { IoDuplicateOutline } from 'react-icons/io5';
+import { handlePaste } from '../utils/selectionUtils';
 
 interface CommandOptionPropType {
   handleCopy: () => void;
+  handlePaste: () => void;
   handleCut: () => void;
   handleDelete: () => void;
   handleUndo: () => void;
@@ -13,13 +15,13 @@ interface CommandOptionPropType {
 
 export const CommandOption: React.FC<CommandOptionPropType> = ({
   handleCopy,
+  handlePaste,
   handleCut,
   handleDelete,
   handleUndo,
   handleRedo,
   handleDuplicate,
 }) => {
-
   return (
     <div className="bg-dark-100 border w-[150px] border-dark-200 absolute shadow-sm rounded-lg grid place-items-center">
       <h2 className="font-bold text-[18px] p-2 border-b dark:border-dark-300 dark:text-dark-700">
@@ -27,12 +29,17 @@ export const CommandOption: React.FC<CommandOptionPropType> = ({
       </h2>
       <div className="grid w-full gap-1">
         {[
-          { action: handleCopy, icon: IoMdCopy, label: "Copy" },
-          { action: handleCut, icon: IoMdCut, label: "Cut" },
-          { action: handleDelete, icon: IoMdTrash, label: "Delete" },
-          { action: handleDuplicate, icon: IoDuplicateOutline, label: "Duplicate" },
-          { action: handleUndo, icon: IoMdUndo, label: "Undo" },
-          { action: handleRedo, icon: IoMdRedo, label: "Redo" },
+          { action: handleCopy, icon: IoMdCopy, label: 'Copy' },
+          { action: handlePaste, icon: IoMdCopy, label: 'Paste' },
+          { action: handleCut, icon: IoMdCut, label: 'Cut' },
+          { action: handleDelete, icon: IoMdTrash, label: 'Delete' },
+          {
+            action: handleDuplicate,
+            icon: IoDuplicateOutline,
+            label: 'Duplicate',
+          },
+          { action: handleUndo, icon: IoMdUndo, label: 'Undo' },
+          { action: handleRedo, icon: IoMdRedo, label: 'Redo' },
         ].map(({ action, icon: Icon, label }) => (
           <div
             key={label}
