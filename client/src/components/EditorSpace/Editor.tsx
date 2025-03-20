@@ -10,6 +10,8 @@ import { HiOutlineCalendarDateRange } from 'react-icons/hi2';
 import { MdDragIndicator } from 'react-icons/md';
 import { IoMdAdd } from 'react-icons/io';
 import { getCurrentDate } from '../utils/dateUtils';
+import { useCommandOption } from '../../hooks/useCommandOpion';
+import { CommandOption } from './CommandOption';
 
 export function Editor() {
   const { blocks, addBlock, updateBlock, deleteBlock } = useBlocks([
@@ -31,7 +33,16 @@ export function Editor() {
   } = useCommand(addBlock);
 
 
-  
+  const {
+    isCommandOptionVisible,
+    setIsCommandOptionVisible,
+    handleCopy,
+    handleCut,
+    handleDelete,
+    handleDuplicate,
+    handleRedo,
+    handleUndo
+  } = useCommandOption();
 
   const editorRef = useRef<HTMLDivElement>(null);
   const [focusedBlockIndex, setFocusedBlockIndex] = useState<number | null>(
@@ -204,7 +215,9 @@ export function Editor() {
                 }}
                 className="hover:dark:bg-dark-100 hover:bg-light-100 rounded-sm opacity-0 group-hover:opacity-100 cursor-pointer text-2xl"
               />
-              <MdDragIndicator className="hover:dark:bg-dark-100 hover:bg-light-100 rounded-sm opacity-0 group-hover:opacity-100 cursor-grab text-2xl" />
+              <MdDragIndicator
+              onClick={() => setIsCommandOptionVisible(!isCommandOptionVisible)}
+               className="hover:dark:bg-dark-100 hover:bg-light-100 rounded-sm opacity-0 group-hover:opacity-100 cursor-grab text-2xl" />
             </div>
             <Block
               key={index}
@@ -227,6 +240,18 @@ export function Editor() {
             position={focusedBlockIndex !== null ? focusedBlockIndex : 0}
           />
         )}
+        {
+          isCommandOptionVisible && (
+            <CommandOption
+              handleCopy={handleCopy}
+              handleCut={handleCut}
+              handleDelete={handleDelete}
+              handleDuplicate={handleDuplicate}
+              handleRedo={handleRedo}
+              handleUndo={handleUndo}
+            />
+          )
+        }
       </div>
     </div>
   );

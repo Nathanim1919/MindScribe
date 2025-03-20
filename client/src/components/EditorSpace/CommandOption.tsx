@@ -5,8 +5,24 @@ import { IoMdUndo } from 'react-icons/io';
 import { IoMdRedo } from 'react-icons/io';
 import { IoDuplicateOutline } from 'react-icons/io5';
 
-export const CommandOption: React.FC = () => {
-    
+interface CommandOptionPropType {
+    handleCopy: () => void;
+    handleCut: () => void;
+    handleDelete: () => void;
+    handleUndo: () => void;
+    handleRedo: () => void;
+    handleDuplicate: () => void;
+}
+
+export const CommandOption: React.FC<CommandOptionPropType> = ({
+    handleCopy,
+    handleCut,
+    handleDelete,
+    handleUndo,
+    handleRedo,
+    handleDuplicate,
+}) => {
+
   return (
     <div>
       <h1> Basic Options</h1>
