@@ -35,8 +35,6 @@ export const handleKeyPress = (
   const currentBlockDiv = e.currentTarget;
   const cursorPosition = getCursorPosition(currentBlockDiv);
   const currentContent = currentBlockDiv.innerText;
-  
-  
 
   // 🔹 Backspace at start of block (merge with previous)
   if (e.key === 'Backspace') {
@@ -56,15 +54,14 @@ export const handleKeyPress = (
       }
     }
     console.log('after removed: ', blocks); // Debugging
-  } 
+  }
   // if space is pressed
   else if (e.key === ' ') {
     e.preventDefault();
     insertTextAtCaret('\u00A0'); // Insert a non-breaking space (safe for all browsers)
     console.log('Space is pressed');
-  }
-  else if (e.key === 'Enter') {
-    e.preventDefault(); 
+  } else if (e.key === 'Enter') {
+    e.preventDefault();
     const blockDiv = e.currentTarget;
     const cursorPosition = getCursorPosition(blockDiv);
     const content = blockDiv.innerText;
@@ -75,7 +72,10 @@ export const handleKeyPress = (
       console.log('Enter: Creating a new block below');
 
       const newIndex = index + 1;
-      addBlock({ type: 'paragraph', content: 'New Paragraph Just Created!!!' }, newIndex);
+      addBlock(
+        { type: 'paragraph', content: 'New Paragraph Just Created!!!' },
+        newIndex,
+      );
       setFocusedBlockIndex(newIndex);
     }
     // 2️⃣ Case: Cursor is at the beginning of a non-empty block → Insert above and shift down
