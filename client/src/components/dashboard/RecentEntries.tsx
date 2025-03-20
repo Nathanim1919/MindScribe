@@ -4,8 +4,11 @@ import { FaBook } from 'react-icons/fa6';
 import { EmptyCollectionBoard } from './EmptyCollection';
 import { Link } from '@tanstack/react-router';
 import { EntriecardSkeleton } from '../LoadingSkeletons/DiaryCardSkeleton';
+import { DiaryRow } from './DiaryRow';
+import { DiaryRowSekeleton } from '../LoadingSkeletons/DiaryRowSkeleton';
 
 export const RecentEntries: React.FC = () => {
+  // const diaries = []
   const diaries = [
     {
       id: 1,
@@ -187,10 +190,12 @@ export const RecentEntries: React.FC = () => {
             </Link>
           </div>
 
-          <div className="grid grid-cols-3 gap-2 rounded-sm p-4 py-2 max-h-[85vh] overflow-y-auto scrollb">
+          <div className="grid grid-cols-1 gap-2 rounded-sm p-4 py-2 max-h-[80vh] overflow-y-auto scrollb">
             {diaries?.map((entry) => (
               // <EntriecardSkeleton key={entry.id}/>
-              <Entriecard key={entry.id} entries={entry} />
+              // <Entriecard key={entry.id} entries={entry} />
+              <DiaryRow  key={entry.id} entrie={entry}/>
+              // <DiaryRowSekeleton key={entry.id} />
             ))}
           </div>
         </div>

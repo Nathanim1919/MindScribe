@@ -3,14 +3,8 @@ import { CiEdit } from 'react-icons/ci';
 import { MdDeleteOutline } from 'react-icons/md';
 import { CiCalendarDate } from 'react-icons/ci';
 import { IoIosHeartEmpty } from 'react-icons/io';
+import { EntryType } from '../../types/entrie.interface';
 
-type EntryType = {
-  id: number;
-  title: string;
-  content: string;
-  date: string;
-  mood: string;
-};
 
 type EntriecardPropType = {
   entries: EntryType;
