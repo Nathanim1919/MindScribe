@@ -1,21 +1,41 @@
-interface CommandOptionPropType {
-  icon: React.ReactNode;
-  title: string;
-  onClick: () => void;
-}
+import { IoMdCopy } from 'react-icons/io';
+import { IoMdCut } from 'react-icons/io';
+import { IoMdTrash } from 'react-icons/io';
+import { IoMdUndo } from 'react-icons/io';
+import { IoMdRedo } from 'react-icons/io';
+import { IoDuplicateOutline } from 'react-icons/io5';
 
-export const CommandOption: React.FC<CommandOptionPropType> = ({
-  icon,
-  title,
-  onClick,
-}) => {
+export const CommandOption: React.FC = () => {
+    
   return (
-    <div
-      className="command-item flex text-[20px] items-center gap-2 rounded-md hover:bg-light-200 px-1 hover:dark:bg-dark-200 dark:text-light-100 cursor-pointer"
-      onClick={onClick}
-    >
-      {icon}
-      {title}
+    <div>
+      <h1> Basic Options</h1>
+      <div className="flex flex-row">
+        <div className="flex flex-col items-center justify-center">
+          <IoMdCopy className="text-2xl" />
+          <p>Copy</p>
+        </div>
+        <div className="flex flex-col items-center justify-center">
+          <IoMdCut className="text-2xl" />
+          <p>Cut</p>
+        </div>
+        <div className="flex flex-col items-center justify-center">
+          <IoMdTrash className="text-2xl" />
+          <p>Delete</p>
+        </div>
+        <div className="flex flex-col items-center justify-center">
+          <IoMdUndo className="text-2xl" />
+          <p>Undo</p>
+        </div>
+        <div className="flex flex-col items-center justify-center">
+          <IoMdRedo className="text-2xl" />
+          <p>Redo</p>
+        </div>
+        <div className="flex flex-col items-center justify-center">
+          <IoDuplicateOutline className="text-2xl" />
+          <p>Duplicate</p>
+        </div>
+      </div>
     </div>
   );
 };

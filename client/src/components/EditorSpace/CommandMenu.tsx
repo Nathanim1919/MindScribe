@@ -45,7 +45,9 @@ export function CommandMenu({ filter, onSelect, position }: CommandMenuProps) {
     () => blockTypes.filter((block) => block.label.toLowerCase().includes(filter.toLowerCase())),
     [filter]
   );
-
+  isCommandMenuVisible
+  IsCommandMenuVisible
+  IsCommandMenuVisible
   return (
     <div
       ref={commandMenuRef}
