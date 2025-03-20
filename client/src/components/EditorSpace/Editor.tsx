@@ -25,13 +25,19 @@ export function Editor() {
     },
   ]);
 
+  
+  const editorRef = useRef<HTMLDivElement>(null);
+  const [focusedBlockIndex, setFocusedBlockIndex] = useState<number | null>(
+    null,
+  );
+  const [cursorPosition, setCursorPosition] = useState<number>(0);
+  
   const {
     isCommandMenuVisible,
     setIsCommandMenuVisible,
     commandFilter,
     setCommandFilter,
   } = useCommand(addBlock);
-
 
   const {
     isCommandOptionVisible,
@@ -41,14 +47,8 @@ export function Editor() {
     handleDelete,
     handleDuplicate,
     handleRedo,
-    handleUndo
-  } = useCommandOption();
-
-  const editorRef = useRef<HTMLDivElement>(null);
-  const [focusedBlockIndex, setFocusedBlockIndex] = useState<number | null>(
-    null,
-  );
-  const [cursorPosition, setCursorPosition] = useState<number>(0);
+    handleUndo,
+  } = useCommandOption(focusedBlockIndex);
 
   // 📌 Lifecycle: Focus First Block on Load
   useEffect(() => {
@@ -122,6 +122,7 @@ export function Editor() {
     if (focusedBlockIndex !== index) {
       setFocusedBlockIndex(index);
       setIsCommandMenuVisible(false);
+      setIsCommandOptionVisible(false);
     }
   };
 
@@ -216,8 +217,12 @@ export function Editor() {
                 className="hover:dark:bg-dark-100 hover:bg-light-100 rounded-sm opacity-0 group-hover:opacity-100 cursor-pointer text-2xl"
               />
               <MdDragIndicator
-              onClick={() => setIsCommandOptionVisible(!isCommandOptionVisible)}
-               className="hover:dark:bg-dark-100 hover:bg-light-100 rounded-sm opacity-0 group-hover:opacity-100 cursor-grab text-2xl" />
+                onClick={() => {
+                  setFocusedBlockIndex(index);
+                  setIsCommandOptionVisible(!isCommandOptionVisible);
+                }}
+                className="hover:dark:bg-dark-100 hover:bg-light-100 rounded-sm opacity-0 group-hover:opacity-100 cursor-grab text-2xl"
+              />
             </div>
             <Block
               key={index}
@@ -240,18 +245,16 @@ export function Editor() {
             position={focusedBlockIndex !== null ? focusedBlockIndex : 0}
           />
         )}
-        {
-          isCommandOptionVisible && (
-            <CommandOption
-              handleCopy={handleCopy}
-              handleCut={handleCut}
-              handleDelete={handleDelete}
-              handleDuplicate={handleDuplicate}
-              handleRedo={handleRedo}
-              handleUndo={handleUndo}
-            />
-          )
-        }
+        {isCommandOptionVisible && (
+          <CommandOption
+            handleCopy={handleCopy}
+            handleCut={handleCut}
+            handleDelete={handleDelete}
+            handleDuplicate={handleDuplicate}
+            handleRedo={handleRedo}
+            handleUndo={handleUndo}
+          />
+        )}
       </div>
     </div>
   );

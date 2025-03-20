@@ -1,9 +1,10 @@
 import { useState } from 'react';
 
-export function useCommandOption() {
+export function useCommandOption(index: number | null) {
   const [isCommandOptionVisible, setIsCommandOptionVisible] = useState(false);
 
   const handleCopy = () => {
+    alert('coppy the block at index: ' + index);
     console.log('Copy');
     setIsCommandOptionVisible(false);
   };
