@@ -4,11 +4,11 @@ import { CommandMenu } from './CommandMenu';
 import { createBlock } from '../utils/blockUtils';
 import { BlockType } from '../../types/block.interface';
 import { Block } from './Block';
-import { handleCopy, handleCut, handlePaste } from '../utils/selectionUtils';
 import { handleKeyPress } from '../utils/keyPressHandlers';
 import { placeCaretAtEnd, placeCaretAtPosition } from '../utils/cursorUtils';
 import { HiOutlineCalendarDateRange } from 'react-icons/hi2';
-import { TbDragDrop2 } from 'react-icons/tb';
+import { MdDragIndicator } from "react-icons/md";
+import { IoMdAdd } from "react-icons/io";
 import { getCurrentDate } from '../utils/dateUtils';
 
 export function Editor() {
@@ -21,7 +21,7 @@ export function Editor() {
   } = useBlocks([
     {
       type: 'header',
-      content: 'Hello, Nathanim, What are you up to...',
+      content: 'Your very first Entrie..',
     },
     {
       type: 'paragraph',
@@ -43,9 +43,6 @@ export function Editor() {
   } = useCommand(addBlock);
 
   const editorRef = useRef<HTMLDivElement>(null);
-  const [selectedBlocks, setSelectedBlocks] = useState<Set<number>>(new Set());
-  const [copiedBlocks, setCopiedBlocks] = useState<BlockType[]>([]);
-  const [isFocused, setIsFocused] = useState(false); // Track focus state
   const [focusedBlockIndex, setFocusedBlockIndex] = useState<number | null>(
     null,
   );
@@ -128,7 +125,6 @@ export function Editor() {
 
   useLayoutEffect(() => {
     if (focusedBlockIndex !== null) {
-      console.log('🔥 Focused Block Index:', focusedBlockIndex);
       const blockDivs =
         editorRef.current?.querySelectorAll('[contenteditable]');
       if (blockDivs && blockDivs[focusedBlockIndex]) {
@@ -187,28 +183,19 @@ export function Editor() {
     return '';
   };
 
+
+  const handleAddButtonClicked = () => {
+    // commandMenu is visible
+    if (isCommandMenuVisible) {
+      setIsCommandMenuVisible(false);
+      return;
+    } else {
+      setIsCommandMenuVisible(true);
+    }
+  };
+
   return (
     <div
-      onCopy={(e) => handleCopy(e, selectedBlocks, blocks, setCopiedBlocks)}
-      onCut={(e) =>
-        handleCut(
-          e,
-          selectedBlocks,
-          blocks,
-          setCopiedBlocks,
-          updateBlocksWithNewSetOfBlocks,
-          setSelectedBlocks,
-        )
-      }
-      onPaste={(e) =>
-        handlePaste(
-          e,
-          copiedBlocks,
-          focusedBlockIndex,
-          blocks,
-          updateBlocksWithNewSetOfBlocks,
-        )
-      }
       ref={editorRef}
       className="bg-light-50 dark:bg-dark-50 h-[90vh] overflow-hidden overflow-y-auto mt-2 rounded-md border border-light-200 dark:border-dark-100"
     >
@@ -223,14 +210,17 @@ export function Editor() {
           <div
             key={index}
             data-block-index={index}
-            className="flex  gap-2 group"
+            className="flex items-center  gap-2 group"
           >
-            <TbDragDrop2 className="opacity-0 group-hover:opacity-100 dark:text-dark-400 cursor-grab text-2xl" />
+            <div className='flex self-start items-center gap-1'>
+              <IoMdAdd onClick={() => {setFocusedBlockIndex(index);handleAddButtonClicked()}}
+               className="hover:dark:bg-dark-100 rounded-sm opacity-0 group-hover:opacity-100 dark:text-dark-400 cursor-pointer text-2xl" />
+            <MdDragIndicator className="hover:dark:bg-dark-100 rounded-sm opacity-0 group-hover:opacity-100 dark:text-dark-400 cursor-grab text-2xl" />
+            </div>
             <Block
               key={index}
               index={index}
               block={{ ...block }} // Force new reference
-              isSelected={selectedBlocks.has(index)}
               onKeyDown={(e) => handleKeyDown(e, index)}
               onClick={() => handleBlockClick(index)}
               onInput={(e) => handleInput(index, e)}

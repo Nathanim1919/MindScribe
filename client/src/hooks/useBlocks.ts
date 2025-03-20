@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { BlockType } from '../types/block.interface';
 import { createBlock } from '../components/utils/blockUtils';
 
@@ -15,7 +15,7 @@ export function useBlocks(initialBlocks: BlockType[] = []) {
         console.error('Invalid index:', index);
         return;
       }
-    
+
       const newBlocks = [...blocks]; // Copy the blocks array
       newBlocks.splice(index, 0, newBlock); // Insert the new block at the specified index
       setBlocks(newBlocks);
@@ -34,26 +34,16 @@ export function useBlocks(initialBlocks: BlockType[] = []) {
     setBlocks(newBlocks);
   };
 
-// Update a block by index
-const updateBlock = (index: number, updatedBlock: BlockType) => {
-  setBlocks((prevBlocks) => {
-    
-    const newBlocks = prevBlocks.map((block, i) =>
-      i === index ? { ...block, content: updatedBlock.content } : block
-    );
+  // Update a block by index
+  const updateBlock = (index: number, updatedBlock: BlockType) => {
+    setBlocks((prevBlocks) => {
+      const newBlocks = prevBlocks.map((block, i) =>
+        i === index ? { ...block, content: updatedBlock.content } : block,
+      );
 
-    return [...newBlocks];  
-  });
-};
-
-
-
-
-// Monitor block changes with useEffect
-useEffect(() => {
-  console.log("Blocks after state update:", blocks); // This will log the updated blocks after re-render
-}, [blocks]); // Trigger when blocks change
-
+      return [...newBlocks];
+    });
+  };
 
   // Reorder blocks
   const reorderBlocks = (startIndex: number, endeIndex: number) => {
