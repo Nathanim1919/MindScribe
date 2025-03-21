@@ -23,8 +23,8 @@ export const CommandOption: React.FC<CommandOptionPropType> = ({
   handleDuplicate,
 }) => {
   return (
-    <div className="bg-dark-100 border w-[150px] border-dark-200 absolute shadow-sm rounded-lg grid place-items-center">
-      <h2 className="font-bold text-[18px] p-2 border-b dark:border-dark-300 dark:text-dark-700">
+    <div className="bg-light-base dark:bg-dark-100 border w-[150px] border-light-200 dark:border-dark-200 absolute shadow-lg shadow-dark-800 dark:shadow-dark-50 rounded-lg grid place-items-center">
+      <h2 className="font-bold text-[15px] p-2 border-b w-full border-light-200 dark:border-dark-200 text-light-700 dark:text-dark-700">
         Basic Options
       </h2>
       <div className="grid w-full gap-1">
@@ -44,7 +44,7 @@ export const CommandOption: React.FC<CommandOptionPropType> = ({
           <div
             key={label}
             onClick={action}
-            className="flex px-2 py-1 items-center gap-2 dark:text-dark-500 w-full hover:dark:text-dark-800 hover:dark:bg-dark-200 cursor-pointer rounded-sm"
+            className="flex text-[14px] px-2 py-1 items-center gap-2 text-light-600 dark:text-dark-500 w-full hover:bg-light-200 hover:text-light-900 hover:dark:text-dark-800 hover:dark:bg-dark-200 cursor-pointer"
           >
             <Icon className="text-[20px]" />
             <p>{label}</p>

@@ -18,6 +18,7 @@ export function useBlocks(initialBlocks: BlockType[] = []) {
 
       const newBlocks = [...blocks]; // Copy the blocks array
       newBlocks.splice(index, 0, newBlock); // Insert the new block at the specified index
+      newBlocks[index].content = block.content;
       setBlocks(newBlocks);
     } else {
       const newBlocks = [...blocks, newBlock]; // Append to the end
@@ -26,7 +27,7 @@ export function useBlocks(initialBlocks: BlockType[] = []) {
   };
 
   // Delete a block from the list by index
-  const deleteBlock = (index: number) => {
+  const deleteBlock = (index: number | null) => {
     setBlocks(blocks.filter((_, i) => i !== index));
   };
 
@@ -34,8 +35,10 @@ export function useBlocks(initialBlocks: BlockType[] = []) {
     setBlocks(newBlocks);
   };
 
+
+
   // Update a block by index
-  const updateBlock = (index: number, updatedBlock: BlockType) => {
+  const updateBlock = (index: number | null, updatedBlock: BlockType) => {
     setBlocks((prevBlocks) => {
       const newBlocks = prevBlocks.map((block, i) =>
         i === index ? { ...block, content: updatedBlock.content } : block,

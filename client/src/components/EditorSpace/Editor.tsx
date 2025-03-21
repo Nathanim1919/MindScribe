@@ -49,7 +49,7 @@ export function Editor() {
     handleDuplicate,
     handleRedo,
     handleUndo,
-  } = useCommandOption(focusedBlockIndex);
+  } = useCommandOption(focusedBlockIndex, blocks);
 
   // 📌 Lifecycle: Focus First Block on Load
   useEffect(() => {
@@ -197,7 +197,7 @@ export function Editor() {
       className="bg-light-50 dark:bg-dark-50 h-[90vh] overflow-hidden overflow-y-auto mt-2 rounded-md border border-light-200 dark:border-dark-100"
     >
       <div className="sticky top-0 flex items-center justify-end text-light-500 dark:text-dark-500">
-        <span className="flex items-center font-extralight gap-1 p-3 py-2 border border-light-300 dark:border-dark-100 border-t-0 border-r-0 rounded-bl-2xl bg-light-200 dark:bg-dark-base text-[13px]">
+        <span className="flex items-center font-extralight gap-1 p-3 py-2 border border-light-200 dark:border-dark-100 border-t-0 border-r-0 rounded-bl-2xl bg-light-100 dark:bg-dark-base text-[13px]">
           <HiOutlineCalendarDateRange /> {getCurrentDate()}
         </span>
       </div>

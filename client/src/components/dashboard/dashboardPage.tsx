@@ -11,10 +11,10 @@ export const DashboardPage: React.FC = () => {
         <Outlet/>
       </div>
       <div className="h-full p-2">
-        <AipromptcardSkeleton/>
-        <AiSummerySkeleton/>
-        {/* <Aipromptcard /> */}
-        {/* <Userstats /> */}
+        {/* <AipromptcardSkeleton/>
+        <AiSummerySkeleton/> */}
+        <Aipromptcard />
+        <Userstats />
       </div>
     </div>
   );

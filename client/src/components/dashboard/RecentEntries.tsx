@@ -209,7 +209,7 @@ export const RecentEntries: React.FC = () => {
           </div>
 
           <div
-            className={`grid ${listStyle === 'grid' ? 'grid-cols-3' : 'grid-cols-1'} gap-2 rounded-sm p-4 py-2 max-h-[80vh] overflow-y-auto scrollb`}
+            className={`grid ${listStyle === 'grid' ? 'grid-cols-3 gap-2' : 'grid-cols-1 gap-1'} rounded-sm p-4 py-2 max-h-[85vh] overflow-y-auto scrollb`}
           >
             {diaries?.map((entry) =>
               // <EntriecardSkeleton key={entry.id}/>

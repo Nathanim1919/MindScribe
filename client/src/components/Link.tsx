@@ -41,7 +41,7 @@ export const LinkElement: React.FC<LinkProps> = ({
         {isUserMenu ? (
           <span>{title}</span>
         ) : (
-          <span className="absolute over left-0 bg-white dark:bg-dark-50 dark:text-dark-900 py-[4px] px-2 border border-gray-400 dark:border-dark-200 shadow-2xl rounded-[4px] hidden group-hover:block group-hover:left-10 transition duration-200 ease-in-out">
+          <span className="absolute z-50 left-0 bg-white dark:bg-dark-50 dark:text-dark-900 py-[4px] px-2 border border-gray-400 dark:border-dark-200 shadow-2xl rounded-[4px] hidden group-hover:block group-hover:left-10 transition duration-200 ease-in-out">
         {title}
           </span>
         )}

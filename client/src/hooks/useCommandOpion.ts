@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { useBlocks } from "./useBlocks";
+import { BlockType } from "../types/block.interface";
 
-export function useCommandOption(index: number | null) {
+export function useCommandOption(index: number | null, blocks: BlockType[]) {
   const [isCommandOptionVisible, setIsCommandOptionVisible] = useState(false);
-  const { blocks, updateBlocksWithNewSetOfBlocks } = useBlocks();
+  const { updateBlocksWithNewSetOfBlocks, addBlock } = useBlocks(blocks);
 
   console.log("All blocks:", blocks);
 console.log("Trying to access index:", index);
@@ -36,9 +37,7 @@ console.log("Trying to access index:", index);
   const handlePaste = async () => {
     try {
       const clipboardData = await navigator.clipboard.readText();
-      console.log("Clipboard raw data:", clipboardData); // ✅ Debug
   
-      // ✅ Check if the clipboard contains valid JSON
       let parsedBlock;
       try {
         parsedBlock = JSON.parse(clipboardData);
@@ -47,10 +46,16 @@ console.log("Trying to access index:", index);
         return;
       }
   
-      // ✅ Ensure parsed block has correct structure
       if (parsedBlock && parsedBlock.type && parsedBlock.content) {
         const newBlock = { ...parsedBlock, id: Date.now() }; // Assign a new ID
-        updateBlocksWithNewSetOfBlocks([...blocks, newBlock]);
+        console.log("Update the block at index: ", index)
+        // updateBlock(index, newBlock);
+        blocks.forEach((block, i) =>{
+          if (i === index){
+            block.type = newBlock.type;
+            block.content = newBlock.content;
+          }
+        })
         console.log("Pasted block:", newBlock);
       } else {
         console.warn("Invalid block structure:", parsedBlock);
@@ -62,7 +67,6 @@ console.log("Trying to access index:", index);
     setIsCommandOptionVisible(false);
   };
   
-
   // **Cut Function (Copy & Remove)**
   const handleCut = () => {
     if (index !== null && blocks[index]) {
@@ -86,8 +90,6 @@ console.log("Trying to access index:", index);
   const handleDelete = () => {
     if (index !== null) {
       const newBlocks = blocks.filter((_, i) => i !== index);
-      updateBlocksWithNewSetOfBlocks(newBlocks);
-      console.log("Deleted block at index:", index);
     }
     setIsCommandOptionVisible(false);
   };
@@ -110,8 +112,7 @@ console.log("Trying to access index:", index);
       const duplicatedBlock = { ...blocks[index], id: Date.now() };
       const newBlocks = [...blocks];
       newBlocks.splice(index + 1, 0, duplicatedBlock); // Insert after the original
-
-      updateBlocksWithNewSetOfBlocks(newBlocks);
+      addBlock(duplicatedBlock, index + 1);
       console.log("Duplicated block:", duplicatedBlock);
     }
     setIsCommandOptionVisible(false);
