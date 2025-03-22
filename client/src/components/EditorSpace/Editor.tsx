@@ -116,9 +116,9 @@ export function Editor() {
   const handleBlockClick = (index: number) => {
     if (focusedBlockIndex !== index) {
       setFocusedBlockIndex(index);
-      setIsCommandMenuVisible(false);
-      setIsCommandOptionVisible(false);
     }
+    setIsCommandMenuVisible(false);
+    setIsCommandOptionVisible(false);
   };
 
   useLayoutEffect(() => {

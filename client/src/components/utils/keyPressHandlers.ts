@@ -72,10 +72,7 @@ export const handleKeyPress = (
       console.log('Enter: Creating a new block below');
 
       const newIndex = index + 1;
-      addBlock(
-        { type: 'paragraph', content: 'New Paragraph Just Created!!!' },
-        newIndex,
-      );
+      addBlock({ type: 'paragraph', content: '' }, newIndex);
       setFocusedBlockIndex(newIndex);
     }
     // 2️⃣ Case: Cursor is at the beginning of a non-empty block → Insert above and shift down
