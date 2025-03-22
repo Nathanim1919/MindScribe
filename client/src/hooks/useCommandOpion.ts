@@ -1,11 +1,10 @@
 import { useState } from "react";
-import { useBlocks } from "./useBlocks";
 import { BlockType } from "../types/block.interface";
+import { useBlockContext } from "../contexts/BlockContext";
 
 export function useCommandOption(index: number | null, blocks: BlockType[]) {
   const [isCommandOptionVisible, setIsCommandOptionVisible] = useState(false);
-  const { updateBlocksWithNewSetOfBlocks, addBlock } = useBlocks(blocks);
-
+  const { deleteBlock, setBlocks} = useBlockContext()
   console.log("All blocks:", blocks);
 console.log("Trying to access index:", index);
 
@@ -17,9 +16,6 @@ console.log("Trying to access index:", index);
   
       // Convert to JSON
       const blockData = JSON.stringify(block);
-  
-      // ✅ Debugging
-      console.log("Copying block:", block);
   
       // Copy to clipboard
       navigator.clipboard
@@ -78,19 +74,25 @@ console.log("Trying to access index:", index);
         .then(() => {
           // Remove block after copying
           const newBlocks = blocks.filter((_, i) => i !== index);
-          updateBlocksWithNewSetOfBlocks(newBlocks);
+          setBlocks(newBlocks);
           console.log("Block cut:", block);
         })
         .catch((err) => console.error("Failed to cut:", err));
+
+        // then remove block
+        deleteBlock(index);
+
     }
     setIsCommandOptionVisible(false);
   };
 
   // **Delete Function**
   const handleDelete = () => {
-    if (index !== null) {
-      const newBlocks = blocks.filter((_, i) => i !== index);
+    if (index === null || index > blocks.length) {
+      console.warn("No block found at index:", index);
+      return;
     }
+    deleteBlock(index)
     setIsCommandOptionVisible(false);
   };
 
@@ -120,7 +122,7 @@ console.log("Trying to access index:", index);
       const newBlocks = [...blocks.slice(0, index + 1), duplicatedBlock, ...blocks.slice(index + 1)];
   
       // ✅ Update state properly
-      updateBlocksWithNewSetOfBlocks(newBlocks);
+      setBlocks(newBlocks);
       console.log("Updated blocks after duplication:", newBlocks);
     } else {
       console.warn("No block found at index:", index);

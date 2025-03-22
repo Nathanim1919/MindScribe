@@ -10,7 +10,7 @@ import {
 interface KeyPressHandlersProps {
   blocks: BlockType[];
   addBlock: (block: BlockType, index?: number) => void;
-  updateBlock: (index: number, block: BlockType) => void;
+  updateBlock: (index: number, content: string) => void;
   deleteBlock: (index: number) => void;
   setFocusedBlockIndex: (index: number | null) => void;
   setIsCommandMenuVisible: (visible: boolean) => void;
@@ -45,10 +45,10 @@ export const handleKeyPress = (
         const currentBlock: BlockType = blocks[index];
 
         // Merge the current block with the previous block
-        updateBlock(index - 1, {
-          ...previousBlock,
-          content: (previousBlock.content ?? '') + (currentBlock.content ?? ''),
-        });
+        updateBlock(
+          index - 1,
+          (previousBlock.content ?? '') + (currentBlock.content ?? ''),
+        );
         deleteBlock(index);
         setFocusedBlockIndex(index - 1);
       }
@@ -107,7 +107,7 @@ export const handleKeyPress = (
       console.log('The Splited text are: ', firstPart, '---:---', secondPart);
 
       // Update the current block with the first part
-      updateBlock(index, { ...blocks[index], content: 'firstPart' });
+      updateBlock(index, firstPart);
 
       // Preserve the block type for the split content
       addBlock({ type: blockType, content: secondPart }, index + 1);

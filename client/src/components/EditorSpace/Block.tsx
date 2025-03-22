@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { BlockType } from '../../types/block.interface';
 
 interface BlockProps {
@@ -20,8 +20,15 @@ export function Block({
   onBlur,
   placeholder,
 }: BlockProps) {
+  const blockRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if(blockRef.current && blockRef.current.innerText !== block.content) {
+      blockRef.current.innerText = block.content ?? '';
+    }
+  }, [block.content]);
   return (
     <div
+      ref={blockRef}
       data-block-index={index}
       aria-label={`Editable block ${index}`}
       dangerouslySetInnerHTML={{ __html: block.content ?? '' }}
@@ -43,7 +50,7 @@ export function Block({
           block.type === 'header'
             ? block.content?.trim() === ''
               ? 'before:block'
-              : 'before:block'
+              : 'before:hidden'
             : 'before:block focus:before:block'
         }
       `}

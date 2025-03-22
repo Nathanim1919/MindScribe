@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect, useLayoutEffect } from 'react';
-import { useBlocks, useCommand } from '../../hooks';
+import { useCommand } from '../../hooks';
 import { CommandMenu } from './CommandMenu';
 import { createBlock } from '../utils/blockUtils';
 import { BlockType } from '../../types/block.interface';
@@ -12,18 +12,11 @@ import { IoMdAdd } from 'react-icons/io';
 import { getCurrentDate } from '../utils/dateUtils';
 import { useCommandOption } from '../../hooks/useCommandOpion';
 import { CommandOption } from './CommandOption';
+import { useBlockContext } from '../../contexts/BlockContext';
 
 export function Editor() {
-  const { blocks, addBlock, updateBlock, deleteBlock } = useBlocks([
-    {
-      type: 'header',
-      content: 'Your very first Entrie..',
-    },
-    {
-      type: 'paragraph',
-      content: getCurrentDate(),
-    },
-  ]);
+  const {blocks, addBlock, updateBlock, deleteBlock, updateBlockWithNewType, reorderBlocks, setBlocks} = useBlockContext();
+
 
   
   const editorRef = useRef<HTMLDivElement>(null);
@@ -82,7 +75,7 @@ export function Editor() {
 
   const handleBlur = (index: number, e: React.FormEvent<HTMLDivElement>) => {
     const content = e.currentTarget.innerText;
-    updateBlock(index, { ...blocks[index], content });
+    updateBlock(index, content);
   };
 
   const getCursorPosition = (element: HTMLElement): number => {
@@ -104,7 +97,7 @@ export function Editor() {
 
     // Save cursor position
     setCursorPosition(getCursorPosition(e.currentTarget));
-    updateBlock(index, { ...blocks[index], content });
+    updateBlock(index, content);
   };
 
   useLayoutEffect(() => {
@@ -113,11 +106,12 @@ export function Editor() {
       if (blockDivs[focusedBlockIndex]) {
         placeCaretAtPosition(
           blockDivs[focusedBlockIndex] as HTMLElement,
-          cursorPosition,
+          cursorPosition
         );
       }
     }
-  }, [blocks]); // Runs after every block update
+  }, [blocks, focusedBlockIndex]);
+  
 
   const handleBlockClick = (index: number) => {
     if (focusedBlockIndex !== index) {
