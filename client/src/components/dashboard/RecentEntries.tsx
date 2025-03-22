@@ -11,6 +11,7 @@ import { MdGridView } from 'react-icons/md';
 import ThemeContext from '../../contexts/ThemeContext';
 import { useContext } from 'react';
 import { entrieListStyle } from '../../contexts/ThemeContext';
+import { IoIosHeartEmpty } from 'react-icons/io';
 
 export const RecentEntries: React.FC = () => {
   // const diaries = []
@@ -192,9 +193,13 @@ export const RecentEntries: React.FC = () => {
               Entiries
             </h2>
             <div className="flex items-center gap-1">
+              <input type='text' placeholder='Search...' className='text-white outline-0 border dark:border-dark-100 rounded-md p-1'/>
+              <button className="text-light-500 text-2xl cursor-pointer hover:text-light-700 dark:text-dark-400 dark:hover:text-dark-700 hover:dark:bg-dark-100 p-[2px] rounded-md">
+                <IoIosHeartEmpty />
+              </button>
               <button
                 onClick={toggleListStyle}
-                className="text-light-500 text-2xl cursor-pointer hover:text-light-700 dark:text-dark-500 dark:hover:text-dark-700 hover:dark:bg-dark-100 p-[2px] rounded-md"
+                className="text-light-500 text-2xl cursor-pointer hover:text-light-700 dark:text-dark-400 dark:hover:text-dark-700 hover:dark:bg-dark-100 p-[2px] rounded-md"
               >
                 {listStyle !== 'grid' ? <MdGridView /> : <IoIosList />}
               </button>

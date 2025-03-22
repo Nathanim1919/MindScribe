@@ -32,6 +32,7 @@ export function useBlocks(initialBlocks: BlockType[] = []) {
   };
 
   const updateBlocksWithNewSetOfBlocks = (newBlocks: BlockType[]) => {
+    console.log('Updating blocks with new set of blocks:', newBlocks);
     setBlocks(newBlocks);
   };
 

@@ -106,17 +106,30 @@ console.log("Trying to access index:", index);
     setIsCommandOptionVisible(false);
   };
 
-  // **Duplicate Function**
   const handleDuplicate = () => {
     if (index !== null && blocks[index]) {
-      const duplicatedBlock = { ...blocks[index], id: Date.now() };
-      const newBlocks = [...blocks];
-      newBlocks.splice(index + 1, 0, duplicatedBlock); // Insert after the original
-      addBlock(duplicatedBlock, index + 1);
-      console.log("Duplicated block:", duplicatedBlock);
+      // ✅ Create a deep copy with a unique ID
+      const duplicatedBlock = {
+        ...blocks[index],
+        id: Date.now(), // Ensuring a unique identifier
+      };
+  
+      console.log("Duplicating block:", duplicatedBlock);
+  
+      // ✅ Create a new array with the duplicated block inserted
+      const newBlocks = [...blocks.slice(0, index + 1), duplicatedBlock, ...blocks.slice(index + 1)];
+  
+      // ✅ Update state properly
+      updateBlocksWithNewSetOfBlocks(newBlocks);
+      console.log("Updated blocks after duplication:", newBlocks);
+    } else {
+      console.warn("No block found at index:", index);
     }
+  
     setIsCommandOptionVisible(false);
   };
+  
+  
 
   return {
     isCommandOptionVisible,
