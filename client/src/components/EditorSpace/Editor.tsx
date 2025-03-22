@@ -15,7 +15,7 @@ import { CommandOption } from './CommandOption';
 import { useBlockContext } from '../../contexts/BlockContext';
 
 export function Editor() {
-  const {blocks, addBlock, updateBlock, deleteBlock, updateBlockWithNewType, reorderBlocks, setBlocks} = useBlockContext();
+  const {blocks, addBlock, updateBlock, deleteBlock} = useBlockContext();
 
 
   
