@@ -144,5 +144,8 @@ export const handleKeyPress = (
     } else {
       setFocusedBlockIndex(index + 1);
     }
+  } else if (e.key === 'tab'){
+    e.preventDefault()
+    alert("The key tab is pressed")
   }
 };

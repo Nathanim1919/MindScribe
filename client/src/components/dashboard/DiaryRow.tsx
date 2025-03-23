@@ -12,7 +12,7 @@ interface DiaryRowPropType {
 
 export const DiaryRow: React.FC<DiaryRowPropType> = ({ entrie }) => {
   return (
-    <div className="group grid grid-cols-5 w-full bg-light-50 dark:bg-transparent items-center justify-between border border-light-200 rounded-sm dark:border-dark-50 hover:dark:bg-dark-50 hover:bg-light-200 cursor-pointer p-1">
+    <div className="group grid grid-cols-5 w-full bg-light-50 dark:bg-transparent items-center justify-between border border-light-200 rounded-sm dark:border-dark-50 hover:dark:bg-dark-50 hover:bg-light-100 cursor-pointer p-1">
 
       <div className="flex items-center gap-4 col-span-2">
       <button aria-label="Like">

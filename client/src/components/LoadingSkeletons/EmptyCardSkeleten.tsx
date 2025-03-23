@@ -2,7 +2,7 @@ export const EmptyCardSkeleton: React.FC<{ middle?: boolean }> = ({
   middle,
 }) => {
   return (
-    <div className="dark:bg-dark-50 shadow-2xl border border-light-400 dark:border-dark-300 bg-light-50 h-48 w-48 rounded-2xl overflow-hidden flex flex-col">
+    <div className="dark:bg-dark-50 shadow-2xl border border-light-400 dark:border-dark-300 bg-light-50 h-48 w-48 rounded-md overflow-hidden flex flex-col">
       <div className="w-full h-8 dark:bg-dark-100 bg-light-300 flex items-center justify-between px-2">
         <span className="h-4 w-18 rounded-full bg-dark-300"></span>
         <span className="h-4 w-4 rounded-full bg-dark-300"></span>

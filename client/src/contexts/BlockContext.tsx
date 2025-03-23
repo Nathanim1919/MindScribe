@@ -92,12 +92,8 @@ export const BlockProvider = ({ children }: { children: ReactNode }) => {
   const [blocks, dispatch] = useReducer(blockReducer, [
     {
       type: 'header',
-      content: 'Your very first Entrie..',
-    },
-    {
-      type: 'paragraph',
-      content: new Date().toLocaleDateString(),
-    },
+      content: '',
+    }
   ]);
 
   const addBlock = (block: BlockType, index?: number) => {

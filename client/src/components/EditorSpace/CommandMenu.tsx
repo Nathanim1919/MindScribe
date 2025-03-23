@@ -64,17 +64,17 @@ export function CommandMenu({ filter, onSelect, position }: CommandMenuProps) {
   return (
     <div
       ref={commandMenuRef}
-      className="command-menu  dark:bg-dark-100 border border-light-200  dark:border-dark-200 rounded-sm text-light-600 max-w-full absolute z-50 shadow-lg shadow-dark-800 dark:shadow-dark-50"
+      className="command-menu  dark:bg-dark-100/50 border border-b-0 overflow-hidden border-light-200/50  dark:border-dark-200/50 rounded-sm text-light-600 max-w-full absolute z-50 shadow-lg shadow-dark-800 dark:shadow-dark-50"
       style={{ top: `${menuPosition.top}px`, left: `${menuPosition.left}px` }}
     >
-      <div className="command-list grid gap-3">
-        <span className="text-sm font-semibold w-full border-b dark:border-dark-200 border-light-200 px-2 py-1 text-light-700 dark:text-dark-900">
+      <div className="command-list grid">
+        <span className="text-sm font-semibold w-full border-b dark:border-dark-200/50 border-light-200/50 p-2 text-light-700 dark:text-dark-900">
           Basic Blocks
         </span>
         {filteredBlocks.map((block) => (
           <div
             key={block.type}
-            className="command-item flex text-[17px] items-center gap-1 px-1 py-0.5 hover:bg-light-200 hover:dark:bg-dark-200 dark:text-light-100 cursor-pointer"
+            className="command-item flex text-[17px] items-center gap-1 p-1 hover:bg-light-100 hover:dark:bg-dark-100 dark:text-dark-400 text-light-400 hover:text-light-600 hover:dark:text-dark-700 cursor-pointer border-b dark:border-dark-200/50 border-light-200/50"
             onClick={() => onSelect(block.type)}
           >
             {block.icon}

@@ -26,14 +26,14 @@ export const Entriecard: React.FC<EntriecardPropType> = ({ entries }) => {
   }
 
   return (
-    <div className="entrie_card hover:dark:border-dark-300 dark:border-dark-100 dark:bg-dark-50">
-      <div className="flex px-4 py-2 border-b border-light-200 dark:border-dark-100 items-center justify-between">
-        <span className="bg-gray-200 dark:bg-dark-100 dark:text-dark-700 rounded-3xl p-[1px] border border-gray-300 dark:border-dark-200 px-1 pr-2 flex items-center gap-1">
+    <div className="entrie_card hover:border-light-400 hover:dark:border-dark-300 dark:border-dark-100 dark:bg-dark-50">
+      <div className="flex px-4 py-2 border-b border-light-200/50 dark:border-dark-100 items-center justify-between">
+        <span className="bg-gray-100 dark:bg-dark-100 dark:text-dark-700 rounded-3xl p-[1px] border border-gray-200 dark:border-dark-200 px-1 pr-2 flex items-center gap-1">
           <BsEmojiSmileFill className='text-orange-400 dark:text-amber-300'/>
           {mood}
         </span>
         <button onClick={likeEntry} aria-label="Like">
-          <IoIosHeartEmpty className="icon dark:bg-transparent hover:dark:bg-dark-100" />
+          <IoIosHeartEmpty className="icon bg-transparent hover:dark:text-dark-700 text-light-500 hover:text-light-800" />
         </button>
       </div>
       <div className="px-4 grid gap-1">

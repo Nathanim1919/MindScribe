@@ -44,7 +44,7 @@ export function Block({
             ? 'text-light-950 font-bold dark:text-dark-900 text-2xl before:text-center'
             : 'text-light-600 dark:text-dark-500 text-[16px] font-extralight'
         }
-        before:absolute before:top-0 before:left-0 before:text-gray-500 before:opacity-50 
+        before:absolute before:top-0 before:left-0 before:h-full before:grid before:place-items-center before:text-gray-500 before:opacity-50 
         before:pointer-events-none before:content-[attr(data-placeholder)]
         ${
           block.type === 'header'

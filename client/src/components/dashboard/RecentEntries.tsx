@@ -193,16 +193,22 @@ export const RecentEntries: React.FC = () => {
               Entiries
             </h2>
             <div className="flex items-center gap-1">
-              <input type='text' placeholder='Search...' className='text-white outline-0 border dark:border-dark-100 rounded-md p-1'/>
-              <button className="text-light-500 text-2xl cursor-pointer hover:text-light-700 dark:text-dark-400 dark:hover:text-dark-700 hover:dark:bg-dark-100 p-[2px] rounded-md">
-                <IoIosHeartEmpty />
-              </button>
-              <button
-                onClick={toggleListStyle}
-                className="text-light-500 text-2xl cursor-pointer hover:text-light-700 dark:text-dark-400 dark:hover:text-dark-700 hover:dark:bg-dark-100 p-[2px] rounded-md"
-              >
-                {listStyle !== 'grid' ? <MdGridView /> : <IoIosList />}
-              </button>
+              <input
+                type="text"
+                placeholder="Search..."
+                className="text-dark-300 dark:text-light-300 outline-0 border border-light-200 dark:border-dark-100 rounded-md p-1"
+              />
+              <div className='bg-light-50 dark:bg-dark-100 border border-light-200 dark:border-dark-200 flex items-center gap-2 p-[3px] rounded-md'>
+                <button className="text-light-500 text-[22px] cursor-pointer hover:text-light-700 dark:text-dark-400 dark:hover:text-dark-700 hover:dark:bg-dark-100 p-[2px] rounded-md">
+                  <IoIosHeartEmpty />
+                </button>
+                <button
+                  onClick={toggleListStyle}
+                  className="text-light-500 text-[22px] cursor-pointer hover:text-light-700 dark:text-dark-400 dark:hover:text-dark-700 hover:dark:bg-dark-100 p-[2px] rounded-md"
+                >
+                  {listStyle !== 'grid' ? <MdGridView /> : <IoIosList />}
+                </button>
+              </div>
               <Link
                 to="/in/home/new"
                 className="new_entry_button text-[13px] dark:bg-dark-100 hover:dark:bg-dark-100 dark:text-dark-700 rounded-lg px-2 py-1 flex items-center gap-1"

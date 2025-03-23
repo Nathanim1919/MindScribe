@@ -1,6 +1,7 @@
 import { RiGeminiLine } from 'react-icons/ri';
 
 export const Aipromptcard: React.FC = () => {
+  
   function enterNewEntrie() {
     console.log('Start Entry button clicked');
   }
@@ -10,17 +11,17 @@ export const Aipromptcard: React.FC = () => {
   }
 
   return (
-    <div className="bg-light-950 dark:bg-gradient-to-br from-dark-base to-dark-50 border border-gray-300 dark:border-dark-50 shadow-lg p-3 rounded-xl grid grid-cols-1 gap-6">
-      <div className="grid gap-4">
-        <h2 className="font-bold text-3xl text-violet-500 flex items-center gap-3">
+    <div className="bg-light-950 dark:bg-gradient-to-br from-dark-base to-dark-50 border border-gray-300 dark:border-dark-50 shadow-lg p-6 rounded-xl grid grid-cols-1 gap-6">
+      <div className="grid gap-6">
+        <h2 className="font-bold text-3xl text-violet-500 flex items-center justify-center gap-3">
           <RiGeminiLine className="w-12 h-12 grid place-items-center rounded-full bg-dark-50 p-2  text-purple-600 shadow-lg" />
           Daily Writing Prompt
         </h2>
-        <p className="text-lg text-gray-300 dark:text-gray-600">
+        <p className="text-sm  w-[70%] text-center mx-auto text-gray-300 dark:text-gray-600">
           Write about a challenge you overcame and how it shaped you.
         </p>
       </div>
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-4 justify-center">
         <button
           onClick={enterNewEntrie}
           className="cursor-pointer bg-light-800 dark:bg-dark-100 text-gray-300 dark:text-gray-200 font-semibold px-6 py-2 rounded-full hover:bg-dark-300 transition-all"

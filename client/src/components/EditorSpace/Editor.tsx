@@ -13,6 +13,10 @@ import { getCurrentDate } from '../utils/dateUtils';
 import { useCommandOption } from '../../hooks/useCommandOpion';
 import { CommandOption } from './CommandOption';
 import { useBlockContext } from '../../contexts/BlockContext';
+import { IoMdUndo, IoMdRedo } from 'react-icons/io';
+import { BiRedo, BiUndo } from 'react-icons/bi';
+import { TextFormatingMenu } from './textFormatingMenu';
+
 
 export function Editor() {
   const {blocks, addBlock, updateBlock, deleteBlock} = useBlockContext();
@@ -169,7 +173,7 @@ export function Editor() {
     // For header blocks, show placeholder ("Head 1" or custom value) if empty.
     if (block.type === 'header') {
       return block.content?.trim() === ''
-        ? 'Hello, Nathanim, What are up to...'
+        ? 'Hello Nathan, How are you doing today?'
         : '';
     }
 
@@ -190,7 +194,11 @@ export function Editor() {
       ref={editorRef}
       className="bg-light-50 dark:bg-dark-50 h-[90vh] overflow-hidden overflow-y-auto mt-2 rounded-md border border-light-200 dark:border-dark-100"
     >
-      <div className="sticky top-0 flex items-center justify-end text-light-500 dark:text-dark-500">
+      <div className="sticky top-0 flex items-center justify-between text-light-500 dark:text-dark-500">
+        <div className='flex items-center gap-1 px-4'>
+          <BiUndo className='w-6 h-6 p-[2px] rounded-full dark:bg-dark-100 cursor-pointer hover:dark:bg-dark-200 bg-light-100 hover:bg-light-200 border dark:border-dark-200 border-light-200'/>
+          <BiRedo className='w-6 h-6 p-[2px] rounded-full dark:bg-dark-100 cursor-pointer hover:dark:bg-dark-200 bg-light-100 hover:bg-light-200 border dark:border-dark-200 border-light-200'/>
+        </div>
         <span className="flex items-center font-extralight gap-1 p-3 py-2 border border-light-200 dark:border-dark-100 border-t-0 border-r-0 rounded-bl-2xl bg-light-100 dark:bg-dark-base text-[13px]">
           <HiOutlineCalendarDateRange /> {getCurrentDate()}
         </span>
@@ -201,7 +209,7 @@ export function Editor() {
           <div
             key={index}
             data-block-index={index}
-            className="flex items-center  gap-2 group"
+            className="flex gap-2 group"
           >
             <div className="flex self-start items-center gap-1 text-light-400 dark:text-dark-400">
               <IoMdAdd
@@ -209,14 +217,14 @@ export function Editor() {
                   setFocusedBlockIndex(index);
                   handleAddButtonClicked();
                 }}
-                className="hover:dark:bg-dark-100 hover:bg-light-100 rounded-sm opacity-0 group-hover:opacity-100 cursor-pointer text-2xl"
+                className="hover:dark:bg-dark-100 hover:bg-light-100 rounded-sm opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 cursor-pointer text-2xl"
               />
               <MdDragIndicator
                 onClick={() => {
                   setFocusedBlockIndex(index);
                   setIsCommandOptionVisible(!isCommandOptionVisible);
                 }}
-                className="hover:dark:bg-dark-100 hover:bg-light-100 rounded-sm opacity-0 group-hover:opacity-100 cursor-grab text-2xl"
+                className="hover:dark:bg-dark-100 hover:bg-light-100 rounded-sm opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 cursor-grab text-2xl"
               />
             </div>
             <Block
@@ -242,6 +250,7 @@ export function Editor() {
         )}
         {isCommandOptionVisible && (
           <CommandOption
+            position={focusedBlockIndex}
             handleCopy={handleCopy}
             handlePaste={handlePaste}
             handleCut={handleCut}
@@ -251,6 +260,7 @@ export function Editor() {
             handleUndo={handleUndo}
           />
         )}
+        {/* <TextFormatingMenu/> */}
       </div>
     </div>
   );
