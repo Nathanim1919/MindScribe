@@ -20,13 +20,14 @@ export interface IQuoteBlock extends IBlock {
   type: 'quote'; // Type of the block
 }
 
-// export interface NonEditableBlock {
-//   type:"nonEditable"
-// }
+export interface IDividerBlock {
+  type: 'divider'; // Type of the block
+  dividerType?:'divider1' | 'divider2';
+}
 
 // Interface for all block types
 export type BlockType =
   | IHeaderBlock
   | IParagraphBlock
   | IQuoteBlock
-  // | NonEditableBlock
+  | IDividerBlock

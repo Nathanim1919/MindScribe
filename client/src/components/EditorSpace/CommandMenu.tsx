@@ -48,7 +48,7 @@ export function CommandMenu({ filter, onSelect, position }: CommandMenuProps) {
 
     // Adjust menu positioning relative to the document, considering scrolling
     setMenuPosition({
-      top: blockRect.bottom + window.scrollY + 4, // Small margin below the block
+      top: blockRect.top + window.scrollY, // Small margin below the block
       left: blockRect.left + window.scrollX, // Align with block's left edge
     });
   }, [position]);
@@ -64,8 +64,10 @@ export function CommandMenu({ filter, onSelect, position }: CommandMenuProps) {
   return (
     <div
       ref={commandMenuRef}
-      className="command-menu  dark:bg-dark-100/50 border border-b-0 overflow-hidden border-light-200/50  dark:border-dark-200/50 rounded-sm text-light-600 max-w-full absolute z-50 shadow-lg shadow-dark-800 dark:shadow-dark-50"
       style={{ top: `${menuPosition.top}px`, left: `${menuPosition.left}px` }}
+      className={`
+        
+        bg-light-base/20 transition-all duration-100 ease-in-out dark:bg-dark-100/20 backdrop-blur-2xl border  border-light-200 border-b-0 overflow-hidden dark:border-dark-200 fixed  shadow-lg shadow-dark-800 dark:shadow-dark-50 rounded-lg grid place-items-center`}
     >
       <div className="command-list grid">
         <span className="text-sm font-semibold w-full border-b dark:border-dark-200/50 border-light-200/50 p-2 text-light-700 dark:text-dark-900">

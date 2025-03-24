@@ -96,18 +96,18 @@ export const handleKeyPress = (
     }
     // 3️⃣ Case: Cursor is in the middle of text → Split the content into two blocks
     else {
-      console.log('Enter: Splitting block at cursor position');
 
       const [firstPart, secondPart] = splitContentAtCursor(blockDiv);
 
       // Lets Check if it is really spliting the text
-      console.log('The Splited text are: ', firstPart, '---:---', secondPart);
 
       // Update the current block with the first part
       updateBlock(index, firstPart);
 
       // Preserve the block type for the split content
-      addBlock({ type: blockType, content: secondPart }, index + 1);
+      addBlock({type:'divider', dividerType: 'divider1'}, index + 1);
+      addBlock({ type: blockType, content: secondPart }, index + 2);
+      addBlock({type:'divider', dividerType: 'divider1'}, index + 3);
       setFocusedBlockIndex(index + 1);
 
       // Ensure the cursor moves to the newly created block
@@ -144,8 +144,11 @@ export const handleKeyPress = (
     } else {
       setFocusedBlockIndex(index + 1);
     }
-  } else if (e.key === 'tab'){
-    e.preventDefault()
-    alert("The key tab is pressed")
+  }
+
+  // if the key is tab
+  else if (e.key === 'Tab') {
+    e.preventDefault();
+    insertTextAtCaret('\u00A0\u00A0\u00A0\u00A0'); // Insert a non-breaking space (safe for all browsers
   }
 };

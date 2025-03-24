@@ -16,6 +16,7 @@ import { useBlockContext } from '../../contexts/BlockContext';
 import { IoMdUndo, IoMdRedo } from 'react-icons/io';
 import { BiRedo, BiUndo } from 'react-icons/bi';
 import { TextFormatingMenu } from './textFormatingMenu';
+import { EditorIntro } from './editorIntro';
 
 
 export function Editor() {
@@ -167,6 +168,14 @@ export function Editor() {
     setFocusedBlockIndex(index);
   };
 
+  const addBgStyleForTheFocusedBlockIfTheCommandMenuIsVissible = (index: number) => {
+    if ((isCommandMenuVisible || isCommandOptionVisible)  && index === focusedBlockIndex){
+      return "bg-dark-100"
+    } else {
+      return ''
+    }
+  }
+
   const activeBlockInformation = (index: number) => {
     const block = blocks[index];
 
@@ -187,12 +196,13 @@ export function Editor() {
 
   const handleAddButtonClicked = () => {
     setIsCommandMenuVisible(!isCommandMenuVisible);
+    setIsCommandOptionVisible(false)
   };
 
   return (
     <div
       ref={editorRef}
-      className="bg-light-50 dark:bg-dark-50 h-[90vh] overflow-hidden overflow-y-auto mt-2 rounded-md border border-light-200 dark:border-dark-100"
+      className="bg-light-50 relative dark:bg-dark-50 h-[90vh] overflow-hidden overflow-y-auto mt-2 rounded-md border border-light-200 dark:border-dark-100"
     >
       <div className="sticky top-0 flex items-center justify-between text-light-500 dark:text-dark-500">
         <div className='flex items-center gap-1 px-4'>
@@ -203,28 +213,32 @@ export function Editor() {
           <HiOutlineCalendarDateRange /> {getCurrentDate()}
         </span>
       </div>
+      <div className='absolute w-full h-full grid place-items-center'>
+        <EditorIntro/>
+      </div>
       {/* 📌 Render Blocks */}
       <div className="relative w-[70%] m-auto">
         {blocks.map((block, index) => (
           <div
             key={index}
             data-block-index={index}
-            className="flex gap-2 group"
+            className={`flex gap-2 group rounded-lg p-2 ${addBgStyleForTheFocusedBlockIfTheCommandMenuIsVissible(index)}`}
           >
-            <div className="flex self-start items-center gap-1 text-light-400 dark:text-dark-400">
+             <div className={`flex self-start ${block.type === 'divider'?"opacity-0":"opacity-100"} items-center gap-1 text-light-400 dark:text-dark-400`}>
               <IoMdAdd
                 onClick={() => {
                   setFocusedBlockIndex(index);
                   handleAddButtonClicked();
                 }}
-                className="hover:dark:bg-dark-100 hover:bg-light-100 rounded-sm opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 cursor-pointer text-2xl"
+                className="hover:dark:bg-dark-100 hover:bg-light-100 rounded-sm opacity-0 group-hover:opacity-100 cursor-pointer text-2xl"
               />
               <MdDragIndicator
                 onClick={() => {
                   setFocusedBlockIndex(index);
                   setIsCommandOptionVisible(!isCommandOptionVisible);
+                  setIsCommandMenuVisible(false);
                 }}
-                className="hover:dark:bg-dark-100 hover:bg-light-100 rounded-sm opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 cursor-grab text-2xl"
+                className="hover:dark:bg-dark-100 hover:bg-light-100 rounded-sm opacity-0 group-hover:opacity-100 cursor-grab text-2xl"
               />
             </div>
             <Block

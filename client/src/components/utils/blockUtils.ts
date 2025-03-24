@@ -29,6 +29,8 @@ export function createBlock<T extends BlockType["type"]>(
             return ParagraphBlock.create(content);
         case "quote":
             return QuoteBlock.create(content);
+        case "divider":
+            return { type };
         default:
             throw new Error(`Unknown block type: ${type}`);
     }

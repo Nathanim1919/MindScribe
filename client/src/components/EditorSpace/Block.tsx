@@ -32,7 +32,7 @@ export function Block({
       data-block-index={index}
       aria-label={`Editable block ${index}`}
       dangerouslySetInnerHTML={{ __html: block.content ?? '' }}
-      contentEditable
+      contentEditable={block.type !== 'divider'}
       onClick={onClick}
       onKeyDown={onKeyDown}
       spellCheck={false}
@@ -47,6 +47,13 @@ export function Block({
         before:absolute before:top-0 before:left-0 before:h-full before:grid before:place-items-center before:text-gray-500 before:opacity-50 
         before:pointer-events-none before:content-[attr(data-placeholder)]
         ${
+          // Hide for divider blocks
+          block.type === 'divider'
+            ? 'before:hidden'
+            : ''
+        }
+        ${
+          // Hide placeholder for non-empty blocks
           block.type === 'header'
             ? block.content?.trim() === ''
               ? 'before:block'

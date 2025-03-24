@@ -1,11 +1,20 @@
-import { useContext, useState } from 'react';
-import { UserMenu } from '../UserMenu';
+import { useContext } from 'react';
 import { CiLight } from 'react-icons/ci';
 import ThemeContext from '../../contexts/ThemeContext';
 import { Link } from '@tanstack/react-router';
 
-export const Header: React.FC = () => {
-  const [displayUserMenu, setDisplayUserMenu] = useState(false);
+
+interface HeaderProps {
+  setDisplayUserMenu: (value: boolean) => void;
+  displayUserMenu: boolean;
+
+}
+
+export const Header: React.FC<HeaderProps> = ({
+  setDisplayUserMenu,
+  displayUserMenu
+}) => {
+ 
   const { setTheme, theme } = useContext(ThemeContext);
 
   const toggleTheme = () => {
@@ -13,9 +22,10 @@ export const Header: React.FC = () => {
   };
 
   return (
+   
     <div
       role="banner"
-      className="border-b border-light-100 dark:border-dark-50 flex justify-between items-center px-4 py-2 bg-white dark:bg-black shadow-sm"
+      className="border-b relative z-100 border-light-100 dark:border-dark-50 flex justify-between items-center px-4 py-2 bg-white dark:bg-gradient-to-b from-dark-50 to-dark-base backdrop-blur-2xl"
     >
       <div>
         <h2 className="font-bold text-2xl text-gray-800 dark:text-dark-950">
@@ -45,7 +55,6 @@ export const Header: React.FC = () => {
           </span>
         </button>
       </div>
-      <UserMenu display={displayUserMenu} />
     </div>
   );
 };
