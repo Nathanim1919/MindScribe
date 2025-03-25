@@ -29,7 +29,6 @@ export const handleKeyPress = (
     deleteBlock,
     setFocusedBlockIndex,
     setIsCommandMenuVisible,
-    setCommandFilter,
   } = props;
 
   const currentBlockDiv = e.currentTarget;
@@ -41,8 +40,14 @@ export const handleKeyPress = (
     if (cursorPosition === 0 || currentContent.trim() === '') {
       if (index > 0) {
         e.preventDefault();
+
         const previousBlock: BlockType = blocks[index - 1];
         const currentBlock: BlockType = blocks[index];
+
+        if (previousBlock.type === 'divider'){
+          deleteBlock(index - 1);
+          setFocusedBlockIndex(index - 2);
+        }
 
         // Merge the current block with the previous block
         updateBlock(
@@ -96,7 +101,6 @@ export const handleKeyPress = (
     }
     // 3️⃣ Case: Cursor is in the middle of text → Split the content into two blocks
     else {
-
       const [firstPart, secondPart] = splitContentAtCursor(blockDiv);
 
       // Lets Check if it is really spliting the text
@@ -105,9 +109,9 @@ export const handleKeyPress = (
       updateBlock(index, firstPart);
 
       // Preserve the block type for the split content
-      addBlock({type:'divider', dividerType: 'divider1'}, index + 1);
+      addBlock({ type: 'divider', dividerType: 'divider1' }, index + 1);
       addBlock({ type: blockType, content: secondPart }, index + 2);
-      addBlock({type:'divider', dividerType: 'divider1'}, index + 3);
+      addBlock({ type: 'divider', dividerType: 'divider1' }, index + 3);
       setFocusedBlockIndex(index + 1);
 
       // Ensure the cursor moves to the newly created block

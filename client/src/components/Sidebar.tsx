@@ -7,16 +7,21 @@ import { RiBarChartLine } from 'react-icons/ri';
 
 export const Sidebar: React.FC = () => {
   return (
-    <nav
-      role="navigation"
-      className="bg-[#f2f3f5] overflow-hidden dark:bg-dark-base h-screen flex flex-col gap-4 p-2 relative items-center"
+    <main
+    className='relative overflow-hidden h-screen  dark:bg-dark-base'
     >
+      <nav
+      role="navigation"
+      className="
+      bg-[#f2f3f5] overflow-hidden dark:bg-dark-base/80 h-screen flex flex-col backdrop-blur-lg gap-4 p-2 relative items-center"
+      >
       <RiBarChartLine className="dark:text-dark-600" />
-      <ul className="flex flex-col bg-white dark:bg-dark-50 border overflow-hidden border-gray-300 dark:border-dark-200 items-center gap-2 rounded-lg">
+      <ul className="flex flex-col bg-white dark:bg-dark-50/0  overflow-hidden border-gray-300 items-center gap-2">
         {TopsidebarElements.map((element) => (
           <SidebarElement key={element.redirectTo} metadata={element} />
         ))}
       </ul>
     </nav>
+    </main>
   );
 };

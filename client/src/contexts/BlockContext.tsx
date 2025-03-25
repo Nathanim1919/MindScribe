@@ -22,7 +22,9 @@ const blockReducer = (state: BlockType[], action: Action) => {
   switch (action.type) {
     case 'ADD_BLOCK': {
       const newBlock: BlockType = createBlock(action.payload.block.type);
-      newBlock.content = action.payload.block.content;
+      if (newBlock.type !== 'divider' && action.payload.block.type !== 'divider'){
+        newBlock.content = action.payload.block.content;
+      }
       if (action.payload.index !== undefined) {
         if (action.payload.index < 0 || action.payload.index > state.length) {
           console.error('Invalid index:', action.payload.index);

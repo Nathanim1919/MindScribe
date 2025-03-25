@@ -5,7 +5,6 @@ import { CiCalendarDate } from 'react-icons/ci';
 import { IoIosHeartEmpty } from 'react-icons/io';
 import { EntryType } from '../../types/entrie.interface';
 
-
 type EntriecardPropType = {
   entries: EntryType;
 };
@@ -26,42 +25,47 @@ export const Entriecard: React.FC<EntriecardPropType> = ({ entries }) => {
   }
 
   return (
-    <div className="entrie_card hover:border-light-400 hover:dark:border-dark-300 dark:border-dark-100 dark:bg-dark-50">
-      <div className="flex px-4 py-2 border-b border-light-200/50 dark:border-dark-100 items-center justify-between">
-        <span className="bg-gray-100 dark:bg-dark-100 dark:text-dark-700 rounded-3xl p-[1px] border border-gray-200 dark:border-dark-200 px-1 pr-2 flex items-center gap-1">
-          <BsEmojiSmileFill className='text-orange-400 dark:text-amber-300'/>
-          {mood}
-        </span>
-        <button onClick={likeEntry} aria-label="Like">
-          <IoIosHeartEmpty className="icon bg-transparent hover:dark:text-dark-700 text-light-500 hover:text-light-800" />
-        </button>
-      </div>
-      <div className="px-4 grid gap-1">
-        <h3 className="text-1xl font-bold dark:text-dark-700">{title}</h3>
-        <p className="text-[14px] text-light-600 dark:text-dark-500 w-full">
-          {content}
-        </p>
-      </div>
-      <div className="flex px-4 bg-gray-100 dark:bg-dark-100 py-2 justify-between items-center border-t border-gray-200 dark:border-dark-100">
-        <span className="relative text-[13px] w-full text-light-600 flex items-center gap-1">
-          <CiCalendarDate className='relative h-4 w-4 grid place-items-center'/>
-          {date}
-        </span>
-        <div className="flex items-center gap-2">
-          <button
-            onClick={editEntry}
-            aria-label="Edit"
-            className="rounded-full border-dark-50"
-          >
-            <CiEdit className="icon dark:bg-dark-100 hover:dark:bg-dark-200 dark:text-dark-400" />
+    <div
+      className="relative w-full h-full
+    "
+    >
+      <div className="entrie_card h-full hover:border-light-400 hover:dark:border-dark-300 dark:border-dark-100 dark:bg-dark-50/90 backdrop-blur-3xl">
+        <div className="flex px-4 py-2 border-b border-light-200/50 dark:border-dark-100 items-center justify-between">
+          <span className="bg-gray-100 dark:bg-dark-100 dark:text-dark-700 rounded-3xl p-[1px] border border-gray-200 dark:border-dark-200 px-1 pr-2 flex items-center gap-1">
+            <BsEmojiSmileFill className="text-orange-400 dark:text-amber-300" />
+            {mood}
+          </span>
+          <button onClick={likeEntry} aria-label="Like">
+            <IoIosHeartEmpty className="icon bg-transparent hover:dark:text-dark-700 text-light-500 hover:text-light-800" />
           </button>
-          <button
-            onClick={deleteEntry}
-            aria-label="Delete"
-            className="rounded-full border-dark-50"
-          >
-            <MdDeleteOutline className="icon dark:bg-dark-100 hover:dark:bg-dark-200 dark:text-dark-400" />
-          </button>
+        </div>
+        <div className="px-4 grid gap-1">
+          <h3 className="text-1xl font-bold dark:text-dark-700">{title}</h3>
+          <p className="text-[14px] text-light-600 dark:text-dark-500 w-full">
+            {content}
+          </p>
+        </div>
+        <div className="flex px-4 bg-gray-100 dark:bg-dark-100 py-2 justify-between items-center border-t border-gray-200 dark:border-dark-100">
+          <span className="relative text-[13px] w-full text-light-600 flex items-center gap-1">
+            <CiCalendarDate className="relative h-4 w-4 grid place-items-center" />
+            {date}
+          </span>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={editEntry}
+              aria-label="Edit"
+              className="rounded-full border-dark-50"
+            >
+              <CiEdit className="icon dark:bg-dark-100 hover:dark:bg-dark-200 dark:text-dark-400" />
+            </button>
+            <button
+              onClick={deleteEntry}
+              aria-label="Delete"
+              className="rounded-full border-dark-50"
+            >
+              <MdDeleteOutline className="icon dark:bg-dark-100 hover:dark:bg-dark-200 dark:text-dark-400" />
+            </button>
+          </div>
         </div>
       </div>
     </div>

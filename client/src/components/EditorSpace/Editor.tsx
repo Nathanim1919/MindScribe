@@ -222,9 +222,10 @@ export function Editor() {
           <div
             key={index}
             data-block-index={index}
-            className={`flex gap-2 group rounded-lg p-2 ${addBgStyleForTheFocusedBlockIfTheCommandMenuIsVissible(index)}`}
+            className={`flex gap-2 group rounded-lg ${addBgStyleForTheFocusedBlockIfTheCommandMenuIsVissible(index)}`}
           >
-             <div className={`flex self-start ${block.type === 'divider'?"opacity-0":"opacity-100"} items-center gap-1 text-light-400 dark:text-dark-400`}>
+             {index !== 0 &&
+              <div className={`flex self-start ${block.type === 'divider'?"opacity-0":"opacity-100"} items-center gap-1 text-light-400 dark:text-dark-400`}>
               <IoMdAdd
                 onClick={() => {
                   setFocusedBlockIndex(index);
@@ -240,7 +241,7 @@ export function Editor() {
                 }}
                 className="hover:dark:bg-dark-100 hover:bg-light-100 rounded-sm opacity-0 group-hover:opacity-100 cursor-grab text-2xl"
               />
-            </div>
+            </div>}
             <Block
               key={index}
               index={index}

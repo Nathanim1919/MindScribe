@@ -3,7 +3,11 @@ import { getCurrentDate } from '../utils/dateUtils';
 
 export const Greeting: React.FC = () => {
   return (
-    <div className="flex items-center justify-between p-4">
+    <div className="relative
+    before:w-[70px] before:h-[10px] before:rounded-full before:top-12 before:left-[70%] before:bg-light-50 before:absolute
+    ">
+      <div className='flex items-center justify-between p-4 dark:bg-dark-base/30 backdrop-blur-[20px] relative z-10'>
+
       <div className="flex flex-col justify-center m-0">
         <h1 className="m-0 text-heading-main dark:text-dark-950">
           Good Morning, <span className="m-0 text-purple-500">Nathanim</span>
@@ -16,6 +20,7 @@ export const Greeting: React.FC = () => {
         <CiCalendarDate className="text-[18px]" />
         {getCurrentDate()}
       </span>
+      </div>
     </div>
   );
 };
