@@ -1,33 +1,51 @@
 // Base interface for all block types
-export interface IBlock {
+
+// Base interface for all blocks
+export interface IBaseBlock {
+  id: string; // Unique identifier for the block
   type: string; // Type of the block (e.g., "paragraph", "quote", "header")
   content?: string; // Content of the block
+  meta?: {
+    spacing?: "small" | "medium" | "large"; // Spacing around the block
+    level?: number; // Level of the header (1 for h1, 2 for h2, etc.)
+  }
 }
 
-// Interface for header blocks
-export interface IHeaderBlock extends IBlock {
+
+// Specific block types
+export interface IHeaderBlock extends IBaseBlock {
   type: 'header'; // Type of the block
-  level?: number; // Level of the header (1 for h1, 2 for h2, etc.)
+  meta: {
+    level: 1 | 2 | 3; // Level of the header (1 for h1, 2 for h2, etc.)
+    spacing:'large';
+  };
 }
 
-// Interface for paragraph blocks
-export interface IParagraphBlock extends IBlock {
-  type: 'paragraph'; // Type of the block
+export interface IParagraphBlock extends IBaseBlock {
+  type: 'paragraph';
+  meta?: {
+    spacing?: 'small' | 'medium';
+  };
 }
 
-// Interface for quote blocks
-export interface IQuoteBlock extends IBlock {
-  type: 'quote'; // Type of the block
+
+export interface IQuoteBlock extends IBaseBlock {
+  type: 'quote';
+  meta?: {
+    spacing?: 'medium' | 'large';
+  };
 }
 
-export interface IDividerBlock {
-  type: 'divider'; // Type of the block
-  dividerType?:'divider1' | 'divider2';
-}
 
-// Interface for all block types
-export type BlockType =
+// Union type of all possible blocks
+export type BlockType = 
   | IHeaderBlock
   | IParagraphBlock
-  | IQuoteBlock
-  | IDividerBlock
+  | IQuoteBlock;
+
+
+
+// type guard helpers
+export const isHeaderBlock = (block: BlockType): block is IHeaderBlock => block.type === 'header';
+export const isParagraphBlock = (block: BlockType): block is IParagraphBlock => block.type === 'paragraph';
+export const isQuoteBlock = (block: BlockType): block is IQuoteBlock => block.type === 'quote';
