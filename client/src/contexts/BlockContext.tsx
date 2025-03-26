@@ -1,15 +1,21 @@
 import { createContext, useReducer, ReactNode, useContext } from 'react';
 import { BlockType } from '../types/block.interface';
-import { createBlock } from '../components/utils/blockUtils';
+import { createBlock } from '../components/utils/blockFactory';
 
 // define actions
 type Action =
-  | { type: 'ADD_BLOCK'; payload: { block: BlockType; index?: number } }
-  | { type: 'UPDATE_BLOCK'; payload: { index: number; content: string } }
+  | {
+      type: 'ADD_BLOCK';
+      payload: { block: BlockType['type']; index?: number; content?: string };
+    }
+  | {
+      type: 'UPDATE_BLOCK';
+      payload: { index: number; updates: Partial<BlockType> };
+    }
   | { type: 'DELETE_BLOCK'; payload: { index: number } }
   | {
-      type: 'UPDATE_BLOCK_WITH_NEW_TYPE';
-      payload: { index: number; newBlock: BlockType };
+      type: 'CHANGE_BLOCK_TYPE';
+      payload: { index: number; newType: BlockType['type'] };
     }
   | {
       type: 'REORDER_BLOCKS';
@@ -21,18 +27,22 @@ type Action =
 const blockReducer = (state: BlockType[], action: Action) => {
   switch (action.type) {
     case 'ADD_BLOCK': {
-      const newBlock: BlockType = createBlock(action.payload.block.type);
-      if (newBlock.type !== 'divider' && action.payload.block.type !== 'divider'){
-        newBlock.content = action.payload.block.content;
-      }
+      console.log('The Payload is: ', action.payload.block);
+      const newBlock: BlockType = createBlock(
+        action.payload.block,
+        action.payload.content,
+      );
       if (action.payload.index !== undefined) {
         if (action.payload.index < 0 || action.payload.index > state.length) {
           console.error('Invalid index:', action.payload.index);
           return state;
         }
-        const newBlocks = [...state];
-        newBlocks.splice(action.payload.index, 0, newBlock);
-        return newBlocks;
+
+        return [
+          ...state.slice(0, action.payload.index),
+          newBlock,
+          ...state.slice(action.payload.index),
+        ];
       }
       return [...state, newBlock];
     }
@@ -42,21 +52,19 @@ const blockReducer = (state: BlockType[], action: Action) => {
     case 'UPDATE_BLOCK': {
       return state.map((block, i) =>
         i === action.payload.index
-          ? { ...block, content: action.payload.content }
+          ? { ...block, ...action.payload.updates }
           : block,
       );
     }
-    case 'UPDATE_BLOCK_WITH_NEW_TYPE': {
+
+    case 'CHANGE_BLOCK_TYPE': {
       return state.map((block, i) =>
         i === action.payload.index
-          ? {
-              ...block,
-              type: action.payload.newBlock.type,
-              content: action.payload.newBlock.content,
-            }
+          ? { ...block, type: action.payload.newType }
           : block,
       );
     }
+
     case 'REORDER_BLOCKS': {
       const newBlocks = Array.from(state);
       const [removed] = newBlocks.splice(action.payload.startIndex, 1);
@@ -68,19 +76,19 @@ const blockReducer = (state: BlockType[], action: Action) => {
       return action.payload.blocks;
     }
     default: {
-      console.error('Invalid action:', action);
-      return state;
+      const _exhaustiveCheck: never = action;
+      throw new Error(`Unknown action type: ${_exhaustiveCheck}`);
     }
   }
 };
 
 export type BlockContextType = {
   blocks: BlockType[];
-  addBlock: (block: BlockType, index?: number) => void;
-  updateBlock: (index: number, content: string) => void;
+  addBlock: (type: BlockType['type'], index?: number, content?: string) => void;
+  updateBlock: (index: number, updates: Partial<BlockType>) => void;
   deleteBlock: (index: number) => void;
   reorderBlocks: (startIndex: number, endIndex: number) => void;
-  updateBlockWithNewType: (index: number, newBlock: BlockType) => void;
+  changeBlockType: (index: number, newType: BlockType['type']) => void;
   setBlocks: (blocks: BlockType[]) => void;
 };
 
@@ -92,56 +100,31 @@ export const BlockContext = createContext<BlockContextType | undefined>(
 // Create the provider
 export const BlockProvider = ({ children }: { children: ReactNode }) => {
   const [blocks, dispatch] = useReducer(blockReducer, [
-    {
-      type: 'header',
-      content: '',
-    }
+    createBlock('header', 'Hello sir'),
   ]);
 
-  const addBlock = (block: BlockType, index?: number) => {
-    dispatch({ type: 'ADD_BLOCK', payload: { block, index } });
-  };
-
-  const updateBlock = (index: number, content: string) => {
-    dispatch({ type: 'UPDATE_BLOCK', payload: { index, content } });
-  };
-
-  const deleteBlock = (index: number) => {
-    dispatch({ type: 'DELETE_BLOCK', payload: { index } });
-  };
-
-  const reorderBlocks = (startIndex: number, endIndex: number) => {
-    dispatch({ type: 'REORDER_BLOCKS', payload: { startIndex, endIndex } });
-  };
-
-  const updateBlockWithNewType = (index: number, newBlock: BlockType) => {
-    dispatch({
-      type: 'UPDATE_BLOCK_WITH_NEW_TYPE',
-      payload: { index, newBlock },
-    });
-  };
-
-  const setBlocks = (blocks: BlockType[]) => {
-    dispatch({ type: 'SET_BLOCKS', payload: { blocks } });
+  const contextValue: BlockContextType = {
+    blocks,
+    addBlock: (type, index, content) =>
+      dispatch({ type: 'ADD_BLOCK', payload: { type, index, content } }),
+    updateBlock: (index, updates) =>
+      dispatch({ type: 'UPDATE_BLOCK', payload: { index, updates } }),
+    deleteBlock: (index) =>
+      dispatch({ type: 'DELETE_BLOCK', payload: { index } }),
+    changeBlockType: (index, newType) =>
+      dispatch({ type: 'CHANGE_BLOCK_TYPE', payload: { index, newType } }),
+    reorderBlocks: (startIndex, endIndex) =>
+      dispatch({ type: 'REORDER_BLOCKS', payload: { startIndex, endIndex } }),
+    setBlocks: (blocks) =>
+      dispatch({ type: 'SET_BLOCKS', payload: { blocks } }),
   };
 
   return (
-    <BlockContext.Provider
-      value={{
-        blocks,
-        addBlock,
-        deleteBlock,
-        updateBlock,
-        updateBlockWithNewType,
-        reorderBlocks,
-        setBlocks,
-      }}
-    >
+    <BlockContext.Provider value={contextValue}>
       {children}
     </BlockContext.Provider>
   );
 };
-
 
 export const useBlockContext = () => {
   const context = useContext(BlockContext);

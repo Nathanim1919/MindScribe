@@ -1,9 +1,7 @@
-import { useState } from 'react';
 import { BlockType } from '../types/block.interface';
 import { useBlockContext } from '../contexts/BlockContext';
 
-export function useCommandOption(index: number | null, blocks: BlockType[]) {
-  const [isCommandOptionVisible, setIsCommandOptionVisible] = useState(false);
+export function useCommandOption(index: number | null, blocks: BlockType[], setIsCommandOptionVisible: (value: boolean) => void) {
   const { deleteBlock, setBlocks } = useBlockContext();
   console.log('All blocks:', blocks);
   console.log('Trying to access index:', index);
@@ -130,8 +128,6 @@ export function useCommandOption(index: number | null, blocks: BlockType[]) {
   };
 
   return {
-    isCommandOptionVisible,
-    setIsCommandOptionVisible,
     handleCopy,
     handlePaste,
     handleCut,

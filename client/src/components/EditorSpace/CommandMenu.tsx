@@ -1,12 +1,13 @@
 import { useMemo, useRef, useState, useLayoutEffect } from 'react';
 import { PiTextHBold } from 'react-icons/pi';
 import { RiText } from 'react-icons/ri';
+import { BlockType } from '../../types/block.interface';
 
 interface CommandMenuProps {
   filter: string;
   onFilterChange: (filter: string) => void;
-  onSelect: (type: string) => void;
-  position: number; // Index of the block where the command menu should appear
+  onSelect: (type: BlockType['type']) => void; // More specific type
+  position: number;
 }
 
 // Define available block types
@@ -21,6 +22,12 @@ const blockTypes = [
     label: 'Text',
     icon: <RiText className="text-light-400" />,
   },
+
+  {
+    type: 'quote',
+    label: 'Quote',
+    icon: <RiText className="text-light-400" />,
+  }
 ];
 
 export function CommandMenu({ filter, onSelect, position }: CommandMenuProps) {
@@ -33,6 +40,8 @@ export function CommandMenu({ filter, onSelect, position }: CommandMenuProps) {
   });
 
   const commandMenuRef = useRef<HTMLDivElement>(null);
+  console.log("CommandMenu rendered with filter:", filter);
+
 
   useLayoutEffect(() => {
     if (!commandMenuRef.current) return;
@@ -77,7 +86,12 @@ export function CommandMenu({ filter, onSelect, position }: CommandMenuProps) {
           <div
             key={block.type}
             className="command-item flex text-[17px] items-center gap-1 p-1 hover:bg-light-100 hover:dark:bg-dark-100 dark:text-dark-400 text-light-400 hover:text-light-600 hover:dark:text-dark-700 cursor-pointer border-b dark:border-dark-200/50 border-light-200/50"
-            onClick={() => onSelect(block.type)}
+            onClick={(e) => {
+              alert("Clicked!");
+              console.log("Clicked on:", block.type);
+              e.stopPropagation(); // Prevents interference from parents
+              onSelect(block.type as BlockType['type']);
+            }}
           >
             {block.icon}
             {block.label}

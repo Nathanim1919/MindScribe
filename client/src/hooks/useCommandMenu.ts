@@ -1,21 +1,36 @@
 import { useState } from "react";
 import { BlockType } from "../types/block.interface";
 
-export function useCommand(addBlock: (block:BlockType) => void) {
-  const [isCommandMenuVisible, setIsCommandMenuVisible] = useState(false);
-  const [commandFilter, setCommandFilter] = useState("");
+export function useCommand(
+  addBlock: (type: BlockType['type'], index?: number) => void
+) {
+  const [isVisible, setIsVisible] = useState(false);
+  const [filter, setFilter] = useState('');
+  const [targetIndex, setTargetIndex] = useState<number | null>(null);
 
-  const handleCommandSelect = (type: "header" | "paragraph" | "quote" | "list" | "image" | "divider") => {
-    addBlock({ type } as BlockType); // Add the selected block type
-    setIsCommandMenuVisible(false); // Hide the command menu
-    setCommandFilter(""); // Reset the filter
+  const showMenu = (index: number) => {
+    setTargetIndex(index);
+    setIsVisible(true);
+  };
+
+  const handleSelect = (type: BlockType['type']) => {
+    alert('Selected: ' + type);
+    if (targetIndex === null) return;
+    
+    const insertIndex = type === 'header' ? targetIndex + 1 : targetIndex;
+    addBlock(type, insertIndex);
+    
+    setIsVisible(false);
+    setFilter('');
+    setTargetIndex(null);
   };
 
   return {
-    isCommandMenuVisible,
-    commandFilter,
-    setCommandFilter,
-    handleCommandSelect,
-    setIsCommandMenuVisible
+    isCommandMenuVisible: isVisible,
+    commandFilter: filter,
+    setCommandFilter: setFilter,
+    handleCommandSelect: handleSelect,
+    showCommandMenu: showMenu,
+    hideCommandMenu: () => setIsVisible(false)
   };
 }

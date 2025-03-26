@@ -2,27 +2,20 @@ import { IoMdCopy, IoMdCut, IoMdTrash,
  } from 'react-icons/io';
 import { MdContentPaste } from "react-icons/md";
 import { IoDuplicateOutline } from 'react-icons/io5';
-import { handlePaste } from '../utils/selectionUtils';
 import { useEffect, useRef, useState } from 'react';
+import { useCommandOption } from '../../hooks/useCommandOpion';
+import { BlockType } from '../../types/block.interface';
 
 interface CommandOptionPropType {
   position: number | null;
-  handleCopy: () => void;
-  handlePaste: () => void;
-  handleCut: () => void;
-  handleDelete: () => void;
-  handleUndo: () => void;
-  handleRedo: () => void;
-  handleDuplicate: () => void;
+  blocks: BlockType[];
+  setIsCommandOptionVisible: (value: boolean) => void;
 }
 
 export const CommandOption: React.FC<CommandOptionPropType> = ({
   position,
-  handleCopy,
-  handlePaste,
-  handleCut,
-  handleDelete,
-  handleDuplicate,
+  blocks,
+  setIsCommandOptionVisible
 }) => {
   const [menuPosition, setmenuPosition] = useState<{
     top: number;
@@ -31,6 +24,14 @@ export const CommandOption: React.FC<CommandOptionPropType> = ({
     top: 0,
     left: 0,
   });
+
+  const {
+    handleCopy,
+    handlePaste,
+    handleCut,
+    handleDelete,
+    handleDuplicate,
+  } = useCommandOption(position, blocks, setIsCommandOptionVisible);
 
   const commandMenuRef = useRef<HTMLDivElement>(null);
 
@@ -57,7 +58,7 @@ export const CommandOption: React.FC<CommandOptionPropType> = ({
   return (
     <div
       ref={commandMenuRef}
-      style={{ top: `${menuPosition.top - 30 }px`, right: `${menuPosition.left + 40}` }}
+      style={{ top: `${menuPosition.top }px`, left: `${menuPosition.left + 40}` }}
       className={`
         
         bg-light-base/20 transition-all duration-100 ease-in-out dark:bg-dark-100/20 backdrop-blur-2xl border w-[150px] border-light-200 border-b-0 overflow-hidden dark:border-dark-200 fixed  shadow-lg shadow-dark-800 dark:shadow-dark-50 rounded-lg grid place-items-center`}

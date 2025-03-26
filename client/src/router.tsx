@@ -76,7 +76,7 @@ const BoardRoute = createRoute({
 });
 
 const EditorRoute = createRoute({
-  getParentRoute: () => dashboardRoute,
+  getParentRoute: () => authenticatedRoute,
   path: '/new',
   component: Editor, // Editor will be rendered at /in/new
 });
@@ -100,7 +100,8 @@ const ProfilePage = createRoute({
 const routeTree = rootRoute.addChildren([
   publicRoute.addChildren([loginRoute, registerRoute]),
   authenticatedRoute.addChildren([
-    dashboardRoute.addChildren([BoardRoute, EditorRoute, AllEntriesPage, ProfilePage]),
+    EditorRoute,
+    dashboardRoute.addChildren([BoardRoute, AllEntriesPage, ProfilePage]),
   ]),
 ]);
 
