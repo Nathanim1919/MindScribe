@@ -104,9 +104,9 @@ export function Editor() {
 
   // 📌 Handlers: Input & Click Events
   const handleInput = (index: number, e: React.FormEvent<HTMLDivElement>) => {
-    // hideMenu();
+    // 
     const content = e.currentTarget.innerText;
-
+    
     // Save cursor position
     setCursorPosition(getCursorPosition(e.currentTarget));
     updateBlock(index, { content });
@@ -203,7 +203,7 @@ export function Editor() {
   return (
     <div
       ref={editorRef}
-      className="bg-light-50 relative dark:bg-dark-50 w-[80%] mx-auto h-[90vh] overflow-hidden overflow-y-auto mt-2 rounded-md border border-light-200 dark:border-dark-100"
+      className="bg-light-50 relative dark:bg-dark-50 max-w-[80%] mx-auto h-[90vh] overflow-hidden overflow-y-auto mt-2 rounded-md border border-light-200 dark:border-dark-100"
     >
       <div className="sticky top-0 flex items-center justify-between text-light-500 dark:text-dark-500">
         <div className="flex items-center gap-1 px-4">
