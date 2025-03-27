@@ -22,6 +22,7 @@ import { BiRedo, BiUndo } from 'react-icons/bi';
 import { TextFormatingMenu } from './textFormatingMenu';
 import { EditorIntro } from './editorIntro';
 import { renderBlock } from './Blocks';
+import { useCommandMenu } from '../../hooks/useCommandMenu';
 
 export function Editor() {
   const { blocks, addBlock, updateBlock, deleteBlock } = useBlockContext();
@@ -34,13 +35,15 @@ export function Editor() {
   const [isCommandOptionVisible, setIsCommandOptionVisible] = useState(false);
 
   const {
-    isCommandMenuVisible,
-    commandFilter,
-    setCommandFilter,
-    handleCommandSelect,
-    showCommandMenu,
-    hideCommandMenu
-  } = useCommand(addBlock);
+    isVisible,
+    filter,
+    setFilter,
+    position,
+    menuRef,
+    showMenu,
+    handleSelect,
+    hideMenu,
+  } = useCommandMenu(addBlock);
 
   // 📌 Lifecycle: Focus First Block on Load
   // useEffect(() => {
@@ -78,7 +81,7 @@ export function Editor() {
       updateBlock,
       deleteBlock,
       setFocusedBlockIndex,
-      setCommandFilter,
+      setFilter,
     });
   };
 
@@ -101,7 +104,7 @@ export function Editor() {
 
   // 📌 Handlers: Input & Click Events
   const handleInput = (index: number, e: React.FormEvent<HTMLDivElement>) => {
-    hideCommandMenu();
+    // hideMenu();
     const content = e.currentTarget.innerText;
 
     // Save cursor position
@@ -122,8 +125,16 @@ export function Editor() {
   }, [blocks, focusedBlockIndex]);
 
   const handleBlockClick = (index: number) => {
+    console.log('Block clicked:', index);
     if (focusedBlockIndex !== index) {
+      console.log('Setting focus:', index);
       setFocusedBlockIndex(index);
+      placeCaretAtPosition(
+        editorRef.current?.querySelector(
+          `[data-block-index="${index}"]`,
+        ) as HTMLElement,
+        cursorPosition,
+      );
     }
     // setIsCommandMenuVisible(false);
     setIsCommandOptionVisible(false);
@@ -148,7 +159,6 @@ export function Editor() {
     }
   }, [focusedBlockIndex]); // Only runs when focus changes
 
-
   // 📌 Utility: Add New Block
   // const addNewBlock = (type: BlockType['type'], index: number) => {
   //   addBlock(type, index);
@@ -159,7 +169,7 @@ export function Editor() {
     index: number,
   ) => {
     if (
-      (isCommandMenuVisible || isCommandOptionVisible || focusedBlockIndex !== null) &&
+      (isVisible || isCommandOptionVisible || focusedBlockIndex !== null) &&
       index === focusedBlockIndex
     ) {
       return 'bg-dark-100';
@@ -187,7 +197,7 @@ export function Editor() {
   // };
 
   const handleAddButtonClicked = (index: number) => {
-    showCommandMenu(index);
+    showMenu(index);
   };
 
   return (
@@ -232,22 +242,26 @@ export function Editor() {
               onDragClick: () => {
                 setFocusedBlockIndex(index);
                 setIsCommandOptionVisible(true);
-                hideCommandMenu();
+                hideMenu();
               },
             })}
           </div>
         ))}
         {/* 📌 Command Menu */}
-        {isCommandMenuVisible && focusedBlockIndex !== null && (
+        {isVisible && (
           <CommandMenu
-            filter={commandFilter}
-            onFilterChange={setCommandFilter}
-            onSelect={handleCommandSelect}
-            position={focusedBlockIndex !== null ? focusedBlockIndex : 0}
+            filter={filter}
+            onSelect={handleSelect}
+            position={position}
+            menuRef={menuRef}
           />
         )}
         {isCommandOptionVisible && focusedBlockIndex !== null && (
-          <CommandOption position={focusedBlockIndex} blocks={blocks} setIsCommandOptionVisible={setIsCommandOptionVisible}/>
+          <CommandOption
+            position={focusedBlockIndex}
+            blocks={blocks}
+            setIsCommandOptionVisible={setIsCommandOptionVisible}
+          />
         )}
         {/* <TextFormatingMenu/> */}
       </div>

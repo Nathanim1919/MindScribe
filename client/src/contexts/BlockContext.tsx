@@ -6,7 +6,7 @@ import { createBlock } from '../components/utils/blockFactory';
 type Action =
   | {
       type: 'ADD_BLOCK';
-      payload: { block: BlockType['type']; index?: number; content?: string };
+      payload: { type: BlockType['type']; index?: number; content?: string };
     }
   | {
       type: 'UPDATE_BLOCK';
@@ -27,9 +27,11 @@ type Action =
 const blockReducer = (state: BlockType[], action: Action) => {
   switch (action.type) {
     case 'ADD_BLOCK': {
-      console.log('The Payload is: ', action.payload.block);
+      console.log('The Payload is: ', action.payload.type);
+      console.log('The index is: ', action.payload.index);
+      console.log('The content is: ', action.payload.content);
       const newBlock: BlockType = createBlock(
-        action.payload.block,
+        action.payload.type,
         action.payload.content,
       );
       if (action.payload.index !== undefined) {

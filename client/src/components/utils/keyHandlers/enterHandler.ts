@@ -10,14 +10,14 @@ export const handleEnter: KeyHandler = (e, { index, currentElement, currentBlock
 
   // Case 1: Empty or end of block
   if (content.trim() === '' || cursorPosition === content.length) {
-    context.addBlock(newBlock, index + 1);
+    context.addBlock('paragraph', index + 1);
     context.setFocusedBlockIndex(index + 1);
     return;
   }
 
   // Case 2: Start of block
   if (cursorPosition === 0 && index > 0) {
-    context.addBlock(newBlock, index);
+    context.addBlock('paragraph', index);
     setTimeout(() => {
       const newBlock = document.querySelector(`[data-block-index="${index}"]`);
       if (newBlock) placeCaretAtStart(newBlock as HTMLElement);
@@ -29,7 +29,7 @@ export const handleEnter: KeyHandler = (e, { index, currentElement, currentBlock
   const [firstPart, secondPart] = splitContentAtCursor(currentElement);
   context.updateBlock(index, { content: firstPart });
   const nextBlock = createBlock('paragraph',secondPart)
-  context.addBlock(nextBlock, index + 1);
+  context.addBlock(nextBlock.type, index + 1);
   context.setFocusedBlockIndex(index + 1);
 
   setTimeout(() => {

@@ -1,35 +1,33 @@
 // utils/blockFactory.ts
 
-import { BlockType, IHeaderBlock, IParagraphBlock, IQuoteBlock } from "../../types/block.interface";
+import {
+  BlockType,
+  IHeaderBlock,
+  IParagraphBlock,
+  IQuoteBlock,
+} from '../../types/block.interface';
 
-export const createBlock = (type: BlockType['type'], content?: string): BlockType => {
-  const id = generateId();
-  
-  switch (type) {
-    case 'header':
-      return {
-        id,
-        type: 'header',
-        content,
-        meta: { level: 1, spacing: 'large' }
-      } as IHeaderBlock;
-    case 'quote':
-      return {
-        id,
-        type: 'quote',
-        content,
-        meta: { spacing: 'medium' }
-      } as IQuoteBlock;
-    case 'paragraph':
-    default:
-      return {
-        id,
-        type: 'paragraph',
-        content,
-        meta: { spacing: 'small' }
-      } as IParagraphBlock;
+export function createBlock<T extends BlockType['type']>(
+  type: T,
+  content?: string,
+): Extract<BlockType, { type: T }> {
+  if (type === 'header') {
+    return {
+      id: generateId(),
+      type: 'header',
+      content,
+      meta: { level: 1, spacing: 'large' },
+    } as Extract<BlockType, { type: T }>;
+  } else if (type === 'paragraph') {
+    return {
+      id: generateId(),
+      type: 'paragraph',
+      content,
+    } as Extract<BlockType, { type: T }>;
+  } else {
+    throw new Error(`Unsupported block type: ${type}`);
   }
-};
+}
 
 const generateId = (): string => {
   return `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
