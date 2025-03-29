@@ -114,6 +114,8 @@ export function Editor() {
 
   const handleBlockClick = (index: number) => {
     if (focusedBlockIndex !== index) {
+      console.log("Focused Block Index:", focusedBlockIndex);
+      console.log("cursorPosition:", cursorPosition);
       setFocusedBlockIndex(index);
       placeCaretAtPosition(
         editorRef.current?.querySelector(
@@ -149,9 +151,6 @@ export function Editor() {
     }
   }, [focusedBlockIndex]); // Only runs when focus changes
 
-  const handleAddButtonClicked = (index: number) => {
-    showMenu(index);
-  };
 
   const handleBlockContainerClick = (index: number | null) => {
     if (focusedBlockIndex === index) {
@@ -162,6 +161,19 @@ export function Editor() {
       setFocusedBlockIndex(index);
     }
   };
+
+  const onAddButtonClick = (index: number) => {
+    if (focusedBlockIndex !== index){
+      setFocusedBlockIndex(index);
+    }
+    showMenu(index);
+    setIsCommandOptionVisible(false);
+  };
+
+
+  useEffect(() => {
+    console.log('Focused Block Index:', focusedBlockIndex);
+  },[focusedBlockIndex]);
 
   return (
     <div
@@ -186,7 +198,7 @@ export function Editor() {
           <div
             key={index}
             data-block-index={index}
-            className={`flex group w-full rounded-md cursor-text ${index === focusedBlockIndex ? 'bg-dark-100' : ''}`}
+            className={`flex group w-full relative rounded-md cursor-text`}
             onClick={() => handleBlockContainerClick(index)}
           >
             {renderBlock({
@@ -198,11 +210,7 @@ export function Editor() {
               onClick: () => handleBlockClick(index),
               onInput: (e) => handleInput(index, e),
               onBlur: (e) => handleInput(index, e),
-              onAddClick: () => {
-                setFocusedBlockIndex(index);
-                setIsCommandOptionVisible(false);
-                handleAddButtonClicked(index);
-              },
+              onAddClick: () => onAddButtonClick(index),
               onDragClick: () => {
                 setFocusedBlockIndex(index);
                 setIsCommandOptionVisible(true);

@@ -29,7 +29,7 @@ export const BaseBlock = React.forwardRef<HTMLDivElement, BaseBlockProps>(
       placeholder,
       isFocused,
       className = '',
-      // showPlaceholder,
+      showPlaceholder,
       spacing = 'medium',
       editable = true,
       onKeyDown,
@@ -57,7 +57,7 @@ export const BaseBlock = React.forwardRef<HTMLDivElement, BaseBlockProps>(
     }, [content]);
 
     return (
-      <div className={`flex group items-center gap-2`}>
+      <div className={`flex w-full group items-center gap-2`}>
         {/* Controls */}
         {(onAddClick || onDragClick || isFocused) && (
           <div
@@ -80,20 +80,21 @@ export const BaseBlock = React.forwardRef<HTMLDivElement, BaseBlockProps>(
         )}
         {/* Content */}
         <div
-          ref={resolvedRef}
-          data-block-id={blockId}
-          data-block-index={index}
-          aria-label={`Editable block ${index}`}
-          dangerouslySetInnerHTML={{ __html: content ?? '' }}
-          contentEditable={editable}
-          onClick={onClick}
-          onKeyDown={onKeyDown}
-          spellCheck={false}
-          onInput={onInput}
-          onBlur={onBlur}
-          className={`${className} ${spacingClasses[spacing]} relative outline-none break-words`}
-          data-placeholder={placeholder}
-        />
+            ref={resolvedRef}
+            data-block-id={blockId}
+            data-block-index={index}
+            aria-label={`Editable block ${index}`}
+            dangerouslySetInnerHTML={{ __html: content ?? '' }}
+            contentEditable={true}
+            onClick={onClick}
+            onKeyDown={onKeyDown}
+            spellCheck={false}
+            onInput={onInput}
+            onBlur={onBlur}
+            className={`${className} relative w-full ${spacingClasses[spacing]} relative outline-none break-words before:absolute before:text-dark-400 before:font-light before:grid before:place-content-center before:h-full before:dark:text-dark-900 before:pointer-events-none before:content-[attr(data-placeholder)] before:top-0 before:left-0`}
+            data-placeholder={showPlaceholder ? placeholder : ''}
+          />
+
       </div>
     );
   },

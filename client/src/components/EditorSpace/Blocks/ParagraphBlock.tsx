@@ -39,14 +39,14 @@ export const ParagraphBlock = ({
   console.log("placeholder is: ", placeholder)
 
   return (
-    <div className="relative group">
+    <div className="relative group w-full">
       <BaseBlock
         blockId={block.id}
         index={index}
         content={block.content}
         placeholder={placeholder}
         isFocused={isFocused}
-        className={`${paragraphClasses} text-light-500 w-full dark:text-dark-500`}
+        className={`${paragraphClasses.large} text-light-800 w-full dark:text-dark-600`}
         showPlaceholder={!block.content?.trim()}
         onKeyDown={onKeyDown}
         onClick={onClick}
