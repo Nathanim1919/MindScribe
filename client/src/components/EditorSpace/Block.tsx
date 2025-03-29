@@ -27,7 +27,7 @@ export const BaseBlock = React.forwardRef<HTMLDivElement, BaseBlockProps>(
       index,
       content,
       placeholder,
-      // isFocused,
+      isFocused,
       className = '',
       // showPlaceholder,
       spacing = 'medium',
@@ -57,9 +57,9 @@ export const BaseBlock = React.forwardRef<HTMLDivElement, BaseBlockProps>(
     }, [content]);
 
     return (
-      <div className="flex group w-full items-center gap-2">
+      <div className={`flex group items-center gap-2`}>
         {/* Controls */}
-        {(onAddClick || onDragClick) && (
+        {(onAddClick || onDragClick || isFocused) && (
           <div
             className={`flex ${spacingClasses[spacing]} self-start items-center gap-1 text-light-400 dark:text-dark-400`}
             
@@ -91,7 +91,7 @@ export const BaseBlock = React.forwardRef<HTMLDivElement, BaseBlockProps>(
           spellCheck={false}
           onInput={onInput}
           onBlur={onBlur}
-          className={`${className} ${spacingClasses[spacing]} relative w-full outline-none break-words`}
+          className={`${className} ${spacingClasses[spacing]} relative outline-none break-words`}
           data-placeholder={placeholder}
         />
       </div>

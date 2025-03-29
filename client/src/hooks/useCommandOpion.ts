@@ -61,7 +61,7 @@ export function useCommandOption(index: number | null, blocks: BlockType[], setI
 
   // **Cut Function (Copy & Remove)**
   const handleCut = () => {
-    if (index !== null && blocks[index]) {
+    if ((index !== null && index > 0)&& blocks[index]) {
       const block = blocks[index];
 
       // Copy first
@@ -108,7 +108,7 @@ export function useCommandOption(index: number | null, blocks: BlockType[], setI
       // ✅ Create a deep copy with a unique ID
       const duplicatedBlock = {
         ...blocks[index],
-        id: Date.now(), // Ensuring a unique identifier
+        id: Date.now().toString(), // Ensuring a unique identifier
       };
 
       // ✅ Create a new array with the duplicated block inserted

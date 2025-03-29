@@ -23,7 +23,7 @@ export const SidebarElement: React.FC<{ metadata: SidebarElementPropType }> = ({
       icon={icon}
       to={redirectTo}
       onClick={handleClick}
-      className="flex group overflow-hidden hover:bg-light-200 dark:hover:bg-dark-100 relative items-center p-2 rounded-2xl justify-center dark:text-white transition-colors"
+      className="flex group text-[20px] duration-150 hover:bg-light-200 dark:hover:bg-dark-100 relative items-center p-2 rounded-[13px] justify-center dark:text-dark-600 transition-colors"
     />
   );
 };

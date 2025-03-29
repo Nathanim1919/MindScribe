@@ -1,26 +1,14 @@
 import React, { useRef, useState, useEffect, useLayoutEffect } from 'react';
-import { useCommand } from '../../hooks';
 import { CommandMenu } from './CommandMenu';
 // import { createBlock } from '../utils/blockUtils';
-import {
-  BlockType,
-  IHeaderBlock,
-  IParagraphBlock,
-  IQuoteBlock,
-  isHeaderBlock,
-} from '../../types/block.interface';
-import { Block } from './Block';
+import { BlockType, isHeaderBlock } from '../../types/block.interface';
 import { handleKeyPress } from '../utils/keyPressHandlers';
 import { placeCaretAtEnd, placeCaretAtPosition } from '../utils/cursorUtils';
 import { HiOutlineCalendarDateRange } from 'react-icons/hi2';
-import { MdDragIndicator } from 'react-icons/md';
 import { getCurrentDate } from '../utils/dateUtils';
-import { useCommandOption } from '../../hooks/useCommandOpion';
 import { CommandOption } from './CommandOption';
 import { useBlockContext } from '../../contexts/BlockContext';
 import { BiRedo, BiUndo } from 'react-icons/bi';
-import { TextFormatingMenu } from './textFormatingMenu';
-import { EditorIntro } from './editorIntro';
 import { renderBlock } from './Blocks';
 import { useCommandMenu } from '../../hooks/useCommandMenu';
 
@@ -46,17 +34,18 @@ export function Editor() {
   } = useCommandMenu(addBlock);
 
   // 📌 Lifecycle: Focus First Block on Load
-  // useEffect(() => {
-  //   if (editorRef.current) {
-  //     const firstBlock = editorRef.current.querySelector(
-  //       '[contenteditable]',
-  //     ) as HTMLDivElement;
-  //     if (firstBlock) {
-  //       firstBlock.focus();
-  //       placeCaretAtEnd(firstBlock);
-  //     }
-  //   }
-  // }, []);
+  useEffect(() => {
+    if (editorRef.current) {
+      const firstBlock = editorRef.current.querySelector(
+        '[contenteditable]',
+      ) as HTMLDivElement;
+      if (firstBlock) {
+        firstBlock.focus();
+        placeCaretAtEnd(firstBlock);
+        setFocusedBlockIndex(0);
+      }
+    }
+  }, []);
 
   // Focus management
   useEffect(() => {
@@ -98,18 +87,17 @@ export function Editor() {
     const preCaretRange = range.cloneRange();
     preCaretRange.selectNodeContents(element);
     preCaretRange.setEnd(range.startContainer, range.startOffset);
-
     return preCaretRange.toString().length; // Returns the correct cursor position
   };
 
   // 📌 Handlers: Input & Click Events
   const handleInput = (index: number, e: React.FormEvent<HTMLDivElement>) => {
-    // 
+    // get the content of the focused block
     const content = e.currentTarget.innerText;
-    
+
     // Save cursor position
-    setCursorPosition(getCursorPosition(e.currentTarget));
     updateBlock(index, { content });
+    setCursorPosition(getCursorPosition(e.currentTarget));
   };
 
   useLayoutEffect(() => {
@@ -125,9 +113,7 @@ export function Editor() {
   }, [blocks, focusedBlockIndex]);
 
   const handleBlockClick = (index: number) => {
-    console.log('Block clicked:', index);
     if (focusedBlockIndex !== index) {
-      console.log('Setting focus:', index);
       setFocusedBlockIndex(index);
       placeCaretAtPosition(
         editorRef.current?.querySelector(
@@ -140,14 +126,12 @@ export function Editor() {
     setIsCommandOptionVisible(false);
   };
 
-  useLayoutEffect(() => {
-    if (focusedBlockIndex !== null) {
+  const getCurrentFocusedBlockElement = () => {
+    if (focusedBlockIndex !== null && editorRef.current) {
       const blockDivs =
         editorRef.current?.querySelectorAll('[contenteditable]');
-      if (blockDivs && blockDivs[focusedBlockIndex]) {
-        const element = blockDivs[focusedBlockIndex] as HTMLElement;
-        element.focus();
-
+      const element = blockDivs[focusedBlockIndex] as HTMLElement;
+      if (element !== undefined) {
         // Move cursor to the end
         const range = document.createRange();
         const selection = window.getSelection();
@@ -157,47 +141,26 @@ export function Editor() {
         selection?.addRange(range);
       }
     }
-  }, [focusedBlockIndex]); // Only runs when focus changes
-
-  // 📌 Utility: Add New Block
-  // const addNewBlock = (type: BlockType['type'], index: number) => {
-  //   addBlock(type, index);
-  //   setFocusedBlockIndex(index);
-  // };
-
-  const addBgStyleForTheFocusedBlockIfTheCommandMenuIsVissible = (
-    index: number,
-  ) => {
-    if (
-      (isVisible || isCommandOptionVisible || focusedBlockIndex !== null) &&
-      index === focusedBlockIndex
-    ) {
-      return 'bg-dark-100';
-    } else {
-      return '';
-    }
   };
 
-  // const activeBlockInformation = (index: number) => {
-  //   const block = blocks[index];
-
-  //   // For header blocks, show placeholder ("Head 1" or custom value) if empty.
-  //   if (block.type === 'header') {
-  //     return block.content?.trim() === ''
-  //       ? 'Hello Nathan, How are you doing today?'
-  //       : '';
-  //   }
-
-  //   // For other blocks, only show placeholder if this block is focused and empty.
-  //   if (focusedBlockIndex === index && block.content?.trim() === '') {
-  //     return 'Write something, press "/" for commands';
-  //   }
-
-  //   return '';
-  // };
+  useLayoutEffect(() => {
+    if (focusedBlockIndex !== null) {
+      getCurrentFocusedBlockElement();
+    }
+  }, [focusedBlockIndex]); // Only runs when focus changes
 
   const handleAddButtonClicked = (index: number) => {
     showMenu(index);
+  };
+
+  const handleBlockContainerClick = (index: number | null) => {
+    if (focusedBlockIndex === index) {
+      if (isVisible) hideMenu();
+      if (isCommandOptionVisible) setIsCommandOptionVisible(false);
+    } else {
+      getCurrentFocusedBlockElement();
+      setFocusedBlockIndex(index);
+    }
   };
 
   return (
@@ -223,7 +186,8 @@ export function Editor() {
           <div
             key={index}
             data-block-index={index}
-            className={`flex group rounded-md ${addBgStyleForTheFocusedBlockIfTheCommandMenuIsVissible(index)}`}
+            className={`flex group w-full rounded-md cursor-text ${index === focusedBlockIndex ? 'bg-dark-100' : ''}`}
+            onClick={() => handleBlockContainerClick(index)}
           >
             {renderBlock({
               block,

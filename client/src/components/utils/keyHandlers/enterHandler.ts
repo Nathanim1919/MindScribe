@@ -8,12 +8,18 @@ export const handleEnter: KeyHandler = (e, { index, currentElement, currentBlock
   const content = currentElement.innerText;
   const newBlock = createBlock('paragraph')
 
+
+  if (index === 0 && cursorPosition === 0){
+    return
+  }
+
   // Case 1: Empty or end of block
   if (content.trim() === '' || cursorPosition === content.length) {
     context.addBlock('paragraph', index + 1);
     context.setFocusedBlockIndex(index + 1);
     return;
   }
+
 
   // Case 2: Start of block
   if (cursorPosition === 0 && index > 0) {
@@ -25,11 +31,12 @@ export const handleEnter: KeyHandler = (e, { index, currentElement, currentBlock
     return;
   }
 
+
   // Case 3: Middle of text
   const [firstPart, secondPart] = splitContentAtCursor(currentElement);
   context.updateBlock(index, { content: firstPart });
   const nextBlock = createBlock('paragraph',secondPart)
-  context.addBlock(nextBlock.type, index + 1);
+  context.addBlock(nextBlock.type, index + 1, secondPart);
   context.setFocusedBlockIndex(index + 1);
 
   setTimeout(() => {

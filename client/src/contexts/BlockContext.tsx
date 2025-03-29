@@ -49,6 +49,8 @@ const blockReducer = (state: BlockType[], action: Action) => {
       return [...state, newBlock];
     }
     case 'DELETE_BLOCK': {
+      if (action.payload.index === 0)
+        return state;
       return state.filter((_, i) => i !== action.payload.index);
     }
     case 'UPDATE_BLOCK': {

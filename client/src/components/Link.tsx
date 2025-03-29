@@ -34,14 +34,14 @@ export const LinkElement: React.FC<LinkProps> = ({
         onClick={handleClick}
         className={`group relative ${className}`}
         aria-label={ariaLabel}
-        activeProps={{ className: 'text-black bg-light-200 dark:bg-light-700' }}
+        activeProps={{ className: 'text-black bg-light-200 dark:bg-dark-100 text-[23px] font-bold dark:text-light-base' }}
         activeOptions={{ exact: true }}
       >
         <span>{icon}</span>
         {isUserMenu ? (
           <span>{title}</span>
         ) : (
-          <span className="absolute z-50 left-0 bg-white dark:bg-dark-50 dark:text-dark-900 py-[4px] px-2 border border-gray-400 dark:border-dark-200 shadow-2xl rounded-[4px] hidden group-hover:block group-hover:left-10 transition duration-200 ease-in-out">
+          <span className="absolute font-light text-[16px] z-1002 -left-30 bg-white dark:bg-dark-50 dark:text-dark-900 py-[4px] px-2 border border-gray-400 dark:border-dark-200 shadow-2xl rounded-[4px] hidden group-hover:block group-hover:left-10 transition-all duration-200 ease-in-out">
         {title}
           </span>
         )}

@@ -11,3 +11,7 @@ export const handlerSpace: KeyHandler = (e) => {
     e.preventDefault();
     insertTextAtCaret('\u00A0'); // Insert a non-breaking space (safe for all browsers)
 };
+
+export const forwardSlash = (e) => {
+    
+}
