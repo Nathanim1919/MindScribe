@@ -70,6 +70,7 @@ export function Editor() {
       updateBlock,
       deleteBlock,
       setFocusedBlockIndex,
+      setCursorPosition,
       setFilter,
     });
   };
@@ -193,12 +194,12 @@ export function Editor() {
         <EditorIntro/>
       </div> */}
       {/* 📌 Render Blocks */}
-      <div className="relative w-[70%] m-auto">
+      <div className="relative w-full max-w-4xl mx-auto px-4">
         {blocks.map((block, index) => (
           <div
             key={index}
             data-block-index={index}
-            className={`flex group w-full relative rounded-md cursor-text`}
+            className={`flex group w-full max-w-[800px] relative rounded-md cursor-text`}
             onClick={() => handleBlockContainerClick(index)}
           >
             {renderBlock({
@@ -243,6 +244,9 @@ export function Editor() {
 
 // Helper functions
 function getPlaceholder(block: BlockType, index: number): string {
+  if (index === 0){
+    return block.content?.trim() ? '' : 'Untitled';
+  }
   if (isHeaderBlock(block)) {
     return block.content?.trim() ? '' : 'Heading';
   }

@@ -57,44 +57,46 @@ export const BaseBlock = React.forwardRef<HTMLDivElement, BaseBlockProps>(
     }, [content]);
 
     return (
-      <div className={`flex w-full group items-center gap-2`}>
+      <div className={`flex w-full h-full group items-center gap-2`}>
         {/* Controls */}
         {(onAddClick || onDragClick || isFocused) && (
           <div
-            className={`flex ${spacingClasses[spacing]} self-start items-center gap-1 text-light-400 dark:text-dark-400`}
+            className={`flex ${spacingClasses[spacing]} self-start mt-1 relative gap-1 text-light-400 dark:text-dark-400`}
             
           >
             {onAddClick && (
               <IoMdAdd
                 onClick={onAddClick}
-                className="hover:dark:bg-dark-100 hover:bg-light-100 rounded-sm opacity-0 group-hover:opacity-100 cursor-pointer text-2xl"
+                className="hover:dark:bg-dark-100 hover:bg-light-100 rounded-sm opacity-0 group-hover:opacity-100 cursor-pointer text-[20px]"
               />
             )}
             {onDragClick && (
               <MdDragIndicator
                 onClick={onDragClick}
-                className="hover:dark:bg-dark-100 hover:bg-light-100 rounded-sm opacity-0 group-hover:opacity-100 cursor-grab text-2xl"
+                className="hover:dark:bg-dark-100 hover:bg-light-100 rounded-sm opacity-0 group-hover:opacity-100 cursor-grab text-[20px]"
               />
             )}
           </div>
         )}
         {/* Content */}
-        <div
-            ref={resolvedRef}
-            data-block-id={blockId}
-            data-block-index={index}
-            aria-label={`Editable block ${index}`}
-            dangerouslySetInnerHTML={{ __html: content ?? '' }}
-            contentEditable={true}
-            onClick={onClick}
-            onKeyDown={onKeyDown}
-            spellCheck={false}
-            onInput={onInput}
-            onBlur={onBlur}
-            className={`${className} relative w-full ${spacingClasses[spacing]} relative outline-none break-words before:absolute before:text-dark-400 before:font-light before:grid before:place-content-center before:h-full before:dark:text-dark-900 before:pointer-events-none before:content-[attr(data-placeholder)] before:top-0 before:left-0`}
-            data-placeholder={showPlaceholder ? placeholder : ''}
-          />
-
+        <div className="flex-1 min-w-0"> 
+          <div
+              ref={resolvedRef}
+              data-block-id={blockId}
+              data-block-index={index}
+              aria-label={`Editable block ${index}`}
+              dangerouslySetInnerHTML={{ __html: content ?? '' }}
+              contentEditable={true}
+              onClick={onClick}
+              onKeyDown={onKeyDown}
+              spellCheck={false}
+              onInput={onInput}
+              onBlur={onBlur}
+              className={`${className} relative w-full  ${spacingClasses[spacing]} relative outline-none break-words before:absolute before:text-dark-500 before:font-light before:grid before:place-content-center before:h-full before:pointer-events-none before:content-[attr(data-placeholder)] before:top-0 before:left-0
+              `}
+              data-placeholder={showPlaceholder ? placeholder : ''}
+            />
+            </div>
       </div>
     );
   },

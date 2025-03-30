@@ -104,7 +104,7 @@ export const BlockContext = createContext<BlockContextType | undefined>(
 // Create the provider
 export const BlockProvider = ({ children }: { children: ReactNode }) => {
   const [blocks, dispatch] = useReducer(blockReducer, [
-    createBlock('header', 'Header-1'),
+    createBlock('header', ''),
   ]);
 
   const contextValue: BlockContextType = {

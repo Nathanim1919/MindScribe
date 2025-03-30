@@ -16,8 +16,8 @@ export const DiaryRow: React.FC<DiaryRowPropType> = ({ entrie }) => {
     <div className="group grid grid-cols-6 w-full bg-light-50 dark:bg-transparent items-center justify-between border border-light-200 rounded-sm dark:border-dark-50 hover:dark:bg-dark-50 hover:bg-light-100 cursor-pointer p-1">
 
       <div className="flex items-center gap-4 col-span-2">
-      <button aria-label="Like">
-          <FaBook className="dark:text-dark-400 group-hover:dark:text-dark-950 text-[16px] cursor-pointer dark:hover:text-dark-300 text-light-50 hover:text-light-600" />
+      <button aria-label="book-icon">
+          <FaBook className="dark:text-dark-400 group-hover:dark:text-dark-950 text-[16px] cursor-pointer dark:hover:text-dark-300 text-light-400 group-hover:text-light-600" />
         </button>
         <h3 className="text-light-500 group-hover:text-light-950 group-hover:dark:text-dark-950">
           {(entrie.title).slice(0, 30)} ...

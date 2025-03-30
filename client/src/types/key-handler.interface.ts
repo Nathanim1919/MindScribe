@@ -7,6 +7,7 @@ export interface KeyHandlerContext {
     updateBlock: (index: number, updates: Partial<BlockType>) => void;
     deleteBlock: (index: number) => void;
     setFocusedBlockIndex: (index: number | null) => void;
+    setCursorPosition: (position: number) => void;
     // setIsCommandMenuVisible: (visible: boolean) => void;
     setFilter: (filter: string) => void;
 }

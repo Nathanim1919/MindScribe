@@ -4,6 +4,8 @@ import { SidebarElementPropType } from '../../types/sideBar.type';
 import { RiGeminiLine } from 'react-icons/ri';
 import { TfiLayoutMediaCenterAlt } from 'react-icons/tfi';
 import { FaBook } from 'react-icons/fa';
+import { IoMdAdd } from "react-icons/io";
+
 
 export const TopsidebarElements: SidebarElementPropType[] = [
   {
@@ -12,9 +14,9 @@ export const TopsidebarElements: SidebarElementPropType[] = [
     redirectTo: '/in/home',
   },
   {
-    title: 'Profile',
-    icon: <FiUser />,
-    redirectTo: '/in/home/profile',
+    title:"Entry",
+    icon:<IoMdAdd />,
+    redirectTo: '/in/new',
   },
   {
     title: 'Entries',
