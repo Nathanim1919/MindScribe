@@ -6,7 +6,6 @@ export const handleEnter: KeyHandler = (e, { index, currentElement, currentBlock
   e.preventDefault();
   const cursorPosition = getCursorPosition(currentElement);
   const content = currentElement.innerText;
-  const newBlock = createBlock('paragraph')
 
 
   if (index === 0 && cursorPosition === 0){
@@ -15,7 +14,7 @@ export const handleEnter: KeyHandler = (e, { index, currentElement, currentBlock
 
   // Case 1: Empty or end of block
   if (content.trim() === '' || cursorPosition === content.length) {
-    context.addBlock('paragraph', index + 1);
+    context.addBlock('paragraph',"", index + 1);
     context.setFocusedBlockIndex(index + 1);
     return;
   }
@@ -23,7 +22,7 @@ export const handleEnter: KeyHandler = (e, { index, currentElement, currentBlock
 
   // Case 2: Start of block
   if (cursorPosition === 0 && index > 0) {
-    context.addBlock('paragraph', index);
+    context.addBlock('paragraph',"", index);
     setTimeout(() => {
       const newBlock = document.querySelector(`[data-block-index="${index}"]`);
       if (newBlock) placeCaretAtStart(newBlock as HTMLElement);
@@ -35,8 +34,8 @@ export const handleEnter: KeyHandler = (e, { index, currentElement, currentBlock
   // Case 3: Middle of text
   const [firstPart, secondPart] = splitContentAtCursor(currentElement);
   context.updateBlock(index, { content: firstPart });
-  const nextBlock = createBlock('paragraph',secondPart)
-  context.addBlock(nextBlock.type, index + 1, secondPart);
+  const nextBlock = createBlock('paragraph',secondPart, {})
+  context.addBlock(nextBlock.type,secondPart, index + 1);
   context.setFocusedBlockIndex(index + 1);
 
   setTimeout(() => {

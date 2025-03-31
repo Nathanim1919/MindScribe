@@ -6,7 +6,12 @@ import { createBlock } from '../components/utils/blockFactory';
 type Action =
   | {
       type: 'ADD_BLOCK';
-      payload: { type: BlockType['type']; index?: number; content?: string };
+      payload: {
+        type: BlockType['type'];
+        content: string;
+        index?: number;
+        meta?: { level: number; spacing: string };
+      };
     }
   | {
       type: 'UPDATE_BLOCK';
@@ -27,12 +32,13 @@ type Action =
 const blockReducer = (state: BlockType[], action: Action) => {
   switch (action.type) {
     case 'ADD_BLOCK': {
-      console.log('The Payload is: ', action.payload.type);
+      console.log('The Payload is: ', action.payload);
       console.log('The index is: ', action.payload.index);
       console.log('The content is: ', action.payload.content);
       const newBlock: BlockType = createBlock(
         action.payload.type,
         action.payload.content,
+        action.payload.meta,
       );
       if (action.payload.index !== undefined) {
         if (action.payload.index < 0 || action.payload.index > state.length) {
@@ -49,8 +55,7 @@ const blockReducer = (state: BlockType[], action: Action) => {
       return [...state, newBlock];
     }
     case 'DELETE_BLOCK': {
-      if (action.payload.index === 0)
-        return state;
+      if (action.payload.index === 0) return state;
       return state.filter((_, i) => i !== action.payload.index);
     }
     case 'UPDATE_BLOCK': {
@@ -88,7 +93,12 @@ const blockReducer = (state: BlockType[], action: Action) => {
 
 export type BlockContextType = {
   blocks: BlockType[];
-  addBlock: (type: BlockType['type'], index?: number, content?: string) => void;
+  addBlock: (
+    type: BlockType['type'],
+    content: string,
+    index?: number,
+    meta?: { level: number; spacing: string },
+  ) => void;
   updateBlock: (index: number, updates: Partial<BlockType>) => void;
   deleteBlock: (index: number) => void;
   reorderBlocks: (startIndex: number, endIndex: number) => void;
@@ -104,13 +114,13 @@ export const BlockContext = createContext<BlockContextType | undefined>(
 // Create the provider
 export const BlockProvider = ({ children }: { children: ReactNode }) => {
   const [blocks, dispatch] = useReducer(blockReducer, [
-    createBlock('header', ''),
+    createBlock('header', '', { level: 1, spacing: 'large' }),
   ]);
 
   const contextValue: BlockContextType = {
     blocks,
-    addBlock: (type, index, content) =>
-      dispatch({ type: 'ADD_BLOCK', payload: { type, index, content } }),
+    addBlock: (type, content, index, meta) =>
+      dispatch({ type: 'ADD_BLOCK', payload: { type, content, index, meta } }),
     updateBlock: (index, updates) =>
       dispatch({ type: 'UPDATE_BLOCK', payload: { index, updates } }),
     deleteBlock: (index) =>

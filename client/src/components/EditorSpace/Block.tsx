@@ -56,6 +56,7 @@ export const BaseBlock = React.forwardRef<HTMLDivElement, BaseBlockProps>(
       }
     }, [content]);
 
+
     return (
       <div className={`flex w-full h-full group items-center gap-2`}>
         {/* Controls */}

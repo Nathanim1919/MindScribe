@@ -2,7 +2,7 @@ import { KeyHandler } from '../../../types/key-handler.interface';
 import { handleArrowKeys } from './arrowKeyHandler';
 import { handleBackspace } from './backspaceHandler';
 import { handleEnter } from './enterHandler';
-import { handlerTab, handlerSpace } from './tabHandler';
+import { handlerTab, handlerSpace, forwardSlash } from './tabHandler';
 // import { handleSlash } from './slashHandler';
 // import { handleTab } from './tabHandler';
 // import { handleSpace } from './spaceHandler';
@@ -14,7 +14,8 @@ const KEY_HANDLERS: Record<string, KeyHandler> = {
   ArrowDown: handleArrowKeys,
   // '/': handleSlash,
   Tab: handlerTab,
-  ' ': handlerSpace
+  ' ': handlerSpace,
+  '/': forwardSlash
 };
 
 export const getKeyHandler = (key: string): KeyHandler | undefined => {

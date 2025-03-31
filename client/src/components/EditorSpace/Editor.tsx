@@ -71,7 +71,9 @@ export function Editor() {
       deleteBlock,
       setFocusedBlockIndex,
       setCursorPosition,
+      showMenu,
       setFilter,
+      
     });
   };
 
@@ -176,6 +178,19 @@ export function Editor() {
     console.log('Focused Block Index:', focusedBlockIndex);
   },[focusedBlockIndex]);
 
+  function getPlaceholder(block: BlockType, index: number): string {
+    if (block.content?.trim() === '' && focusedBlockIndex !== index) {
+      return '';
+    }
+    if (index === 0){
+      return block.content?.trim() ? '' : 'Untitled';
+    }
+    if (isHeaderBlock(block)) {
+      return block.content?.trim() ? '' : 'Heading';
+    }
+    return index === 0 ? 'Start writing...' : 'Continue writing...';
+  }
+
   return (
     <div
       ref={editorRef}
@@ -240,15 +255,4 @@ export function Editor() {
       </div>
     </div>
   );
-}
-
-// Helper functions
-function getPlaceholder(block: BlockType, index: number): string {
-  if (index === 0){
-    return block.content?.trim() ? '' : 'Untitled';
-  }
-  if (isHeaderBlock(block)) {
-    return block.content?.trim() ? '' : 'Heading';
-  }
-  return index === 0 ? 'Start writing...' : 'Continue writing...';
 }

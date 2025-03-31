@@ -1,22 +1,19 @@
-// utils/blockFactory.ts
-
 import {
   BlockType,
-  IHeaderBlock,
-  IParagraphBlock,
-  IQuoteBlock,
 } from '../../types/block.interface';
 
 export function createBlock<T extends BlockType['type']>(
   type: T,
   content?: string,
+  meta?: Record<string, unknown>,
 ): Extract<BlockType, { type: T }> {
   if (type === 'header') {
+    const {level, spacing} = meta!;
     return {
       id: generateId(),
       type: 'header',
       content,
-      meta: { level: 1, spacing: 'large' },
+      meta: { level, spacing },
     } as Extract<BlockType, { type: T }>;
   } else if (type === 'paragraph') {
     return {

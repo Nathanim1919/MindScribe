@@ -1,9 +1,8 @@
 import { useCallback, useLayoutEffect, useRef, useState } from 'react';
 import { BlockType } from '../types/block.interface';
-import { placeCaretAtEnd } from '../components/utils/cursorUtils';
 
 export function useCommandMenu(
-  addBlock: (type: BlockType['type'], index?: number) => void,
+  addBlock: (type: BlockType['type'], content:string, index?: number, meta?:{level: number, spacing:string}) => void,
 ) {
   const [isVisible, setIsVisible] = useState(false);
   const [filter, setFilter] = useState('');
@@ -32,9 +31,9 @@ export function useCommandMenu(
   }, []);
 
   const handleSelect = useCallback(
-    (type: BlockType['type']) => {
+    (type: BlockType['type'], meta?:{level: number, spacing: string}) => {
       if (targetIndex === null) return;
-      addBlock(type, targetIndex);
+      addBlock(type, "",targetIndex,meta);
       hideMenu();
     },
     [addBlock, targetIndex],

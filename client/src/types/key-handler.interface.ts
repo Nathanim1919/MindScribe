@@ -3,12 +3,12 @@ import { BlockType } from "./block.interface";
 
 export interface KeyHandlerContext {
     blocks: BlockType[];
-    addBlock: (block: BlockType['type'], index?: number, content?:string) => void;
+    addBlock: (type: BlockType['type'], content:string, index?: number, meta?:{level: number, spacing:string}) => void,
     updateBlock: (index: number, updates: Partial<BlockType>) => void;
     deleteBlock: (index: number) => void;
     setFocusedBlockIndex: (index: number | null) => void;
     setCursorPosition: (position: number) => void;
-    // setIsCommandMenuVisible: (visible: boolean) => void;
+    showMenu: (index: number) => void;
     setFilter: (filter: string) => void;
 }
 

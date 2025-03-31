@@ -35,9 +35,6 @@ export const ParagraphBlock = ({
     large: 'text-lg',
   };
 
-
-  console.log("placeholder is: ", placeholder)
-
   return (
     <div className="relative group w-full">
       <BaseBlock

@@ -12,7 +12,6 @@ export const handleArrowKeys: KeyHandler = (e, { index, context }) => {
       
       setFocusedBlockIndex(newIndex);
       
-      // Use requestAnimationFrame for better timing with React's render cycle
       requestAnimationFrame(() => {
         const targetElement = document.querySelector(
           `[data-block-index="${newIndex}"] [contenteditable]`

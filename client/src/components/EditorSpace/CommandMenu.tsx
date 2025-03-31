@@ -6,7 +6,7 @@ import { BlockType } from '../../types/block.interface';
 interface CommandMenuProps {
   filter: string;
   // onFilterChange: (filter: string) => void;
-  onSelect: (type: BlockType['type']) => void; // More specific type
+  onSelect: (type: BlockType['type'], meta?:{level:number, spacing: string}) => void; // More specific type
   position: { top: number; left: number };
   menuRef: React.RefObject<HTMLDivElement | null>;
 }
@@ -15,7 +15,29 @@ interface CommandMenuProps {
 const blockTypes = [
   {
     type: 'header',
-    label: 'Heading',
+    meta: {
+      level: 1,
+      spacing: 'large',
+    },
+    label: 'Heading 1',
+    icon: <PiTextHBold className="text-light-400" />,
+  },
+  {
+    type: 'header',
+    meta: {
+      level: 2,
+      spacing: 'medium',
+    },
+    label: 'Heading 2',
+    icon: <PiTextHBold className="text-light-400" />,
+  },
+  {
+    type: 'header',
+    meta: {
+      level: 3,
+      spacing: 'small',
+    },
+    label: 'Heading 3',
     icon: <PiTextHBold className="text-light-400" />,
   },
   {
@@ -45,7 +67,6 @@ export function CommandMenu({
     [filter],
   );
 
-
   return (
     <div
       ref={menuRef}
@@ -60,11 +81,11 @@ export function CommandMenu({
         </span>
         {filteredBlocks.map((block) => (
           <div
-            key={block.type}
-            className="command-item flex text-[17px] items-center gap-1 p-1 hover:bg-light-100 hover:dark:bg-dark-100 dark:text-dark-400 text-light-400 hover:text-light-600 hover:dark:text-dark-700 cursor-pointer border-b dark:border-dark-200/50 border-light-200/50"
+            key={block.label}
+            className="command-item flex text-[17px] items-center gap-1 py-1 rounded-none hover:rounded-md hover:border-0 px-2 hover:bg-light-100 hover:dark:bg-dark-100 dark:text-dark-400 text-light-400 hover:text-light-600 hover:dark:text-dark-700 cursor-pointer border-t dark:border-dark-200/50 border-light-200/50"
             onClick={(e) => {
-              e.stopPropagation()
-              onSelect(block.type as BlockType['type'])
+              e.stopPropagation();
+              onSelect(block.type as BlockType['type'], block.meta);
             }}
           >
             {block.icon}
