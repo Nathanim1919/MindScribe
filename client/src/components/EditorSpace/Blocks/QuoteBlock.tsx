@@ -22,7 +22,13 @@ export const QuoteBlock = ({
   onClick,
   onInput,
   onBlur,
-}: QuoteBlockProps) => {
+  onAddClick,
+  onDragClick
+}: QuoteBlockProps & {
+  onAddClick: () => void;
+  onDragClick: () => void;
+}) => {
+
   const paragraphClasses = {
     small: 'text-sm',
     medium: 'text-base',
@@ -30,20 +36,22 @@ export const QuoteBlock = ({
   };
 
   return (
-    <div className="relative group">
+    <div className="relative group w-full">
       <BaseBlock
         blockId={block.id}
         index={index}
         content={block.content}
         placeholder={placeholder}
         isFocused={isFocused}
-        className={`${paragraphClasses} text-gray-900 dark:text-white`}
+        className={`${paragraphClasses} bg-light-100 dark:bg-dark-100 px-2 rounded-md text-gray-500 dark:text-dark-500`}
         showPlaceholder={!block.content?.trim()}
         // spacing={block.meta.spacing}
         onKeyDown={onKeyDown}
         onClick={onClick}
         onInput={onInput}
         onBlur={onBlur}
+        onAddClick={onAddClick}
+        onDragClick={onDragClick}
       />
     </div>
   );

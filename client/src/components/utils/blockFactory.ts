@@ -1,6 +1,4 @@
-import {
-  BlockType,
-} from '../../types/block.interface';
+import { BlockType } from '../../types/block.interface';
 
 export function createBlock<T extends BlockType['type']>(
   type: T,
@@ -8,7 +6,7 @@ export function createBlock<T extends BlockType['type']>(
   meta?: Record<string, unknown>,
 ): Extract<BlockType, { type: T }> {
   if (type === 'header') {
-    const {level, spacing} = meta!;
+    const { level, spacing } = meta!;
     return {
       id: generateId(),
       type: 'header',
@@ -19,6 +17,12 @@ export function createBlock<T extends BlockType['type']>(
     return {
       id: generateId(),
       type: 'paragraph',
+      content,
+    } as Extract<BlockType, { type: T }>;
+  } else if (type === 'quote') {
+    return {
+      id: generateId(),
+      type: 'quote',
       content,
     } as Extract<BlockType, { type: T }>;
   } else {

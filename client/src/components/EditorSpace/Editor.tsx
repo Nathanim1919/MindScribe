@@ -96,7 +96,7 @@ export function Editor() {
   // 📌 Handlers: Input & Click Events
   const handleInput = (index: number, e: React.FormEvent<HTMLDivElement>) => {
     // get the content of the focused block
-    const content = e.currentTarget.innerText;
+    const content = e.currentTarget.textContent;
 
     // Save cursor position
     updateBlock(index, { content });

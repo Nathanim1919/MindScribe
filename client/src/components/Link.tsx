@@ -37,7 +37,7 @@ export const LinkElement: React.FC<LinkProps> = ({
         activeProps={{ className: 'text-black bg-light-200 dark:bg-dark-100 text-[23px] font-bold dark:text-light-base' }}
         activeOptions={{ exact: true }}
       >
-        <span>{icon}</span>
+        <span className='group-hover:rotate-12 transition-transform duration-150'>{icon}</span>
         {isUserMenu ? (
           <span>{title}</span>
         ) : (

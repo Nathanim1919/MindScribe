@@ -52,6 +52,8 @@ export const renderBlock = (props: BlockComponentProps) => {
           key={block.id}
           block={block as IQuoteBlock}
           {...restProps}
+          onAddClick={onAddClick}
+          onDragClick={onDragClick}
         />
       );
     default:

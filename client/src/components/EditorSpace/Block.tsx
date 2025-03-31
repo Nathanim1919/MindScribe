@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { IoMdAdd } from 'react-icons/io';
 import { MdDragIndicator } from 'react-icons/md';
+import { FaQuoteLeft } from 'react-icons/fa';
 
 interface BaseBlockProps {
   blockId: string;
@@ -56,14 +57,12 @@ export const BaseBlock = React.forwardRef<HTMLDivElement, BaseBlockProps>(
       }
     }, [content]);
 
-
     return (
       <div className={`flex w-full h-full group items-center gap-2`}>
         {/* Controls */}
         {(onAddClick || onDragClick || isFocused) && (
           <div
             className={`flex ${spacingClasses[spacing]} self-start mt-1 relative gap-1 text-light-400 dark:text-dark-400`}
-            
           >
             {onAddClick && (
               <IoMdAdd
@@ -80,24 +79,24 @@ export const BaseBlock = React.forwardRef<HTMLDivElement, BaseBlockProps>(
           </div>
         )}
         {/* Content */}
-        <div className="flex-1 min-w-0"> 
+        <div className="flex-1 min-w-0">
           <div
-              ref={resolvedRef}
-              data-block-id={blockId}
-              data-block-index={index}
-              aria-label={`Editable block ${index}`}
-              dangerouslySetInnerHTML={{ __html: content ?? '' }}
-              contentEditable={true}
-              onClick={onClick}
-              onKeyDown={onKeyDown}
-              spellCheck={false}
-              onInput={onInput}
-              onBlur={onBlur}
-              className={`${className} relative w-full  ${spacingClasses[spacing]} relative outline-none break-words before:absolute before:text-dark-500 before:font-light before:grid before:place-content-center before:h-full before:pointer-events-none before:content-[attr(data-placeholder)] before:top-0 before:left-0
+            ref={resolvedRef}
+            data-block-id={blockId}
+            data-block-index={index}
+            aria-label={`Editable block ${index}`}
+            dangerouslySetInnerHTML={{ __html: content ?? '' }}
+            contentEditable={editable}
+            onClick={onClick}
+            onKeyDown={onKeyDown}
+            spellCheck={false}
+            onInput={onInput}
+            onBlur={onBlur}
+            className={`${className} leading-tight relative w-full  ${spacingClasses[spacing]} relative outline-none break-words before:absolute before:text-dark-500 before:font-light before:grid before:place-content-center before:h-full before:pointer-events-none before:content-[attr(data-placeholder)] before:top-0 before:left-0
               `}
-              data-placeholder={showPlaceholder ? placeholder : ''}
-            />
-            </div>
+            data-placeholder={showPlaceholder ? placeholder : ''}
+          />
+        </div>
       </div>
     );
   },

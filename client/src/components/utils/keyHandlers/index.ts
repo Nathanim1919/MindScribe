@@ -3,9 +3,6 @@ import { handleArrowKeys } from './arrowKeyHandler';
 import { handleBackspace } from './backspaceHandler';
 import { handleEnter } from './enterHandler';
 import { handlerTab, handlerSpace, forwardSlash } from './tabHandler';
-// import { handleSlash } from './slashHandler';
-// import { handleTab } from './tabHandler';
-// import { handleSpace } from './spaceHandler';
 
 const KEY_HANDLERS: Record<string, KeyHandler> = {
   Backspace: handleBackspace,
@@ -15,7 +12,7 @@ const KEY_HANDLERS: Record<string, KeyHandler> = {
   // '/': handleSlash,
   Tab: handlerTab,
   ' ': handlerSpace,
-  '/': forwardSlash
+  '/': forwardSlash,
 };
 
 export const getKeyHandler = (key: string): KeyHandler | undefined => {

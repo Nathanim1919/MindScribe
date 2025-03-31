@@ -76,9 +76,7 @@ export const insertTextAtCaret = (text: string) => {
 
   // Move caret after inserted text
   range.setStartAfter(textNode);
-  range.setEndAfter(textNode);
+  range.collapse(true);
   selection.removeAllRanges();
   selection.addRange(range);
-  // placeCart at the end of the textNode
-  placeCaretAtEnd(textNode.parentElement as HTMLElement);
 };

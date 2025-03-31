@@ -117,6 +117,8 @@ export const BlockProvider = ({ children }: { children: ReactNode }) => {
     createBlock('header', '', { level: 1, spacing: 'large' }),
   ]);
 
+  console.log(blocks)
+
   const contextValue: BlockContextType = {
     blocks,
     addBlock: (type, content, index, meta) =>
