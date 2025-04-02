@@ -1,16 +1,16 @@
 export interface UserPreferences {
   aiAssistant: {
-    analyzeText: boolean;
-    suggestPrompts: boolean;
-    sentimentAnalysis: boolean;
+    enableTextAnalysis: boolean;
+    enablePromptSuggestions: boolean;
+    enableSentimentAnalysis: boolean;
   };
   appearance: {
     theme: 'light' | 'dark' | 'system';
-    cardDispay: 'grid' | 'list';
+    cardView: 'grid' | 'list';
   };
   notifications: {
-    dailyReminders: boolean;
-    weeklySummary: boolean;
-    newFeatures: boolean;
+    enableDailyReminders: boolean;
+    enableWeeklyDigest: boolean;
+    enableFeatureUpdates: boolean;
   };
 }
