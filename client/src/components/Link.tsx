@@ -34,10 +34,10 @@ export const LinkElement: React.FC<LinkProps> = ({
         onClick={handleClick}
         className={`group relative ${className}`}
         aria-label={ariaLabel}
-        activeProps={{ className: 'text-black bg-light-200 dark:bg-dark-100 text-[23px] font-bold dark:text-light-base' }}
+        activeProps={{ className: 'bg-light-200 dark:bg-dark-100 text-[23px] font-bold text-violet-600 dark:text-violet-600' }}
         activeOptions={{ exact: true }}
       >
-        <span className='group-hover:rotate-12 transition-transform duration-150'>{icon}</span>
+        <span className='group-hover:rotate-12 transition-all duration-200'>{icon}</span>
         {isUserMenu ? (
           <span>{title}</span>
         ) : (

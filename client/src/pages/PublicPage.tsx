@@ -1,5 +1,7 @@
 import { CardDecoration } from '../components/publicPageComponents/CardDecoration';
 import CoverImage from '../assets/img.png';
+import { PiShootingStarThin } from "react-icons/pi";
+
 
 export const PublicPage: React.FC = () => {
   return (
@@ -16,14 +18,15 @@ export const PublicPage: React.FC = () => {
         
         ">
           <div className="flex items-center ml-32 relative flex-col -mt-10  p-4 gap-4">
-            <h1 className="font-bold text-6xl">
-            DROP EVERY <br/> <span className='text-[5rem] ml-[6rem] text-violet-500'>THOUGHT</span><br/>
-             U CAN’T SAY<br/> <span className='text-[5rem] ml-[6rem] text-violet-500'>OUT LOUD</span>
+            <h1 className="font-bold text-5xl">
+            DROP EVERY <br/> <span className='text-[5rem] ml-[5rem] text-violet-500 '>THOUGHT</span><br/>
+             U CAN’T SAY<br/> <span className='text-[5rem] ml-[5rem] text-violet-500'>OUT LOUD</span>
             </h1>
             <p className='self-start text-2xl mt-4'>
             Your safe <span className='text-violet-600 font-bold'>space</span> for daily<span className='text-violet-600 font-bold'> reflection.</span>
             </p>
-          <button className="bottom-10 left-10 p-3 rounded-full w-[50%] self-start font-bold cursor-pointer hover:bg-violet-500 bg-violet-600">
+          <button className="bottom-10 left-10 p-3 flex items-center gap-2 justify-center rounded-full w-[50%] self-start font-bold cursor-pointer hover:bg-violet-500 bg-violet-600">
+            <PiShootingStarThin className="text-3xl" />
             Start Now
           </button>
           </div>

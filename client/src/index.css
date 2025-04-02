@@ -1,5 +1,6 @@
 /* src/styles.css */
 @import url('https://fonts.googleapis.com/css2?family=Gabarito:wght@400..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&display=swap');
 @import 'tailwindcss';
 
 @custom-variant dark (&:where(.dark, .dark *));
@@ -50,6 +51,7 @@
     --divider: #e2e8f0; /* Cool Light Gray */
     --active: #2563eb; /* Deep Blue */
     --font-sans: 'Gabarito', 'Poppins', sans-serif;
+    --font-serif: 'Dancing Script', cursive;
     --card_border_color: #d1d5dc;
     --font-heading-main: 2rem;
     --font-heading-sub: 20px;

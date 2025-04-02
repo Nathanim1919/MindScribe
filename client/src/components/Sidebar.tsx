@@ -7,7 +7,7 @@ import { RiBarChartLine } from 'react-icons/ri';
 
 export const Sidebar: React.FC = () => {
   return (
-    <main className="relative z-999 h-screen  dark:bg-dark-base">
+    <main className="relative z-999 w-16 h-screen  dark:bg-dark-base">
       <nav
         role="navigation"
         className="
