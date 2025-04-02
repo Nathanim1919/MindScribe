@@ -11,8 +11,8 @@ export const UserMenu: React.FC<UserMenuProps> = ({ display }) => {
   return (
     <div
       role="menu"
-      className="fixed z-999 transition-all duration-1000
-       right-4 top-14 border bg-light-100/60 dark:border-dark-100 rounded-md border-b-0 overflow-hidden backdrop-blur-lg dark:bg-dark-50/40
+      className="fixed z-999 transition-all duration-200
+       right-4 top-14 border bg-light-100/60 border-light-300 dark:border-dark-100 rounded-md border-b-0 overflow-hidden backdrop-blur-lg dark:bg-dark-50/40
       "
     >
       {UserMenuElements.map(({ title, icon, to, onClick }) => (

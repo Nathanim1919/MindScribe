@@ -2,7 +2,7 @@ import { KeyHandler } from "../../../types/key-handler.interface";
 import { createBlock } from "../blockFactory";
 import { getCursorPosition, placeCaretAtEnd, placeCaretAtStart, splitContentAtCursor } from "../cursorUtils";
 
-export const handleEnter: KeyHandler = (e, { index, currentElement, currentBlock, context }) => {
+export const handleEnter: KeyHandler = (e, { index, currentElement, context }) => {
   e.preventDefault();
   const cursorPosition = getCursorPosition(currentElement);
   const content = currentElement.innerText;
@@ -14,8 +14,15 @@ export const handleEnter: KeyHandler = (e, { index, currentElement, currentBlock
 
   // Case 1: Empty or end of block
   if (content.trim() === '' || cursorPosition === content.length) {
-    context.addBlock('paragraph',"", index + 1);
+    const newBlock = context.addBlock('paragraph',"", index + 1);
     context.setFocusedBlockIndex(index + 1);
+
+    console.log("New block created: ", newBlock)
+
+    // setTimeout(() => {
+    //   const blockId = context.blocks[index + 1].id;
+    //   context.updateCursorPosition(blockId, 0);
+    // }, 0)
     return;
   }
 

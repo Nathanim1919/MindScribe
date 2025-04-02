@@ -1,25 +1,30 @@
-import React, { useRef, useState, useEffect, useLayoutEffect } from 'react';
+import React, {
+  useRef,
+  useState,
+  useEffect,
+  useLayoutEffect,
+  useCallback,
+} from 'react';
 import { CommandMenu } from './CommandMenu';
-// import { createBlock } from '../utils/blockUtils';
 import { BlockType, isHeaderBlock } from '../../types/block.interface';
 import { handleKeyPress } from '../utils/keyPressHandlers';
 import { placeCaretAtEnd, placeCaretAtPosition } from '../utils/cursorUtils';
-import { HiOutlineCalendarDateRange } from 'react-icons/hi2';
-import { getCurrentDate } from '../utils/dateUtils';
 import { CommandOption } from './CommandOption';
 import { useBlockContext } from '../../contexts/BlockContext';
-import { BiRedo, BiUndo } from 'react-icons/bi';
 import { renderBlock } from './Blocks';
 import { useCommandMenu } from '../../hooks/useCommandMenu';
+import { EditorToolbar } from './EditorToolbar';
+import { EditorBlocks } from './EditorBlocks';
 
 export function Editor() {
-  const { blocks, addBlock, updateBlock, deleteBlock } = useBlockContext();
+  const { blocks, addBlock, updateBlock, deleteBlock, updateCursorPosition } =
+    useBlockContext();
 
   const editorRef = useRef<HTMLDivElement>(null);
   const [focusedBlockIndex, setFocusedBlockIndex] = useState<number | null>(
     null,
   );
-  const [cursorPosition, setCursorPosition] = useState<number>(0);
+  const cursorPosition = useRef<Record<string, number>>({});
   const [isCommandOptionVisible, setIsCommandOptionVisible] = useState(false);
 
   const {
@@ -32,6 +37,41 @@ export function Editor() {
     handleSelect,
     hideMenu,
   } = useCommandMenu(addBlock);
+
+  // 📌 Handlers: Input & Click Events
+  // In Editor.tsx
+  const handleBlockContainerClick = useCallback(
+    (index: number | null) => {
+      if (focusedBlockIndex === index) {
+        if (isVisible) hideMenu();
+        if (isCommandOptionVisible) setIsCommandOptionVisible(false);
+      } else {
+        setFocusedBlockIndex(index);
+      }
+    },
+    [focusedBlockIndex, isVisible, isCommandOptionVisible, hideMenu],
+  );
+
+  const handleInput = useCallback(
+    (index: number, e: React.FormEvent<HTMLDivElement>) => {
+      const target = e.currentTarget;
+      const content = target.textContent || '';
+      const blockId = blocks[index].id;
+
+      // Save cursor position
+      const selection = window.getSelection();
+      if (selection?.rangeCount) {
+        const range = selection.getRangeAt(0);
+        cursorPosition.current[blockId] = range.startOffset;
+      }
+
+      // Only update if content changed
+      if (content !== blocks[index].content) {
+        updateBlock(index, { content });
+      }
+    },
+    [blocks, updateBlock],
+  );
 
   // 📌 Lifecycle: Focus First Block on Load
   useEffect(() => {
@@ -66,68 +106,49 @@ export function Editor() {
   ) => {
     handleKeyPress(e, index, {
       blocks,
+      updateCursorPosition,
       addBlock,
       updateBlock,
       deleteBlock,
       setFocusedBlockIndex,
-      setCursorPosition,
       showMenu,
       setFilter,
-      
     });
-  };
-
-  // const handleBlur = (index: number, e: React.FormEvent<HTMLDivElement>) => {
-  //   const content = e.currentTarget.innerText;
-  //   updateBlock(index, { content });
-  // };
-
-  const getCursorPosition = (element: HTMLElement): number => {
-    const selection = window.getSelection();
-    if (!selection || selection.rangeCount === 0) return 0;
-
-    const range = selection.getRangeAt(0);
-    const preCaretRange = range.cloneRange();
-    preCaretRange.selectNodeContents(element);
-    preCaretRange.setEnd(range.startContainer, range.startOffset);
-    return preCaretRange.toString().length; // Returns the correct cursor position
-  };
-
-  // 📌 Handlers: Input & Click Events
-  const handleInput = (index: number, e: React.FormEvent<HTMLDivElement>) => {
-    // get the content of the focused block
-    const content = e.currentTarget.textContent;
-
-    // Save cursor position
-    updateBlock(index, { content });
-    setCursorPosition(getCursorPosition(e.currentTarget));
   };
 
   useLayoutEffect(() => {
     if (focusedBlockIndex !== null && editorRef.current) {
-      const blockDivs = editorRef.current.querySelectorAll('[contenteditable]');
-      if (blockDivs[focusedBlockIndex]) {
-        placeCaretAtPosition(
-          blockDivs[focusedBlockIndex] as HTMLElement,
-          cursorPosition,
-        );
+      const blockId = blocks[focusedBlockIndex].id;
+      const position = cursorPosition.current[blockId] || 0;
+
+      const element = editorRef.current.querySelector(
+        `[data-block-id="${blockId}"] [contenteditable]`,
+      ) as HTMLElement;
+      if (element) {
+        placeCaretAtPosition(element, position);
       }
     }
   }, [blocks, focusedBlockIndex]);
 
   const handleBlockClick = (index: number) => {
     if (focusedBlockIndex !== index) {
-      console.log("Focused Block Index:", focusedBlockIndex);
-      console.log("cursorPosition:", cursorPosition);
+      console.log('Focused Block Index:', focusedBlockIndex);
+      console.log('cursorPosition:', cursorPosition);
       setFocusedBlockIndex(index);
-      placeCaretAtPosition(
-        editorRef.current?.querySelector(
-          `[data-block-index="${index}"]`,
-        ) as HTMLElement,
-        cursorPosition,
-      );
+      const blockId = blocks[index].id;
+      const position = cursorPosition.current[blockId] || 0;
+
+
+      useLayoutEffect(()=> {
+        placeCaretAtPosition(
+          editorRef.current?.querySelector(
+            `[data-block-index="${index}"]`,
+          ) as HTMLElement,
+          position,
+        );
+        console.log("Cursor-Position Updated to: ", position);
+      })
     }
-    // setIsCommandMenuVisible(false);
     setIsCommandOptionVisible(false);
   };
 
@@ -154,35 +175,23 @@ export function Editor() {
     }
   }, [focusedBlockIndex]); // Only runs when focus changes
 
-
-  const handleBlockContainerClick = (index: number | null) => {
-    if (focusedBlockIndex === index) {
-      if (isVisible) hideMenu();
-      if (isCommandOptionVisible) setIsCommandOptionVisible(false);
-    } else {
-      getCurrentFocusedBlockElement();
-      setFocusedBlockIndex(index);
-    }
-  };
-
   const onAddButtonClick = (index: number) => {
-    if (focusedBlockIndex !== index){
+    if (focusedBlockIndex !== index) {
       setFocusedBlockIndex(index);
     }
     showMenu(index);
     setIsCommandOptionVisible(false);
   };
 
-
   useEffect(() => {
     console.log('Focused Block Index:', focusedBlockIndex);
-  },[focusedBlockIndex]);
+  }, [focusedBlockIndex]);
 
   function getPlaceholder(block: BlockType, index: number): string {
     if (block.content?.trim() === '' && focusedBlockIndex !== index) {
       return '';
     }
-    if (index === 0){
+    if (index === 0) {
       return block.content?.trim() ? '' : 'Untitled';
     }
     if (isHeaderBlock(block)) {
@@ -191,50 +200,65 @@ export function Editor() {
     return index === 0 ? 'Start writing...' : 'Continue writing...';
   }
 
+  console.log('It is Re-Rendering ...');
+
+  const renderSingleBlock = useCallback(
+    ({
+      block,
+      index,
+      isFocused,
+    }: {
+      block: BlockType;
+      index: number;
+      isFocused: boolean;
+    }) => {
+      return renderBlock({
+        block,
+        index,
+        isFocused,
+        placeholder: getPlaceholder(block, index),
+        onKeyDown: (e) => handleKeyDown(e, index),
+        onClick: () => handleBlockClick(index),
+        onInput: (e) => handleInput(index, e),
+        onBlur: (e) => handleInput(index, e),
+        onAddClick: () => onAddButtonClick(index),
+        onDragClick: () => {
+          setFocusedBlockIndex(index);
+          setIsCommandOptionVisible(true);
+          hideMenu();
+        },
+        // Only pass down what's absolutely necessary
+        setFocusedBlockIndex,
+        setIsCommandOptionVisible,
+        hideMenu,
+        showMenu,
+      });
+    },
+    [
+      handleKeyDown,
+      handleInput,
+      handleBlockClick,
+      onAddButtonClick,
+      hideMenu,
+      showMenu,
+    ],
+  );
+
   return (
     <div
       ref={editorRef}
       className="bg-light-50 relative dark:bg-dark-50 max-w-[80%] mx-auto h-[90vh] overflow-hidden overflow-y-auto mt-2 rounded-md border border-light-200 dark:border-dark-100"
     >
-      <div className="sticky top-0 flex items-center justify-between text-light-500 dark:text-dark-500">
-        <div className="flex items-center gap-1 px-4">
-          <BiUndo className="w-6 h-6 p-[2px] rounded-full dark:bg-dark-100 cursor-pointer hover:dark:bg-dark-200 bg-light-100 hover:bg-light-200 border dark:border-dark-200 border-light-200" />
-          <BiRedo className="w-6 h-6 p-[2px] rounded-full dark:bg-dark-100 cursor-pointer hover:dark:bg-dark-200 bg-light-100 hover:bg-light-200 border dark:border-dark-200 border-light-200" />
-        </div>
-        <span className="flex items-center font-extralight gap-1 p-3 py-2 border border-light-200 dark:border-dark-100 border-t-0 border-r-0 rounded-bl-2xl bg-light-100 dark:bg-dark-base text-[13px]">
-          <HiOutlineCalendarDateRange /> {getCurrentDate()}
-        </span>
-      </div>
-      {/* <div className='absolute w-full h-full grid place-items-center'>
-        <EditorIntro/>
-      </div> */}
+      <EditorToolbar />
+
       {/* 📌 Render Blocks */}
-      <div className="relative w-full max-w-4xl mx-auto px-4">
-        {blocks.map((block, index) => (
-          <div
-            key={index}
-            data-block-index={index}
-            className={`flex group w-full max-w-[800px] relative rounded-md cursor-text`}
-            onClick={() => handleBlockContainerClick(index)}
-          >
-            {renderBlock({
-              block,
-              index,
-              isFocused: index === focusedBlockIndex,
-              placeholder: getPlaceholder(block, index),
-              onKeyDown: (e) => handleKeyDown(e, index),
-              onClick: () => handleBlockClick(index),
-              onInput: (e) => handleInput(index, e),
-              onBlur: (e) => handleInput(index, e),
-              onAddClick: () => onAddButtonClick(index),
-              onDragClick: () => {
-                setFocusedBlockIndex(index);
-                setIsCommandOptionVisible(true);
-                hideMenu();
-              },
-            })}
-          </div>
-        ))}
+      <div className="relative w-full max-w-4xl mx-auto px-4 pb-[4rem]">
+        <EditorBlocks
+          blocks={blocks}
+          focusedBlockIndex={focusedBlockIndex}
+          renderBlock={renderSingleBlock}
+          onClickBlock={handleBlockContainerClick}
+        />
         {/* 📌 Command Menu */}
         {isVisible && (
           <CommandMenu
@@ -251,7 +275,6 @@ export function Editor() {
             setIsCommandOptionVisible={setIsCommandOptionVisible}
           />
         )}
-        {/* <TextFormatingMenu/> */}
       </div>
     </div>
   );

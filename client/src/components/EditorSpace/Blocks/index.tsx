@@ -20,6 +20,10 @@ type BlockComponentProps = {
   onBlur: (e: React.FormEvent<HTMLDivElement>) => void;
   onAddClick: () => void;
   onDragClick: () => void;
+  setFocusedBlockIndex: (index: number) => void;
+  showMenu: (index: number) => void;
+  hideMenu: () => void;
+  setIsCommandOptionVisible: (visible: boolean) => void;
 };
 
 export const renderBlock = (props: BlockComponentProps) => {

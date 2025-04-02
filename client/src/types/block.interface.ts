@@ -27,7 +27,7 @@ export interface IParagraphBlock extends IBaseBlock {
 export interface IQuoteBlock extends IBaseBlock {
   type: 'quote';
   meta?: {
-    spacing?: 'medium' | 'large';
+    spacing?: 'small' |'medium' | 'large';
   };
 }
 
