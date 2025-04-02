@@ -11,7 +11,7 @@ export const EmptyCardSkeleton: React.FC<{ middle?: boolean }> = ({
         {middle && (
           <div className="grid gap-2 py-4 px-2">
             <h2 className="w-[50%] bg-dark-300 h-4 rounded-full"></h2>
-            <div className="grid gap-1 animate-pulse">
+            <div className="grid gap-1">
               <p className="w-full bg-dark-300 h-3 rounded-full"></p>
               <p className="w-full bg-dark-300 h-3 rounded-full"></p>
               <p className="w-full bg-dark-300 h-3 rounded-full"></p>
