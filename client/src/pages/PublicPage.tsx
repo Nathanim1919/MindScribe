@@ -13,7 +13,9 @@ export const PublicPage: React.FC = () => {
      "
     >
       <div className='backdrop-blur-3xl relative z-999'>
-        <CardDecoration />
+        <div className='absolute opacity-60 max-w-[300px] bottom-[50%] left-[5%] transform translate-[-50% -50%]'>
+          <CardDecoration />
+        </div>
         <div className="grid items-center justify-start absolute top-0 left-0 w-full h-full z-999
         
         ">

@@ -35,7 +35,7 @@ const loginRoute = createRoute({
 });
 
 const registerRoute = createRoute({
-  getParentRoute: () => publicRoute,
+  getParentRoute: () => rootRoute,
   path: '/register',
   component: RegistrationPage,
 });
@@ -98,7 +98,8 @@ const ProfilePage = createRoute({
 
 // Create the route tree
 const routeTree = rootRoute.addChildren([
-  publicRoute.addChildren([loginRoute, registerRoute]),
+  registerRoute,
+  publicRoute.addChildren([loginRoute]),
   authenticatedRoute.addChildren([
     EditorRoute,
     dashboardRoute.addChildren([BoardRoute, AllEntriesPage, ProfilePage]),
