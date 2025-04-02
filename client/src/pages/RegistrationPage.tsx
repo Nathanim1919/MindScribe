@@ -9,7 +9,7 @@ export const RegistrationPage: React.FC = () => {
     after:absolute after:bottom-0 after:right-0 after:h-[40%] after:w-[20%] after:bg-violet-500
     "
     >
-      <div className="relative w-screen h-screen grid backdrop-blur-[10rem] bg-dark-50/30 z-10">
+      <div className="relative w-screen h-screen grid backdrop-blur-[10rem] bg-dark-50/10 z-10">
         <div className="grid grid-cols-2 w-[70%] h-[90%] m-auto">
           <div className="relative p-4 flex flex-col items-center gap-4 rounded-lg">
             <div>
@@ -73,7 +73,6 @@ export const RegistrationPage: React.FC = () => {
                 </label>
                 <input
                   autoComplete="off"
-                  autoFocus
                   className={`bg-dark-50/30 transition-all duration-300  focus:border-violet-600/70 text-light-50 border border-dark-100 outline-none rounded-md p-2`}
                   type="email"
                   id="email"
@@ -88,13 +87,12 @@ export const RegistrationPage: React.FC = () => {
                 </label>
                 <input
                   autoComplete="off"
-                  autoFocus
                   className={`bg-dark-50/30 transition-all duration-300  focus:border-violet-600/70 text-light-50 border border-dark-100 outline-none rounded-md p-2`}
                   type="password"
                   id="password"
                   name="password"
                   required
-                  placeholder="Enter your password"
+                  placeholder="••••••••"
                 />
               </div>
               <div className={`flex flex-col gap-1`}>
@@ -103,13 +101,12 @@ export const RegistrationPage: React.FC = () => {
                 </label>
                 <input
                   autoComplete="off"
-                  autoFocus
                   className={`bg-dark-50/30 transition-all duration-300  focus:border-violet-600/70 text-light-50 border border-dark-100 outline-none rounded-md p-2`}
                   type="password"
                   id="confirmPassword"
                   name="confirmPassword"
                   required
-                  placeholder="Confirm your password"
+                 placeholder="••••••••"
                 />
               </div>
               <div>
