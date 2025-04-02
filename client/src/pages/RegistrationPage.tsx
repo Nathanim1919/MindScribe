@@ -120,6 +120,12 @@ export const RegistrationPage: React.FC = () => {
                   <MdNavigateNext className="transition-all duration-300 inline-block ml-2 text-2xl justify-self-end opacity-0 transform translate-x-10 group-hover:translate-0 group-hover:opacity-100" />
                 </button>
               </div>
+              <p className="text-center text-sm mt-4">
+                Already have an account?{' '}
+                <a href="/login" className="text-violet-500 hover:underline font-medium">
+                  Sign In
+                </a>
+              </p>
             </form>
           </div>
         </div>
