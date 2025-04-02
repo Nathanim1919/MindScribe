@@ -52,6 +52,10 @@ export const RegistrationPage: React.FC = () => {
           </div>
           <div className="grid place-items-center">
             <form className="relative w-[80%] h-full flex flex-col gap-4 p-10 rounded-lg">
+            <div>
+                <h2 className="text-4xl font-bold mb-2">Welcome back</h2>
+                <p className="text-light-50/70">Continue your reflective journey</p>
+              </div>
               <div className={`flex flex-col gap-1`}>
                 <label className={`text-violet-500`} htmlFor="username">
                   Full Name
