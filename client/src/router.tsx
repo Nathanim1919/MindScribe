@@ -15,6 +15,7 @@ import { RecentEntries } from './components/dashboard/RecentEntries';
 import { EmptyCollectionBoard } from './components/dashboard/EmptyCollection';
 import { Profile } from './components/dashboard/Profile';
 import { ProfileSkeleton } from './components/LoadingSkeletons/UserProfilePageSkeleton';
+import { PreferenceSetupFlow } from './components/PreferenceSetupFlow';
 
 // Create a root route
 const rootRoute = createRootRoute({
@@ -26,6 +27,13 @@ const publicRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: '/',
   component: PublicLayout,
+});
+
+
+const walkThrough = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/walkthrough',
+  component:PreferenceSetupFlow
 });
 
 const loginRoute = createRoute({
@@ -100,6 +108,7 @@ const ProfilePage = createRoute({
 const routeTree = rootRoute.addChildren([
   registerRoute,
   loginRoute,
+  walkThrough,
   publicRoute,
   authenticatedRoute.addChildren([
     EditorRoute,
