@@ -1,8 +1,12 @@
+import { useState } from "react";
 import { AiPreference } from "./preferenceFlowSteps/aiPreference";
 import { AppearancePreference } from "./preferenceFlowSteps/appearnacePreference";
+import { NotificationPreference } from "./preferenceFlowSteps/notificationPreference";
+import { userPreferences } from "../contexts/PreferencesContext";
+import { DEFAULT_PREFERENCES } from "../lib/defaultPreferences";
 
 export const PreferenceSetupFlow: React.FC<{ onComplete?: () => void }> = ({ onComplete }) => {
-  const { preferences, updatePreferences } = usePreferences();
+  const { preferences, updatePreferences } = userPreferences();
   const [step, setStep] = useState(0);
   const [tempPrefs, setTempPrefs] = useState(() => 
     Object.keys(preferences).length > 0 ? preferences : DEFAULT_PREFERENCES
@@ -18,7 +22,7 @@ export const PreferenceSetupFlow: React.FC<{ onComplete?: () => void }> = ({ onC
           onChange={(key, value) => 
             setTempPrefs(prev => ({
               ...prev,
-              ai: { ...prev.ai, [key]: value }
+              ai: { ...prev.aiAssistant, [key]: value }
             }))
           }
         />
@@ -41,7 +45,7 @@ export const PreferenceSetupFlow: React.FC<{ onComplete?: () => void }> = ({ onC
     {
       title: "Notifications",
       component: (
-        <NotificationsStep
+        <NotificationPreference
           prefs={tempPrefs}
           onChange={(key, value) => 
             setTempPrefs(prev => ({
