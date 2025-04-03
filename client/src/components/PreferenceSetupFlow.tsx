@@ -1,69 +1,109 @@
-import { useState } from 'react';
-import { userPreferences } from '../contexts/PreferencesContext';
-import { DEFAULT_PREFERENCES } from '../lib/defaultPreferences';
-import { PreferenceToggle } from './preferenceToggle';
+import { AiPreference } from "./preferenceFlowSteps/aiPreference";
+import { AppearancePreference } from "./preferenceFlowSteps/appearnacePreference";
 
-export const PreferenceSetupFlow: React.FC = () => {
-  const { preferences, updatePreferences } = userPreferences();
+export const PreferenceSetupFlow: React.FC<{ onComplete?: () => void }> = ({ onComplete }) => {
+  const { preferences, updatePreferences } = usePreferences();
   const [step, setStep] = useState(0);
-
-  // Initialize with default pref if empty
-  const [tempPrefs, settempPrefs] = useState(() =>
-    Object.keys(preferences).length > 0 ? preferences : DEFAULT_PREFERENCES,
+  const [tempPrefs, setTempPrefs] = useState(() => 
+    Object.keys(preferences).length > 0 ? preferences : DEFAULT_PREFERENCES
   );
 
-  const handlePrefChange = <K extends keyof typeof tempPrefs>(
-    category: K,
-    key: keyof (typeof tempPrefs)[K],
-    value: any,
-  ) => {
-    settempPrefs((prev) => ({
-      ...prev,
-      [category]: {
-        ...prev[category],
-        [key]: value,
-      },
-    }));
-  };
-
-
+  // Type-safe step handler
   const steps = [
-    
-  ]
+    {
+      title: "AI Preferences",
+      component: (
+        <AiPreference 
+          prefs={tempPrefs}
+          onChange={(key, value) => 
+            setTempPrefs(prev => ({
+              ...prev,
+              ai: { ...prev.ai, [key]: value }
+            }))
+          }
+        />
+      )
+    },
+    {
+      title: "Appearance",
+      component: (
+        <AppearancePreference
+          prefs={tempPrefs}
+          onChange={(key, value) => 
+            setTempPrefs(prev => ({
+              ...prev,
+              appearance: { ...prev.appearance, [key]: value }
+            }))
+          }
+        />
+      )
+    },
+    {
+      title: "Notifications",
+      component: (
+        <NotificationsStep
+          prefs={tempPrefs}
+          onChange={(key, value) => 
+            setTempPrefs(prev => ({
+              ...prev,
+              notifications: { ...prev.notifications, [key]: value }
+            }))
+          }
+        />
+      )
+    }
+  ];
 
   const handleFinish = () => {
-    updatePreferences(tempPrefs); // Save to context
-    // onComplete(); // Close walkthrough
+    updatePreferences(tempPrefs);
+    onComplete?.();
   };
 
   return (
     <div className="max-w-md mx-auto p-6 bg-white rounded-lg shadow-lg">
-      {/* Progress bar remains same */}
+      {/* Progress indicator */}
+      <div className="mb-6">
+        <h2 className="text-2xl font-bold mb-2">{steps[step].title}</h2>
+        <div className="flex gap-2 mb-4">
+          {steps.map((_, index) => (
+            <div 
+              key={index}
+              className={`h-1 flex-1 rounded-full ${
+                index <= step ? 'bg-violet-600' : 'bg-gray-200'
+              }`}
+            />
+          ))}
+        </div>
+      </div>
 
-      {steps[step]}
+      {/* Current step content */}
+      <div className="min-h-[300px]">
+        {steps[step].component}
+      </div>
 
+      {/* Navigation */}
       <div className="flex justify-between mt-8">
         <button
-          onClick={() => setStep((prev) => Math.max(0, prev - 1))}
+          onClick={() => setStep(prev => Math.max(0, prev - 1))}
           disabled={step === 0}
           className="px-4 py-2 rounded disabled:opacity-50"
         >
           Back
         </button>
-
+        
         {step < steps.length - 1 ? (
           <button
-            onClick={() => setStep((prev) => prev + 1)}
+            onClick={() => setStep(prev => prev + 1)}
             className="px-4 py-2 bg-violet-600 text-white rounded"
           >
-            Next
+            Continue
           </button>
         ) : (
           <button
             onClick={handleFinish}
             className="px-4 py-2 bg-green-600 text-white rounded"
           >
-            Finish Setup
+            Complete Setup
           </button>
         )}
       </div>

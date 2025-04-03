@@ -2,8 +2,8 @@ import React from "react";
 import { UserPreferences } from "../../types/preferences.interface";
 
 interface AppearancePreferenceProps {
-  tempPrefs: UserPreferences;
-  handlePrefChange: <K extends keyof UserPreferences>(
+  prefs: UserPreferences;
+  onChange: <K extends keyof UserPreferences>(
     category: K,
     key: keyof UserPreferences[K],
     value: UserPreferences[K][keyof UserPreferences[K]]
@@ -11,8 +11,8 @@ interface AppearancePreferenceProps {
 }
 
 export const AppearancePreference: React.FC<AppearancePreferenceProps> = ({
-  tempPrefs,
-  handlePrefChange
+  prefs,
+  onChange
 }) => {
   return (
     <div className="space-y-6">
@@ -21,9 +21,9 @@ export const AppearancePreference: React.FC<AppearancePreferenceProps> = ({
         <div>
           <label className="block mb-2">Theme</label>
           <select
-            value={tempPrefs.appearance.theme}
+            value={prefs.appearance.theme}
             onChange={(e) =>
-              handlePrefChange(
+              onChange(
                 'appearance',
                 'theme',
                 e.target.value as UserPreferences['appearance']['theme']
@@ -45,10 +45,10 @@ export const AppearancePreference: React.FC<AppearancePreferenceProps> = ({
               <button
                 key={mode}
                 onClick={() => 
-                  handlePrefChange('appearance', 'cardView', mode)
+                  onChange('appearance', 'cardView', mode)
                 }
                 className={`px-4 py-2 rounded ${
-                  tempPrefs.appearance.cardView === mode
+                  prefs.appearance.cardView === mode
                     ? 'bg-violet-600 text-white'
                     : 'bg-gray-200'
                 }`}

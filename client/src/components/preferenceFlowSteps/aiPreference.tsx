@@ -3,33 +3,33 @@ import { PreferenceToggle } from '../preferenceToggle';
 import { UserPreferences } from '../../types/preferences.interface';
 
 interface AiPreferenceProps {
-  tempPrefs: UserPreferences;
-  handlePrefChange: <K extends keyof UserPreferences>(
+    prefs: UserPreferences;
+  onChange: <K extends keyof UserPreferences>(
     category: K,
     key: keyof UserPreferences[K],
     value: UserPreferences[K][keyof UserPreferences[K]],
   ) => void;
 }
 
-export const aiPreference: React.FC<AiPreferenceProps> = ({
-  tempPrefs,
-  handlePrefChange,
+export const AiPreference: React.FC<AiPreferenceProps> = ({
+    prefs,
+  onChange,
 }) => {
   return (
     <div key="ai" className="space-y-6">
       <h3 className="text-xl font-semibold">AI Assistance</h3>
       <PreferenceToggle
         label="Enable text analysis"
-        checked={tempPrefs.aiAssistant.enableTextAnalysis}
+        checked={prefs.aiAssistant.enableTextAnalysis}
         onChange={(v) =>
-          handlePrefChange('aiAssistant', 'enableTextAnalysis', v)
+          onChange('aiAssistant', 'enableTextAnalysis', v)
         }
       />
       <PreferenceToggle
         label="Show writing prompts"
-        checked={tempPrefs.aiAssistant.enablePromptSuggestions}
+        checked={prefs.aiAssistant.enablePromptSuggestions}
         onChange={(v) =>
-          handlePrefChange('aiAssistant', 'enablePromptSuggestions', v)
+          onChange('aiAssistant', 'enablePromptSuggestions', v)
         }
       />
     </div>
