@@ -3,6 +3,7 @@ import { TiInputChecked } from 'react-icons/ti';
 import { motion } from 'framer-motion';
 
 interface PreferenceToggleProps {
+  icon?: string;
   image?: string;
   label: string;
   description?: string;
@@ -58,6 +59,7 @@ const checkmarkVariants = {
 };
 
 export const PreferenceToggle = ({
+  icon,
   image,
   label,
   description,
@@ -81,13 +83,13 @@ export const PreferenceToggle = ({
       {checked && (
         <motion.div
           variants={checkmarkVariants}
-          className="w-5 h-5 bg-violet-500 shadow-2xl text-dark-950 font-bold grid place-items-center rounded-bl-[10px] absolute -top-[0rem] -right-[0rem]"
+          className="w-5 h-5 bg-violet-500 shadow-2xl  text-dark-950 font-bold grid place-items-center rounded-bl-[10px] absolute z-100 -top-[0rem] -right-[0rem]"
         >
           <TiInputChecked />
         </motion.div>
       )}
 
-      <div className="flex flex-col">
+      <div className="flex flex-col items-center">
         <motion.span
           className="text-lg font-semibold"
           animate={{
@@ -97,7 +99,13 @@ export const PreferenceToggle = ({
           {
             image? (
               <img src={image} alt={label} className="relative w-full mr-2" />
-            ): label
+            ): 
+            <div className='flex items-center flex-col justify-center'>
+              {icon && 
+              <motion.img  initial="initial"
+                                animate="animate" src={icon} alt={label} className="relative w-[100px] m-0" />}
+            <span className='m-0'>{  label}</span>
+            </div>
           }
           
         </motion.span>

@@ -173,8 +173,8 @@ export const PreferenceSetupFlow: React.FC<{ onComplete?: () => void }> = ({
   };
 
   return (
-    <div className="w-full min-h-screen mx-auto p-6 bg-dark-50 text-light-50">
-      <div className="w-full max-w-2xl m-auto">
+    <div className="w-full min-h-screen mx-auto p-12 bg-dark-50 text-light-50">
+      <div className="w-full max-w-2xl m-auto relative">
         {/* Animated Progress Indicator */}
         <motion.div
           className="flex items-center justify-between"
