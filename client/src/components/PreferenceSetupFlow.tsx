@@ -108,7 +108,7 @@ export const PreferenceSetupFlow: React.FC<{ onComplete?: () => void }> = ({
       ),
     },
     {
-      title: 'Personalize Theme Your Experience',
+      title: 'Customize Theme',
       component: (
         <AppearancePreference
           prefs={tempPrefs}
@@ -122,7 +122,7 @@ export const PreferenceSetupFlow: React.FC<{ onComplete?: () => void }> = ({
       ),
     },
     {
-      title: 'Personalize Card View Your Experience',
+      title: 'Customize Card Layout',
       component: (
         <CardViewAppearancePreference
           prefs={tempPrefs}
