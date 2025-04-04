@@ -20,11 +20,10 @@ export const AppearancePreference: React.FC<AppearancePreferenceProps> = ({
 }) => {
   return (
     <div className="h-full w-full p-6 rounded-lg shadow-md">
-      <h3 className="text-xl font-semibold">Appearance</h3>
+      <h3 className="text-xl font-semibold text-violet-500">Theme Preferences</h3>
       <div className="space-y-6 flex mt-6">
           {/* Theme Selection Cards */}
           <div className="space-y-2 w-full h-full">
-            <label className="block mb-2">Theme</label>
             <div className="grid grid-cols-2 gap-2">
               <PreferenceToggle
                 image={LightModeImage}

@@ -15,7 +15,7 @@ export const NotificationPreference: React.FC<NotificationPreferenceProps> = ({
 }) => {
   return (
     <div className="space-y-6">
-      <h3 className="text-xl font-semibold">Notifications</h3>
+      <h3 className="text-xl font-semibold text-violet-500">Notifications</h3>
       
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         {/* Notification Cards */}

@@ -14,7 +14,7 @@ interface AiPreferenceProps {
 export const AiPreference: React.FC<AiPreferenceProps> = ({ prefs, onChange }) => {
   return (
     <div className="space-y-6">
-      <h3 className="text-xl font-semibold">AI Assistance</h3>
+      <h3 className="text-xl font-semibold text-violet-500">AI Assistance</h3>
       <div className='grid grid-cols-3 gap-4'>
         <PreferenceToggle
           icon={TextAnalaysisImage}
