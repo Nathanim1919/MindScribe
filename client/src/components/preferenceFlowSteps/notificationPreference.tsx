@@ -3,11 +3,7 @@ import { PreferenceToggle } from '../preferenceToggle';
 
 interface NotificationPreferenceProps {
   prefs: UserPreferences;
-  onChange: <K extends keyof UserPreferences>(
-    category: K,
-    key: keyof UserPreferences[K],
-    value: UserPreferences[K][keyof UserPreferences[K]],
-  ) => void;
+  onChange: (key: keyof UserPreferences['notifications'], value: boolean) => void;
 }
 
 export const NotificationPreference: React.FC<NotificationPreferenceProps> = ({
@@ -15,23 +11,32 @@ export const NotificationPreference: React.FC<NotificationPreferenceProps> = ({
   onChange,
 }) => {
   return (
-    <div key="notification" className="space-y-6">
+    <div className="space-y-6">
       <h3 className="text-xl font-semibold">Notifications</h3>
-      <PreferenceToggle
-        label="Enable daily reminders"
-        checked={prefs.notifications.enableDailyReminders}
-        onChange={(v) => onChange('notifications', 'enableDailyReminders', v)}
-      />
-      <PreferenceToggle
-        label="Enable weekly digest"
-        checked={prefs.notifications.enableWeeklyDigest}
-        onChange={(v) => onChange('notifications', 'enableWeeklyDigest', v)}
-      />
-      <PreferenceToggle
-        label="Enable feature updates"
-        checked={prefs.notifications.enableFeatureUpdates}
-        onChange={(v) => onChange('notifications', 'enableFeatureUpdates', v)}
-      />
+      
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {/* Notification Cards */}
+        <PreferenceToggle
+          label="Daily Reminders"
+          description="Get notified each day to journal"
+          checked={prefs.notifications.enableDailyReminders}
+          onChange={(v) => onChange('enableDailyReminders', v)}
+        />
+        
+        <PreferenceToggle
+          label="Weekly Digest"
+          description="Receive weekly insights summary"
+          checked={prefs.notifications.enableWeeklyDigest}
+          onChange={(v) => onChange('enableWeeklyDigest', v)}
+        />
+        
+        <PreferenceToggle
+          label="Feature Updates"
+          description="Learn about new features"
+          checked={prefs.notifications.enableFeatureUpdates}
+          onChange={(v) => onChange('enableFeatureUpdates', v)}
+        />
+      </div>
     </div>
   );
 };
