@@ -173,8 +173,12 @@ export const PreferenceSetupFlow: React.FC<{ onComplete?: () => void }> = ({
   };
 
   return (
-    <div className="w-full min-h-screen mx-auto p-12 bg-dark-50 text-light-50">
-      <div className="w-full max-w-2xl m-auto relative">
+    <div className="w-full overflow-hidden min-h-screen mx-auto bg-dark-50 text-light-50
+     before:absolute before:top-0 before:left-[30%] before:h-[20%] before:w-[30%] before:bg-violet-500
+    after:absolute after:bottom-0 after:right-0 after:h-[40%] after:w-[20%] after:bg-violet-500
+    ">
+      <div className='relative w-screen p-12 h-screen backdrop-blur-[10rem] bg-dark-50/20 z-10'>
+      <div className="w-full max-w-2xl m-auto relative ">
         {/* Animated Progress Indicator */}
         <motion.div
           className="flex items-center justify-between"
@@ -274,6 +278,7 @@ export const PreferenceSetupFlow: React.FC<{ onComplete?: () => void }> = ({
           )}
         </motion.div>
       </div>
+    </div>
     </div>
   );
 };

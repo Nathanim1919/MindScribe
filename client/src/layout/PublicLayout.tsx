@@ -16,7 +16,7 @@ export function PublicLayout() {
       <main className='flex-1 overflow-hidden'>
         <PublicPage /> 
       </main>
-      <footer>Public Footer</footer>
+      {/* <footer>Public Footer</footer> */}
     </div>
   );
 }
