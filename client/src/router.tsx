@@ -4,6 +4,7 @@ import {
   createRouter,
   Outlet,
 } from '@tanstack/react-router';
+
 import { LoginPage } from './pages/LoginPage';
 import { RegistrationPage } from './pages/RegistrationPage';
 import { PublicLayout } from './layout/PublicLayout';
@@ -86,7 +87,11 @@ const BoardRoute = createRoute({
 const EditorRoute = createRoute({
   getParentRoute: () => authenticatedRoute,
   path: '/new',
-  component: Editor, // Editor will be rendered at /in/new
+  component: Editor,
+  staticData: {
+    hideHeader: true,
+    hideSidebar: true,
+  }
 });
 
 
@@ -119,7 +124,7 @@ const routeTree = rootRoute.addChildren([
 // Create the router
 export const router = createRouter({ routeTree });
 
-// Register the router for type safety
+
 declare module '@tanstack/react-router' {
   interface Register {
     router: typeof router;

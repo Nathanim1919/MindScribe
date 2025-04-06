@@ -16,7 +16,7 @@ export const CardViewAppearancePreference: React.FC<
   AppearancePreferenceProps
 > = ({ prefs, onChange }) => {
   return (
-    <div className="h-full w-full p-6 rounded-lg shadow-md">
+    <div className="h-full w-full p-6 rounded-lg">
       <h3 className="text-xl font-semibold text-violet-500">Card Layout</h3>
       <div className="space-y-6 flex mt-6">
         <div className="flex gap-2">

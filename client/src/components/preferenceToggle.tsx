@@ -77,7 +77,7 @@ export const PreferenceToggle = ({
       className={`relative cursor-pointer border p-4 w-full max-w-[300px] h-full overflow-hidden rounded-md ${
         checked
           ? 'border-violet-500 bg-violet-500/10 text-violet-500'
-          : 'border-dark-300 bg-gray-100 dark:bg-dark-100 hover:border-violet-500/50 hover:text-violet-500'
+          : 'border-dark-700 dark:border-dark-300 bg-gray-100 dark:bg-dark-100 hover:border-violet-500/50 hover:text-violet-500'
       } transition-colors duration-200`}
     >
       {checked && (
@@ -104,7 +104,7 @@ export const PreferenceToggle = ({
               {icon && 
               <motion.img  initial="initial"
                                 animate="animate" src={icon} alt={label} className="relative w-[100px] m-0" />}
-            <span className='m-0'>{  label}</span>
+            <span className={`m-0 font-bold text-light-950 dark:text-dark-950 ${checked?"text-violet-600":""}`}>{  label}</span>
             </div>
           }
           

@@ -1,7 +1,10 @@
 // components/blocks/HeaderBlock.tsx
 
 import { IHeaderBlock } from '../../../types/block.interface';
-import { getActionDecorators, getHeaderDecorators } from '../../../utils/decorators';
+import {
+  getActionDecorators,
+  getHeaderDecorators,
+} from '../../../utils/decorators';
 import { BaseBlock } from '../Block';
 
 interface HeaderBlockProps {
@@ -17,7 +20,6 @@ interface HeaderBlockProps {
   onClick: () => void;
   onInput: (e: React.FormEvent<HTMLDivElement>) => void;
   onBlur: (e: React.FormEvent<HTMLDivElement>) => void;
-  
 }
 
 export const HeaderBlock = ({
@@ -35,7 +37,6 @@ export const HeaderBlock = ({
   onAddClick: () => void;
   onDragClick: () => void;
 }) => {
-
   // const decorators = getHeaderDecorators(block.meta?.level || 1);
   const level = block.meta?.level || 1;
 
@@ -48,16 +49,13 @@ export const HeaderBlock = ({
     6: 'text-base font-medium',
   }[level];
 
-
   const decorators = [
     ...getHeaderDecorators(block.meta?.level || 1),
     ...getActionDecorators(
       () => onAddClick?.(),
-      () => onDragClick?.()
-    )
+      () => onDragClick?.(),
+    ),
   ];
-
-
 
   return (
     <div className="relative group w-full">

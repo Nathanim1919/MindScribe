@@ -3,8 +3,6 @@ import { UserPreferences } from '../../types/preferences.interface';
 import { PreferenceToggle } from '../preferenceToggle';
 import DarkModeImage from "../../assets/preferenceImages/darkMode.png";
 import LightModeImage from "../../assets/preferenceImages/lightMode.png";
-import GridViewImage from "../../assets/preferenceImages/gridView.png";
-import ListViewImage from "../../assets/preferenceImages/listView.png";
 
 interface AppearancePreferenceProps {
   prefs: UserPreferences;
@@ -19,7 +17,7 @@ export const AppearancePreference: React.FC<AppearancePreferenceProps> = ({
   onChange,
 }) => {
   return (
-    <div className="h-full w-full p-6 rounded-lg shadow-md">
+    <div className="h-full w-full p-6 rounded-lg">
       <h3 className="text-xl font-semibold text-violet-500">Theme Preferences</h3>
       <div className="space-y-6 flex mt-6">
           {/* Theme Selection Cards */}

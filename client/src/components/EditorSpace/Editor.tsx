@@ -247,7 +247,7 @@ export function Editor() {
   return (
     <div
       ref={editorRef}
-      className="bg-light-50 relative dark:bg-dark-50 max-w-[80%] mx-auto h-[90vh] overflow-hidden overflow-y-auto mt-2 rounded-md border border-light-200 dark:border-dark-100"
+      className="bg-light-50 relative dark:bg-dark-50 w-[95%] mx-auto h-[98vh] overflow-hidden overflow-y-auto mt-2 rounded-md border border-light-200 dark:border-dark-100"
     >
       <EditorToolbar />
 

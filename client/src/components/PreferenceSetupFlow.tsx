@@ -172,12 +172,13 @@ export const PreferenceSetupFlow: React.FC<{ onComplete?: () => void }> = ({
     return () => clearTimeout(timer);
   };
 
+
   return (
-    <div className="w-full overflow-hidden min-h-screen mx-auto bg-dark-50 text-light-50
+    <div className="w-full overflow-hidden min-h-screen mx-auto bg-light-base dark:bg-dark-50 text-light-50
      before:absolute before:top-0 before:left-[30%] before:h-[20%] before:w-[30%] before:bg-violet-500
     after:absolute after:bottom-0 after:right-0 after:h-[40%] after:w-[20%] after:bg-violet-500
     ">
-      <div className='relative w-screen p-12 h-screen backdrop-blur-[10rem] bg-dark-50/20 z-10'>
+      <div className='relative w-screen p-12 h-screen backdrop-blur-[10rem] dark:bg-dark-50/20 z-10'>
       <div className="w-full max-w-2xl m-auto relative ">
         {/* Animated Progress Indicator */}
         <motion.div
@@ -188,7 +189,7 @@ export const PreferenceSetupFlow: React.FC<{ onComplete?: () => void }> = ({
         >
           <motion.h2
             key={`title-${step}`}
-            className="text-2xl font-bold mb-6"
+            className="text-2xl font-bold mb-6 text-light-950 dark:text-dark-950"
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4 }}
