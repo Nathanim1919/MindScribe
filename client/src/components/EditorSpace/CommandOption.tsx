@@ -5,6 +5,7 @@ import { IoDuplicateOutline } from 'react-icons/io5';
 import { useEffect, useRef, useState } from 'react';
 import { useCommandOption } from '../../hooks/useCommandOpion';
 import { BlockType } from '../../types/block.interface';
+import { motion } from 'framer-motion';
 
 interface CommandOptionPropType {
   position: number | null;
@@ -56,7 +57,11 @@ export const CommandOption: React.FC<CommandOptionPropType> = ({
   }, [position]);
 
   return (
-    <div
+    <motion.div
+      initial={{ opacity: 0, scale: 0.8 }}
+      animate={{ opacity: 1, scale: 1 }}
+      exit={{ opacity: 0, scale: 0.05 }}
+      transition={{ duration: 0.2 }}
       ref={commandMenuRef}
       style={{ top: `${menuPosition.top }px`, left: `${menuPosition.left + 40}` }}
       className={`
@@ -88,6 +93,6 @@ export const CommandOption: React.FC<CommandOptionPropType> = ({
           </div>
         ))}
       </div>
-    </div>
+    </motion.div>
   );
 };

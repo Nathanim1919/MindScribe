@@ -2,6 +2,7 @@ import { useMemo } from 'react';
 import { PiTextHBold } from 'react-icons/pi';
 import { RiText } from 'react-icons/ri';
 import { BlockType } from '../../types/block.interface';
+import { motion } from 'framer-motion';
 
 interface CommandMenuProps {
   filter: string;
@@ -20,7 +21,7 @@ const blockTypes = [
       spacing: 'large',
     },
     label: 'Heading 1',
-    icon: <PiTextHBold className="text-light-400 dark:text-dark-800" />,
+    icon: <PiTextHBold className="text-light-500 dark:text-dark-800" />,
   },
   {
     type: 'header',
@@ -29,7 +30,7 @@ const blockTypes = [
       spacing: 'medium',
     },
     label: 'Heading 2',
-    icon: <PiTextHBold className="text-light-400 dark:text-dark-800" />,
+    icon: <PiTextHBold className="text-light-500 dark:text-dark-800" />,
   },
   {
     type: 'header',
@@ -38,18 +39,18 @@ const blockTypes = [
       spacing: 'small',
     },
     label: 'Heading 3',
-    icon: <PiTextHBold className="text-light-400 dark:text-dark-800" />,
+    icon: <PiTextHBold className="text-light-500 dark:text-dark-800" />,
   },
   {
     type: 'paragraph',
     label: 'Text',
-    icon: <RiText className="text-light-400 dark:text-dark-800" />,
+    icon: <RiText className="text-light-500 dark:text-dark-800" />,
   },
 
   {
     type: 'quote',
     label: 'Quote',
-    icon: <RiText className="text-light-400 dark:text-dark-800" />,
+    icon: <RiText className="text-light-500 dark:text-dark-800" />,
   },
 ];
 
@@ -68,7 +69,11 @@ export function CommandMenu({
   );
 
   return (
-    <div
+    <motion.div
+      initial={{ opacity: 0, scale: 0.7 }}
+      animate={{ opacity: 1, scale: 1 }}
+      exit={{ opacity: 0, scale: 0.8 }}
+      transition={{ duration: .06 }}
       ref={menuRef}
       style={{ top: `${position.top}px`, left: `${position.left}px` }}
       className={`
@@ -82,7 +87,7 @@ export function CommandMenu({
         {filteredBlocks.map((block) => (
           <div
             key={block.label}
-            className="command-item flex text-[17px] items-center gap-1 py-1 rounded-none px-2 hover:bg-light-100 hover:dark:bg-dark-100 dark:text-dark-500 text-light-400 hover:text-light-600 hover:dark:text-dark-700 cursor-pointer border-t dark:border-dark-200/50 border-light-200/50"
+            className="command-item flex text-[17px] items-center gap-1 py-1 rounded-none px-2 hover:bg-light-100 hover:dark:bg-dark-100 dark:text-dark-500 text-light-500 hover:text-light-600 hover:dark:text-dark-700 cursor-pointer border-t dark:border-dark-200/50 border-light-200/50"
             onClick={(e) => {
               e.stopPropagation();
               onSelect(block.type as BlockType['type'], block.meta);
@@ -93,6 +98,6 @@ export function CommandMenu({
           </div>
         ))}
       </div>
-    </div>
+    </motion.div>
   );
 }

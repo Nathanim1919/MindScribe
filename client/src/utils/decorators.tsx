@@ -45,7 +45,6 @@ export const getActionDecorators = (
     component: () => (
       <button
         onClick={(e) => {
-            alert('add button clicked');
           e.preventDefault();
           e.stopPropagation();
           onAddClick();
