@@ -2,6 +2,7 @@ import { useContext } from 'react';
 import { CiLight } from 'react-icons/ci';
 import ThemeContext from '../../contexts/ThemeContext';
 import { Link } from '@tanstack/react-router';
+import { useRouterState } from '@tanstack/react-router';
 
 
 interface HeaderProps {
@@ -20,6 +21,14 @@ export const Header: React.FC<HeaderProps> = ({
   const toggleTheme = () => {
     setTheme(theme === 'light' ? 'dark' : 'light'); // Correctly toggle the theme
   };
+
+  const currentMatch = useRouterState({ select: (s:any) => s.matches.at(-1) });
+
+  const {hideHeader} = currentMatch.staticData || {};
+
+  if (hideHeader === true) {
+    return null;
+  }
 
   return (
    
