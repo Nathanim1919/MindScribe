@@ -6,7 +6,7 @@ import { BaseBlock } from '../Block';
 
 interface ParagraphBlockProps {
   block: IParagraphBlock;
-  index: number;
+  id: string;
   isFocused: boolean;
   placeholder: string;
   onKeyDown: (e: React.KeyboardEvent<HTMLDivElement>) => void;
@@ -17,7 +17,7 @@ interface ParagraphBlockProps {
 
 export const ParagraphBlock = ({
   block,
-  index,
+  id,
   isFocused,
   placeholder,
   onKeyDown,
@@ -50,8 +50,7 @@ export const ParagraphBlock = ({
       <BaseBlock
         decorators={decorators}
         block={block}
-        blockId={block.id}
-        index={index}
+        blockId={id}
         content={block.content}
         placeholder={placeholder}
         isFocused={isFocused}

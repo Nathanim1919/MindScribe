@@ -1,21 +1,29 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { SidebarElement } from './sideBar/sideBarElement';
 import { TopsidebarElements } from './sideBar/sideBarElements';
 import { RiBarChartLine } from 'react-icons/ri';
 import { useRouterState } from '@tanstack/react-router';
 import { motion } from 'motion/react';
+import { CiLight } from 'react-icons/ci';
+import ThemeContext from '../contexts/ThemeContext';
 
 export const Sidebar: React.FC = () => {
   const [isHovered, setIsHovered] = React.useState(false);
   const currentMatch = useRouterState({ select: (s: any) => s.matches.at(-1) });
   const { hideSidebar } = currentMatch.staticData || {};
 
+  const { setTheme, theme } = useContext(ThemeContext);
+
+  const toggleTheme = () => {
+    setTheme(theme === 'light' ? 'dark' : 'light'); // Correctly toggle the theme
+  };
+
   return (
     <main
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       role="navigation"
-      className={`relative z-999  w-16 h-screen dark:bg-dark-base`}
+      className={`relative z-999 w-16 h-screen dark:bg-dark-base`}
     >
       <div
         role="navigation"
@@ -29,11 +37,25 @@ export const Sidebar: React.FC = () => {
             animate={{ translateX: '0px', scale: 1 }}
             exit={{ opacity: 0, scale: 0.05 }}
             transition={{ duration: 0.2 }}
-            className={`flex flex-col bg-light-100 dark:bg-dark-50/0 ${hideSidebar}   border-gray-300 items-center gap-2`}
+            className='flex flex-col gap-10'
           >
+            <div
+             className={`flex flex-col bg-light-100 dark:bg-dark-50/0  border-gray-300 items-center gap-2`}
+            >
             {TopsidebarElements.map((element) => (
               <SidebarElement key={element.redirectTo} metadata={element} />
             ))}
+
+            </div>
+            {hideSidebar && (
+              <button
+                onClick={toggleTheme}
+                className={`flex text-2xl cursor-pointer group mt-10 relative items-center w-10 h-10 p-1 justify-center hover:bg-light-100 hover:dark:bg-dark-100 rounded-full dark:text-white transition-colors`}
+                aria-label={'Theme'}
+              >
+                <CiLight />
+              </button>
+            )}
           </motion.ul>
         )}
       </div>

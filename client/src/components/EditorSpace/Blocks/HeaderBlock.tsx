@@ -9,10 +9,10 @@ import { BaseBlock } from '../Block';
 
 interface HeaderBlockProps {
   block: IHeaderBlock;
-  index: number;
+  id: string;
   isFocused: boolean;
   placeholder: string;
-  setFocusedBlockIndex: (index: number) => void;
+  setFocusedBlockId: (id: string) => void;
   showMenu: (index: number) => void;
   hideMenu: () => void;
   setIsCommandOptionVisible: (visible: boolean) => void;
@@ -24,7 +24,7 @@ interface HeaderBlockProps {
 
 export const HeaderBlock = ({
   block,
-  index,
+  id,
   isFocused,
   placeholder,
   onKeyDown,
@@ -62,8 +62,7 @@ export const HeaderBlock = ({
       <BaseBlock
         block={block}
         decorators={decorators}
-        blockId={block.id}
-        index={index}
+        blockId={id}
         content={block.content}
         placeholder={placeholder}
         isFocused={isFocused}

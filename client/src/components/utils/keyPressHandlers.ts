@@ -4,7 +4,7 @@ import { shiftPlusEnter } from './keyHandlers/tabHandler';
 
 export const handleKeyPress = (
   e: React.KeyboardEvent<HTMLDivElement>,
-  index: number,
+  id: string,
   context: KeyHandlerContext,
 ) => {
   const handler = getKeyHandler(e.key);
@@ -12,13 +12,12 @@ export const handleKeyPress = (
 
   // Handle Shift+Enter first
   if (e.key === 'Enter' && e.shiftKey) {
-    shiftPlusEnter(e, { index, currentBlock: context.blocks[index], currentElement: e.currentTarget, context });
+    shiftPlusEnter(e, { id, currentElement: e.currentTarget, context });
     return;
   }
 
   handler(e, {
-    index,
-    currentBlock: context.blocks[index],
+    id,
     currentElement: e.currentTarget,
     context,
   });

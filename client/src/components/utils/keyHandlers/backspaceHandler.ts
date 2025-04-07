@@ -3,11 +3,13 @@ import { getCursorPosition, placeCaretAtPosition } from "../cursorUtils";
 
 export const handleBackspace: KeyHandler = (
   e,
-  { index, currentElement, context }
+  { id, currentElement, context }
 ) => {
   const cursorPosition = getCursorPosition(currentElement);
   const currentContent = currentElement.textContent || '';
-  const currentBlock = context.blocks[index];
+  const currentBlock = context.blocks.find(block => block.id === id);
+  const index = context.blocks.findIndex(block => block.id === id);
+
 
   if (cursorPosition === 0 || currentContent.trim() === '') {
     if (index > 0) {
@@ -15,9 +17,10 @@ export const handleBackspace: KeyHandler = (
       const previousBlock = context.blocks[index - 1];
       
       // Merge blocks
-      const mergedContent = (previousBlock.content || '') + (currentBlock.content || '');
-      context.updateBlock(index - 1, { content: mergedContent });
-      context.deleteBlock(index);
+      const mergedContent = (previousBlock.content || '') + (currentBlock?.content || '');
+
+      context.updateBlock(previousBlock.id, { content: mergedContent });
+      context.deleteBlock(id);
 
       // Update cursor position via context
       const newPosition = previousBlock.content?.length || 0;
@@ -32,7 +35,7 @@ export const handleBackspace: KeyHandler = (
         }
       });
 
-      context.setFocusedBlockIndex(index - 1);
+      context.setFocusedBlockId(context.blocks[index + 1]?.id);
     }
   }
 };

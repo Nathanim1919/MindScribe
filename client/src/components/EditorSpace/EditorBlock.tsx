@@ -5,28 +5,28 @@ import React from 'react';
 export const EditorBlock = React.memo(
   ({
     block,
-    index,
+    id,
     isFocused,
     renderBlock,
   }: {
     block: BlockType;
-    index: number;
+    id: string;
     isFocused: boolean;
     renderBlock: (props: {
       block: BlockType;
-      index: number;
+      id: string;
       isFocused: boolean;
     }) => JSX.Element;
   }) => {
     return (
       <div
-        data-block-id={block.id}
-        data-block-index={index}
+        data-block-id={id}
+        // data-block-index={index}
         className="flex group w-full max-w-[800px] relative rounded-md cursor-text"
       >
         {renderBlock({
           block,
-          index,
+          id,
           isFocused,
         })}
       </div>
@@ -35,7 +35,7 @@ export const EditorBlock = React.memo(
   (prevProps, nextProps) =>
     prevProps.block.id === nextProps.block.id &&
     prevProps.block.content === nextProps.block.content &&
-    prevProps.index === nextProps.index &&
+    prevProps.id === nextProps.id &&
     prevProps.isFocused === nextProps.isFocused,
 );
 EditorBlock.displayName = 'EditorBlock';

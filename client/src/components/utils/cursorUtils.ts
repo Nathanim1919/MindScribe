@@ -45,6 +45,7 @@ export const placeCaretAtPosition = (
 ) => {
   const range = document.createRange();
   const selection = window.getSelection();
+  console.log(selection)
 
   if (!selection) return;
 
@@ -54,11 +55,14 @@ export const placeCaretAtPosition = (
     ? Math.min(position, textNode.textContent?.length || 0)
     : 0;
 
-  if (textNode) {
+    
+    if (textNode) {
+    console.log("The valid position for this text node will be: ", validPosition) 
     range.setStart(textNode, validPosition);
     range.setEnd(textNode, validPosition);
     selection.removeAllRanges();
     selection.addRange(range);
+    console.log("Final Selection Range is: ", selection);
   }
 };
 

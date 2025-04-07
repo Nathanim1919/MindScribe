@@ -1,11 +1,11 @@
 import React, { useEffect, useMemo, useRef } from 'react';
 import { BlockDecorator } from '../../types/decorators';
 import { BlockType } from '../../types/block.interface';
+import { motion } from 'motion/react';
 
 interface BaseBlockProps {
   block: BlockType;
   blockId: string;
-  index: number;
   content?: string;
   placeholder: string;
   isFocused: boolean;
@@ -104,12 +104,14 @@ export const BaseBlock = React.forwardRef<HTMLDivElement, BaseBlockProps>(
         </div>
         {/* Content */}
         <div className={`flex-1 min-w-0 h-full`}>
-          <div
+          <motion.div
+            initial={{opacity:0}}
+            animate={{opacity:1}}
+            transition={{duration:1}}
             ref={resolvedRef}
             data-focused={isFocused}
             data-block-id={props.blockId}
-            data-block-index={props.index}
-            aria-label={`Editable block ${props.index}`}
+            aria-label={`Editable block ${props.blockId}`}
             dangerouslySetInnerHTML={{ __html: props.content ?? '' }}
             contentEditable={true}
             onClick={props.onClick}
@@ -120,7 +122,7 @@ export const BaseBlock = React.forwardRef<HTMLDivElement, BaseBlockProps>(
             className={`
             leading-tight relative w-full 
             ${spacingClasses[props.spacing ?? 'large']} 
-            outline-none break-words
+            outline-none break-words bg-red-500
             before:absolute before:text-dark-500 
             before:font-light before:grid before:place-content-center 
             before:h-full before:pointer-events-none 

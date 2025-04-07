@@ -1,4 +1,5 @@
 import { Link } from '@tanstack/react-router';
+import { motion } from 'motion/react';
 
 interface LinkProps {
   to?: string;
@@ -34,16 +35,26 @@ export const LinkElement: React.FC<LinkProps> = ({
         onClick={handleClick}
         className={`group relative ${className}`}
         aria-label={ariaLabel}
-        activeProps={{ className: 'bg-light-200 dark:bg-dark-100 text-[23px] font-bold text-violet-600 dark:text-violet-600' }}
+        activeProps={{
+          className:
+            'bg-light-200 dark:bg-dark-100 text-[23px] font-bold text-violet-600 dark:text-violet-600',
+        }}
         activeOptions={{ exact: true }}
       >
-        <span className='group-hover:rotate-12 transition-all duration-200'>{icon}</span>
+        <span className="group-hover:rotate-12 transition-all duration-200">
+          {icon}
+        </span>
         {isUserMenu ? (
           <span>{title}</span>
         ) : (
-          <span className="absolute font-light text-[16px] z-1002 -left-30 bg-white dark:bg-dark-50 dark:text-dark-900 py-[4px] px-2 border border-gray-400 dark:border-dark-200 shadow-2xl rounded-[4px] hidden group-hover:block group-hover:left-10 transition-all duration-200 ease-in-out">
-        {title}
-          </span>
+          <motion.span
+            initial={{ translateX: '20px' }}
+            animate={{ translateX: '0px' }}
+            transition={{ duration: '.5' }}
+            className="absolute font-light text-[16px] z-1002 -left-30 bg-white dark:bg-dark-50 dark:text-dark-900 py-[4px] px-2 border border-gray-400 dark:border-dark-200 shadow-2xl rounded-[4px] hidden group-hover:block group-hover:left-10"
+          >
+            {title}
+          </motion.span>
         )}
       </Link>
     </li>

@@ -1,10 +1,11 @@
 // Base interface for all block types
 
-// Base interface for all blocks
 export interface IBaseBlock {
   id: string; // Unique identifier for the block
   type: string; // Type of the block (e.g., "paragraph", "quote", "header")
   content?: string; // Content of the block
+  prevId: string | null;
+  nextId: string | null;
   meta?: Record<string, unknown>; // Additional metadata for the block
 }
 
@@ -30,6 +31,7 @@ export interface IQuoteBlock extends IBaseBlock {
     spacing?: 'small' |'medium' | 'large';
   };
 }
+
 
 // Union type of all possible blocks
 export type BlockType = IHeaderBlock | IParagraphBlock | IQuoteBlock;

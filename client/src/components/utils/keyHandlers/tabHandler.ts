@@ -2,10 +2,10 @@ import { KeyHandler } from "../../../types/key-handler.interface";
 import { getCursorPosition, insertTextAtCaret, placeCaretAtPosition } from "../cursorUtils";
 
 
-export const handlerTab: KeyHandler = (e, { index, currentElement, currentBlock, context }) => {
+export const handlerTab: KeyHandler = (e, { id, currentElement, context }) => {
     e.preventDefault();
 
-    const currentContent = currentBlock.content; // Get content from state
+    const currentContent = context.blocks.find((block) => block.id === id);
     const cursorPos = getCursorPosition(currentElement); // Get cursor position from DOM
 
     const textToInsert = '\u00A0\u00A0\u00A0\u00A0';
@@ -13,12 +13,12 @@ export const handlerTab: KeyHandler = (e, { index, currentElement, currentBlock,
     const newCursorPos = cursorPos + textToInsert.length;
 
     // Update React State FIRST
-    context.updateBlock(index, { content: newContent });
+    context.updateBlock(id, { content: newContent });
 
     // Set cursor position AFTER state update (React render)
     requestAnimationFrame(() => {
         // Need to re-acquire the element potentially if it re-rendered
-        const potentiallyNewElement = document.querySelector(`[data-block-index="${index}"]`) as HTMLElement;
+        const potentiallyNewElement = document.querySelector(`[data-block-id="${id}"]`) as HTMLElement;
         if (potentiallyNewElement) {
             placeCaretAtPosition(potentiallyNewElement, newCursorPos); // Use your utility
         }
@@ -31,11 +31,11 @@ export const handlerSpace: KeyHandler = (e) => {
     insertTextAtCaret('\u00A0'); // Insert a non-breaking space (safe for all browsers)
 };
 
-export const forwardSlash: KeyHandler = (e, {index,
+export const forwardSlash: KeyHandler = (e, {id,
     context
 }) => {
     e.preventDefault()
-    context.showMenu(index);
+    context.showMenu(id);
 }
 
 

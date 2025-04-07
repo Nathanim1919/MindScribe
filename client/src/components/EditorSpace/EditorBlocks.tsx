@@ -5,15 +5,15 @@ import { EditorBlock } from './EditorBlock';
 export const EditorBlocks = React.memo(
   ({
     blocks,
-    focusedBlockIndex,
+    focusedBlockId,
     renderBlock,
     onClickBlock,
   }: {
     blocks: BlockType[];
-    focusedBlockIndex: number | null;
+    focusedBlockId: string | null;
     renderBlock: (props: {
       block: BlockType;
-      index: number;
+      id: string;
       isFocused: boolean;
     }) => JSX.Element;
     onClickBlock: (index: number) => void;
@@ -29,12 +29,12 @@ export const EditorBlocks = React.memo(
             key={block.id}
             block={block}
             index={index}
-            isFocused={focusedBlockIndex === index}
+            isFocused={focusedBlockId === block.id}
             renderBlock={renderBlock}
           />
         </div>
       ));
-    }, [blocks, focusedBlockIndex, renderBlock]);
+    }, [blocks, focusedBlockId, renderBlock]);
 
     return (
       <div className="relative w-full max-w-4xl mx-auto px-4 pb-[4rem]">

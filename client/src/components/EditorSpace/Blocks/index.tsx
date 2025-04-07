@@ -11,7 +11,7 @@ import { QuoteBlock } from './QuoteBlock';
 
 type BlockComponentProps = {
   block: BlockType;
-  index: number;
+  id: string;
   isFocused: boolean;
   placeholder: string;
   onKeyDown: (e: React.KeyboardEvent<HTMLDivElement>) => void;
@@ -20,8 +20,8 @@ type BlockComponentProps = {
   onBlur: (e: React.FormEvent<HTMLDivElement>) => void;
   onAddClick: () => void;
   onDragClick: () => void;
-  setFocusedBlockIndex: (index: number) => void;
-  showMenu: (index: number) => void;
+  setFocusedBlockId: (id: string) => void;
+  showMenu: (id: string) => void;
   hideMenu: () => void;
   setIsCommandOptionVisible: (visible: boolean) => void;
 };

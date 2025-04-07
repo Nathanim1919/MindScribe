@@ -1,3 +1,4 @@
+// context/BlockContext.tsx
 import {
   createContext,
   useReducer,
@@ -7,98 +8,140 @@ import {
   useMemo,
   useRef,
 } from 'react';
-import { BlockType } from '../types/block.interface';
+import {
+  BlockType,
+  isHeaderBlock,
+  isParagraphBlock,
+  isQuoteBlock,
+} from '../types/block.interface';
 import { createBlock } from '../components/utils/blockFactory';
+import { mergeBlockUpdate } from '../utils/mergeUpdate';
 
-// Define action types
+// -------------------
+// ACTION TYPES
+// -------------------
 type Action =
   | {
       type: 'ADD_BLOCK';
       payload: {
         type: BlockType['type'];
         content: string;
-        index?: number;
+        afterId?: string;
         meta?: { level: number; spacing: string };
       };
     }
   | {
       type: 'UPDATE_BLOCK';
-      payload: { index: number; updates: Partial<BlockType> };
+      payload: { id: string; updates: Partial<BlockType> };
     }
-  | { type: 'DELETE_BLOCK'; payload: { index: number } }
+  | {
+      type: 'DELETE_BLOCK';
+      payload: { id: string };
+    }
   | {
       type: 'CHANGE_BLOCK_TYPE';
-      payload: { index: number; newType: BlockType['type'] };
+      payload: { id: string; newType: BlockType['type'] };
     }
   | {
       type: 'REORDER_BLOCKS';
-      payload: { startIndex: number; endIndex: number };
+      payload: { sourceId: string; targetId: string };
     }
-  | { type: 'SET_BLOCKS'; payload: { blocks: BlockType[] } };
+  | {
+      type: 'SET_BLOCKS';
+      payload: { blocks: BlockType[] };
+    };
 
-// Optimized reducer function
-const blockReducer = (state: BlockType[], action: Action) => {
+// -------------------
+// REDUCER
+// -------------------
+const blockReducer = (state: BlockType[], action: Action): BlockType[] => {
   switch (action.type) {
     case 'ADD_BLOCK': {
-      const { index, content, type, meta } = action.payload;
+      const { afterId, content, type, meta } = action.payload;
       const newBlock = createBlock(type, content, meta);
-      console.log("newly created block is: ", newBlock);
 
-      if (index !== undefined) {
-        if (index < 0 || index > state.length) return state;
+      if (afterId) {
+        const index = state.findIndex((b) => b.id === afterId);
+        if (index === -1) return state;
 
-        const newState = state.slice();
-        newState.splice(index, 0, newBlock);
-        return newState;
+        return [
+          ...state.slice(0, index + 1),
+          newBlock,
+          ...state.slice(index + 1),
+        ];
       }
+
       return [...state, newBlock];
     }
 
-    case 'DELETE_BLOCK': {
-      const { index } = action.payload;
-      if (index === 0) return state;
+    case 'UPDATE_BLOCK': {
+      const { id, updates } = action.payload;
 
-      const newState = state.slice();
-      newState.splice(index, 1);
-      return newState;
+      return state.map((block) => {
+        if (block.id !== id) return block;
+
+        if (isHeaderBlock(block)) {
+          return mergeBlockUpdate(block, updates as Partial<typeof block>);
+        } else if (isParagraphBlock(block)) {
+          return mergeBlockUpdate(block, updates as Partial<typeof block>);
+        } else if (isQuoteBlock(block)) {
+          return mergeBlockUpdate(block, updates as Partial<typeof block>);
+        }
+
+        return block;
+      });
     }
 
-    case 'UPDATE_BLOCK': {
-      const { index, updates } = action.payload;
-      const block = state[index];
-
-      // Skip if no actual changes
-      if (
-        Object.keys(updates).every(
-          (key) =>
-            block[key as keyof BlockType] === updates[key as keyof BlockType],
-        )
-      ) {
-        return state;
-      }
-
-      const newState = state.slice();
-      newState[index] = { ...block, ...updates } as BlockType;
-      return newState;
+    case 'DELETE_BLOCK': {
+      const { id } = action.payload;
+      return state.filter((block) => block.id !== id);
     }
 
     case 'CHANGE_BLOCK_TYPE': {
-      const { index, newType } = action.payload;
-      if (state[index].type === newType) return state;
-
-      const newState = state.slice();
-      newState[index] = { ...newState[index], type: newType } as BlockType;
-      return newState;
+      const { id, newType } = action.payload;
+      return state.map((block) => {
+        if (block.id !== id) return block;
+    
+        // Determine the default meta for the new type
+        let newMeta: BlockType['meta'] | undefined = undefined;
+    
+        switch (newType) {
+          case 'header':
+            newMeta = { level: 1, spacing: 'large' }; // Default meta for a header block
+            break;
+          case 'paragraph':
+            newMeta = { spacing: 'medium' }; // Default meta for a paragraph block
+            break;
+          case 'quote':
+            newMeta = { spacing: 'small' }; // Default meta for a quote block
+            break;
+          // Handle other block types similarly
+          default:
+            newMeta = undefined; // No meta for other types (if needed)
+        }
+    
+        return {
+          ...block,
+          type: newType,
+          meta: newMeta,  // Update meta for the new block type
+        } as BlockType;
+      });
     }
+    
 
     case 'REORDER_BLOCKS': {
-      const { startIndex, endIndex } = action.payload;
-      if (startIndex === endIndex) return state;
+      const { sourceId, targetId } = action.payload;
+      if (sourceId === targetId) return state;
 
-      const newState = state.slice();
-      const [removed] = newState.splice(startIndex, 1);
-      newState.splice(endIndex, 0, removed);
-      return newState;
+      const sourceIndex = state.findIndex((b) => b.id === sourceId);
+      const targetIndex = state.findIndex((b) => b.id === targetId);
+
+      if (sourceIndex === -1 || targetIndex === -1) return state;
+
+      const updated = [...state];
+      const [moved] = updated.splice(sourceIndex, 1);
+      updated.splice(targetIndex, 0, moved);
+      return updated;
     }
 
     case 'SET_BLOCKS': {
@@ -107,34 +150,41 @@ const blockReducer = (state: BlockType[], action: Action) => {
 
     default: {
       const _exhaustiveCheck: never = action;
-      throw new Error(`Unknown action type: ${_exhaustiveCheck}`);
+      throw new Error(`Unhandled action: ${_exhaustiveCheck}`);
     }
   }
 };
 
+// -------------------
+// CONTEXT TYPES
+// -------------------
 export type BlockContextType = {
   blocks: BlockType[];
+  cursorPositions: React.MutableRefObject<Record<string, number>>;
+  updateCursorPosition: (blockId: string, position: number) => void;
   addBlock: (
     type: BlockType['type'],
     content: string,
-    index?: number,
+    afterId?: string,
     meta?: { level: number; spacing: string },
   ) => void;
-  cursorPositions: React.MutableRefObject<Record<string, number>>;
-  updateCursorPosition: (blockId: string, position: number) => void;
-  updateBlock: (index: number, updates: Partial<BlockType>) => void;
-  deleteBlock: (index: number) => void;
-  reorderBlocks: (startIndex: number, endIndex: number) => void;
-  changeBlockType: (index: number, newType: BlockType['type']) => void;
+  updateBlock: (id: string, updates: Partial<BlockType>) => void;
+  deleteBlock: (id: string) => void;
+  reorderBlocks: (sourceId: string, targetId: string) => void;
+  changeBlockType: (id: string, newType: BlockType['type']) => void;
   setBlocks: (blocks: BlockType[]) => void;
 };
 
-// Create the context
+// -------------------
+// CONTEXT
+// -------------------
 export const BlockContext = createContext<BlockContextType | undefined>(
   undefined,
 );
 
-// Optimized provider component
+// -------------------
+// PROVIDER
+// -------------------
 export const BlockProvider = ({ children }: { children: ReactNode }) => {
   const [blocks, dispatch] = useReducer(blockReducer, [
     createBlock('header', '', { level: 1, spacing: 'large' }),
@@ -142,61 +192,52 @@ export const BlockProvider = ({ children }: { children: ReactNode }) => {
 
   const cursorPositions = useRef<Record<string, number>>({});
 
-const updateCursorPosition = useCallback((blockId: string, position: number) => {
-  cursorPositions.current[blockId] = position;
-}, []);
+  const updateCursorPosition = useCallback(
+    (blockId: string, position: number) => {
+      cursorPositions.current[blockId] = position;
+    },
+    [],
+  );
 
-  // Memoized action creators
   const addBlock = useCallback(
     (
       type: BlockType['type'],
       content: string,
-      index?: number,
+      afterId?: string,
       meta?: { level: number; spacing: string },
     ) => {
-      dispatch({ type: 'ADD_BLOCK', payload: { type, content, index, meta } });
+      dispatch({
+        type: 'ADD_BLOCK',
+        payload: { type, content, afterId, meta },
+      });
     },
     [],
   );
 
-  const updateBlock = useCallback(
-    (index: number, updates: Partial<BlockType>) => {
-      // Skip if no actual changes
-      if (
-        Object.keys(updates).every(
-          (key) =>
-            blocks[index][key as keyof BlockType] ===
-            updates[key as keyof BlockType],
-        )
-      )
-        return;
+  const updateBlock = useCallback((id: string, updates: Partial<BlockType>) => {
+    dispatch({ type: 'UPDATE_BLOCK', payload: { id, updates } });
+  }, []);
 
-      dispatch({ type: 'UPDATE_BLOCK', payload: { index, updates } });
-    },
-    [blocks],
-  );
-
-  const deleteBlock = useCallback((index: number) => {
-    dispatch({ type: 'DELETE_BLOCK', payload: { index } });
+  const deleteBlock = useCallback((id: string) => {
+    dispatch({ type: 'DELETE_BLOCK', payload: { id } });
   }, []);
 
   const changeBlockType = useCallback(
-    (index: number, newType: BlockType['type']) => {
-      dispatch({ type: 'CHANGE_BLOCK_TYPE', payload: { index, newType } });
+    (id: string, newType: BlockType['type']) => {
+      dispatch({ type: 'CHANGE_BLOCK_TYPE', payload: { id, newType } });
     },
     [],
   );
 
-  const reorderBlocks = useCallback((startIndex: number, endIndex: number) => {
-    dispatch({ type: 'REORDER_BLOCKS', payload: { startIndex, endIndex } });
+  const reorderBlocks = useCallback((sourceId: string, targetId: string) => {
+    dispatch({ type: 'REORDER_BLOCKS', payload: { sourceId, targetId } });
   }, []);
 
   const setBlocks = useCallback((blocks: BlockType[]) => {
     dispatch({ type: 'SET_BLOCKS', payload: { blocks } });
   }, []);
 
-  // Memoized context value
-  const contextValue = useMemo(
+  const value = useMemo(
     () => ({
       blocks,
       cursorPositions,
@@ -210,8 +251,6 @@ const updateCursorPosition = useCallback((blockId: string, position: number) => 
     }),
     [
       blocks,
-      cursorPositions,
-      updateCursorPosition,
       addBlock,
       updateBlock,
       deleteBlock,
@@ -222,13 +261,13 @@ const updateCursorPosition = useCallback((blockId: string, position: number) => 
   );
 
   return (
-    <BlockContext.Provider value={contextValue}>
-      {children}
-    </BlockContext.Provider>
+    <BlockContext.Provider value={value}>{children}</BlockContext.Provider>
   );
 };
 
-// Custom hook for consuming the context
+// -------------------
+// HOOK
+// -------------------
 export const useBlockContext = () => {
   const context = useContext(BlockContext);
   if (!context) {

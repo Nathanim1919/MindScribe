@@ -4,7 +4,7 @@ import { MdDragIndicator } from 'react-icons/md';
 import { BlockDecorator } from '../types/decorators';
 
 export const getQuoteDecorators = (): BlockDecorator[] => [
- 
+  
 ];
 
 

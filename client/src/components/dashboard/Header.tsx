@@ -1,7 +1,6 @@
 import { useContext } from 'react';
 import { CiLight } from 'react-icons/ci';
 import ThemeContext from '../../contexts/ThemeContext';
-import { Link } from '@tanstack/react-router';
 import { useRouterState } from '@tanstack/react-router';
 
 

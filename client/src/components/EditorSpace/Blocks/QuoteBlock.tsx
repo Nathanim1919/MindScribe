@@ -12,7 +12,7 @@ import { FaQuoteRight } from "react-icons/fa6";
 
 interface QuoteBlockProps {
   block: IQuoteBlock;
-  index: number;
+  id: string;
   isFocused: boolean;
   placeholder: string;
   onKeyDown: (e: React.KeyboardEvent<HTMLDivElement>) => void;
@@ -23,7 +23,7 @@ interface QuoteBlockProps {
 
 export const QuoteBlock = ({
   block,
-  index,
+  id,
   isFocused,
   placeholder,
   onKeyDown,
@@ -53,8 +53,7 @@ export const QuoteBlock = ({
       <BaseBlock
         block={block}
         decorators={decorators}
-        blockId={block.id}
-        index={index}
+        blockId={id}
         content={block.content}
         placeholder={placeholder}
         isFocused={isFocused}

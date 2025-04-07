@@ -21,9 +21,8 @@ export function Editor() {
     useBlockContext();
 
   const editorRef = useRef<HTMLDivElement>(null);
-  const [focusedBlockIndex, setFocusedBlockIndex] = useState<number | null>(
-    null,
-  );
+  const [focusedBlockId, setFocusedBlockId] = useState<string | null>(null);
+
   const cursorPosition = useRef<Record<string, number>>({});
   const [isCommandOptionVisible, setIsCommandOptionVisible] = useState(false);
 
@@ -41,22 +40,21 @@ export function Editor() {
   // 📌 Handlers: Input & Click Events
   // In Editor.tsx
   const handleBlockContainerClick = useCallback(
-    (index: number | null) => {
-      if (focusedBlockIndex === index) {
+    (blockId: string | null) => {
+      if (focusedBlockId === blockId) {
         if (isVisible) hideMenu();
         if (isCommandOptionVisible) setIsCommandOptionVisible(false);
       } else {
-        setFocusedBlockIndex(index);
+        setFocusedBlockId(blockId);
       }
     },
-    [focusedBlockIndex, isVisible, isCommandOptionVisible, hideMenu],
+    [focusedBlockId, isVisible, isCommandOptionVisible, hideMenu],
   );
 
   const handleInput = useCallback(
-    (index: number, e: React.FormEvent<HTMLDivElement>) => {
+    (blockId: string, e: React.FormEvent<HTMLDivElement>) => {
       const target = e.currentTarget;
       const content = target.textContent || '';
-      const blockId = blocks[index].id;
 
       // Save cursor position
       const selection = window.getSelection();
@@ -65,9 +63,12 @@ export function Editor() {
         cursorPosition.current[blockId] = range.startOffset;
       }
 
+
+      const block = blocks.find((block) => block.id === blockId);
+
       // Only update if content changed
-      if (content !== blocks[index].content) {
-        updateBlock(index, { content });
+      if (content !== block?.content) {
+        updateBlock(id, { content });
       }
     },
     [blocks, updateBlock],
@@ -82,115 +83,99 @@ export function Editor() {
       if (firstBlock) {
         firstBlock.focus();
         placeCaretAtEnd(firstBlock);
-        setFocusedBlockIndex(0);
+        setFocusedBlockId(blocks[0].id);
+        // Set initial cursor position
       }
     }
   }, []);
 
   // Focus management
   useEffect(() => {
-    if (editorRef.current && blocks.length > 0 && focusedBlockIndex !== null) {
+    if (editorRef.current && blocks.length > 0 && focusedBlockId !== null) {
       const blockElement = editorRef.current.querySelector(
-        `[data-block-index="${focusedBlockIndex}"]`,
+        `[data-block-id="${focusedBlockId}"]`,
       ) as HTMLElement;
       if (blockElement) {
         blockElement.focus();
       }
     }
-  }, [focusedBlockIndex, blocks]);
+  }, [focusedBlockId, blocks]);
 
   // 📌 Handlers: Key Press Events
   const handleKeyDown = (
     e: React.KeyboardEvent<HTMLDivElement>,
-    index: number,
+    id: string,
   ) => {
-    handleKeyPress(e, index, {
+    handleKeyPress(e, id, {
       blocks,
       updateCursorPosition,
       addBlock,
       updateBlock,
       deleteBlock,
-      setFocusedBlockIndex,
+      setFocusedBlockId,
       showMenu,
       setFilter,
     });
   };
 
+
+  //TODO:  what if use it in block level??
   useLayoutEffect(() => {
-    if (focusedBlockIndex !== null && editorRef.current) {
-      const blockId = blocks[focusedBlockIndex].id;
-      const position = cursorPosition.current[blockId] || 0;
+    if (focusedBlockId !== null && editorRef.current) {
+      const position = cursorPosition.current[focusedBlockId] || 0;
 
       const element = editorRef.current.querySelector(
-        `[data-block-id="${blockId}"] [contenteditable]`,
+        `[data-block-id="${focusedBlockId}"] [contenteditable]`,
       ) as HTMLElement;
       if (element) {
         placeCaretAtPosition(element, position);
       }
     }
-  }, [blocks, focusedBlockIndex]);
-
-  const handleBlockClick = (index: number) => {
-    if (focusedBlockIndex !== index) {
-      console.log('Focused Block Index:', focusedBlockIndex);
-      console.log('cursorPosition:', cursorPosition);
-      setFocusedBlockIndex(index);
-      const blockId = blocks[index].id;
-      const position = cursorPosition.current[blockId] || 0;
+  }, [blocks, focusedBlockId]);
 
 
-      useLayoutEffect(()=> {
-        placeCaretAtPosition(
-          editorRef.current?.querySelector(
-            `[data-block-index="${index}"]`,
-          ) as HTMLElement,
-          position,
-        );
-        console.log("Cursor-Position Updated to: ", position);
-      })
+  const handleBlockClick = (id: string | null) => {
+    if (focusedBlockId !== id) {
+      setFocusedBlockId(id);
     }
     setIsCommandOptionVisible(false);
+    hideMenu();
   };
 
   const getCurrentFocusedBlockElement = () => {
-    if (focusedBlockIndex !== null && editorRef.current) {
-      const blockDivs =
-        editorRef.current?.querySelectorAll('[contenteditable]');
-      const element = blockDivs[focusedBlockIndex] as HTMLElement;
-      if (element !== undefined) {
-        // Move cursor to the end
-        const range = document.createRange();
-        const selection = window.getSelection();
-        range.selectNodeContents(element);
-        range.collapse(false); // Move to end
-        selection?.removeAllRanges();
-        selection?.addRange(range);
-      }
+    if (focusedBlockId !== null && editorRef.current) {
+      const element = editorRef.current.querySelector(
+        `[data-block-id="${focusedBlockId}"] [contenteditable]`,
+      ) as HTMLElement;
+      const position = cursorPosition.current[focusedBlockId] || 0;
+      // placeCaretAtPosition(element, position);
     }
   };
 
   useLayoutEffect(() => {
-    if (focusedBlockIndex !== null) {
+    if (focusedBlockId !== null) {
       getCurrentFocusedBlockElement();
     }
-  }, [focusedBlockIndex]); // Only runs when focus changes
+  }, [focusedBlockId]); // Only runs when focus changes
 
-  const onAddButtonClick = (index: number) => {
-    if (focusedBlockIndex !== index) {
-      setFocusedBlockIndex(index);
+  const onAddButtonClick = (id: string | null) => {
+    if (focusedBlockId !== id) {
+      setFocusedBlockId(id);
     }
-    showMenu(index);
+    showMenu(id);
     setIsCommandOptionVisible(false);
   };
 
   useEffect(() => {
-    console.log('Focused Block Index:', focusedBlockIndex);
-  }, [focusedBlockIndex]);
+    console.log('Focused Block Index:', focusedBlockId);
+  }, [focusedBlockId]);
 
-  function getPlaceholder(block: BlockType, index: number): string {
-    if (block.content?.trim() === '' && focusedBlockIndex !== index) {
+  function getPlaceholder(block: BlockType, id: string): string {
+    if (block.content?.trim() === '' && focusedBlockId !== id) {
       return '';
     }
+
+    const index = blocks.findIndex((b) => b.id === id);
     if (index === 0) {
       return block.content?.trim() ? '' : 'Untitled';
     }
@@ -205,30 +190,30 @@ export function Editor() {
   const renderSingleBlock = useCallback(
     ({
       block,
-      index,
+      id,
       isFocused,
     }: {
       block: BlockType;
-      index: number;
+      id: string;
       isFocused: boolean;
     }) => {
       return renderBlock({
         block,
-        index,
+        id,
         isFocused,
-        placeholder: getPlaceholder(block, index),
-        onKeyDown: (e) => handleKeyDown(e, index),
-        onClick: () => handleBlockClick(index),
-        onInput: (e) => handleInput(index, e),
-        onBlur: (e) => handleInput(index, e),
-        onAddClick: () => onAddButtonClick(index),
+        placeholder: getPlaceholder(block, id),
+        onKeyDown: (e) => handleKeyDown(e, id),
+        onClick: () => handleBlockClick(id),
+        onInput: (e) => handleInput(id, e),
+        onBlur: (e) => handleInput(id, e),
+        onAddClick: () => onAddButtonClick(id),
         onDragClick: () => {
-          setFocusedBlockIndex(index);
+          setFocusedBlockId(id);
           setIsCommandOptionVisible(true);
           hideMenu();
         },
         // Only pass down what's absolutely necessary
-        setFocusedBlockIndex,
+        setFocusedBlockId,
         setIsCommandOptionVisible,
         hideMenu,
         showMenu,
@@ -247,7 +232,7 @@ export function Editor() {
   return (
     <div
       ref={editorRef}
-      className="bg-light-50 relative dark:bg-dark-50 w-[95%] mx-auto h-[98vh] overflow-hidden overflow-y-auto mt-2 rounded-md border border-light-200 dark:border-dark-100"
+      className="bg-light-50 relative dark:bg-dark-50 left-[-2rem] w-[95%] mx-auto h-[98vh] overflow-hidden overflow-y-auto mt-2 rounded-md border border-light-200 dark:border-dark-100"
     >
       <EditorToolbar />
 
@@ -255,7 +240,7 @@ export function Editor() {
       <div className="relative w-full max-w-4xl mx-auto px-4 pb-[4rem]">
         <EditorBlocks
           blocks={blocks}
-          focusedBlockIndex={focusedBlockIndex}
+          focusedBlockId={focusedBlockId}
           renderBlock={renderSingleBlock}
           onClickBlock={handleBlockContainerClick}
         />
@@ -268,9 +253,9 @@ export function Editor() {
             menuRef={menuRef}
           />
         )}
-        {isCommandOptionVisible && focusedBlockIndex !== null && (
+        {isCommandOptionVisible && focusedBlockId !== null && (
           <CommandOption
-            position={focusedBlockIndex}
+            position={focusedBlockId}
             blocks={blocks}
             setIsCommandOptionVisible={setIsCommandOptionVisible}
           />
