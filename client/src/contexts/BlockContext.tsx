@@ -17,6 +17,15 @@ import {
 import { createBlock } from '../components/utils/blockFactory';
 import { mergeBlockUpdate } from '../utils/mergeUpdate';
 
+
+interface addBlockPayLoad {
+  type: BlockType['type'],
+  content: string,
+  afterId?: string,
+  beforeId?: string,
+  meta?: { level: number; spacing: string },
+}
+
 // -------------------
 // ACTION TYPES
 // -------------------
@@ -24,10 +33,9 @@ type Action =
   | {
       type: 'ADD_BLOCK';
       payload: {
-        type: BlockType['type'];
-        content: string;
+        block: BlockType;
         afterId?: string;
-        meta?: { level: number; spacing: string };
+        beforeId?: string;
       };
     }
   | {
@@ -57,22 +65,22 @@ type Action =
 const blockReducer = (state: BlockType[], action: Action): BlockType[] => {
   switch (action.type) {
     case 'ADD_BLOCK': {
-      const { afterId, content, type, meta } = action.payload;
-      const newBlock = createBlock(type, content, meta);
-
+      const { block, afterId } = action.payload;
+    
       if (afterId) {
         const index = state.findIndex((b) => b.id === afterId);
         if (index === -1) return state;
-
+    
         return [
           ...state.slice(0, index + 1),
-          newBlock,
+          block,
           ...state.slice(index + 1),
         ];
       }
-
-      return [...state, newBlock];
+    
+      return [...state, block];
     }
+    
 
     case 'UPDATE_BLOCK': {
       const { id, updates } = action.payload;
@@ -162,12 +170,7 @@ export type BlockContextType = {
   blocks: BlockType[];
   cursorPositions: React.MutableRefObject<Record<string, number>>;
   updateCursorPosition: (blockId: string, position: number) => void;
-  addBlock: (
-    type: BlockType['type'],
-    content: string,
-    afterId?: string,
-    meta?: { level: number; spacing: string },
-  ) => void;
+  addBlock: (payload: addBlockPayLoad) => void;
   updateBlock: (id: string, updates: Partial<BlockType>) => void;
   deleteBlock: (id: string) => void;
   reorderBlocks: (sourceId: string, targetId: string) => void;
@@ -199,20 +202,22 @@ export const BlockProvider = ({ children }: { children: ReactNode }) => {
     [],
   );
 
-  const addBlock = useCallback(
-    (
-      type: BlockType['type'],
-      content: string,
-      afterId?: string,
-      meta?: { level: number; spacing: string },
-    ) => {
-      dispatch({
-        type: 'ADD_BLOCK',
-        payload: { type, content, afterId, meta },
-      });
-    },
-    [],
-  );
+
+  const addBlock = useCallback((payload: addBlockPayLoad): string => {
+    const newBlock = createBlock(payload.type, payload.content, payload.meta);
+  
+    dispatch({
+      type: 'ADD_BLOCK',
+      payload: {
+        block: newBlock,
+        afterId: payload.afterId,
+        beforeId: payload.beforeId,
+      },
+    });
+  
+    return newBlock.id;
+  }, []);
+  
 
   const updateBlock = useCallback((id: string, updates: Partial<BlockType>) => {
     dispatch({ type: 'UPDATE_BLOCK', payload: { id, updates } });

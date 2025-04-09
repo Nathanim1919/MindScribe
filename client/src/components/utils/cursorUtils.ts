@@ -31,6 +31,7 @@ export const placeCaretAtEnd = (element: HTMLElement) => {
 };
 
 export const placeCaretAtStart = (element: HTMLElement) => {
+  console.log("Focused Element is: ", element);
   const range = document.createRange();
   const selection = window.getSelection();
   range.selectNodeContents(element);

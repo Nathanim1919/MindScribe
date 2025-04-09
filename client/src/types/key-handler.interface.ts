@@ -4,11 +4,11 @@ import { BlockType } from "./block.interface";
 export interface KeyHandlerContext {
     blocks: BlockType[];
     updateCursorPosition: (blockId: string, position: number) => void;
-    addBlock: (type: BlockType['type'], content:string, afterId?: string, beforeId?: string, id?: string, meta?:{level: number, spacing:string}) => void,
+    addBlock: (payload:{type: BlockType['type'], content:string, afterId?:string, beforeId?: string, meta?:{level: number, spacing:string}}) => string,
     updateBlock: (id: string, updates: Partial<BlockType>) => void;
     deleteBlock: (id: string) => void;
     setFocusedBlockId: (index: string | null) => void;
-    showMenu: (index: number) => void;
+    showMenu: (id: string) => void;
     setFilter: (filter: string) => void;
 }
 

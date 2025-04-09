@@ -16,19 +16,19 @@ export const EditorBlocks = React.memo(
       id: string;
       isFocused: boolean;
     }) => JSX.Element;
-    onClickBlock: (index: number) => void;
+    onClickBlock: (id: string) => void;
   }) => {
     const blockList = useMemo(() => {
       return blocks.map((block, index) => (
         <div
           key={block.id}
-          onClick={() => onClickBlock(index)}
+          onClick={() => onClickBlock(block.id)}
           className="flex group w-full max-w-[800px] relative rounded-md cursor-text"
         >
           <EditorBlock
             key={block.id}
             block={block}
-            index={index}
+            id={block.id}
             isFocused={focusedBlockId === block.id}
             renderBlock={renderBlock}
           />

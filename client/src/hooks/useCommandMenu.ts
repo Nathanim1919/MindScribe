@@ -2,7 +2,7 @@ import { useCallback, useLayoutEffect, useRef, useState } from 'react';
 import { BlockType } from '../types/block.interface';
 
 export function useCommandMenu(
-  addBlock: (type: BlockType['type'], content:string, afterId?:string, beforeId?: string, index?: number, meta?:{level: number, spacing:string}) => void,
+  addBlock: (payload:{type: BlockType['type'], content:string, afterId?:string, beforeId?: string, meta?:{level: number, spacing:string}}) => void,
 ) {
   const [isVisible, setIsVisible] = useState(false);
   const [filter, setFilter] = useState('');
@@ -33,7 +33,14 @@ export function useCommandMenu(
   const handleSelect = useCallback(
     (type: BlockType['type'], meta?:{level: number, spacing: string}) => {
       if (targetBlockId === null) return;
-      addBlock(type, "",targetBlockId, meta);
+      addBlock(
+        {
+          type,
+          content:"",
+          afterId:targetBlockId,
+          meta
+        }
+      );
       hideMenu();
     },
     [addBlock, targetBlockId],

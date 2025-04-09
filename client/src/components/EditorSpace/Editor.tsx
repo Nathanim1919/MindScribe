@@ -63,12 +63,11 @@ export function Editor() {
         cursorPosition.current[blockId] = range.startOffset;
       }
 
-
       const block = blocks.find((block) => block.id === blockId);
 
       // Only update if content changed
       if (content !== block?.content) {
-        updateBlock(id, { content });
+        updateBlock(blockId, { content });
       }
     },
     [blocks, updateBlock],
@@ -118,7 +117,6 @@ export function Editor() {
     });
   };
 
-
   //TODO:  what if use it in block level??
   useLayoutEffect(() => {
     if (focusedBlockId !== null && editorRef.current) {
@@ -132,7 +130,6 @@ export function Editor() {
       }
     }
   }, [blocks, focusedBlockId]);
-
 
   const handleBlockClick = (id: string | null) => {
     if (focusedBlockId !== id) {
@@ -253,9 +250,9 @@ export function Editor() {
             menuRef={menuRef}
           />
         )}
-        {isCommandOptionVisible && focusedBlockId !== null && (
+        {isCommandOptionVisible &&  (
           <CommandOption
-            position={focusedBlockId}
+            id={focusedBlockId}
             blocks={blocks}
             setIsCommandOptionVisible={setIsCommandOptionVisible}
           />

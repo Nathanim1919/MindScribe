@@ -8,13 +8,13 @@ import { BlockType } from '../../types/block.interface';
 import { motion } from 'framer-motion';
 
 interface CommandOptionPropType {
-  position: number | null;
+  id: string | null;
   blocks: BlockType[];
   setIsCommandOptionVisible: (value: boolean) => void;
 }
 
 export const CommandOption: React.FC<CommandOptionPropType> = ({
-  position,
+  id,
   blocks,
   setIsCommandOptionVisible
 }) => {
@@ -32,7 +32,7 @@ export const CommandOption: React.FC<CommandOptionPropType> = ({
     handleCut,
     handleDelete,
     handleDuplicate,
-  } = useCommandOption(position, blocks, setIsCommandOptionVisible);
+  } = useCommandOption(id, blocks, setIsCommandOptionVisible);
 
   const commandMenuRef = useRef<HTMLDivElement>(null);
 
@@ -41,7 +41,7 @@ export const CommandOption: React.FC<CommandOptionPropType> = ({
 
     // Located the selected block using its data attribute
     const blockElement = document.querySelector(
-      `[data-block-index="${position}"]`,
+      `[data-block-id="${id}"]`,
     ) as HTMLDivElement;
 
     if (!blockElement) return;
@@ -54,16 +54,15 @@ export const CommandOption: React.FC<CommandOptionPropType> = ({
       top: blockRect.top + window.scrollY - 90,
       left: blockRect.left + window.scrollX,
     });
-  }, [position]);
+  }, [id]);
 
   return (
     <motion.div
-      initial={{ opacity: 0, scale: 0.8 }}
-      animate={{ opacity: 1, scale: 1 }}
-      exit={{ opacity: 0, scale: 0.05 }}
-      transition={{ duration: 0.2 }}
+      initial={{ opacity: 0}}
+      animate={{ opacity: 1}}
+      transition={{ duration: 1 }}
       ref={commandMenuRef}
-      style={{ top: `${menuPosition.top }px`, left: `${menuPosition.left + 40}` }}
+      style={{ top: `${menuPosition.top }px`, left: `${menuPosition.left + 2}` }}
       className={`
         
         bg-light-base/20 transition-all z-999 duration-100 ease-in-out dark:bg-dark-100/20 backdrop-blur-2xl border max-w-[150px] border-light-200 border-b-0 overflow-hidden dark:border-dark-200 fixed  shadow-lg shadow-dark-800 dark:shadow-dark-50 rounded-lg grid place-items-center`}

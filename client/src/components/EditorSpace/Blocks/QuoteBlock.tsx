@@ -45,11 +45,7 @@ export const QuoteBlock = ({
   ];
   return (
     <div className="relative group w-[95%] mx-auto">
-      <span
-      className='absolute w-10 h-10 text-2xl z-999 dark:text-dark-400 text-light-400 left-18 -top-2'
-      >
-        <FaQuoteLeft/>
-      </span>
+     
       <BaseBlock
         block={block}
         decorators={decorators}
@@ -57,7 +53,7 @@ export const QuoteBlock = ({
         content={block.content}
         placeholder={placeholder}
         isFocused={isFocused}
-        contentClassName="dark:border-dark-400 px-4 italic text-[15px] bg-light-100 dark:bg-dark-100"
+        contentClassName="border-l-4 dark:border-dark-400 px-4 italic text-[15px] bg-light-100 dark:bg-dark-100"
         className={`p-1 rounded-md text-gray-500 dark:text-dark-500 relative
           `}
         showPlaceholder={!block.content?.trim()}
@@ -67,11 +63,7 @@ export const QuoteBlock = ({
         onInput={onInput}
         onBlur={onBlur}
       />
-        <span
-      className='absolute w-10 h-10 text-2xl z-999 dark:text-dark-400 text-light-400 right-0 -bottom-6'
-      >
-        <FaQuoteRight/>
-      </span>
+     
     </div>
   );
 };

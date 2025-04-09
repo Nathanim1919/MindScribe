@@ -1,16 +1,18 @@
 import { BlockType } from '../types/block.interface';
 import { useBlockContext } from '../contexts/BlockContext';
 
-export function useCommandOption(index: number | null, blocks: BlockType[], setIsCommandOptionVisible: (value: boolean) => void) {
-  const { deleteBlock, setBlocks } = useBlockContext();
-  console.log('All blocks:', blocks);
-  console.log('Trying to access index:', index);
+export function useCommandOption(
+  id: string | null,
+  blocks: BlockType[],
+  setIsCommandOptionVisible: (value: boolean) => void,
+) {
+  const { deleteBlock, setBlocks, updateBlock } = useBlockContext();
+  const block = blocks.find((block) => block.id === id);
+  const index = blocks.findIndex((block)=> block.id === id);
 
   // **Copy Function**
   const handleCopy = () => {
-    if (index !== null && blocks[index]) {
-      const block = blocks[index];
-
+    if (id !== null && block) {
       // Convert to JSON
       const blockData = JSON.stringify(block);
 
@@ -20,7 +22,7 @@ export function useCommandOption(index: number | null, blocks: BlockType[], setI
         .then(() => console.log('Block copied successfully!'))
         .catch((err) => console.error('Failed to copy:', err));
     } else {
-      console.warn('No block found at index:', index);
+      console.warn('No block found at index:', id);
     }
 
     setIsCommandOptionVisible(false);
@@ -30,24 +32,26 @@ export function useCommandOption(index: number | null, blocks: BlockType[], setI
     try {
       const clipboardData = await navigator.clipboard.readText();
 
-      let parsedBlock;
+      let parsedBlock:BlockType;
       try {
         parsedBlock = JSON.parse(clipboardData);
       } catch (error) {
+        console.log(error);
         console.error('Clipboard data is not valid JSON:', clipboardData);
         return;
       }
 
       if (parsedBlock && parsedBlock.type && parsedBlock.content) {
-        const newBlock = { ...parsedBlock, id: Date.now() }; // Assign a new ID
-        console.log('Update the block at index: ', index);
-        // updateBlock(index, newBlock);
-        blocks.forEach((block, i) => {
-          if (i === index) {
-            block.type = newBlock.type;
-            block.content = newBlock.content;
-          }
-        });
+        const newBlock = { ...parsedBlock, id: Date.now().toLocaleString() }; // Assign a new ID
+        console.log('Update the block at index: ', id);
+
+        
+        if (!block) return;
+        
+        block.type = newBlock.type;
+        block.content = newBlock.content;
+        
+        updateBlock(block.id, newBlock);
         console.log('Pasted block:', newBlock);
       } else {
         console.warn('Invalid block structure:', parsedBlock);
@@ -61,33 +65,31 @@ export function useCommandOption(index: number | null, blocks: BlockType[], setI
 
   // **Cut Function (Copy & Remove)**
   const handleCut = () => {
-    if ((index !== null && index > 0)&& blocks[index]) {
-      const block = blocks[index];
-
+    if (id !== null && index > 0 && block) {
+  
       // Copy first
       navigator.clipboard
         .writeText(JSON.stringify(block))
         .then(() => {
           // Remove block after copying
-          const newBlocks = blocks.filter((_, i) => i !== index);
+          const newBlocks = blocks.filter((block) => block.id !== id);
           setBlocks(newBlocks);
-          console.log('Block cut:', block);
         })
         .catch((err) => console.error('Failed to cut:', err));
 
       // then remove block
-      deleteBlock(index);
+      deleteBlock(id);
     }
     setIsCommandOptionVisible(false);
   };
 
   // **Delete Function**
   const handleDelete = () => {
-    if (index === null || index > blocks.length) {
+    if (id === null || index > blocks.length) {
       console.warn('No block found at index:', index);
       return;
     }
-    deleteBlock(index);
+    deleteBlock(id);
     setIsCommandOptionVisible(false);
   };
 

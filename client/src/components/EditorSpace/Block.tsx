@@ -105,9 +105,10 @@ export const BaseBlock = React.forwardRef<HTMLDivElement, BaseBlockProps>(
         {/* Content */}
         <div className={`flex-1 min-w-0 h-full`}>
           <motion.div
-            initial={{opacity:0}}
-            animate={{opacity:1}}
-            transition={{duration:1}}
+            draggable={true}
+            initial={{opacity:0, translateY:"2px"}}
+            animate={{opacity:1,translateY:"0px"}}
+            transition={{duration:.4}}
             ref={resolvedRef}
             data-focused={isFocused}
             data-block-id={props.blockId}
@@ -122,7 +123,7 @@ export const BaseBlock = React.forwardRef<HTMLDivElement, BaseBlockProps>(
             className={`
             leading-tight relative w-full 
             ${spacingClasses[props.spacing ?? 'large']} 
-            outline-none break-words bg-red-500
+            outline-none break-words
             before:absolute before:text-dark-500 
             before:font-light before:grid before:place-content-center 
             before:h-full before:pointer-events-none 
