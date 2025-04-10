@@ -32,14 +32,15 @@ export const handleEnter: KeyHandler = async (
     context.setFocusedBlockId(newBlockId);
     await new Promise((resolve) => setTimeout(resolve, 0));
 
-    const newBlockElement = document.querySelector(
-      `[data-block-id="${newBlockId}"] [contenteditable]`,
-    ) as HTMLElement;
+    const targetEl = context.refMap.get(newBlockId)?.current;
 
-    if (newBlockElement) {
-      newBlockElement.focus();
-      placeCaretAtStart(newBlockElement);
+    if (targetEl) {
+      requestAnimationFrame(() => {
+        placeCaretAtStart(targetEl);
+        targetEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      });
     }
+    
     return;
   }
 
@@ -47,8 +48,8 @@ export const handleEnter: KeyHandler = async (
   if (cursorPosition === 0 && index > 0) {
     context.addBlock({ type: 'paragraph', content: '', afterId: id });
     setTimeout(() => {
-      const newBlock = document.querySelector(`[data-block-index="${index}"]`);
-      if (newBlock) placeCaretAtStart(newBlock as HTMLElement);
+      const newBlock = context.refMap.get(id)?.current;
+      if (newBlock) placeCaretAtStart(newBlock);
     }, 0);
     return;
   }
@@ -66,18 +67,6 @@ export const handleEnter: KeyHandler = async (
   if (!newBlockId) return;
   context.setFocusedBlockId(newBlockId);
 
-
-
-  const newBlockElement = document.querySelector(
-    `[data-block-id="${newBlockId}"] [contenteditable]`,
-  ) as HTMLElement;
-
-  placeCaretAtEnd(newBlockElement);
-
-  // setTimeout(() => {
-  //   const newBlock = document.querySelector(
-  //     `[data-block-id="${newBlockId}"]`,
-  //   );
-  //   if (newBlock) placeCaretAtEnd(newBlock as HTMLElement);
-  // }, 0);
+  const targetEl = context.refMap.get(newBlockId)?.current;
+  if (targetEl) placeCaretAtEnd(targetEl);
 };

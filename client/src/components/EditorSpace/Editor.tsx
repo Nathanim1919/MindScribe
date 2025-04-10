@@ -17,8 +17,14 @@ import { EditorToolbar } from './EditorToolbar';
 import { EditorBlocks } from './EditorBlocks';
 
 export function Editor() {
-  const { blocks, addBlock, updateBlock, deleteBlock, updateCursorPosition } =
-    useBlockContext();
+  const {
+    blocks,
+    refMap,
+    addBlock,
+    updateBlock,
+    deleteBlock,
+    updateCursorPosition,
+  } = useBlockContext();
 
   const editorRef = useRef<HTMLDivElement>(null);
   const [focusedBlockId, setFocusedBlockId] = useState<string | null>(null);
@@ -35,7 +41,7 @@ export function Editor() {
     showMenu,
     handleSelect,
     hideMenu,
-  } = useCommandMenu(addBlock);
+  } = useCommandMenu(addBlock, refMap);
 
   // 📌 Handlers: Input & Click Events
   // In Editor.tsx
@@ -50,6 +56,20 @@ export function Editor() {
     },
     [focusedBlockId, isVisible, isCommandOptionVisible, hideMenu],
   );
+
+  const handleCursorPosition = useCallback((id: string | null) => {
+    if (id && refMap.has(id)) {
+      const element = refMap.get(id)?.current;
+      if (element) {
+        const position = cursorPosition.current[id];
+        if (position !== undefined) {
+          placeCaretAtPosition(element, position);
+        } else {
+          placeCaretAtEnd(element);
+        }
+      }
+    }
+  }, [refMap]);
 
   const handleInput = useCallback(
     (blockId: string, e: React.FormEvent<HTMLDivElement>) => {
@@ -91,11 +111,9 @@ export function Editor() {
   // Focus management
   useEffect(() => {
     if (editorRef.current && blocks.length > 0 && focusedBlockId !== null) {
-      const blockElement = editorRef.current.querySelector(
-        `[data-block-id="${focusedBlockId}"]`,
-      ) as HTMLElement;
-      if (blockElement) {
-        blockElement.focus();
+      const targetEl = refMap.get(focusedBlockId)?.current;
+      if (targetEl) {
+        targetEl.focus();
       }
     }
   }, [focusedBlockId, blocks]);
@@ -114,6 +132,7 @@ export function Editor() {
       setFocusedBlockId,
       showMenu,
       setFilter,
+      refMap,
     });
   };
 
@@ -131,29 +150,51 @@ export function Editor() {
     }
   }, [blocks, focusedBlockId]);
 
-  const handleBlockClick = (id: string | null) => {
+  const handleBlockClick = useCallback((id: string) => {
+    // Save selection before any state changes
+    const selection = window.getSelection();
+    if (selection?.rangeCount) {
+      const range = selection.getRangeAt(0);
+      cursorPosition.current[id] = range.startOffset;
+    }
+  
     if (focusedBlockId !== id) {
       setFocusedBlockId(id);
     }
     setIsCommandOptionVisible(false);
     hideMenu();
-  };
+  }, [focusedBlockId, hideMenu]);
 
-  const getCurrentFocusedBlockElement = () => {
-    if (focusedBlockId !== null && editorRef.current) {
-      const element = editorRef.current.querySelector(
-        `[data-block-id="${focusedBlockId}"] [contenteditable]`,
-      ) as HTMLElement;
-      const position = cursorPosition.current[focusedBlockId] || 0;
-      // placeCaretAtPosition(element, position);
+  const getCurrentFocusedBlockElement = useCallback(() => {
+    if (focusedBlockId !== null) {
+      const element = refMap.get(focusedBlockId)?.current;
+      if (element) {
+        // Only place caret if we have a saved position
+        const position = cursorPosition.current[focusedBlockId];
+        if (position !== undefined) {
+          placeCaretAtPosition(element, position);
+        } else {
+          placeCaretAtEnd(element);
+        }
+      }
     }
-  };
+  }, [focusedBlockId, refMap]);
 
   useLayoutEffect(() => {
     if (focusedBlockId !== null) {
-      getCurrentFocusedBlockElement();
+      const element = refMap.get(focusedBlockId)?.current;
+      if (element) {
+        // Focus the element
+        element.focus();
+        
+        // Only restore position if we have one saved
+        const position = cursorPosition.current[focusedBlockId];
+        if (position !== undefined) {
+          requestAnimationFrame(() => placeCaretAtPosition(element, position));
+        }
+      }
     }
-  }, [focusedBlockId]); // Only runs when focus changes
+  }, [focusedBlockId, refMap]);
 
   const onAddButtonClick = (id: string | null) => {
     if (focusedBlockId !== id) {
@@ -240,6 +281,7 @@ export function Editor() {
           focusedBlockId={focusedBlockId}
           renderBlock={renderSingleBlock}
           onClickBlock={handleBlockContainerClick}
+          isCommandOptionVisible={isCommandOptionVisible}
         />
         {/* 📌 Command Menu */}
         {isVisible && (
@@ -250,7 +292,7 @@ export function Editor() {
             menuRef={menuRef}
           />
         )}
-        {isCommandOptionVisible &&  (
+        {isCommandOptionVisible && (
           <CommandOption
             id={focusedBlockId}
             blocks={blocks}

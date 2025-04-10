@@ -27,9 +27,7 @@ export const handleBackspace: KeyHandler = (
       context.updateCursorPosition(previousBlock.id, newPosition);
       
       queueMicrotask(() => {
-        const prevBlockElement = document.querySelector(
-          `[data-block-id="${previousBlock.id}"] [contenteditable]`
-        ) as HTMLElement;
+        const prevBlockElement = context.refMap.get(previousBlock.id)?.current;
         if (prevBlockElement) {
           placeCaretAtPosition(prevBlockElement, newPosition);
         }

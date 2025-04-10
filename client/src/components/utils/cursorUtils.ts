@@ -22,6 +22,7 @@ export const splitContentAtCursor = (
 };
 
 export const placeCaretAtEnd = (element: HTMLElement) => {
+  element?.focus()
   const range = document.createRange();
   const selection = window.getSelection();
   range.selectNodeContents(element);
@@ -32,6 +33,7 @@ export const placeCaretAtEnd = (element: HTMLElement) => {
 
 export const placeCaretAtStart = (element: HTMLElement) => {
   console.log("Focused Element is: ", element);
+  element?.focus()
   const range = document.createRange();
   const selection = window.getSelection();
   range.selectNodeContents(element);

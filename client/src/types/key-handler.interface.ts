@@ -10,6 +10,7 @@ export interface KeyHandlerContext {
     setFocusedBlockId: (index: string | null) => void;
     showMenu: (id: string) => void;
     setFilter: (filter: string) => void;
+    refMap: Map<string, React.RefObject<HTMLElement>>;
 }
 
 

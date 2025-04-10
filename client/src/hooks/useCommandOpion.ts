@@ -6,7 +6,7 @@ export function useCommandOption(
   blocks: BlockType[],
   setIsCommandOptionVisible: (value: boolean) => void,
 ) {
-  const { deleteBlock, setBlocks, updateBlock } = useBlockContext();
+  const { deleteBlock, setBlocks, updateBlock, changeBlockType } = useBlockContext();
   const block = blocks.find((block) => block.id === id);
   const index = blocks.findIndex((block)=> block.id === id);
 
@@ -83,6 +83,13 @@ export function useCommandOption(
     setIsCommandOptionVisible(false);
   };
 
+  // Hnalde block type change
+  const handleBlockTypeChange = (newBlockType: BlockType['type']) => {
+    if (id !== null)
+    changeBlockType(id, newBlockType)
+    setIsCommandOptionVisible(false);
+  }
+
   // **Delete Function**
   const handleDelete = () => {
     if (id === null || index > blocks.length) {
@@ -99,7 +106,7 @@ export function useCommandOption(
     setIsCommandOptionVisible(false);
   };
 
-  // **Redo Functionality (Future Enhancement)**
+  //TODO: **Redo Functionality (Future Enhancement)**
   const handleRedo = () => {
     console.log('Redo action (not implemented yet)');
     setIsCommandOptionVisible(false);
@@ -137,5 +144,6 @@ export function useCommandOption(
     handleUndo,
     handleRedo,
     handleDuplicate,
+    handleBlockTypeChange
   };
 }

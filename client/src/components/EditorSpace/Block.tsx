@@ -1,7 +1,8 @@
-import React, { useEffect, useMemo, useRef } from 'react';
+import React, {useEffect, useMemo, useRef } from 'react';
 import { BlockDecorator } from '../../types/decorators';
 import { BlockType } from '../../types/block.interface';
 import { motion } from 'motion/react';
+import { useBlockContext } from '../../contexts/BlockContext';
 
 interface BaseBlockProps {
   block: BlockType;
@@ -29,6 +30,18 @@ export const BaseBlock = React.forwardRef<HTMLDivElement, BaseBlockProps>(
   ) => {
     const internalRef = useRef<HTMLDivElement>(null);
     const resolvedRef = (ref || internalRef) as React.RefObject<HTMLDivElement>;
+
+    const {refMap} = useBlockContext();
+
+
+    useEffect(()=> {
+      refMap.set(props.blockId, resolvedRef);
+
+      return () => {
+        refMap.delete(props.blockId);
+      };
+    },[props.blockId, resolvedRef, refMap]);
+
 
     // Add decorators to the content
     const [isHovered, setIsHovered] = React.useState(false);
@@ -90,7 +103,7 @@ export const BaseBlock = React.forwardRef<HTMLDivElement, BaseBlockProps>(
                 key={d.id}
                 className="inline-flex items-center justify-center h-[24px] w-[24px]"
                 onMouseDown={(e) => {
-                  e.preventDefault(); // Critical for contentEditable
+                  e.preventDefault();
                   e.stopPropagation();
                 }}
                 onClick={(e) => {

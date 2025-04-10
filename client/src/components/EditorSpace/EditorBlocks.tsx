@@ -8,6 +8,7 @@ export const EditorBlocks = React.memo(
     focusedBlockId,
     renderBlock,
     onClickBlock,
+    isCommandOptionVisible,
   }: {
     blocks: BlockType[];
     focusedBlockId: string | null;
@@ -17,20 +18,25 @@ export const EditorBlocks = React.memo(
       isFocused: boolean;
     }) => JSX.Element;
     onClickBlock: (id: string) => void;
+    isCommandOptionVisible: boolean;
   }) => {
     const blockList = useMemo(() => {
-      return blocks.map((block, index) => (
+      return blocks.map((block) => (
         <div
           key={block.id}
           onClick={() => onClickBlock(block.id)}
-          className="flex group w-full max-w-[800px] relative rounded-md cursor-text"
+          className={`flex group w-full max-w-[800px] ${
+            isCommandOptionVisible && focusedBlockId === block.id
+              ? 'bg-light-100 dark:bg-dark-100'
+              : ''
+          } relative rounded-md cursor-text`}
         >
           <EditorBlock
-            key={block.id}
             block={block}
             id={block.id}
             isFocused={focusedBlockId === block.id}
             renderBlock={renderBlock}
+            isCommandOptionVisible={isCommandOptionVisible}
           />
         </div>
       ));

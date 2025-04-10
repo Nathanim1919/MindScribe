@@ -1,5 +1,7 @@
 // Base interface for all block types
 
+import { HeaderMeta, ParagraphMeta, QuoteMeta } from "./meta.type";
+
 export interface IBaseBlock {
   id: string; // Unique identifier for the block
   type: string; // Type of the block (e.g., "paragraph", "quote", "header")
@@ -12,24 +14,17 @@ export interface IBaseBlock {
 // Specific block types
 export interface IHeaderBlock extends IBaseBlock {
   type: 'header'; // Type of the block
-  meta: {
-    level: 1 | 2 | 3; // Level of the header (1 for h1, 2 for h2, etc.)
-    spacing: 'large';
-  };
+  meta: HeaderMeta
 }
 
 export interface IParagraphBlock extends IBaseBlock {
   type: 'paragraph';
-  meta?: {
-    spacing?: 'small' | 'medium';
-  };
+  meta:ParagraphMeta
 }
 
 export interface IQuoteBlock extends IBaseBlock {
   type: 'quote';
-  meta?: {
-    spacing?: 'small' |'medium' | 'large';
-  };
+  meta?: QuoteMeta
 }
 
 

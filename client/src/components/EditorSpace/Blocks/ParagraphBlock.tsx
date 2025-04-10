@@ -32,7 +32,7 @@ export const ParagraphBlock = ({
 }) => {
   const paragraphClasses = {
     small: 'text-sm',
-    medium: 'text-base',
+    medium: 'text-lg',
     large: 'text-lg',
   };
 
