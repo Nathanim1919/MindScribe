@@ -209,6 +209,8 @@ export function Editor() {
   }, [focusedBlockId]);
 
   function getPlaceholder(block: BlockType, id: string): string {
+    if (block.type === 'image') 
+      return block.caption?.trim() ? '' : 'Add a caption...';
     if (block.content?.trim() === '' && focusedBlockId !== id) {
       return '';
     }
@@ -250,7 +252,6 @@ export function Editor() {
           setIsCommandOptionVisible(true);
           hideMenu();
         },
-        // Only pass down what's absolutely necessary
         setFocusedBlockId,
         setIsCommandOptionVisible,
         hideMenu,

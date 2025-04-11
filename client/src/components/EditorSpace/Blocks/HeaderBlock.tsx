@@ -13,7 +13,7 @@ interface HeaderBlockProps {
   isFocused: boolean;
   placeholder: string;
   setFocusedBlockId: (id: string) => void;
-  showMenu: (index: number) => void;
+  showMenu: (id: string) => void;
   hideMenu: () => void;
   setIsCommandOptionVisible: (visible: boolean) => void;
   onKeyDown: (e: React.KeyboardEvent<HTMLDivElement>) => void;

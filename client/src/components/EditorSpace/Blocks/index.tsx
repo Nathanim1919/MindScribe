@@ -2,12 +2,14 @@ import React from 'react';
 import {
   BlockType,
   IHeaderBlock,
+  IImageBlock,
   IParagraphBlock,
   IQuoteBlock,
 } from '../../../types/block.interface';
 import { HeaderBlock } from './HeaderBlock';
 import { ParagraphBlock } from './ParagraphBlock';
 import { QuoteBlock } from './QuoteBlock';
+import { ImageBlock } from './ImageBlock';
 
 type BlockComponentProps = {
   block: BlockType;
@@ -58,6 +60,17 @@ export const renderBlock = (props: BlockComponentProps) => {
           {...restProps}
           onAddClick={onAddClick}
           onDragClick={onDragClick}
+        />
+      );
+
+      case 'image':
+      return (
+        <ImageBlock
+          key={block.id}
+          block={block as IImageBlock}
+          {...restProps}
+          onClick={onAddClick}
+          // onDragClick={onDragClick}
         />
       );
     default:

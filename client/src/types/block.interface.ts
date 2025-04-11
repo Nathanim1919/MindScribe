@@ -28,8 +28,23 @@ export interface IQuoteBlock extends IBaseBlock {
 }
 
 
+export interface IImageBlock {
+  id: string;
+  type: 'image';
+  url: string;
+  caption?: string;
+  prevId: string | null;
+  nextId: string | null;
+  meta?: {
+    width: number;
+    alignment?: 'left' | 'center' | 'right';
+}
+
+}
+
+
 // Union type of all possible blocks
-export type BlockType = IHeaderBlock | IParagraphBlock | IQuoteBlock;
+export type BlockType = IHeaderBlock | IParagraphBlock | IQuoteBlock | IImageBlock;
 
 // type guard helpers
 export const isHeaderBlock = (block: BlockType): block is IHeaderBlock =>
