@@ -1,4 +1,4 @@
-import React, { JSX, useMemo } from 'react';
+import React, { JSX } from 'react';
 import { BlockType } from '../../types/block.interface';
 import { EditorBlock } from './EditorBlock';
 
@@ -20,8 +20,11 @@ export const EditorBlocks = React.memo(
     onClickBlock: (id: string) => void;
     isCommandOptionVisible: boolean;
   }) => {
-    const blockList = useMemo(() => {
-      return blocks.map((block) => (
+
+
+    return (
+      <div className="relative w-full max-w-4xl mx-auto px-4 pb-[4rem]">
+        {blocks.map((block) => (
         <div
           key={block.id}
           onClick={() => onClickBlock(block.id)}
@@ -36,15 +39,9 @@ export const EditorBlocks = React.memo(
             id={block.id}
             isFocused={focusedBlockId === block.id}
             renderBlock={renderBlock}
-            isCommandOptionVisible={isCommandOptionVisible}
           />
         </div>
-      ));
-    }, [blocks, focusedBlockId, renderBlock]);
-
-    return (
-      <div className="relative w-full max-w-4xl mx-auto px-4 pb-[4rem]">
-        {blockList}
+      ))}
       </div>
     );
   },

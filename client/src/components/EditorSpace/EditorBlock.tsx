@@ -8,7 +8,6 @@ export const EditorBlock = React.memo(
     id,
     isFocused,
     renderBlock,
-    isCommandOptionVisible
   }: {
     block: BlockType;
     id: string;
@@ -18,7 +17,6 @@ export const EditorBlock = React.memo(
       id: string;
       isFocused: boolean;
     }) => JSX.Element;
-    isCommandOptionVisible
   }) => {
     return (
       <div
