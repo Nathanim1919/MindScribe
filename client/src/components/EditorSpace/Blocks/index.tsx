@@ -26,6 +26,10 @@ type BlockComponentProps = {
   showMenu: (id: string) => void;
   hideMenu: () => void;
   setIsCommandOptionVisible: (visible: boolean) => void;
+
+  // ✅ Add these for ImageBlock
+  handleImageReplace?: (file: File, id: string) => void;
+  onCaptionChange?: (newCaption: string) => void;
 };
 
 export const renderBlock = (props: BlockComponentProps) => {
@@ -63,16 +67,24 @@ export const renderBlock = (props: BlockComponentProps) => {
         />
       );
 
-      case 'image':
-      return (
-        <ImageBlock
-          key={block.id}
-          block={block as IImageBlock}
-          {...restProps}
-          onClick={onAddClick}
-          // onDragClick={onDragClick}
-        />
-      );
+      case 'image': {
+        const imageBlock = block as IImageBlock;
+        return (
+          <ImageBlock
+            key={block.id}
+            imageUrl={imageBlock.url}
+            caption={imageBlock.caption}
+            onReplace={(file) => props.handleImageReplace?.(file, block.id)}
+            onCaptionChange={(newCaption) =>
+              props.onCaptionChange?.(newCaption)
+            }
+            isFocused={props.isFocused}
+            onAddClick={onAddClick}
+            onDragClick={onDragClick}
+          />
+        );
+      }
+      
     default:
       return (
         <ParagraphBlock

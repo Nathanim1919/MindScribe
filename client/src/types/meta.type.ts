@@ -16,3 +16,5 @@ export type ImageMeta = {
   caption: string;
 
 };
+
+export type BlockMeta = HeaderMeta | ParagraphMeta | QuoteMeta | ImageMeta;

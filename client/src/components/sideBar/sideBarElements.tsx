@@ -32,7 +32,7 @@ export const TopsidebarElements: SidebarElementPropType[] = [
   {
     title: 'Media',
     icon: <TfiLayoutMediaCenterAlt />,
-    redirectTo: '/media-center',
+    redirectTo: '/in/gallary',
   },
 ];
 

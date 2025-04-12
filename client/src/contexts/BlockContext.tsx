@@ -10,21 +10,19 @@ import {
 } from 'react';
 import {
   BlockType,
-  isHeaderBlock,
-  isParagraphBlock,
-  isQuoteBlock,
 } from '../types/block.interface';
 import { createBlock } from '../components/utils/blockFactory';
 import { applyBlockUpdate } from '../utils/mergeUpdate';
 import { blockTypeDefaults } from '../utils/blockTypeDefaults';
 import { findIndexById } from '../utils/block.utils';
+import { BlockMeta } from '../types/meta.type';
 
 interface addBlockPayLoad {
   type: BlockType['type'];
   content: string;
   afterId?: string;
   beforeId?: string;
-  meta?: { level: number; spacing: string };
+  meta?: BlockMeta;
 }
 
 // -------------------

@@ -31,8 +31,8 @@ export interface IQuoteBlock extends IBaseBlock {
 export interface IImageBlock {
   id: string;
   type: 'image';
-  url: string;
   caption?: string;
+  url: string;
   prevId: string | null;
   nextId: string | null;
   meta?: {

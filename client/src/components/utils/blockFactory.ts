@@ -25,7 +25,21 @@ export function createBlock<T extends BlockType['type']>(
       type: 'quote',
       content,
     } as Extract<BlockType, { type: T }>;
-  } else {
+  } 
+  else if (type === 'image') {
+    return {
+      id: generateId(),
+      type: 'image',
+      url:content, // can be a URL or empty initially
+      caption: 'this is image caption',
+      meta: {
+        // alt: meta?.alt || '',
+        width: meta?.width || 'auto',
+      },
+    } as Extract<BlockType, { type: T }>;
+  }
+  
+  else {
     throw new Error(`Unsupported block type: ${type}`);
   }
 }

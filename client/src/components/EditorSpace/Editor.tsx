@@ -227,6 +227,17 @@ export function Editor() {
 
   console.log('It is Re-Rendering ...');
 
+  const handleImageReplace = (file: File, id: string) => {
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      updateBlock(id, {
+        url: reader.result as string,
+      });
+    };
+    reader.readAsDataURL(file);
+  };
+  
+
   const renderSingleBlock = useCallback(
     ({
       block,
@@ -256,6 +267,13 @@ export function Editor() {
         setIsCommandOptionVisible,
         hideMenu,
         showMenu,
+
+        onImageReplace: (file: File) => handleImageReplace(file, id),
+        onRemove: () => {
+          deleteBlock(id);
+          setFocusedBlockId(null);
+          setIsCommandOptionVisible(false);
+        }
       });
     },
     [

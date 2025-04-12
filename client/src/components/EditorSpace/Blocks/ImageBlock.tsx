@@ -1,71 +1,63 @@
-import { useState } from 'react';
-import { IImageBlock } from '../../../types/block.interface';
+import { useState } from "react";
 
-interface ImageBlockProps {
-  block: IImageBlock;
-  id: string;
-  isFocused: boolean;
-  onClick: () => void;
-//   onCaptionChange: (caption: string) => void;
-//   onRemove: () => void;
-//   onReplace: () => void;
-}
+type ImageBlockProps = {
+  imageUrl: string;
+  caption?: string;
+  onReplace?: () => void;
+  onCaptionChange?: (newCaption: string) => void;
+};
 
-export const ImageBlock = ({
-  block,
-  id,
-  isFocused,
-  onClick,
-//   onCaptionChange,
-//   onRemove,
-//   onReplace,
-}: ImageBlockProps) => {
-  const [caption, setCaption] = useState(block.caption || '');
+export function ImageBlock({
+  imageUrl,
+  caption = "",
+  onReplace,
+  onCaptionChange,
+}: ImageBlockProps) {
+  const [isEditing, setIsEditing] = useState(false);
+  const [currentCaption, setCurrentCaption] = useState(caption);
 
-  const handleCaptionChange = (e: React.FormEvent<HTMLDivElement>) => {
-    const newCaption = (e.target as HTMLDListElement).innerText;
-    setCaption(newCaption);
-    // onCaptionChange(newCaption);
+  const handleBlur = () => {
+    setIsEditing(false);
+    if (currentCaption !== caption) {
+      onCaptionChange?.(currentCaption);
+    }
   };
 
   return (
-    <div
-      className={`group relative w-full py-4 ${
-        block.meta?.alignment === 'center' ? 'flex justify-center' : ''
-      }`}
-      onClick={onClick}
-      data-focused={isFocused}
-    >
-      <div className="relative">
-        <img
-          src={block.url}
-          alt="User uploaded"
-          className="rounded-lg max-w-full max-h-[500px] object-contain"
-          style={{ width: block.meta?.width ?? '100%' }}
-        />
+    <div className="group relative flex flex-col items-center">
+      <img
+        src={imageUrl}
+        alt="Image block"
+        className="rounded-lg max-w-full"
+      />
+      {onReplace && (
+        <button
+          onClick={onReplace}
+          className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 bg-white/80 hover:bg-white text-sm px-2 py-1 rounded shadow transition"
+        >
+          Replace
+        </button>
+      )}
 
-        {/* Toolbar */}
-        {isFocused && (
-          <div className="absolute top-2 right-2 flex gap-2 bg-black/60 text-white rounded-md p-1 z-10">
-            <button  className="text-sm hover:underline">
-              Replace
-            </button>
-            <button  className="text-sm hover:underline">
-              Remove
-            </button>
-          </div>
+      <div className="mt-2 w-full text-center">
+        {isEditing ? (
+          <input
+            type="text"
+            value={currentCaption}
+            autoFocus
+            onBlur={handleBlur}
+            onChange={(e) => setCurrentCaption(e.target.value)}
+            className="w-full border-b border-gray-300 focus:outline-none focus:border-black text-sm p-1 bg-transparent"
+          />
+        ) : (
+          <p
+            onClick={() => setIsEditing(true)}
+            className="text-sm text-gray-500 cursor-text hover:underline"
+          >
+            {caption || "Add a caption..."}
+          </p>
         )}
-      </div>
-      {/* Caption */}
-      <div
-        contentEditable
-        suppressContentEditableWarning
-        onInput={handleCaptionChange}
-        className="text-center text-sm text-gray-500 mt-2 focus:outline-none"
-        data-placeholder="Add a caption..."
-      >
-        {caption}
       </div>
     </div>
   );
-};
+}

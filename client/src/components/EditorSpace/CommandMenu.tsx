@@ -3,11 +3,12 @@ import { PiTextHBold } from 'react-icons/pi';
 import { RiText } from 'react-icons/ri';
 import { BlockType } from '../../types/block.interface';
 import { motion } from 'framer-motion';
+import { BlockMeta } from '../../types/meta.type';
 
 interface CommandMenuProps {
   filter: string;
   // onFilterChange: (filter: string) => void;
-  onSelect: (type: BlockType['type'], meta?:{level:number, spacing: string}) => void; // More specific type
+  onSelect: (type: BlockType['type'], meta?:BlockMeta) => void; // More specific type
   position: { top: number; left: number };
   menuRef: React.RefObject<HTMLDivElement | null>;
 }
@@ -52,6 +53,11 @@ const blockTypes = [
     label: 'Quote',
     icon: <RiText className="text-light-500 dark:text-dark-800" />,
   },
+  {
+    type: 'image',
+    label: 'Image',
+    icon: <RiText className="text-light-500 dark:text-dark-800" />,
+  },
 ];
 
 export function CommandMenu({
@@ -89,7 +95,7 @@ export function CommandMenu({
             className="command-item flex text-[17px] items-center gap-1 py-1 rounded-none px-2 hover:bg-light-100 hover:dark:bg-dark-100 dark:text-dark-500 text-light-500 hover:text-light-600 hover:dark:text-dark-700 cursor-pointer border-t dark:border-dark-200/50 border-light-200/50"
             onClick={(e) => {
               e.stopPropagation();
-              onSelect(block.type as BlockType['type'], block.meta);
+              onSelect(block.type as BlockType['type'], block.meta as BlockMeta);
             }}
           >
             {block.icon}
