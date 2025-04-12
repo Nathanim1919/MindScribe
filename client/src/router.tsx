@@ -18,6 +18,7 @@ import { Profile } from './components/dashboard/Profile';
 import { ProfileSkeleton } from './components/LoadingSkeletons/UserProfilePageSkeleton';
 import { PreferenceSetupFlow } from './components/PreferenceSetupFlow';
 import { GalleryPage } from './pages/GallaryPage';
+import { GallerySkeleton } from './components/LoadingSkeletons/GallerySkeleton';
 
 // Create a root route
 const rootRoute = createRootRoute({
@@ -83,7 +84,8 @@ const dashboardRoute = createRoute({
 const GalleryRoute = createRoute({
   getParentRoute: () => authenticatedRoute,
   path:"/gallary",
-  component:GalleryPage
+  // component:GalleryPage
+  component: GallerySkeleton,
 })
 
 const BoardRoute = createRoute({

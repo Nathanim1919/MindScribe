@@ -2,6 +2,8 @@ import { ImageCard } from "../components/ImageCard";
 
 export const GalleryPage: React.FC = () => {
   const images = [
+    'https://avatars.githubusercontent.com/u/106013719?v=4',
+    'https://i.redd.it/z4e1pulumu301.jpg',
     'https://www.mtdtraining.com/wp-content/uploads/2023/12/steeve-jobs.jpg',
     'https://mau.com/wp-content/uploads/2022/11/From-Setbacks-to-Success-1.png',
     'https://c8.alamy.com/comp/CY7J48/death-of-steve-jobs-a-memorial-created-by-apple-fans-outside-the-apple-CY7J48.jpg',
