@@ -83,10 +83,11 @@ const dashboardRoute = createRoute({
 
 const GalleryRoute = createRoute({
   getParentRoute: () => authenticatedRoute,
-  path:"/gallary",
-  // component:GalleryPage
-  component: GallerySkeleton,
-})
+  path: "/gallary",
+  component: () => import('./pages/GallaryPage').then(mod => mod.GalleryPage),
+  pendingComponent: GalleryPage,
+});
+
 
 const BoardRoute = createRoute({
   getParentRoute: () => dashboardRoute,
