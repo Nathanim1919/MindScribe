@@ -168,6 +168,8 @@ export const BlockProvider = ({ children }: { children: ReactNode }) => {
     createBlock('header', '', { level: 1, spacing: 'large' }),
   ]);
 
+  console.log("🧪 Initial Blocks", blocks);
+
   const cursorPositions = useRef<Record<string, number>>({});
   const refMap = useMemo(
     () => new Map<string, React.RefObject<HTMLElement>>(),
