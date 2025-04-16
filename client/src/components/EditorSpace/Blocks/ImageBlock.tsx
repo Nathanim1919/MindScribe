@@ -1,63 +1,77 @@
-import { useState } from "react";
+// components/blocks/ImageBlock.tsx
+
+import { useMemo } from 'react';
+import { BlockType } from '../../../types/block.interface';
+import { getActionDecorators } from '../../../utils/decorators';
+import { BlockWrapper } from './BlockWrapper';
+import { motion } from 'motion/react';
 
 type ImageBlockProps = {
+  block: BlockType;
+  blockId: string;
   imageUrl: string;
   caption?: string;
-  onReplace?: () => void;
+  isFocused: boolean;
+  onAddClick: () => void;
+  onDragClick: () => void;
+  onImageClick?: () => void;
   onCaptionChange?: (newCaption: string) => void;
 };
 
 export function ImageBlock({
+  block,
+  blockId,
   imageUrl,
-  caption = "",
-  onReplace,
-  onCaptionChange,
+  caption = '',
+  isFocused,
+  onAddClick,
+  onDragClick,
+  onImageClick,
 }: ImageBlockProps) {
-  const [isEditing, setIsEditing] = useState(false);
-  const [currentCaption, setCurrentCaption] = useState(caption);
-
-  const handleBlur = () => {
-    setIsEditing(false);
-    if (currentCaption !== caption) {
-      onCaptionChange?.(currentCaption);
-    }
-  };
+  const decorators = useMemo(
+    () => [...getActionDecorators(onAddClick, onDragClick)],
+    [onAddClick, onDragClick],
+  );
 
   return (
-    <div className="group relative flex flex-col items-center">
-      <img
-        src={imageUrl}
-        alt="Image block"
-        className="rounded-lg max-w-full"
-      />
-      {onReplace && (
-        <button
-          onClick={onReplace}
-          className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 bg-white/80 hover:bg-white text-sm px-2 py-1 rounded shadow transition"
-        >
-          Replace
-        </button>
-      )}
+    <BlockWrapper
+      block={block}
+      blockId={blockId}
+      isFocused={isFocused}
+      className={`p-1 rounded-md text-gray-500 dark:text-dark-500 relative`}
+      decorators={decorators}
+    >
+      <motion.div
+        initial={{ opacity: 0, translateY: '2px' }}
+        animate={{ opacity: 1, translateY: '0px' }}
+        transition={{ duration: 0.4 }}
+        data-block-id={blockId}
+        onClick={onImageClick}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter') {
+            onImageClick?.();
+          }
+        }}
+        tabIndex={0}
+        role="button"
+        aria-label="Image block"
+        className="flex relative flex-col items-center gap-2 hover:opacity-75"
+      >
+        {/* <img
+          src={imageUrl}
+          alt="Image block"
+          className={`rounded-lg relative max-w-full cursor-pointer`}
+          onClick={onImageClick}
+        /> */}
+        <div className='w-10 h-10 bg-dark-500'>
 
-      <div className="mt-2 w-full text-center">
-        {isEditing ? (
-          <input
-            type="text"
-            value={currentCaption}
-            autoFocus
-            onBlur={handleBlur}
-            onChange={(e) => setCurrentCaption(e.target.value)}
-            className="w-full border-b border-gray-300 focus:outline-none focus:border-black text-sm p-1 bg-transparent"
-          />
-        ) : (
-          <p
-            onClick={() => setIsEditing(true)}
-            className="text-sm text-gray-500 cursor-text hover:underline"
-          >
-            {caption || "Add a caption..."}
-          </p>
+        </div>
+        {caption && (
+          <div className="text-sm text-gray-500 dark:text-gray-400 w-full text-center">
+            {caption}
+          </div>
         )}
-      </div>
-    </div>
+      </motion.div>
+    </BlockWrapper>
   );
 }
