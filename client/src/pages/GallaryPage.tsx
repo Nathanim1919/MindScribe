@@ -24,7 +24,7 @@ export const GalleryPage: React.FC = () => {
   ];
 
   return (
-    <div className="p-4 h-[95vh] overflow-hidden overflow-y-auto">
+    <div className="p-4 h-[95vh] w-[95%] m-auto overflow-hidden overflow-y-auto">
       <div className="columns-2 md:columns-3 lg:columns-4 gap-2 space-y-2">
         {images.map((src, idx) => (
           <ImageCard

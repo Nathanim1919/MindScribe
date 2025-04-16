@@ -40,6 +40,7 @@ export const renderBlock = (props: BlockComponentProps) => {
       return (
         <HeaderBlock
           block={block as IHeaderBlock}
+          blockId={block.id}
           key={props.block.id}
           {...restProps}
           onAddClick={onAddClick}
@@ -50,6 +51,7 @@ export const renderBlock = (props: BlockComponentProps) => {
       return (
         <ParagraphBlock
           key={block.id}
+          blockId={block.id}
           block={block as IParagraphBlock}
           {...restProps}
           onAddClick={onAddClick}
@@ -60,6 +62,7 @@ export const renderBlock = (props: BlockComponentProps) => {
       return (
         <QuoteBlock
           key={block.id}
+          blockId={block.id}
           block={block as IQuoteBlock}
           {...restProps}
           onAddClick={onAddClick}
@@ -72,15 +75,14 @@ export const renderBlock = (props: BlockComponentProps) => {
         return (
           <ImageBlock
             key={block.id}
+            block={block}
+            blockId={block.id}
             imageUrl={imageBlock.url}
             caption={imageBlock.caption}
-            onReplace={(file) => props.handleImageReplace?.(file, block.id)}
-            onCaptionChange={(newCaption) =>
-              props.onCaptionChange?.(newCaption)
-            }
             isFocused={props.isFocused}
             onAddClick={onAddClick}
             onDragClick={onDragClick}
+            
           />
         );
       }
@@ -88,6 +90,7 @@ export const renderBlock = (props: BlockComponentProps) => {
     default:
       return (
         <ParagraphBlock
+          blockId={block.id}
           key={block.id}
           block={block as IParagraphBlock}
           {...restProps}

@@ -4,8 +4,14 @@ import { placeCaretAtStart } from '../components/utils/cursorUtils';
 import { BlockMeta } from '../types/meta.type';
 
 export function useCommandMenu(
-  addBlock: (payload:{type: BlockType['type'], content:string, afterId?:string, beforeId?: string, meta?:BlockMeta}) => string,
-  refMap: Map<string, React.RefObject<HTMLElement>>
+  addBlock: (payload: {
+    type: BlockType['type'];
+    content: string;
+    afterId?: string;
+    beforeId?: string;
+    meta?: BlockMeta;
+  }) => string,
+  refMap: Map<string, React.RefObject<HTMLElement>>,
 ) {
   const [isVisible, setIsVisible] = useState(false);
   const [filter, setFilter] = useState('');
@@ -17,9 +23,9 @@ export function useCommandMenu(
   });
 
   const showMenu = useCallback((id: string) => {
+    alert('Command Menu Opened, with id: ' + id);
     const blockElement = refMap.get(id)?.current;
     if (!blockElement) return;
-
 
     const { top, left } = blockElement.getBoundingClientRect();
     setPosition({
@@ -32,11 +38,11 @@ export function useCommandMenu(
   }, []);
 
   const handleSelect = useCallback(
-    async (type: BlockType['type'], meta?:BlockMeta) => {
+    async (type: BlockType['type'], meta?: BlockMeta) => {
       if (targetBlockId === null) return;
 
       if (type === 'image') {
-        console.log("🧪 Image Payload", {
+        console.log('🧪 Image Payload', {
           type,
           content: '',
           afterId: targetBlockId,
@@ -44,31 +50,28 @@ export function useCommandMenu(
             width: 600,
             alignment: 'center',
           },
-          url: 'https://images.supersport.com/media/3t2hfy10/soc_080425_uefa_arsvrma_hd5.png?width=1000',
+          imageUrl:
+            'https://images.supersport.com/media/3t2hfy10/soc_080425_uefa_arsvrma_hd5.png?width=1000',
           caption: 'Test image',
         });
       }
-      
-     
-      const newBlock = addBlock(
-        {
-          type,
-          content:"",
-          afterId:targetBlockId,
-          meta
-        }
-      );
+
+      const newBlock = addBlock({
+        type,
+        content:'',
+        afterId: targetBlockId,
+        meta,
+      });
       if (!newBlock) return;
       setTargetBlockId(newBlock);
-      await new Promise((resolve)=> setTimeout(resolve,0));
+      await new Promise((resolve) => setTimeout(resolve, 0));
       const targetEl = refMap.get(newBlock)?.current;
 
-
-      if (targetEl){
-        requestAnimationFrame(()=> {
+      if (targetEl) {
+        requestAnimationFrame(() => {
           placeCaretAtStart(targetEl);
-          targetEl.scrollIntoView({behavior:"smooth", block:"nearest"});
-        })
+          targetEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        });
       }
       hideMenu();
     },

@@ -196,7 +196,8 @@ export function Editor() {
     }
   }, [focusedBlockId, refMap]);
 
-  const onAddButtonClick = (id: string | null) => {
+  const onAddButtonClick = (id: string) => {
+    alert('Add Button Clicked................');
     if (focusedBlockId !== id) {
       setFocusedBlockId(id);
     }
@@ -268,12 +269,12 @@ export function Editor() {
         hideMenu,
         showMenu,
 
-        onImageReplace: (file: File) => handleImageReplace(file, id),
-        onRemove: () => {
-          deleteBlock(id);
-          setFocusedBlockId(null);
-          setIsCommandOptionVisible(false);
-        }
+        // onImageReplace: (file: File) => handleImageReplace(file, id),
+        // onRemove: () => {
+        //   deleteBlock(id);
+        //   setFocusedBlockId(null);
+        //   setIsCommandOptionVisible(false);
+        // }
       });
     },
     [
