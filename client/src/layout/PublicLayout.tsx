@@ -3,6 +3,7 @@ import { PublicPage } from '../pages/PublicPage';
 import { CiLight } from 'react-icons/ci';
 import ThemeContext from '../contexts/ThemeContext';
 import { WhyMindScribeExists } from '../pages/Mission';
+import { FeatureShowcase } from '../pages/Features';
 
 export function PublicLayout() {
   const { setTheme, theme } = useContext(ThemeContext);
@@ -20,7 +21,7 @@ export function PublicLayout() {
       <header className="flex  items-center fixed z-1000 w-full justify-between p-4">
         <div>
           <h2 className="text-3xl font-bold text-light-950 dark:text-dark-950">
-            mind<span className="text-violet-500">Scrabe</span>
+            freelly.
           </h2>
         </div>
         <nav className="flex items-center gap-2">
@@ -38,6 +39,7 @@ export function PublicLayout() {
       <main className="flex-1">
         <PublicPage />
         <WhyMindScribeExists />
+        <FeatureShowcase/>
       </main>
     </div>
   );

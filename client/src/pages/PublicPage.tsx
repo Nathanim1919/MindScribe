@@ -10,7 +10,7 @@ export const PublicPage: React.FC = () => {
   const Image = theme === 'dark' ? CoverImage : CoverImageForLightMood;
   return (
     <div
-      className="w-full relative h-full grid
+      className="w-full relative h-screen overflow-hidden grid
       after:absolute after:top-[40%] after:-left-[30%] after:rounded-full after:w-[40%] after:h-[30%] dark:after:bg-dark-300 after:bg-light-300 after:z-99
      "
     >
@@ -24,11 +24,11 @@ export const PublicPage: React.FC = () => {
           <CardDecoration />
         </motion.div>
         <div
-          className="grid items-center justify-start absolute top-0 left-0 w-full h-full z-999
+          className="grid items-center justify-start absolute mt-48 left-0 w-full z-999
         
         "
         >
-          <div className="flex justify-center w-[60%] ml-32 relative flex-col mt-10  p-4 gap-4">
+          <div className="flex justify-center w-[60%] ml-32 relative flex-col p-4 gap-4">
             <motion.h1
               initial={{ opacity: 0, translateX: '-50px' }}
               animate={{ opacity: 1, translateX: '0' }}
@@ -56,7 +56,7 @@ export const PublicPage: React.FC = () => {
           transition={{ duration: 0.5 }}
           className="absolute
            before:absolute before:top-0 before:left-0 before:w-full before:h-full before:bg-gradient-to-b dark:before:to-dark-base before:to-light-50 before:z-999
-        top-32 right-0 h-[80%] w-[50%]"
+        top-32 right-0 w-[55%]"
         >
           <img src={Image} alt="" className="w-full relative z-10" />
         </motion.div>

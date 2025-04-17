@@ -11,7 +11,7 @@ export const WhyMindScribeExists = () => {
   ];
 
   return (
-    <section className="w-[80%] mx-auto pt-20 mb-10 relative backdrop-blur-[3rem] z-100 bg-dark-50/15">
+    <section className="w-[70%] mx-auto pt-20 pb-10 relative backdrop-blur-[3rem] z-100 dark:bg-dark-base bg-light-base">
       {/* Heading */}
       <motion.h1
         className="text-8xl font-bold text-light-950 dark:text-dark-950 relative mb-10"
@@ -31,7 +31,7 @@ export const WhyMindScribeExists = () => {
       </motion.h1>
 
       {/* Values with Floating Effect */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-10">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-10 overflow-hidden">
         {items.map((item, index) => (
           <motion.div
             key={index}
@@ -48,7 +48,7 @@ export const WhyMindScribeExists = () => {
               animate={{ opacity: 1 }}
               transition={{ delay: 1.5 + index * 0.3, duration: 1 }}
             />
-            <h3 className="text-5xl p-2 bg-gradient-to-b from-transparent to-black h-[50%] grid place-items-center absolute bottom-0 w-full text-light-950 dark:text-dark-950 font-bold group-hover:text-violet-500">
+            <h3 className="text-3xl p-2 bg-gradient-to-b from-transparent to-white dark:to-black h-[50%] grid place-items-center absolute bottom-0 w-full text-light-950 dark:text-dark-950 font-bold group-hover:text-violet-500">
               {item}
             </h3>
           </motion.div>
@@ -56,7 +56,7 @@ export const WhyMindScribeExists = () => {
       </div>
 
       {/* Background Glow Effect */}
-      <div className="absolute inset-0 bg-gradient-to-r from-violet-300 to-blue-300 opacity-20 blur-3xl z-[-1]" />
+      {/* <div className="absolute inset-0 bg-gradient-to-r from-violet-300 to-blue-300 opacity-20 blur-3xl z-[-1]" /> */}
     </section>
   );
 };
