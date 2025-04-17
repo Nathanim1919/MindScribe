@@ -5,6 +5,7 @@ import { CiCalendarDate } from 'react-icons/ci';
 import { IoIosHeartEmpty } from 'react-icons/io';
 import { EntryType } from '../../types/entrie.interface';
 import { motion } from 'motion/react';
+import { Link } from '@tanstack/react-router';
 
 type EntriecardPropType = {
   entries: EntryType;
@@ -26,6 +27,7 @@ export const Entriecard: React.FC<EntriecardPropType> = ({ entries }) => {
   }
 
   return (
+    <Link to={'/in/new'}>
     <motion.div
       initial={{opacity:0, translateY:"10px"}}
       animate={{opacity:1, translateY:"0px"}}
@@ -77,5 +79,6 @@ export const Entriecard: React.FC<EntriecardPropType> = ({ entries }) => {
         </div>
       </div>
     </motion.div>
+    </Link>
   );
 };

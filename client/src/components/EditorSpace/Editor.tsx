@@ -15,6 +15,7 @@ import { renderBlock } from './Blocks';
 import { useCommandMenu } from '../../hooks/useCommandMenu';
 import { EditorToolbar } from './EditorToolbar';
 import { EditorBlocks } from './EditorBlocks';
+import { EntrieSkeleton } from '../LoadingSkeletons/EntrieSkeleton';
 
 export function Editor() {
   const {
@@ -294,32 +295,34 @@ export function Editor() {
     >
       <EditorToolbar />
 
-      {/* 📌 Render Blocks */}
-      <div className="relative w-full max-w-4xl mx-auto px-4 pb-[4rem]">
-        <EditorBlocks
-          blocks={blocks}
-          focusedBlockId={focusedBlockId}
-          renderBlock={renderSingleBlock}
-          onClickBlock={handleBlockContainerClick}
-          isCommandOptionVisible={isCommandOptionVisible}
-        />
-        {/* 📌 Command Menu */}
-        {isVisible && (
-          <CommandMenu
-            filter={filter}
-            onSelect={handleSelect}
-            position={position}
-            menuRef={menuRef}
-          />
-        )}
-        {isCommandOptionVisible && (
-          <CommandOption
-            id={focusedBlockId}
-            blocks={blocks}
-            setIsCommandOptionVisible={setIsCommandOptionVisible}
-          />
-        )}
-      </div>
+      {/*  */}
+        <EntrieSkeleton/>
     </div>
   );
 }
+
+      // <div className="relative w-full max-w-4xl mx-auto px-4 pb-[4rem]">
+      //   <EditorBlocks
+      //     blocks={blocks}
+      //     focusedBlockId={focusedBlockId}
+      //     renderBlock={renderSingleBlock}
+      //     onClickBlock={handleBlockContainerClick}
+      //     isCommandOptionVisible={isCommandOptionVisible}
+      //   />
+      //   {/* 📌 Command Menu */}
+      //   {isVisible && (
+      //     <CommandMenu
+      //       filter={filter}
+      //       onSelect={handleSelect}
+      //       position={position}
+      //       menuRef={menuRef}
+      //     />
+      //   )}
+      //   {isCommandOptionVisible && (
+      //     <CommandOption
+      //       id={focusedBlockId}
+      //       blocks={blocks}
+      //       setIsCommandOptionVisible={setIsCommandOptionVisible}
+      //     />
+      //   )}
+      // </div>

@@ -224,15 +224,15 @@ export const RecentEntries: React.FC = () => {
           >
             {diaries?.map((entry) =>
               // <EntriecardSkeleton key={entry.id}/>
-              <Entriecard key={entry.id} entries={entry} />
+              // <Entriecard key={entry.id} entries={entry} />
               // <DiaryRow  key={entry.id} entrie={entry}/>
               // <DiaryRowSekeleton key={entry.id} />
 
-              // listStyle === 'grid' ? (
-              //   <Entriecard key={entry.id} entries={entry} />
-              // ) : (
-              //   <DiaryRow key={entry.id} entrie={entry} />
-              // ),
+              listStyle === 'grid' ? (
+                <Entriecard key={entry.id} entries={entry} />
+              ) : (
+                <DiaryRow key={entry.id} entrie={entry} />
+              ),
             )}
           </div>
         </div>

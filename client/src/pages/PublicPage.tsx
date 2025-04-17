@@ -1,7 +1,6 @@
 import { CardDecoration } from '../components/publicPageComponents/CardDecoration';
 import CoverImage from '../assets/img.png';
 import CoverImageForLightMood from '../assets/img2.png';
-import { PiShootingStarThin } from 'react-icons/pi';
 import { motion } from 'motion/react';
 import { useContext } from 'react';
 import ThemeContext from '../contexts/ThemeContext';
@@ -29,38 +28,25 @@ export const PublicPage: React.FC = () => {
         
         "
         >
-          <div className="flex items-center ml-32 bg-gradient-to-r from-transparent dark:to-black to-white relative flex-col mt-10  p-4 gap-4">
+          <div className="flex justify-center w-[60%] ml-32 relative flex-col mt-10  p-4 gap-4">
             <motion.h1
               initial={{ opacity: 0, translateX: '-50px' }}
               animate={{ opacity: 1, translateX: '0' }}
               transition={{ duration: 0.5 }}
-              className="font-bold text-5xl text-light-950 dark:text-dark-950"
+              className="font-bold text-7xl w-[70%] text-light-950 dark:text-dark-950"
             >
-              DROP EVERY <br />{' '}
-              <span className="text-[5rem] ml-[5rem] text-violet-500 ">
-                THOUGHT
-              </span>
-              <br />
-              U CAN’T SAY
-              <br />{' '}
-              <motion.span
-                initial={{ opacity: 0, translateY: '10px' }}
-                animate={{ opacity: 1, translateY: '0' }}
-                transition={{ duration: 1 }}
-                className="text-[5rem] ml-[5rem] text-violet-500"
-              >
-                OUT LOUD
-              </motion.span>
+              Where your <span className="text-violet-">silence</span>{' '}
+              <span className="text-violet-500">speaks</span> volumes.
             </motion.h1>
-            <p className="self-start text-2xl mt-4 dark:text-dark-950 text-light-950 font-bold">
-              Your safe <span className="text-violet-600 font-bold">space</span>{' '}
-              for daily
-              <span className="text-violet-600 font-bold"> reflection.</span>
+            <p className="w-[70%] dark:text-dark-500 text-light-700 py-2">
+              Your <span className="text-violet-500">thoughts</span> deserve
+              more than a passing moment. <br />
+              Welcome to the place where they{' '}
+              <span className="text-violet-500">breathe</span>.
             </p>
 
-            <button className="bottom-10 left-10 p-3 flex items-center gap-2 justify-center rounded-full w-[50%] self-start font-bold cursor-pointer hover:bg-violet-500 bg-violet-600">
-              <PiShootingStarThin className="text-3xl" />
-              Join the waitlist
+            <button className="px-6 py-3 flex items-center gap-2 justify-center rounded-full self-start font-bold cursor-pointer hover:bg-violet-500 bg-violet-600">
+              Begin Your First Page
             </button>
           </div>
         </div>
