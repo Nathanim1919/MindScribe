@@ -296,33 +296,32 @@ export function Editor() {
       <EditorToolbar />
 
       {/*  */}
-        <EntrieSkeleton/>
+        {/* <EntrieSkeleton/> */}
+        <div className="relative w-full max-w-4xl mx-auto px-4 pb-[4rem]">
+          <EditorBlocks
+            blocks={blocks}
+            focusedBlockId={focusedBlockId}
+            renderBlock={renderSingleBlock}
+            onClickBlock={handleBlockContainerClick}
+            isCommandOptionVisible={isCommandOptionVisible}
+          />
+          {/* 📌 Command Menu */}
+          {isVisible && (
+            <CommandMenu
+              filter={filter}
+              onSelect={handleSelect}
+              position={position}
+              menuRef={menuRef}
+            />
+          )}
+          {isCommandOptionVisible && (
+            <CommandOption
+              id={focusedBlockId}
+              blocks={blocks}
+              setIsCommandOptionVisible={setIsCommandOptionVisible}
+            />
+          )}
+        </div>
     </div>
   );
 }
-
-      // <div className="relative w-full max-w-4xl mx-auto px-4 pb-[4rem]">
-      //   <EditorBlocks
-      //     blocks={blocks}
-      //     focusedBlockId={focusedBlockId}
-      //     renderBlock={renderSingleBlock}
-      //     onClickBlock={handleBlockContainerClick}
-      //     isCommandOptionVisible={isCommandOptionVisible}
-      //   />
-      //   {/* 📌 Command Menu */}
-      //   {isVisible && (
-      //     <CommandMenu
-      //       filter={filter}
-      //       onSelect={handleSelect}
-      //       position={position}
-      //       menuRef={menuRef}
-      //     />
-      //   )}
-      //   {isCommandOptionVisible && (
-      //     <CommandOption
-      //       id={focusedBlockId}
-      //       blocks={blocks}
-      //       setIsCommandOptionVisible={setIsCommandOptionVisible}
-      //     />
-      //   )}
-      // </div>

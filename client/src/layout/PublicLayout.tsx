@@ -4,6 +4,7 @@ import { CiLight } from 'react-icons/ci';
 import ThemeContext from '../contexts/ThemeContext';
 import { WhyMindScribeExists } from '../pages/Mission';
 import { FeatureShowcase } from '../pages/Features';
+import { RealVoices } from '../pages/TestimoniaPage';
 
 export function PublicLayout() {
   const { setTheme, theme } = useContext(ThemeContext);
@@ -40,6 +41,7 @@ export function PublicLayout() {
         <PublicPage />
         <WhyMindScribeExists />
         <FeatureShowcase/>
+        <RealVoices />
       </main>
     </div>
   );

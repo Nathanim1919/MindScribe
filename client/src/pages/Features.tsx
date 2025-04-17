@@ -3,7 +3,10 @@ import { FeatureCard } from '../components/FeatureCard';
 
 import darkMoodIllustrationImage from "../assets/feature/darkMoodIllustrationImage.png";
 import lightMoodIllustrationImage from "../assets/feature/lightMoodIllustrationImage.png";
-import { image } from 'motion/react-client';
+
+
+import darkBlockPreviewImage from "../assets/feature/darkBlockPreviewImage.png";
+import lightBlockPreviewImage from "../assets/feature/lightBlockPreviewImage.png";
 
 
 export const FeatureShowcase = () => {
@@ -29,8 +32,8 @@ export const FeatureShowcase = () => {
       description: 'Consistency counts. Get subtle nudges, not guilt trips.',
     },
     {
-        lightImage: lightMoodIllustrationImage,
-        darkImage: darkMoodIllustrationImage,
+        lightImage: lightBlockPreviewImage,
+        darkImage: darkBlockPreviewImage,
       title: 'Block-Based Writing',
       description: 'Headers, lists, quotes, dividers. Your page, your flow.',
     },
