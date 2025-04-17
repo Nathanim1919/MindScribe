@@ -37,8 +37,8 @@ export const WhyMindScribeExists = () => {
             key={index}
             className="flex relative flex-col items-center text-center group"
             initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.7 + index * 0.3, duration: 1 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1 }}
           >
             <motion.img
               src={index === 0 ? Image1 : index === 1 ? Image2 : Image3}

@@ -92,7 +92,7 @@ const TestimonialCard = ({
   name: string;
   role: string;
 }) => (
-  <div className="min-w-[300px] max-w-[300px] p-6 bg-light-200 dark:bg-dark-50 rounded-xl shadow-md border-light-300 dark:border-dark-500 mx-2">
+  <div className="min-w-[300px] max-w-[300px] p-6 bg-light-base dark:bg-dark-base rounded-xl border border-light-300 dark:border-dark-100 mx-2">
     <p className="text-base italic text-light-900 dark:text-dark-900 mb-3">
       “{quote}”
     </p>
@@ -109,7 +109,7 @@ export const RealVoices = () => {
   return (
     <section className="w-[70%] mx-auto py-24 overflow-hidden dark:bg-dark-base bg-light-base relative z-999">
       <div className="tflex felx-col mb-8">
-        <h1 className="text-6xl font-bold text-light-950 dark:text-dark-950">
+        <h1 className="text-6xl capitalize font-bold text-light-950 dark:text-dark-950">
           They found a <span className="text-violet-500">place</span> to feel
           again.
         </h1>
@@ -121,8 +121,8 @@ export const RealVoices = () => {
 
       <div
         className="space-y-4 overflow-hidden relative
-      before:absolute before:top-0 before:left-0 before:w-[30%] before:h-full before:bg-gradient-to-r before:from-dark-base  before:z-999
-            after:absolute after:top-0 after:right-0 after:w-[30%] after:h-full after:bg-gradient-to-l after:from-dark-base  after:z-999
+      before:absolute before:top-0 before:left-0 before:w-[30%] before:h-full before:bg-gradient-to-r before:from-light-base dark:before:from-dark-base  before:z-999
+            after:absolute after:top-0 after:right-0 after:w-[30%] after:h-full after:bg-gradient-to-l after:from-light-base dark:after:from-dark-base  after:z-999
 
       "
       >

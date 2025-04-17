@@ -7,6 +7,7 @@ import lightMoodIllustrationImage from "../assets/feature/lightMoodIllustrationI
 
 import darkBlockPreviewImage from "../assets/feature/darkBlockPreviewImage.png";
 import lightBlockPreviewImage from "../assets/feature/lightBlockPreviewImage.png";
+import { motion } from 'motion/react';
 
 
 export const FeatureShowcase = () => {
@@ -48,7 +49,11 @@ export const FeatureShowcase = () => {
 
   return (
     <section className="w-[70%] mx-auto py-24 grid grid-cols-1 gap-2 relative backdrop-blur-[3rem] z-100 dark:bg-dark-base bg-light-base">
-      <div className="text-center mb-12">
+      <motion.div 
+       initial={{ opacity: 0, y: 50 }}
+       whileInView={{ opacity: 1, y: 0 }}
+       transition={{ duration: .5 }}
+      className="text-center mb-12">
         <h2 className="text-8xl text-left font-bold text-light-950 dark:text-dark-950 mb-4">
           What Makes <span className="text-violet-500">mindScribe</span>{' '}
           Different
@@ -57,7 +62,7 @@ export const FeatureShowcase = () => {
           Dive into a space built for you, not your followers. Every feature is
           crafted with care and a touch of the future.
         </p>
-      </div>
+      </motion.div>
 
       <div className="grid grid-cols-1 w-full h-full m-auto sm:grid-cols-2 lg:grid-cols-2 gap-4">
         {features.map((feature, idx) => (

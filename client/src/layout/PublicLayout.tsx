@@ -5,6 +5,9 @@ import ThemeContext from '../contexts/ThemeContext';
 import { WhyMindScribeExists } from '../pages/Mission';
 import { FeatureShowcase } from '../pages/Features';
 import { RealVoices } from '../pages/TestimoniaPage';
+import { EmotionalJourney } from '../pages/EmotionalJourney';
+import { PlanSimplicity } from '../pages/PlanSimplicity';
+import { FinalCTA } from '../pages/FinalCTA';
 
 export function PublicLayout() {
   const { setTheme, theme } = useContext(ThemeContext);
@@ -42,6 +45,9 @@ export function PublicLayout() {
         <WhyMindScribeExists />
         <FeatureShowcase/>
         <RealVoices />
+        {/* <EmotionalJourney/> */}
+        {/* <PlanSimplicity/> */}
+        <FinalCTA/>
       </main>
     </div>
   );

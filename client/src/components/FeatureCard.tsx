@@ -22,17 +22,20 @@ export const FeatureCard: FC<FeatureCardProps> = ({
   const Image = theme === 'light' ? lightImage : darkImage;
   return (
     <motion.div
-      className={`"bg-white/5  w-full h-full grid grid-cols-1 my-10 backdrop-blur-lg rounded-2xl p-6 border border-light-100 dark:border-dark-50`}
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ delay: 0.3 + index * 0.2, duration: .2 }}
+      className={`"bg-white/5  w-full h-full grid grid-cols-1 my-10 backdrop-blur-lg rounded-2xl p-6`}
     >
-      <div className='relative mt-24 z-1000 w-[70%]'>
-        <h3 className="font-bold text-4xl text-violet-500 mb-2">
-          {title}
-        </h3>
+      <div className="relative mt-24 z-1000 w-[70%]">
+        <h3 className="font-bold text-4xl text-violet-500 mb-2">{title}</h3>
         <h1 className="text-dark-base dark:text-dark-700">{description}</h1>
       </div>
-      <div className='w-[50%] absolute to-0% right-0 
+      <div
+        className="w-[50%] absolute to-0% right-[20%] 
       before:absolute before:top-0 before:left-0 before:w-full before:h-full before:bg-gradient-to-b dark:before:to-dark-base before:to-light-50 before:z-999
-      '>
+      "
+      >
         <motion.img
           src={Image}
           alt="Feature"
