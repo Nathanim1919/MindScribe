@@ -8,7 +8,7 @@ export const FinalCTA = () => {
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 1.1 }}
-          className="text-3xl md:text-6xl font-bold text-light-900 dark:text-dark-950 mb-10 leading-snug"
+          className="text-3xl uppercase md:text-6xl font-bold text-light-900 dark:text-dark-950 mb-10 leading-snug"
         >
           You deserve to be <span className="text-violet-500">heard</span> even
           if it’s just by <span className="text-violet-500">you</span>.

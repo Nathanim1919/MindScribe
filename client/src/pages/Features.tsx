@@ -39,6 +39,12 @@ export const FeatureShowcase = () => {
       description: 'Headers, lists, quotes, dividers. Your page, your flow.',
     },
     {
+      lightImage: lightBlockPreviewImage,
+        darkImage: darkBlockPreviewImage,
+      title: 'Visual Journaling',
+      description: 'Enhance entries with images and revisit memories in your private gallery',
+    },
+    {
         lightImage: lightMoodIllustrationImage,
         darkImage: darkMoodIllustrationImage,
       title: 'Private by Default',
@@ -52,7 +58,7 @@ export const FeatureShowcase = () => {
       <motion.div 
        initial={{ opacity: 0, y: 50 }}
        whileInView={{ opacity: 1, y: 0 }}
-       transition={{ duration: .5 }}
+       transition={{ duration: .1 }}
       className="text-center mb-12">
         <h2 className="text-8xl text-left font-bold text-light-950 dark:text-dark-950 mb-4">
           What Makes <span className="text-violet-500">mindScribe</span>{' '}

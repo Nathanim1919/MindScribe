@@ -42,11 +42,11 @@ export function PublicLayout() {
       </header>
       <main className="flex-1">
         <PublicPage />
-        <WhyMindScribeExists />
         <FeatureShowcase/>
+        <WhyMindScribeExists />
         <RealVoices />
         {/* <EmotionalJourney/> */}
-        {/* <PlanSimplicity/> */}
+        <PlanSimplicity/>
         <FinalCTA/>
       </main>
     </div>
