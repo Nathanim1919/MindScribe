@@ -7,6 +7,10 @@
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
+    "baseUrl": "./src",
+    "paths": {
+     "@lib/*": ["lib/*"],
+    },
     "typeRoots": ["./node_modules/@types", "./src/types/global.d.ts"],
   },
   "include": ["src/**/*", "index.ts","src/types/global.d.ts"],
