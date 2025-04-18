@@ -1,50 +1,38 @@
-import mongoose from "mongoose";
+import { Schema, model, InferSchemaType } from "mongoose";
 
-const userSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: true,
-    trim: true,
-  },
-  email: {
-    type: String,
-    require: true,
-    unique: true,
-    trim: true,
-    lowercase: true,
-  },
-  profilePicture: {
-    type: String,
-    default: "https://i.imgur.com/8cX2j7b.png",
-  },
-  coverPicture: {
-    type: String,
-    default: "https://i.imgur.com/8cX2j7b.png",
-  },
-  password: {
-    type: String,
-    required: true,
-    trim: true,
-  },
-  entries: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Entry",
+const userSchema = new Schema(
+  {
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+      lowercase: true,
     },
-  ],
-  createdAt: {
-    type: Date,
-    default: Date.now,
+    password: {
+      type: String,
+      required: true,
+    },
+    name: {
+      type: String,
+      required: true,
+    },
+    profilePicture: {
+      type: String,
+      default: "https://i.imgur.com/8cX2j7b.png",
+    },
+    coverPicture: {
+      type: String,
+      default: "https://i.imgur.com/8cX2j7b.png",
+    },
+    isVerified: {
+      type: Boolean,
+      default: false,
+    },
   },
-  updatedAt: {
-    type: Date,
-    default: Date.now,
-  },
-  isVerified: {
-    type: Boolean,
-    default: false,
-  },
-});
+  { timestamps: true }
+);
 
-const User = mongoose.model("User", userSchema);
-export default User;
+// 🔁 Inferred TS type from schema
+export type UserDocument = InferSchemaType<typeof userSchema>;
+
+export const User = model("User", userSchema);
