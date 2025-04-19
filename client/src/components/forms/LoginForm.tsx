@@ -1,47 +1,49 @@
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { registrationSchema } from '../../validation/zodSchemas';
+import { loginSchema } from '../../validation/zodSchemas';
 import { Input } from '../ui/Input';
 import { MdNavigateNext } from 'react-icons/md';
 import { authClient } from '../../lib/authClient';
 import { useCallback, useState } from 'react';
-import { RegistrationFormData } from '../../types/form';
+import { LoginFormData } from '../../types/form';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 import { useNavigate } from '@tanstack/react-router';
 import { Link } from '@tanstack/react-router';
 
-export const RegistrationForm: React.FC = () => {
+export const LoginForm: React.FC = () => {
   const [submitError, setSubmitError] = useState('');
   const navigate = useNavigate();
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm<RegistrationFormData>({
-    resolver: zodResolver(registrationSchema),
+  } = useForm<LoginFormData>({
+    resolver: zodResolver(loginSchema),
   });
 
   const onSubmit = useCallback(
-    async (data: RegistrationFormData) => {
+    async (data: LoginFormData) => {
       try {
         setSubmitError('');
-        const res = await authClient.signUp.email(data);
+        const res = await authClient.signIn.email(data);
 
         if (res?.error) {
           setSubmitError(res.error.message || 'Failed to sign up.');
           return;
         }
 
-        console.log('✅ Registration successful:', res);
+        console.log('✅ Login successful:', res);
 
         // Navigate to dashboard
         navigate({ to: '/in/home' });
       } catch (error: any) {
         console.error('❌ Error during registration:', error);
-        setSubmitError(error?.message || 'Something went wrong. Please try again.');
+        setSubmitError(
+          error?.message || 'Something went wrong. Please try again.',
+        );
       }
     },
-    [navigate]
+    [navigate],
   );
 
   return (
@@ -50,19 +52,9 @@ export const RegistrationForm: React.FC = () => {
       className="w-[80%] flex flex-col gap-4 p-10 rounded-lg"
     >
       <div>
-        <h2 className="text-4xl font-bold mb-2">Create your account</h2>
-        <p className="text-light-50/70">Begin your reflective journey</p>
+        <h2 className="text-4xl font-bold mb-2">Welcome back</h2>
+        <p className="text-light-50/70">Continue your reflective journey</p>
       </div>
-
-      <Input
-        label="Full Name"
-        id="name"
-        placeholder="Enter your Full Name"
-        autoComplete="off"
-        autoFocus
-        {...register('name')}
-        error={errors.name?.message}
-      />
 
       <Input
         label="Email"
@@ -83,18 +75,19 @@ export const RegistrationForm: React.FC = () => {
         error={errors.password?.message}
       />
 
-      <Input
-        label="Confirm Password"
-        id="confirmPassword"
-        placeholder="••••••••"
-        type="password"
-        {...register('confirmPassword')}
-        error={errors.confirmPassword?.message}
-      />
-
       {submitError && (
         <p className="text-red-500 text-sm text-center">{submitError}</p>
       )}
+
+      <div className="flex justify-between items-center text-sm">
+        <label className="flex items-center gap-2 cursor-pointer">
+          <input type="checkbox" className="accent-violet-500" />
+          Remember me
+        </label>
+        <a href="#" className="text-violet-500 hover:underline">
+          Forgot password?
+        </a>
+      </div>
 
       <button
         type="submit"
@@ -106,22 +99,23 @@ export const RegistrationForm: React.FC = () => {
         {isSubmitting ? (
           <div className="flex items-center gap-2">
             <AiOutlineLoading3Quarters className="animate-spin text-2xl" />
-            Signing up...
+            Signing In...
           </div>
         ) : (
           <div className="flex items-center gap-2">
-            Sign Up
+            Sign In
             <MdNavigateNext className="transition-all duration-300 ml-2 text-2xl opacity-0 group-hover:opacity-100 group-hover:translate-x-1" />
           </div>
         )}
       </button>
 
       <p className="text-center text-sm mt-4">
-        Already have an account?{' '}
-        <Link to={'/login'}
+        Don't have an account?{' '}
+        <Link
+          to={'/register'}
           className="text-violet-500 hover:underline font-medium"
         >
-          Sign In
+          Create one
         </Link>
       </p>
     </form>
