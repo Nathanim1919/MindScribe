@@ -5,6 +5,7 @@ import { RiGeminiLine } from 'react-icons/ri';
 import { TfiLayoutMediaCenterAlt } from 'react-icons/tfi';
 import { FaBook } from 'react-icons/fa';
 import { IoMdAdd } from "react-icons/io";
+import { authClient } from '../../lib/authClient';
 
 
 
@@ -36,9 +37,15 @@ export const TopsidebarElements: SidebarElementPropType[] = [
   },
 ];
 
-const handleLogout = () => {
-  console.log('User logged out');
-  // Add actual logout logic here
+const handleLogout = async () => {
+  const res = await authClient.signOut();
+  if (res?.error) {
+    console.error('Logout error:', res.error);
+    return;
+  }
+  console.log('Logout successful:', res);
+  // Optionally, you can redirect the user to the login page or show a success messagez
+
 };
 
 export const UserMenuElements = [
@@ -60,7 +67,7 @@ export const UserMenuElements = [
   {
     title: 'Logout',
     icon: <FiLogOut />,
-    to: '/logout',
+    to: '/login',
     onClick: handleLogout,
   },
 ];
