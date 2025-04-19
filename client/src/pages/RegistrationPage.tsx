@@ -1,21 +1,15 @@
-import { MdNavigateNext } from 'react-icons/md';
 import { CardDecoration } from '../components/publicPageComponents/CardDecoration';
-import { motion } from 'motion/react';
-
+import { motion } from 'framer-motion';
+import { RegistrationForm } from '../components/forms/RegistrationForm';
 
 export const RegistrationPage: React.FC = () => {
   return (
-    <div
-      className="bg-dark-50 relative flex h-screen w-screen items-center justify-center text-light-50
-    before:absolute before:top-0 before:left-[30%] before:h-[20%] before:w-[30%] before:bg-violet-500
-    after:absolute after:bottom-0 after:right-0 after:h-[40%] after:w-[20%] after:bg-violet-500
-    "
-    >
-      <div className="relative w-screen h-screen grid backdrop-blur-[10rem] bg-dark-50/10 z-10">
-        <div className="grid grid-cols-2 w-[70%] h-[90%] m-auto">
+    <div className="bg-dark-50 relative flex h-screen w-screen items-center justify-center text-light-50 before:absolute before:top-0 before:left-[30%] before:h-[20%] before:w-[30%] before:bg-violet-500 after:absolute after:bottom-0 after:right-0 after:h-[40%] after:w-[20%] after:bg-violet-500">
+      <div className="relative w-screen h-screen grid backdrop-blur-[10rem] bg-dark-50/10 z-10 overflow-hidden">
+        <div className="grid grid-cols-2 w-[70%] h-[90%] m-auto overflow-hidden">
           <div className="relative p-4 flex flex-col items-center gap-4 rounded-lg">
             <motion.div
-              initial={{ opacity: 0, translateY: '-50px' }}
+              initial={{ opacity: 0, translateY: '100px' }}
               animate={{ opacity: 1, translateY: '0' }}
               transition={{ duration: 0.5 }}
             >
@@ -29,108 +23,38 @@ export const RegistrationPage: React.FC = () => {
                 Grow <span className="text-violet-500">mindfully</span>
               </p>
             </motion.div>
+
             <div className="bg-sky-400/20 relative w-full h-full rounded-lg">
               <motion.div
-                initial={{ opacity: 0, scale: .4 }}
-                animate={{ opacity: .5, scale: 1 }}
-                transition={{ duration: .3 }}
-               className="absolute opacity-50 left-0 bottom-[20%] w-[60%] h-[50%] grid place-items-center">
+                initial={{ opacity: 0, translateY: '300px' }}
+                animate={{ opacity: 0.5, translateY: '0px' }}
+                transition={{ duration: 0.5 }}
+                className="absolute opacity-50 left-0 bottom-[20%] w-[60%] h-[50%] grid place-items-center"
+              >
                 <CardDecoration />
               </motion.div>
+
               <motion.div
-              initial={{
-                opacity: 0,
-                translateY: '50px',
-              }}
-              animate={{ opacity: 1, translateY: '0' }}
-              transition={{ duration: 0.5 }}
-               className='bg-gradient-to-b from-transparent to-dark-50 absolute w-full py-12 px-4 bottom-0'>
-                <h2 className='text-5xl font-bold'>Your <span className='text-violet-500'>thoughts</span> matter.<br/> Let's make them count.</h2>
-                <p>Join us in this journey of <span className='text-violet-500'>self-discovery </span>and expression.</p>
+                initial={{ opacity: 0, translateY: '50px' }}
+                animate={{ opacity: 1, translateY: '0' }}
+                transition={{ duration: 0.5 }}
+                className="bg-gradient-to-b from-transparent to-dark-50 absolute w-full py-12 px-4 bottom-0"
+              >
+                <h2 className="text-5xl font-bold">
+                  Your <span className="text-violet-500">thoughts</span> matter.
+                  <br /> Let's make them count.
+                </h2>
+                <p>
+                  Join us in this journey of{' '}
+                  <span className="text-violet-500">self-discovery </span>and
+                  expression.
+                </p>
               </motion.div>
             </div>
           </div>
+
           <div className="grid place-items-center">
-            <form className="relative w-[80%] h-full flex flex-col gap-4 p-10 rounded-lg">
-            <div>
-                <h2 className="text-4xl font-bold mb-2">Welcome back</h2>
-                <p className="text-light-50/70">Continue your reflective journey</p>
-              </div>
-              <div className={`flex flex-col gap-1`}>
-                <label className={`text-violet-500`} htmlFor="username">
-                  Full Name
-                </label>
-                <input
-                  autoComplete="off"
-                  autoFocus
-                  className={`bg-dark-50/30 transition-all duration-300  focus:border-violet-600/70 text-light-50 border border-dark-100 outline-none rounded-md p-2`}
-                  type="text"
-                  id="username"
-                  name="username"
-                  required
-                  placeholder="Enter your Full Name"
-                />
-              </div>
-              <div className={`flex flex-col gap-1`}>
-                <label className={`text-violet-500`} htmlFor="email">
-                  Email
-                </label>
-                <input
-                  autoComplete="off"
-                  className={`bg-dark-50/30 transition-all duration-300  focus:border-violet-600/70 text-light-50 border border-dark-100 outline-none rounded-md p-2`}
-                  type="email"
-                  id="email"
-                  name="email"
-                  required
-                  placeholder="Enter your email"
-                />
-              </div>
-              <div className={`flex flex-col gap-1`}>
-                <label className={`text-violet-500`} htmlFor="password">
-                  Password
-                </label>
-                <input
-                  autoComplete="off"
-                  className={`bg-dark-50/30 transition-all duration-300  focus:border-violet-600/70 text-light-50 border border-dark-100 outline-none rounded-md p-2`}
-                  type="password"
-                  id="password"
-                  name="password"
-                  required
-                  placeholder="••••••••"
-                />
-              </div>
-              <div className={`flex flex-col gap-1`}>
-                <label className={`text-violet-500`} htmlFor="confirmPassword">
-                  Confirm Password
-                </label>
-                <input
-                  autoComplete="off"
-                  className={`bg-dark-50/30 transition-all duration-300  focus:border-violet-600/70 text-light-50 border border-dark-100 outline-none rounded-md p-2`}
-                  type="password"
-                  id="confirmPassword"
-                  name="confirmPassword"
-                  required
-                 placeholder="••••••••"
-                />
-              </div>
-              <div>
-                <button
-                  className={`bg-violet-500 group text-light-50 flex items-center justify-center rounded-md p-2 w-full cursor-pointer hover:bg-violet-600 transition-all duration-300`}
-                  id="submit"
-                  name="submit"
-                  type="submit"
-                >
-                  Sign Up
-                  <MdNavigateNext className="transition-all duration-300 inline-block ml-2 text-2xl justify-self-end opacity-0 transform translate-x-10 group-hover:translate-0 group-hover:opacity-100" />
-                </button>
-              </div>
-              <p className="text-center text-sm mt-4">
-                Already have an account?{' '}
-                <a href="/login" className="text-violet-500 hover:underline font-medium">
-                  Sign In
-                </a>
-              </p>
-            </form>
+            <RegistrationForm />
           </div>
         </div>
       </div>
