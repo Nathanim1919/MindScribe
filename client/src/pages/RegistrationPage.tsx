@@ -1,5 +1,7 @@
 import { MdNavigateNext } from 'react-icons/md';
 import { CardDecoration } from '../components/publicPageComponents/CardDecoration';
+import { motion } from 'motion/react';
+
 
 export const RegistrationPage: React.FC = () => {
   return (
@@ -12,42 +14,40 @@ export const RegistrationPage: React.FC = () => {
       <div className="relative w-screen h-screen grid backdrop-blur-[10rem] bg-dark-50/10 z-10">
         <div className="grid grid-cols-2 w-[70%] h-[90%] m-auto">
           <div className="relative p-4 flex flex-col items-center gap-4 rounded-lg">
-            <div>
+            <motion.div
+              initial={{ opacity: 0, translateY: '-50px' }}
+              animate={{ opacity: 1, translateY: '0' }}
+              transition={{ duration: 0.5 }}
+            >
               <h1 className="text-6xl font-bold text-light-50">
                 Your Private Digital{' '}
                 <span className="text-violet-500">Sanctuary</span>
               </h1>
-              {/* <p>
-              A place to capture your thoughts, ideas, and memories. 
-              Your personal space for reflection and creativity.
-            </p>
-            <p>
-              Join us in this journey of self-discovery and expression.
-            </p>
-            <p>
-              Sign up now and start creating your own digital sanctuary.
-            </p>
-            <p>
-              Your thoughts matter. Let's make them count.
-            </p>
-            <p>
-              Welcome to your personal space.
-            </p>
-            */}
               <p>
                 Write <span className="text-violet-500">freely</span> ·
                 Understand <span className="text-violet-500">deeply</span> ·
                 Grow <span className="text-violet-500">mindfully</span>
               </p>
-            </div>
+            </motion.div>
             <div className="bg-sky-400/20 relative w-full h-full rounded-lg">
-              <div className="absolute opacity-50 left-0 bottom-[20%] w-[60%] h-[50%] grid place-items-center">
+              <motion.div
+                initial={{ opacity: 0, scale: .4 }}
+                animate={{ opacity: .5, scale: 1 }}
+                transition={{ duration: .3 }}
+               className="absolute opacity-50 left-0 bottom-[20%] w-[60%] h-[50%] grid place-items-center">
                 <CardDecoration />
-              </div>
-              <div className='bg-gradient-to-b from-transparent to-dark-50 absolute w-full py-12 px-4 bottom-0'>
+              </motion.div>
+              <motion.div
+              initial={{
+                opacity: 0,
+                translateY: '50px',
+              }}
+              animate={{ opacity: 1, translateY: '0' }}
+              transition={{ duration: 0.5 }}
+               className='bg-gradient-to-b from-transparent to-dark-50 absolute w-full py-12 px-4 bottom-0'>
                 <h2 className='text-5xl font-bold'>Your <span className='text-violet-500'>thoughts</span> matter.<br/> Let's make them count.</h2>
                 <p>Join us in this journey of <span className='text-violet-500'>self-discovery </span>and expression.</p>
-              </div>
+              </motion.div>
             </div>
           </div>
           <div className="grid place-items-center">

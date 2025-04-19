@@ -4,6 +4,7 @@ import CoverImageForLightMood from '../assets/img2.png';
 import { motion } from 'motion/react';
 import { useContext } from 'react';
 import ThemeContext from '../contexts/ThemeContext';
+import { Link } from '@tanstack/react-router';
 
 export const PublicPage: React.FC = () => {
   const { theme } = useContext(ThemeContext);
@@ -45,9 +46,9 @@ export const PublicPage: React.FC = () => {
               <span className="text-violet-500">breathe</span>.
             </p>
 
-            <button className="px-6 py-3 flex items-center gap-2 justify-center rounded-full self-start font-bold cursor-pointer hover:bg-violet-500 bg-violet-600">
+            <Link to={'/register'} className="px-6 py-3 flex items-center gap-2 justify-center rounded-full self-start font-bold cursor-pointer hover:bg-violet-500 bg-violet-600">
               Begin Your First Page
-            </button>
+            </Link>
           </div>
         </div>
         <motion.div

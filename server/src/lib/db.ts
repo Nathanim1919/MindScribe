@@ -1,12 +1,17 @@
-import { MongoClient } from "mongodb";
+import dotenv from "dotenv";
+dotenv.config();
 
-const client = new MongoClient(process.env.MONGO_URL as string);
 
-export const db = client.db(); // Optionally, specify the database name here
+import mongoose from "mongoose";
 
 export const connectMongo = async () => {
+  const mongoURI = process.env.MONGO_URI as string;
+  console.log("Mongo URI:", mongoURI);
+  if (!mongoURI) {
+    throw new Error("MONGO_URI is not defined in .env file");
+  }
   try {
-    await client.connect();
+    await mongoose.connect(mongoURI);
     console.log("MongoDB connected");
   } catch (error) {
     console.error("MongoDB connection error:", error);

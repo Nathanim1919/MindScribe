@@ -1,16 +1,18 @@
 // Entry Point for the server.
-import express from 'express';
-import env from 'dotenv';
-import { connectMongo } from '@lib/db';
+import dotenv from "dotenv";
+dotenv.config();
 
-// Load environment variables from .env file
-env.config();
-// Connect to MongoDB
-connectMongo()
+import app from './app.ts';
+import { connectMongo } from "./lib/db.ts";
 
-const app = express();
+const PORT = process.env.PORT || 3000;
 
+const start = async () => {
+  await connectMongo();
 
-app.listen(3000, ()=> {
-    console.log('Listening on port 3000');
-})
+  app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+  });
+};
+
+start();
