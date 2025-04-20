@@ -194,21 +194,21 @@ export const RecentEntries: React.FC = () => {
             </h2>
             <div className="flex items-center gap-1">
               <div className='dark:border-dark-200 flex items-center gap-1 rounded-md'>
-                <button className="text-light-500 text-[22px] cursor-pointer hover:text-light-700 dark:text-dark-400 dark:hover:text-dark-700 hover:bg-light-200 hover:dark:bg-dark-100 px-2 py-1 rounded-md">
+                <button className="text-light-500 text-[20px] cursor-pointer hover:text-light-700 dark:text-dark-400 dark:hover:text-dark-700 hover:bg-light-200 hover:dark:bg-dark-100 px-1 py-1 rounded-md">
                   <IoIosHeartEmpty />
                 </button>
                 <button
                   onClick={toggleListStyle}
-                  className="text-light-500 text-[22px] cursor-pointer hover:text-light-700 dark:text-dark-400 dark:hover:text-dark-700 hover:bg-light-200 hover:dark:bg-dark-100 px-2 py-1 rounded-md"
+                  className="text-light-500 text-[20px] cursor-pointer hover:text-light-700 dark:text-dark-400 dark:hover:text-dark-700 hover:bg-light-200 hover:dark:bg-dark-100 px-1 py-1 rounded-md"
                 >
                   {listStyle !== 'grid' ? <MdGridView /> : <IoIosList />}
                 </button>
               </div>
               <Link
                 to="/in/new"
-                className="bg-transparent border-0 hover:bg-light-200 hover:dark:bg-dark-100 text-light-950 dark:text-dark-700 rounded-lg px-2 py-1 flex items-center gap-1"
+                className="bg-transparent border-0 hover:bg-light-200 hover:dark:bg-dark-100 text-light-950 dark:text-dark-700 rounded-lg px-1 py-1 flex items-center gap-1"
               >
-                <BiPlus className='text-2xl'/>
+                <BiPlus className='text-[20px]'/>
                 
               </Link>
             </div>
@@ -221,13 +221,13 @@ export const RecentEntries: React.FC = () => {
               // <EntriecardSkeleton key={entry.id}/>
               // <Entriecard key={entry.id} entries={entry} />
               // <DiaryRow  key={entry.id} entrie={entry}/>
-              <DiaryRowSekeleton key={entry.id} />
+              // <DiaryRowSekeleton key={entry.id} />
 
-              // listStyle === 'grid' ? (
-              //   <Entriecard key={entry.id} entries={entry} />
-              // ) : (
-              //   <DiaryRow key={entry.id} entrie={entry} />
-              // ),
+              listStyle === 'grid' ? (
+                <Entriecard key={entry.id} entries={entry} />
+              ) : (
+                <DiaryRow key={entry.id} entrie={entry} />
+              ),
             )}
           </div>
         </div>
