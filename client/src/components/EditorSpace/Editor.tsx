@@ -296,7 +296,7 @@ export function Editor() {
       <EditorToolbar />
 
       {/*  */}
-        <EditorSkeleton/>
+        {/* <EditorSkeleton/> */}
         <div className="relative w-full max-w-4xl mx-auto px-4 pb-[4rem]">
           <EditorBlocks
             blocks={blocks}
