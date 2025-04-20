@@ -43,6 +43,8 @@ const handleLogout = async () => {
     console.error('Logout error:', res.error);
     return;
   }
+
+  
   console.log('Logout successful:', res);
   // Optionally, you can redirect the user to the login page or show a success messagez
 
@@ -67,7 +69,6 @@ export const UserMenuElements = [
   {
     title: 'Logout',
     icon: <FiLogOut />,
-    to: '/login',
     onClick: handleLogout,
   },
 ];

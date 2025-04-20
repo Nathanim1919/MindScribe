@@ -193,28 +193,23 @@ export const RecentEntries: React.FC = () => {
               Entiries
             </h2>
             <div className="flex items-center gap-1">
-              <input
-                type="text"
-                placeholder="Search..."
-                className="text-dark-300 dark:text-light-300 outline-0 border border-light-200 dark:border-dark-100 rounded-md p-1"
-              />
-              <div className='bg-light-50 dark:bg-dark-100 border border-light-200 dark:border-dark-200 flex items-center gap-2 p-[3px] rounded-md'>
-                <button className="text-light-500 text-[22px] cursor-pointer hover:text-light-700 dark:text-dark-400 dark:hover:text-dark-700 hover:dark:bg-dark-100 p-[2px] rounded-md">
+              <div className='dark:border-dark-200 flex items-center gap-1 rounded-md'>
+                <button className="text-light-500 text-[22px] cursor-pointer hover:text-light-700 dark:text-dark-400 dark:hover:text-dark-700 hover:bg-light-200 hover:dark:bg-dark-100 px-2 py-1 rounded-md">
                   <IoIosHeartEmpty />
                 </button>
                 <button
                   onClick={toggleListStyle}
-                  className="text-light-500 text-[22px] cursor-pointer hover:text-light-700 dark:text-dark-400 dark:hover:text-dark-700 hover:dark:bg-dark-100 p-[2px] rounded-md"
+                  className="text-light-500 text-[22px] cursor-pointer hover:text-light-700 dark:text-dark-400 dark:hover:text-dark-700 hover:bg-light-200 hover:dark:bg-dark-100 px-2 py-1 rounded-md"
                 >
                   {listStyle !== 'grid' ? <MdGridView /> : <IoIosList />}
                 </button>
               </div>
               <Link
-                to="/in/home/new"
-                className="new_entry_button text-[13px] dark:bg-dark-100 hover:dark:bg-dark-100 dark:text-dark-700 rounded-lg px-2 py-1 flex items-center gap-1"
+                to="/in/new"
+                className="bg-transparent border-0 hover:bg-light-200 hover:dark:bg-dark-100 text-light-950 dark:text-dark-700 rounded-lg px-2 py-1 flex items-center gap-1"
               >
-                <BiPlus className="dark:bg-dark-300" />
-                New Entry
+                <BiPlus className='text-2xl'/>
+                
               </Link>
             </div>
           </div>
@@ -223,16 +218,16 @@ export const RecentEntries: React.FC = () => {
             className={`grid ${listStyle === 'grid' ? 'grid-cols-3 gap-2' : 'grid-cols-1 gap-1'} rounded-sm p-4 py-2 max-h-[85vh] overflow-y-auto scrollb`}
           >
             {diaries?.map((entry) =>
-              // <EntriecardSkeleton key={entry.id}/>
+              <EntriecardSkeleton key={entry.id}/>
               // <Entriecard key={entry.id} entries={entry} />
               // <DiaryRow  key={entry.id} entrie={entry}/>
               // <DiaryRowSekeleton key={entry.id} />
 
-              listStyle === 'grid' ? (
-                <Entriecard key={entry.id} entries={entry} />
-              ) : (
-                <DiaryRow key={entry.id} entrie={entry} />
-              ),
+              // listStyle === 'grid' ? (
+              //   <Entriecard key={entry.id} entries={entry} />
+              // ) : (
+              //   <DiaryRow key={entry.id} entrie={entry} />
+              // ),
             )}
           </div>
         </div>
