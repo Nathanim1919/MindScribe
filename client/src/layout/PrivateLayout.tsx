@@ -5,16 +5,18 @@ import { UserMenu } from '../components/UserMenu';
 import { useState } from 'react';
 
 export function AuthenticatedLayout() {
-   const [displayUserMenu, setDisplayUserMenu] = useState(false);
+  const [displayUserMenu, setDisplayUserMenu] = useState(false);
 
   return (
     <div className="flex flex-col overflow-hidden h-screen">
-  
-      <Header setDisplayUserMenu={setDisplayUserMenu} displayUserMenu={displayUserMenu}/>
- 
+      <Header
+        setDisplayUserMenu={setDisplayUserMenu}
+        displayUserMenu={displayUserMenu}
+      />
+
       <UserMenu display={displayUserMenu} />
       <div className="flex overflow-hidden">
-      <Sidebar/>
+        <Sidebar />
         <main className="flex-1 bg-light-100 dark:bg-dark-base">
           <Outlet />
         </main>

@@ -6,6 +6,7 @@ import { TfiLayoutMediaCenterAlt } from 'react-icons/tfi';
 import { FaBook } from 'react-icons/fa';
 import { IoMdAdd } from "react-icons/io";
 import { authClient } from '../../lib/authClient';
+import { MdOutlineSelfImprovement } from 'react-icons/md';
 
 
 
@@ -26,10 +27,15 @@ export const TopsidebarElements: SidebarElementPropType[] = [
     redirectTo: '/in/home/entries',
   },
   {
-    title: 'Chat',
-    icon: <RiGeminiLine />,
-    redirectTo: '/chat',
+    title:"Activity",
+    icon:<MdOutlineSelfImprovement />,
+    redirectTo:'/in/progress'
   },
+  // {
+  //   title: 'Chat',
+  //   icon: <RiGeminiLine />,
+  //   redirectTo: '/chat',
+  // },
   {
     title: 'Media',
     icon: <TfiLayoutMediaCenterAlt />,
@@ -54,7 +60,7 @@ export const UserMenuElements = [
   {
     title: 'Profile',
     icon: <FiUser />,
-    to: '/profile',
+    to: '/in/home/profile',
   },
   {
     title: 'Settings',

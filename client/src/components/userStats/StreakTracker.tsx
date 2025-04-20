@@ -1,3 +1,4 @@
+import { Link } from '@tanstack/react-router';
 import { motion } from 'motion/react';
 import { FaFireFlameCurved } from 'react-icons/fa6';
 import { FaBook } from 'react-icons/fa6';
@@ -40,13 +41,16 @@ export const StreakTracker = ({
         <div className="flex justify-between items-center gap-2">
           <div className="flex justify-between items-center gap-1">
             {[...Array(9)].map((_, i) => (
-              <div key={i} className="w-full relative">
+              <motion.div
+              initial={{opacity:0, translateX:"-30px"}}
+              animate={{opacity:1, translateX:"0px"}}
+              transition={{duration:i/20}}
+               key={i} className="w-full relative">
                 {/* Icon Circle */}
-                <motion.div
-                  
+                <div
                   className="w-7 h-7 peer relative cursor-pointer hover:dark:text-dark-900 hover:transform hover:scale-90 transition-all duration-300 hover:text-light-900 rounded-lg grid place-items-center border border-light-300 dark:border-dark-200 text-light-500 dark:text-dark-400">
                   <FaBook />
-                </motion.div>
+                </div>
 
                 {/* Tooltip (after peer) */}
                 <motion.span
@@ -59,14 +63,14 @@ export const StreakTracker = ({
                 >
                   12, Jan 2025
                 </motion.span>
-              </div>
+              </motion.div>
             ))}
           </div>
-          <div className="flex items-center cursor-pointer hover:opacity-50">
+          <Link to={'/in/progress'} className="flex items-center cursor-pointer hover:opacity-50">
             <div className="w-7 h-7 rounded-lg bg-light-300 dark:bg-dark-100 border-3 dark:border-dark-50 border-light-50"></div>
             <div className="w-7 absolute ml-2 h-7 rounded-lg bg-light-300 dark:bg-dark-100 border-3 dark:border-dark-50 border-light-50"></div>
             <div className="w-7 absolute h-7 ml-4 rounded-lg bg-light-300 dark:bg-dark-100 border-3 dark:border-dark-50 border-light-50"></div>
-          </div>
+          </Link>
         </div>
         <div className="flex items-end gap-2 justify-self-start px-6 border border-violet-600/30 bg-violet-600/10 rounded-lg">
           <span className="text-3xl font-bold text-gray-900 dark:text-white">

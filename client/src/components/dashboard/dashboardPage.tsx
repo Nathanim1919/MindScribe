@@ -15,8 +15,8 @@ export const DashboardPage: React.FC = () => {
     },
     mood: {
       dominant: {
-        emoji: '🔥',
-        label: 'motivated',
+        emoji: '🤩',
+        label: 'excited',
         count: 3,
         total: 5
       },

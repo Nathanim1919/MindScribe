@@ -19,6 +19,7 @@ import { ProfileSkeleton } from './components/LoadingSkeletons/UserProfilePageSk
 import { PreferenceSetupFlow } from './components/PreferenceSetupFlow';
 import { GalleryPage } from './pages/GallaryPage';
 import { GallerySkeleton } from './components/LoadingSkeletons/GallerySkeleton';
+import { ProgressIndicator } from './pages/ProgressIndicator';
 
 // Create a root route
 const rootRoute = createRootRoute({
@@ -105,6 +106,12 @@ const EditorRoute = createRoute({
   }
 });
 
+const ProgressRoute = createRoute({
+  getParentRoute: () => authenticatedRoute,
+  path: '/progress',
+  component: ProgressIndicator,
+});
+
 
 const AllEntriesPage = createRoute({
   getParentRoute: () => dashboardRoute,
@@ -129,6 +136,7 @@ const routeTree = rootRoute.addChildren([
   authenticatedRoute.addChildren([
     EditorRoute,
     GalleryRoute,
+    ProgressRoute,
     dashboardRoute.addChildren([BoardRoute, AllEntriesPage, ProfilePage]),
   ]),
 ]);

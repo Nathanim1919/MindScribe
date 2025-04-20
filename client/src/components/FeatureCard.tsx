@@ -24,8 +24,8 @@ export const FeatureCard: FC<FeatureCardProps> = ({
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
-      transition={{ delay: 0.3 + index * 0.2, duration: .2 }}
-      className={`"bg-white/5 border border-dark-50 overflow-hidden  w-full h-full grid grid-cols-1 my-10 backdrop-blur-lg rounded-2xl p-6
+      transition={{ delay: 0.3 + index * 0.2, duration: 0.2 }}
+      className={`"bg-white/5 border border-light-200 dark:border-dark-50 overflow-hidden  w-full h-full grid grid-cols-1 my-10 backdrop-blur-lg rounded-2xl p-6
         before:absolute before:top-0 before:left-0 before:w-full before:h-full before:bg-gradient-to-b dark:before:to-dark-base before:to-light-50 before:z-999
         `}
     >
