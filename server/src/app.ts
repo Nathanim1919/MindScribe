@@ -4,31 +4,44 @@ import helmet from "helmet";
 import cors from "cors";
 import { auth } from "./lib/auth.ts";
 import { toNodeHandler } from "better-auth/node";
+import { connectMongo } from "./lib/db.ts";
 
 const app = express();
 
-// Middleware stack
-app.use(helmet()); // Security headers
+connectMongo();
+
+
 app.use(
   cors({
-    origin: process.env.CLIENT_URL,
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    credentials: true,
+    origin: "http://localhost:5173", // Replace with your frontend's origin
+    methods: ["GET", "POST", "PUT", "DELETE"], // Specify allowed HTTP methods
+    credentials: true, // Allow credentials (cookies, authorization headers, etc.)
   })
 );
 
-// Authentication middleware
-app.use("/api/v1/auth", toNodeHandler(auth)); // Authentication routes
+const betterAuthHandler = toNodeHandler(auth);
+app.all("/api/auth/*", toNodeHandler(auth)); // For ExpressJS v4
 
-app.use(express.json()); // Parse JSON request bodies
-app.use(express.urlencoded({ extended: true })); // Parse URL-encoded request bodies
-app.use(morgan("dev")); // HTTP request logger
+
+// Security headers
+app.use(helmet());
+
+// console.log("Better Auth Object:", auth);
+
+
+// Body parsers
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// HTTP request logger
+app.use(morgan("dev"));
+
+app.use(express.json());
 
 // Health check endpoint
 app.get("/api/v1/health", (req, res) => {
   res.status(200).json({ status: "ok" });
 });
 
-// other routes
-
+// Export the app
 export default app;
