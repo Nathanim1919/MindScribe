@@ -218,10 +218,10 @@ export const RecentEntries: React.FC = () => {
             className={`grid ${listStyle === 'grid' ? 'grid-cols-3 gap-2' : 'grid-cols-1 gap-1'} rounded-sm p-4 py-2 max-h-[85vh] overflow-y-auto scrollb`}
           >
             {diaries?.map((entry) =>
-              <EntriecardSkeleton key={entry.id}/>
+              // <EntriecardSkeleton key={entry.id}/>
               // <Entriecard key={entry.id} entries={entry} />
               // <DiaryRow  key={entry.id} entrie={entry}/>
-              // <DiaryRowSekeleton key={entry.id} />
+              <DiaryRowSekeleton key={entry.id} />
 
               // listStyle === 'grid' ? (
               //   <Entriecard key={entry.id} entries={entry} />

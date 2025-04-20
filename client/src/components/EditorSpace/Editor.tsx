@@ -15,7 +15,7 @@ import { renderBlock } from './Blocks';
 import { useCommandMenu } from '../../hooks/useCommandMenu';
 import { EditorToolbar } from './EditorToolbar';
 import { EditorBlocks } from './EditorBlocks';
-import { EntrieSkeleton } from '../LoadingSkeletons/EntrieSkeleton';
+import { EditorSkeleton } from '../LoadingSkeletons/EntrieSkeleton';
 
 export function Editor() {
   const {
@@ -296,7 +296,7 @@ export function Editor() {
       <EditorToolbar />
 
       {/*  */}
-        {/* <EntrieSkeleton/> */}
+        <EditorSkeleton/>
         <div className="relative w-full max-w-4xl mx-auto px-4 pb-[4rem]">
           <EditorBlocks
             blocks={blocks}

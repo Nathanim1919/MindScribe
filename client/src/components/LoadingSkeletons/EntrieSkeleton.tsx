@@ -1,28 +1,37 @@
 import React from 'react';
 
-export const EntrieSkeleton: React.FC = () => {
+export const EditorSkeleton: React.FC = () => {
   return (
-    <div className="w-[45%] mx-auto flex items-center justify-center flex-col gap-4">
-      <h1 className="h-8 w-[50%] bg-light-300 dark:bg-dark-200 rounded-full"></h1>
-      <div className="w-full grid gap-1">
-        <p className="w-full h-6 bg-light-300 dark:bg-dark-100 rounded-full animate-pulse duration-75"></p>
-        <p className="w-full h-6 bg-light-300 dark:bg-dark-100 rounded-full animate-pulse duration-200"></p>
-        <p className="w-full h-6 bg-light-300 dark:bg-dark-100 rounded-full animate-pulse duration-500"></p>
-        <p className="w-full h-6 bg-light-300 dark:bg-dark-100 rounded-full animate-pulse duration-900"></p>
+    <div className="w-[90%] max-w-[700px] mx-auto py-6 animate-pulse space-y-6">
+      {/* Header */}
+      <div className="h-10 w-1/2 bg-light-300 dark:bg-dark-200 rounded-md" />
+
+      {/* Paragraph blocks */}
+      {[...Array(2)].map((_, i) => (
+        <div key={i} className="space-y-2">
+          <div className="h-4 w-[95%] bg-light-300 dark:bg-dark-100 rounded-full" />
+          <div className="h-4 w-[85%] bg-light-300 dark:bg-dark-100 rounded-full" />
+          <div className="h-4 w-[90%] bg-light-300 dark:bg-dark-100 rounded-full" />
+        </div>
+      ))}
+
+      {/* Quote block */}
+      <div className="pl-4 border-l-4 border-light-300 dark:border-dark-100">
+        <div className="h-4 w-[80%] bg-light-300 dark:bg-dark-100 rounded-full" />
+        <div className="h-4 w-[70%] bg-light-300 dark:bg-dark-100 rounded-full mt-1" />
       </div>
-      <div className="w-[100%] h-56 border-0 outline-0 bg-light-300 dark:bg-dark-100">
-      </div>
-      <div className="w-full grid gap-1">
-        <p className="w-full h-6 bg-light-300 dark:bg-dark-100 rounded-full animate-pulse duration-75"></p>
-        <p className="w-full h-6 bg-light-300 dark:bg-dark-100 rounded-full animate-pulse duration-200"></p>
-        <p className="w-full h-6 bg-light-300 dark:bg-dark-100 rounded-full animate-pulse duration-500"></p>
-        <p className="w-full h-6 bg-light-300 dark:bg-dark-100 rounded-full animate-pulse duration-900"></p>
-        <p className="w-full h-6 bg-light-300 dark:bg-dark-100 rounded-full animate-pulse duration-75"></p>
-        <p className="w-full h-6 bg-light-300 dark:bg-dark-100 rounded-full animate-pulse duration-200"></p>
-        <p className="w-full h-6 bg-light-300 dark:bg-dark-100 rounded-full animate-pulse duration-500"></p>
-        <p className="w-full h-6 bg-light-300 dark:bg-dark-100 rounded-full animate-pulse duration-900"></p>
-      </div>
-      <p></p>
+
+      {/* Image placeholder */}
+      <div className="w-full h-56 bg-light-300 dark:bg-dark-100 rounded-xl shadow-inner" />
+
+      {/* More paragraphs */}
+      {[...Array(1)].map((_, i) => (
+        <div key={i} className="space-y-2">
+          <div className="h-4 w-[92%] bg-light-300 dark:bg-dark-100 rounded-full" />
+          <div className="h-4 w-[75%] bg-light-300 dark:bg-dark-100 rounded-full" />
+          <div className="h-4 w-[80%] bg-light-300 dark:bg-dark-100 rounded-full" />
+        </div>
+      ))}
     </div>
   );
 };
