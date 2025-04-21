@@ -20,8 +20,8 @@ export const Input: React.FC<InputProps> = ({
         id={id}
         aria-invalid={!!error}
         aria-describedby={error ? `${id}-error` : undefined}
-        className={`bg-dark-50/30 text-light-50 border ${
-          error ? 'border-red-500' : 'border-dark-100'
+        className={`bg-light-50/30 dark:bg-dark-50/30 dark:text-light-50 border ${
+          error ? 'border-red-500' : 'dark:border-dark-100 border-light-200'
         } outline-none rounded-md p-2 focus:border-violet-600/70 transition-all duration-300`}
         {...props}
       />

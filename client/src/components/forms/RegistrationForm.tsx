@@ -51,7 +51,7 @@ export const RegistrationForm: React.FC = () => {
     >
       <div>
         <h2 className="text-4xl font-bold mb-2">Create your account</h2>
-        <p className="text-light-50/70">Begin your reflective journey</p>
+        <p className="dark:text-light-50/70">Begin your reflective journey</p>
       </div>
 
       <Input

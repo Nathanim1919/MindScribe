@@ -53,7 +53,7 @@ export const LoginForm: React.FC = () => {
     >
       <div>
         <h2 className="text-4xl font-bold mb-2">Welcome back</h2>
-        <p className="text-light-50/70">Continue your reflective journey</p>
+        <p className="dark:text-light-50/70">Continue your reflective journey</p>
       </div>
 
       <Input

@@ -85,8 +85,11 @@ const dashboardRoute = createRoute({
 const GalleryRoute = createRoute({
   getParentRoute: () => authenticatedRoute,
   path: "/gallary",
-  component: () => import('./pages/GallaryPage').then(mod => mod.GalleryPage),
-  pendingComponent: GalleryPage,
+  component: GalleryPage,
+  staticData: {
+    hideHeader: true,
+    // hideSidebar: true,
+  },
 });
 
 

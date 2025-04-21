@@ -4,3 +4,21 @@ export type SidebarElementPropType = {
   redirectTo?: string;
   onClick?: () => void; // Optional click handler for logout
 };
+
+
+// types.ts or directly in your component file
+export interface ImageProps {
+  url: string;
+  caption: string;
+  date: string;
+  entryId: string;
+  sentiment?: string;
+}
+
+
+export interface ImageCardProps {
+  url: string;
+  caption: string;
+  date: string;
+  entrieId: string;
+}

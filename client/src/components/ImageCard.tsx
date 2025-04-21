@@ -8,9 +8,15 @@ interface ImageCardProps {
   sentiment?: string;
 }
 
-export const ImageCard: React.FC<ImageCardProps> = ({
+
+interface Props extends ImageCardProps {
+  onClick: () => void;
+}
+
+export const ImageCard: React.FC<Props> = ({
   caption,
   url,
+  onClick,
   date,
   entrieId,
   sentiment = 'Happy',
@@ -24,16 +30,18 @@ export const ImageCard: React.FC<ImageCardProps> = ({
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className="relative group cursor-pointer rounded-xl shadow-lg overflow-hidden bg-orange-300"
+      className="relative group cursor-pointer rounded-xl shadow-lg overflow-hidden"
     >
       {/* Image with hover zoom effect */}
       <motion.div
+        onClick={onClick}
         className="relative overflow-hidden"
-        whileHover={{ scale: 1.05 }}
+        whileHover={{ opacity: .7 }}
         transition={{ duration: 0.3 }}
       >
         <img
           src={url}
+
           alt={`Image ${entrieId}`}
           className="w-full h-auto object-cover rounded-xl break-inside-avoid"
           loading="lazy"

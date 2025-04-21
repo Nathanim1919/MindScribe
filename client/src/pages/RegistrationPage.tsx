@@ -4,8 +4,8 @@ import { RegistrationForm } from '../components/forms/RegistrationForm';
 
 export const RegistrationPage: React.FC = () => {
   return (
-    <div className="bg-dark-50 relative flex h-screen w-screen items-center justify-center text-light-50 before:absolute before:top-0 before:left-[30%] before:h-[20%] before:w-[30%] before:bg-violet-500 after:absolute after:bottom-0 after:right-0 after:h-[40%] after:w-[20%] after:bg-violet-500">
-      <div className="relative w-screen h-screen grid backdrop-blur-[10rem] bg-dark-50/10 z-10 overflow-hidden">
+    <div className="dark:bg-dark-50 relative flex h-screen w-screen items-center justify-center dark:text-light-50 before:absolute before:top-0 before:left-[30%] before:h-[20%] before:w-[30%] before:bg-violet-500 after:absolute after:bottom-0 after:right-0 after:h-[40%] after:w-[20%] after:bg-violet-500">
+      <div className="relative w-screen h-screen grid backdrop-blur-[10rem] dark:bg-dark-50/10 z-10 overflow-hidden">
         <div className="grid grid-cols-2 w-[70%] h-[90%] m-auto overflow-hidden">
           <div className="relative p-4 flex flex-col items-center gap-4 rounded-lg">
             <motion.div
@@ -13,7 +13,7 @@ export const RegistrationPage: React.FC = () => {
               animate={{ opacity: 1, translateY: '0' }}
               transition={{ duration: 0.5 }}
             >
-              <h1 className="text-6xl font-bold text-light-50">
+              <h1 className="text-6xl font-bold dark:text-light-50">
                 Your Private Digital{' '}
                 <span className="text-violet-500">Sanctuary</span>
               </h1>
@@ -26,7 +26,7 @@ export const RegistrationPage: React.FC = () => {
 
             <div className="bg-sky-400/20 relative w-full h-full rounded-lg">
               <motion.div
-                initial={{ opacity: 0, translateY: '300px' }}
+                initial={{ opacity: 0, translateY: '100px' }}
                 animate={{ opacity: 0.5, translateY: '0px' }}
                 transition={{ duration: 0.5 }}
                 className="absolute opacity-50 left-0 bottom-[20%] w-[60%] h-[50%] grid place-items-center"
@@ -38,7 +38,7 @@ export const RegistrationPage: React.FC = () => {
                 initial={{ opacity: 0, translateY: '50px' }}
                 animate={{ opacity: 1, translateY: '0' }}
                 transition={{ duration: 0.5 }}
-                className="bg-gradient-to-b from-transparent to-dark-50 absolute w-full py-12 px-4 bottom-0"
+                className="bg-gradient-to-b from-transparent dark:to-dark-50 to-light-50 absolute w-full py-12 px-4 bottom-0"
               >
                 <h2 className="text-5xl font-bold">
                   Your <span className="text-violet-500">thoughts</span> matter.

@@ -10,7 +10,7 @@ import ThemeContext from '../contexts/ThemeContext';
 export const Sidebar: React.FC = () => {
   const [isHovered, setIsHovered] = React.useState(false);
   const currentMatch = useRouterState({ select: (s: any) => s.matches.at(-1) });
-  const { hideSidebar } = currentMatch.staticData || {};
+  const { hideSidebar, hideHeader } = currentMatch.staticData || {};
 
   const { setTheme, theme } = useContext(ThemeContext);
 
@@ -47,7 +47,7 @@ export const Sidebar: React.FC = () => {
             ))}
 
             </div>
-            {hideSidebar && (
+            {(hideSidebar || hideHeader) && (
               <button
                 onClick={toggleTheme}
                 className={`flex text-2xl cursor-pointer group mt-10 relative items-center w-10 h-10 p-1 justify-center hover:bg-light-100 hover:dark:bg-dark-100 rounded-full dark:text-white transition-colors`}
