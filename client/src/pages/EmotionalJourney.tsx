@@ -1,68 +1,193 @@
-import { motion, useScroll, useTransform } from 'framer-motion';
-import { useRef } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { useEffect, useState } from 'react';
 
 const journeyPhases = [
-  { text: 'You hold it in.', color: 'bg-black' },
-  { text: 'Then you write.', color: 'bg-gray-900' },
-  { text: 'It softens.', color: 'bg-gray-800' },
-  { text: 'You feel lighter.', color: 'bg-gray-700' },
-  { text: "It’s still yours. Always.", color: 'bg-gray-600' },
+  { 
+    text: 'You hold it in.',
+    gradient: 'from-purple-500 via-violet-600 to-blue-500',
+    bgGradient: 'from-indigo-900/30 via-purple-900/20 to-black'
+  },
+  { 
+    text: 'Then you write.',
+    gradient: 'from-cyan-400 via-sky-500 to-blue-600',
+    bgGradient: 'from-sky-900/30 via-blue-900/20 to-black'
+  },
+  { 
+    text: 'It softens.',
+    gradient: 'from-emerald-400 via-teal-500 to-green-600',
+    bgGradient: 'from-emerald-900/30 via-teal-900/20 to-black'
+  },
+  { 
+    text: 'You feel lighter.',
+    gradient: 'from-amber-400 via-yellow-500 to-orange-600',
+    bgGradient: 'from-amber-900/30 via-yellow-900/20 to-black'
+  },
+  { 
+    text: "It's still yours. Always.",
+    gradient: 'from-rose-400 via-pink-500 to-fuchsia-600',
+    bgGradient: 'from-rose-900/30 via-pink-900/20 to-black'
+  },
+  { 
+    text: 'Memories, kept like constellations.',
+    gradient: 'from-indigo-400 via-cyan-500 to-teal-600',
+    bgGradient: 'from-cyan-900/30 via-teal-900/20 to-black'
+  },
+  { 
+    text: 'Designed not just to remember, but to feel.',
+    gradient: 'from-blue-400 via-purple-500 to-pink-600',
+    bgGradient: 'from-blue-900/30 via-indigo-900/20 to-black'
+  },
+  {
+    text: 'A diary from the next dimension.',
+    gradient: 'from-fuchsia-400 via-violet-500 to-indigo-600',
+    bgGradient: 'from-violet-900/30 via-indigo-900/20 to-black'
+  },
+  {
+    text: 'Built for minds that dream forward.',
+    gradient: 'from-lime-400 via-green-500 to-emerald-600',
+    bgGradient: 'from-lime-900/30 via-green-900/20 to-black'
+  },
+  {
+    text: 'Welcome to MindScribe, Your Consciousness, Eternal.',
+    gradient: 'from-[#ffd700] via-[#ffffff] to-[#ffaa00]', // Radiant gold to white to amber
+    bgGradient: 'from-[#1a1a33]/70 via-[#ffffff]/10 to-[#1a1a33]/70', // Radiant white core with dark edges
+  },
 ];
 
+
 export const EmotionalJourney = () => {
-  const containerRef = useRef(null);
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ['start start', 'end end'],
-  });
+  const [activeIndex, setActiveIndex] = useState(0);
 
-  const total = journeyPhases.length;
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveIndex((prev) => (prev + 1) % journeyPhases.length);
+    }, 3500); // smooth cycle
 
-  const backgroundColor = useTransform(
-    scrollYProgress,
-    [0, 0.25, 0.5, 0.75, 1],
-    ['#000000', '#1F1F1F', '#3A3A3A', '#4F4F4F', '#666666']
-  );
-
-  const heroScale = useTransform(scrollYProgress, [0, 0.5, 1], [1, 1.2, 0.8]);
-  const heroRotate = useTransform(scrollYProgress, [0, 0.5, 1], [0, 5, -5]);
-  const heroY = useTransform(scrollYProgress, [0, 0.5, 1], ['0%', '-20%', '10%']);
+    return () => clearInterval(interval);
+  }, []);
 
   return (
-    <motion.div
-      ref={containerRef}
-      style={{ backgroundColor }}
-      className="relative h-[600vh] w-full"
-    >
-      <div className="sticky top-0 h-screen flex flex-col items-center justify-center overflow-hidden">
-        <motion.div
-          style={{ scale: heroScale, rotate: heroRotate, y: heroY }}
-          className="absolute w-64 h-64 bg-white/20 rounded-full flex items-center justify-center text-white text-2xl"
+    <div className="relative h-screen overflow-hidden flex items-center justify-center bg-black z-999">
+      {/* Cosmic Background Layers */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className={`absolute inset-0 bg-gradient-to-br ${journeyPhases[activeIndex].bgGradient} transition-all duration-1500`} />
+        
+        {/* Animated Nebula Particles */}
+        <motion.div 
+          className="absolute inset-0 opacity-30"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 0.3 }}
+          transition={{ duration: 2 }}
+          key={activeIndex}
         >
-          AirPods Placeholder
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full bg-gradient-to-r from-purple-500/30 to-transparent blur-3xl animate-float-slow" />
+          <div className="absolute bottom-1/3 right-1/4 w-64 h-64 rounded-full bg-gradient-to-l from-cyan-400/30 to-transparent blur-2xl animate-float-medium" />
+          <div className="absolute top-2/3 left-1/3 w-80 h-80 rounded-full bg-gradient-to-b from-pink-500/20 to-transparent blur-3xl animate-float-fast" />
         </motion.div>
-
-        {journeyPhases.map((phase, index) => {
-          const start = index / total;
-          const end = (index + 1) / total;
-
-          const opacity = useTransform(scrollYProgress, [start, end - 0.1, end], [0, 1, 0]);
-          const y = useTransform(scrollYProgress, [start, end - 0.1, end], ['20%', '0%', '-20%']);
-          const scale = useTransform(scrollYProgress, [start, end - 0.1, end], [0.8, 1, 0.8]);
-
-          return (
-            <motion.div
-              key={index}
-              style={{ opacity, y, scale }}
-              className="absolute text-white text-3xl sm:text-5xl md:text-6xl font-bold text-center px-6 max-w-3xl"
-            >
-              {phase.text}
-            </motion.div>
-          );
-        })}
       </div>
-    </motion.div>
+
+      {/* Blur Overlay */}
+      <div className="absolute top-0 left-0 w-full h-full pointer-events-none z-10">
+        <div className="absolute inset-0 backdrop-blur-[2px]" />
+      </div>
+
+      {/* Content */}
+      <div className="relative h-screen w-full max-w-4xl mx-auto z-20">
+        <AnimatePresence mode="wait">
+          {journeyPhases.map((phase, index) =>
+            index === activeIndex ? (
+              <motion.div
+                key={index}
+                className="absolute inset-0 flex items-center justify-center text-center px-4"
+                initial={{ y: 40, opacity: 0 }}
+                animate={{
+                  y: 0,
+                  opacity: 1,
+                  transition: {
+                    ease: [0.33, 1, 0.68, 1],
+                    duration: 1.4,
+                  },
+                }}
+                exit={{
+                  y: -40,
+                  opacity: 0,
+                  transition: {
+                    ease: [0.65, 0, 0.35, 1],
+                    duration: 0.9,
+                  },
+                }}
+              >
+                <motion.div className="relative">
+                  {/* Cosmic Index Number */}
+                  <motion.h2
+                    className={`absolute left-1/2 -translate-x-1/2 -top-64 text-[25rem] font-black text-transparent bg-clip-text bg-gradient-to-b ${phase.gradient} opacity-10 select-none pointer-events-none z-0`}
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ 
+                      opacity: 0.1, 
+                      y: 0,
+                      transition: { 
+                        duration: 1.5, 
+                        ease: 'easeOut' 
+                      } 
+                    }}
+                  >
+                    0{index + 1}
+                  </motion.h2>
+
+                  {/* Main Text */}
+                  <motion.h1
+                    className="relative z-10 font-extrabold leading-[1.1] tracking-tight drop-shadow-[0_5px_15px_rgba(0,0,0,0.5)] text-5xl md:text-8xl"
+                    initial={{ scale: 0.97 }}
+                    animate={{ scale: 1 }}
+                    transition={{ duration: 1.2, ease: [0.33, 1, 0.68, 1] }}
+                  >
+                    {phase.text.split(' ').map((word, wordIndex) => (
+                      <motion.span
+                        key={wordIndex}
+                        className="inline-block whitespace-nowrap"
+                        initial={{ opacity: 0, y: 20, scale: 0.95 }}
+                        animate={{
+                          opacity: 1,
+                          y: 0,
+                          scale: 1,
+                          transition: {
+                            delay: wordIndex * 0.07,
+                            duration: 0.6,
+                            ease: [0.33, 1, 0.68, 1],
+                          },
+                        }}
+                      >
+                        <span className={`text-transparent bg-clip-text bg-gradient-to-r ${phase.gradient}`}>
+                          {word}
+                        </span>
+                        &nbsp;
+                      </motion.span>
+                    ))}
+                  </motion.h1>
+                </motion.div>
+              </motion.div>
+            ) : null
+          )}
+        </AnimatePresence>
+      </div>
+
+      {/* Cosmic Navigation Dots */}
+      <div className="absolute bottom-12 left-0 right-0 flex justify-center z-30">
+        <div className="flex space-x-3">
+          {journeyPhases.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => setActiveIndex(index)}
+              className="relative w-3 h-3 rounded-full group"
+            >
+              <div className={`absolute inset-0 rounded-full transition-all duration-500 ${index === activeIndex ? 'opacity-100' : 'opacity-30 bg-white'}`} />
+              <div 
+                className={`absolute inset-0 rounded-full bg-gradient-to-r ${journeyPhases[index].gradient} transition-all duration-500 ${index === activeIndex ? 'opacity-100' : 'opacity-0 group-hover:opacity-50'}`}
+              />
+            </button>
+          ))}
+        </div>
+      </div>
+    </div>
   );
 };
-
-export default EmotionalJourney;

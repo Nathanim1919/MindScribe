@@ -45,7 +45,7 @@ export function PublicLayout() {
         <FeatureShowcase/>
         <WhyMindScribeExists />
         <RealVoices />
-        {/* <EmotionalJourney/> */}
+        <EmotionalJourney/>
         <PlanSimplicity/>
         <FinalCTA/>
       </main>
