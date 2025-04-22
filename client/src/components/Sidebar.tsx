@@ -6,6 +6,7 @@ import { useRouterState } from '@tanstack/react-router';
 import { motion } from 'motion/react';
 import { CiLight } from 'react-icons/ci';
 import ThemeContext from '../contexts/ThemeContext';
+import { MdNightlight } from 'react-icons/md';
 
 export const Sidebar: React.FC = () => {
   const [isHovered, setIsHovered] = React.useState(false);
@@ -13,7 +14,8 @@ export const Sidebar: React.FC = () => {
   const { hideSidebar, hideHeader } = currentMatch.staticData || {};
 
   const { setTheme, theme } = useContext(ThemeContext);
-
+const isDarkMode = theme === 'dark'; // Check if the current theme is dark mode
+  const icon = isDarkMode ? <MdNightlight className="text-gray-800 dark:text-white" /> : <CiLight className="text-gray-800 dark:text-white" />; // Use the appropriate icon based on the theme
   const toggleTheme = () => {
     setTheme(theme === 'light' ? 'dark' : 'light'); // Correctly toggle the theme
   };
@@ -53,7 +55,7 @@ export const Sidebar: React.FC = () => {
                 className={`flex text-2xl cursor-pointer group mt-10 relative items-center w-10 h-10 p-1 justify-center hover:bg-light-100 hover:dark:bg-dark-100 rounded-full dark:text-white transition-colors`}
                 aria-label={'Theme'}
               >
-                <CiLight />
+               {icon}
               </button>
             )}
           </motion.ul>

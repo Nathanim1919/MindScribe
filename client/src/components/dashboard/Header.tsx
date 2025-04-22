@@ -1,6 +1,7 @@
 import { useContext } from 'react';
 import { CiLight } from 'react-icons/ci';
 import ThemeContext from '../../contexts/ThemeContext';
+import { MdNightlight } from "react-icons/md";
 import { useRouterState } from '@tanstack/react-router';
 
 
@@ -16,7 +17,8 @@ export const Header: React.FC<HeaderProps> = ({
 }) => {
  
   const { setTheme, theme } = useContext(ThemeContext);
-
+  const isDarkMode = theme === 'dark'; // Check if the current theme is dark mode
+  const icon = isDarkMode ? <MdNightlight className="text-gray-800 dark:text-white" /> : <CiLight className="text-gray-800 dark:text-white" />; // Use the appropriate icon based on the theme
   const toggleTheme = () => {
     setTheme(theme === 'light' ? 'dark' : 'light'); // Correctly toggle the theme
   };
@@ -52,7 +54,7 @@ export const Header: React.FC<HeaderProps> = ({
           className={`flex cursor-pointer group relative items-center w-10 h-10 p-1 justify-center bg-light-200 hover:bg-light-100 dark:bg-dark-100 rounded-full hover:dark:bg-dark-200 dark:text-white transition-colors`}
           aria-label={'Theme'}
         >
-          <CiLight />
+         {icon}
         </button>
         <button
           onClick={() => setDisplayUserMenu(!displayUserMenu)}

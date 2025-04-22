@@ -6,11 +6,16 @@ import { WhyMindScribeExists } from '../pages/Mission';
 import { FeatureShowcase } from '../pages/Features';
 import { RealVoices } from '../pages/TestimoniaPage';
 import { EmotionalJourney } from '../pages/EmotionalJourney';
-import { PlanSimplicity } from '../pages/PlanSimplicity';
+import { Plans } from '../pages/PlanSimplicity';
 import { FinalCTA } from '../pages/FinalCTA';
+import { MdNightlight } from 'react-icons/md';
+import { FooterPage } from '../pages/FooterPage';
 
 export function PublicLayout() {
   const { setTheme, theme } = useContext(ThemeContext);
+
+    const isDarkMode = theme === 'dark'; // Check if the current theme is dark mode
+    const icon = isDarkMode ? <MdNightlight className="text-gray-800 dark:text-white" /> : <CiLight className="text-gray-800 dark:text-white" />; // Use the appropriate icon based on the theme
 
   const toggleTheme = () => {
     setTheme(theme === 'light' ? 'dark' : 'light'); // Correctly toggle the theme
@@ -36,7 +41,7 @@ export function PublicLayout() {
             onClick={toggleTheme}
             className="w-8 h-8 text-2xl cursor-pointer rounded-full grid place-items-center dark:bg-dark-200 bg-light-200 dark:text-dark-500 text-light-800"
           >
-            <CiLight />
+          {icon}
           </button>
         </nav>
       </header>
@@ -46,8 +51,9 @@ export function PublicLayout() {
         <WhyMindScribeExists />
         <RealVoices />
         <EmotionalJourney/>
-        <PlanSimplicity/>
         <FinalCTA/>
+        <Plans/>
+        <FooterPage/>
       </main>
     </div>
   );

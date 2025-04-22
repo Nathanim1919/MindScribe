@@ -67,7 +67,7 @@ export const EmotionalJourney = () => {
   }, []);
 
   return (
-    <div className="relative h-screen overflow-hidden flex items-center justify-center bg-black z-999">
+    <div className="relative overflow-hidden flex items-center justify-center bg-black z-999">
       {/* Cosmic Background Layers */}
       <div className="absolute inset-0 overflow-hidden">
         <div className={`absolute inset-0 bg-gradient-to-br ${journeyPhases[activeIndex].bgGradient} transition-all duration-1500`} />
