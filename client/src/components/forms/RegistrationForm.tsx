@@ -25,7 +25,7 @@ export const RegistrationForm: React.FC = () => {
     async (data: RegistrationFormData) => {
       try {
         setSubmitError('');
-        const res = await authClient.signUp.email(data);
+        const res = await authClient.signUp.email({...data,callbackURL: '/in/home'});
 
         if (res?.error) {
           setSubmitError(res.error.message || 'Failed to sign up.');
@@ -35,7 +35,6 @@ export const RegistrationForm: React.FC = () => {
         console.log('✅ Registration successful:', res);
 
         // Navigate to dashboard
-        navigate({ to: '/in/home' });
       } catch (error: any) {
         console.error('❌ Error during registration:', error);
         setSubmitError(error?.message || 'Something went wrong. Please try again.');

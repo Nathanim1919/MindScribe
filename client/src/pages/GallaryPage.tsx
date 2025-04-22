@@ -199,51 +199,67 @@ export const GalleryPage: React.FC = () => {
     },
     {
       url: 'https://miro.medium.com/v2/resize:fit:596/1*CbqS79EgxBX19ZDuv5g8TA.png',
-      caption: 'Visual calm fade',
+      caption:
+        'Inspiried by the thing i have never done before and the passion i have for it',
+
       date: '2025-04-17',
       entrieId: 'entry-033',
     },
     {
       url: 'https://i.pinimg.com/736x/e1/e5/61/e1e56172432d601265eca5897a9b5612.jpg',
-      caption: 'Visual calm fade',
+      caption:
+        'Inspiried by the thing i have never done before and the passion i have for it',
+
       date: '2025-04-17',
       entrieId: 'entry-034',
     },
     {
       url: 'https://i.pinimg.com/736x/26/51/e0/2651e0814b8874602dcc80e4d99cccfe.jpg',
-      caption: 'Visual calm fade',
+      caption:
+        'Inspiried by the thing i have never done before and the passion i have for it',
+
       date: '2025-04-17',
       entrieId: 'entry-035',
     },
     {
       url: 'https://i.pinimg.com/736x/4b/c8/4d/4bc84d6ab1a54bdb943c69be9a80e479.jpg',
-      caption: 'Visual calm fade',
+      caption:
+        'Inspiried by the thing i have never done before and the passion i have for it',
+
       date: '2025-04-17',
       entrieId: 'entry-036',
     },
     {
-      url:'https://i.pinimg.com/1200x/4f/5c/a8/4f5ca85bd4eca287e8888f83f8928c1d.jpg',
-      caption: 'Visual calm fade',
+      url: 'https://i.pinimg.com/1200x/4f/5c/a8/4f5ca85bd4eca287e8888f83f8928c1d.jpg',
+      caption:
+        'Inspiried by the thing i have never done before and the passion i have for it',
+
       date: '2025-04-17',
       entrieId: 'entry-037',
     },
     {
       url: 'https://i.pinimg.com/736x/55/17/f5/5517f55e57cad053f14d09d4e93bcc55.jpg',
-      caption: 'Visual calm fade',
+      caption:
+        'Inspiried by the thing i have never done before and the passion i have for it',
+
       date: '2025-04-17',
       entrieId: 'entry-038',
     },
     {
-      url:"https://i.pinimg.com/564x/ea/c2/4c/eac24c05d1e1bcde2d61b09a68e51bc4.jpg",
-      caption: 'Visual calm fade',
+      url: 'https://i.pinimg.com/564x/ea/c2/4c/eac24c05d1e1bcde2d61b09a68e51bc4.jpg',
+      caption:
+        'Inspiried by the thing i have never done before and the passion i have for it',
+
       date: '2025-04-17',
       entrieId: 'entry-039',
-    },{
+    },
+    {
       url: 'https://i1.sndcdn.com/artworks-hHMcACZ5sR4nUVde-5SZb1Q-t1080x1080.jpg',
-      caption: 'Visual calm fade',
+      caption:
+        'Inspiried by the thing i have never done before and the passion i have for it',
       date: '2025-04-17',
       entrieId: 'entry-040',
-    }
+    },
   ];
   const [selectedImage, setSelectedImage] = useState<null | ImageCardProps>(
     null,
@@ -261,6 +277,7 @@ export const GalleryPage: React.FC = () => {
       <div className="columns-2 md:columns-3 lg:columns-7 gap-2 space-y-2">
         {imageCards.map((img, idx) => (
           <ImageCard
+            index={idx}
             key={img.url}
             onClick={() => setSelectedImage(img)}
             url={img.url}

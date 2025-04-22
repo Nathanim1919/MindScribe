@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 
 interface ImageCardProps {
+  index: number;
   caption: string;
   url: string;
   date: string;
@@ -14,6 +15,7 @@ interface Props extends ImageCardProps {
 }
 
 export const ImageCard: React.FC<Props> = ({
+  index,
   caption,
   url,
   onClick,
@@ -29,7 +31,7 @@ export const ImageCard: React.FC<Props> = ({
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
+      transition={{ duration: index/20 }}
       className="relative group cursor-pointer rounded-xl shadow-lg overflow-hidden"
     >
       {/* Image with hover zoom effect */}

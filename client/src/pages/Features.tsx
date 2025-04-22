@@ -94,7 +94,7 @@ export const FeatureShowcase = () => {
         />
         <div
           className="absolute bottom-0 py-10 left-0 w-full h-full flex flex-col items-center justify-end rounded-xl
-       before:absolute before:top-0 before:left-0 before:w-full before:h-full before:bg-gradient-to-t dark:before:from-dark-base before:from-light-base
+       before:absolute before:bottom-0 before:left-0 before:w-full before:h-[50%] before:bg-gradient-to-t dark:before:from-dark-base before:from-light-base
           after:absolute after:top-0 after:left-0 after:w-full after:h-full after:bg-gradient-to-b dark:after:from-dark-base after:from-light-base
        "
         >
