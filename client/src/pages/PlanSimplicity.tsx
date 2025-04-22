@@ -4,9 +4,9 @@ import { FaBrain, FaShieldAlt } from 'react-icons/fa';
 
 export const Plans = () => {
   return (
-    <section className="relative w-[70%] mx-auto bg-dark-base z-999 min-h-screen overflow-hidden bg-neuralblack py-32 px-6">
+    <section className="relative w-[70%] mx-auto bg-light-base dark:bg-dark-base z-999 min-h-screen overflow-hidden bg-neuralblack py-32 px-6">
       {/* Quantum Data Particles */}
-      <div className="absolute inset-0 overflow-hidden z-0">
+      <div className="absolute inset-0 overflow-hidden z-0 dark:text-light-200 text-dark-200">
         {[...Array(48)].map((_, i) => (
           <motion.div
             key={i}
@@ -41,17 +41,17 @@ export const Plans = () => {
           transition={{ duration: 1.2 }}
           className="text-center mb-20"
         >
-          <div className="text-neonpink font-mono text-lg tracking-widest">
+          <div className="dark:text-dark-800 text-light-800 font-mono text-lg tracking-widest">
             [ NEURAL ACCESS TIERS ]
           </div>
-          <h1 className="text-5xl md:text-8xl font-bold text-white mb-6">
+          <h1 className="text-5xl md:text-8xl font-bold dark:text-light-base text-dark-base mb-6">
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-neonblue to-neonpink">
               Upgrade Your
             </span>
             <br />
             <span>Mind Interface</span>
           </h1>
-          <p className="text-white/70 text-xl max-w-2xl mx-auto">
+          <p className="dark:text-dark-700 text-light-700 text-xl max-w-2xl mx-auto">
             Select your cognitive enhancement level. All plans include quantum encryption.
           </p>
         </motion.div>
@@ -63,18 +63,18 @@ export const Plans = () => {
             initial={{ opacity: 0, x: -40 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
-            className="bg-neuralpanel/50 border border-white/10 rounded-2xl p-4 backdrop-blur-lg"
+            className="bg-neuralpanel/50 border dark:border-dark-200 border-light-200 rounded-2xl p-4 backdrop-blur-lg"
           >
             <div className="flex items-center gap-4 mb-6">
               <div className="w-12 h-12 rounded-full bg-neonblue/10 flex items-center justify-center">
-                <FaBrain className="text-neonblue text-xl" />
+                <FaBrain className="dark:text-light-base text-dark-base text-xl" />
               </div>
-              <h3 className="text-2xl font-bold text-white">Neural Basic</h3>
+              <h3 className="text-2xl font-bold dark:text-light-base text-dark-base">Neural Basic</h3>
             </div>
             
             <div className="mb-8">
-              <span className="text-4xl font-bold text-white">Free</span>
-              <span className="text-white/60 ml-2">/ lifetime</span>
+              <span className="text-4xl font-bold dark:text-light-base text-dark-base">Free</span>
+              <span className="dark:text-dark-800 text-light-800 ml-2">/ lifetime</span>
             </div>
 
             <ul className="space-y-4 mb-10">
@@ -86,7 +86,7 @@ export const Plans = () => {
                 'Community support',
                 'Basic neuro-themes'
               ].map((feature, i) => (
-                <li key={i} className="flex items-start gap-3 text-white/80">
+                <li key={i} className="flex items-start gap-3 dark:text-light-200 text-dark-200">
                   <div className="w-5 h-5 rounded-full bg-neonblue/20 flex items-center justify-center mt-0.5">
                     <div className="w-2 h-2 rounded-full bg-neonblue" />
                   </div>
@@ -95,7 +95,7 @@ export const Plans = () => {
               ))}
             </ul>
 
-            <button className="w-full py-4 border border-white/20 rounded-xl text-white hover:border-neonblue transition-colors">
+            <button className="w-full py-4 border dark:border-dark-200 border-light-200 rounded-xl dark:text-light-base text-dark-base hover:border-neonblue transition-colors">
               Activate Basic Mode
             </button>
           </motion.div>
@@ -108,13 +108,13 @@ export const Plans = () => {
             className="relative overflow-hidden border border-transparent rounded-2xl"
           >
             <div className="absolute inset-0 bg-gradient-to-br from-neonpink/30 to-neonblue/30 rounded-2xl blur-xl opacity-30" />
-            <div className="relative bg-neuralpanel/70 border border-white/10 rounded-2xl p-8 backdrop-blur-lg">
+            <div className="relative bg-neuralpanel/70 border dark:border-dark-200 border-light-200 rounded-2xl p-8 backdrop-blur-lg">
               <div className="flex items-center justify-between mb-6">
                 <div className="flex items-center gap-4">
                   <div className="w-12 h-12 rounded-full bg-neonpink/10 flex items-center justify-center">
-                    <AiOutlineExperiment className="text-neonpink text-xl" />
+                    <AiOutlineExperiment className="dark:text-light-base text-dark-base text-xl" />
                   </div>
-                  <h3 className="text-2xl font-bold text-white">Neuro Enhancer</h3>
+                  <h3 className="text-2xl font-bold dark:text-light-base text-dark-base">Neuro Enhancer</h3>
                 </div>
                 <div className="px-3 py-1 rounded-full bg-neonpink/10 text-neonpink text-sm">
                   Recommended
@@ -137,7 +137,7 @@ export const Plans = () => {
                   'Temporal journaling',
                   'Cognitive boosters'
                 ].map((feature, i) => (
-                  <li key={i} className="flex items-start gap-3 text-white">
+                  <li key={i} className="flex items-start gap-3 dark:text-light-200 text-dark-200">
                     <div className="w-5 h-5 rounded-full bg-neonpink/20 flex items-center justify-center mt-0.5">
                       <div className="w-2 h-2 rounded-full bg-neonpink" />
                     </div>
@@ -146,8 +146,8 @@ export const Plans = () => {
                 ))}
               </ul>
 
-              <button className="w-full py-4 bg-gradient-to-r border cursor-pointer from-neonpink to-neonblue rounded-xl text-white font-bold hover:shadow-lg hover:shadow-neonpink/20 transition-all">
-                Upgrade Neural Capacity
+              <button className="w-full py-4 border dark:border-dark-200 border-light-200 rounded-xl dark:text-light-base text-dark-base hover:border-neonblue transition-colors">
+              Upgrade Neural Capacity
               </button>
             </div>
           </motion.div>
@@ -158,7 +158,7 @@ export const Plans = () => {
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           transition={{ delay: 0.4 }}
-          className="mt-16 flex items-center justify-center gap-3 text-white/50"
+          className="mt-16 flex items-center justify-center gap-3 dark:text-light-200 text-dark-200"
         >
           <FaShieldAlt className="text-neonblue" />
           <span className="font-mono text-sm">All plans include end-to-end quantum encryption</span>

@@ -12,7 +12,7 @@ import { RiAiGenerate } from "react-icons/ri";
 
 export const FooterPage = () => {
   return (
-    <footer className="relative w-full overflow-hidden bg-neuralblack border-t border-white/10">
+    <footer className="relative w-full text-dark-50 dark:text-light-50 overflow-hidden bg-neuralblack border-t dark:border-light-950 border-dark-800">
       {/* **Floating Cyber Orbs** */}
       <div className="absolute inset-0 overflow-hidden z-0">
         {[...Array(16)].map((_, i) => (
@@ -52,11 +52,11 @@ export const FooterPage = () => {
         >
           <div className="flex items-center gap-3">
             <FaBrain className="text-neonblue text-2xl" />
-            <span className="text-2xl font-bold bg-gradient-to-r from-neonblue to-neonpink bg-clip-text text-transparent">
+            <span className="text-2xl font-bold bg-gradient-to-r from-neonblue to-neonpink bg-clip-text">
               MindScribe
             </span>
           </div>
-          <p className="text-white/60 text-sm">
+          <p className="dark:text-dark-600 text-light-800 text-sm">
             The next-gen neurographic journal for memory preservation and cognitive enhancement.
           </p>
           
@@ -72,7 +72,7 @@ export const FooterPage = () => {
                 key={i}
                 href="#"
                 whileHover={{ y: -3, scale: 1.1 }}
-                className="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center border border-white/10 hover:border-neonblue/50 transition-all"
+                className="w-10 h-10 rounded-lg dark:bg-dark-100 bg-light-100 flex items-center justify-center border dark:border-light-950 border-dark-800 hover:border-neonblue/50 transition-all"
               >
                 {social.icon}
               </motion.a>
@@ -87,13 +87,13 @@ export const FooterPage = () => {
           transition={{ duration: 0.8, delay: 0.1 }}
           className="space-y-6"
         >
-          <h3 className="text-white font-bold text-lg tracking-wider">NEURAL PATHS</h3>
+          <h3 className="dark:text-dark-950 text-light-950 font-bold text-lg tracking-wider">NEURAL PATHS</h3>
           <ul className="space-y-3">
             {['Journal', 'Memories', 'Analytics', 'AI Insights'].map((item, i) => (
               <motion.li
                 key={i}
                 whileHover={{ x: 5 }}
-                className="text-white/60 hover:text-neonblue cursor-pointer text-sm flex items-center gap-2 transition-all"
+                className="dark:text-dark-500 text-light-700 hover:text-neonblue cursor-pointer text-sm flex items-center gap-2 transition-all"
               >
                 <span className="w-1 h-1 rounded-full bg-neonblue opacity-0 group-hover:opacity-100" />
                 {item}
@@ -109,7 +109,7 @@ export const FooterPage = () => {
           transition={{ duration: 0.8, delay: 0.2 }}
           className="space-y-6"
         >
-          <h3 className="text-white font-bold text-lg tracking-wider">COGNITIVE TOOLS</h3>
+          <h3 className="dark:text-dark-950 text-light-950 font-bold text-lg tracking-wider">COGNITIVE TOOLS</h3>
           <ul className="space-y-3">
             {[
               { icon: <RiAiGenerate className="text-neonpink" />, text: 'AI Reflection' },
@@ -119,7 +119,7 @@ export const FooterPage = () => {
               <motion.li
                 key={i}
                 whileHover={{ x: 5 }}
-                className="text-white/60 hover:text-white cursor-pointer text-sm flex items-center gap-3 transition-all"
+                className="dark:text-dark-500 text-light-700 hover:text-white cursor-pointer text-sm flex items-center gap-3 transition-all"
               >
                 <span className="text-lg">{tool.icon}</span>
                 {tool.text}
@@ -135,8 +135,8 @@ export const FooterPage = () => {
           transition={{ duration: 0.8, delay: 0.3 }}
           className="space-y-6"
         >
-          <h3 className="text-white font-bold text-lg tracking-wider">JOIN THE HIVE</h3>
-          <p className="text-white/60 text-sm">
+          <h3 className="dark:text-dark-950 text-light-950 font-bold text-lg tracking-wider">JOIN THE HIVE</h3>
+          <p className="dark:text-dark-500 text-light-700 text-sm">
             Subscribe for neural updates and early access to experimental features.
           </p>
           
@@ -158,13 +158,13 @@ export const FooterPage = () => {
       </div>
 
       {/* **Quantum Encryption Badge** */}
-      <div className="relative z-10 border-t border-white/5 py-6">
+      <div className="relative z-10 border-t dark:border-light-950 border-dark-800 py-6">
         <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-4">
-          <div className="flex items-center gap-2 text-white/50 text-sm">
+          <div className="flex items-center gap-2 dark:text-dark-500 text-light-700 text-sm">
             <FaShieldAlt className="text-neonblue" />
             <span>All neural data secured with quantum encryption</span>
           </div>
-          <div className="text-white/40 text-sm">
+          <div className="dark:text-dark-500 text-light-700 text-sm">
             © {new Date().getFullYear()} MindScribe Neurosystems. A product of the future.
           </div>
         </div>
