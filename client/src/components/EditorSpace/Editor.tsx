@@ -298,25 +298,32 @@ export function Editor() {
       {/*  */}
         {/* <EditorSkeleton/> */}
 
-        <div>
-          {blocks.map((block, index) => {
-            const isFocused = focusedBlockId === block.id;
-            return (
-              <div
-                key={block.id}
-                ref={refMap.get(block.id)}
-                data-block-id={block.id}
-                className={`relative ${isFocused ? 'outline-none' : ''}`}
-              >
-                {renderSingleBlock({
-                  block,
-                  id: block.id,
-                  isFocused,
-                })}
-              </div>
-            );
-          })}
-        </div>
+        {/* 📌 Render Blocks */}
+      <div className="relative w-full max-w-4xl mx-auto px-4 pb-[4rem]">
+        <EditorBlocks
+          blocks={blocks}
+          focusedBlockId={focusedBlockId}
+          renderBlock={renderSingleBlock}
+          onClickBlock={handleBlockContainerClick}
+          isCommandOptionVisible={isCommandOptionVisible}
+        />
+        {/* 📌 Command Menu */}
+        {isVisible && (
+          <CommandMenu
+            filter={filter}
+            onSelect={handleSelect}
+            position={position}
+            menuRef={menuRef}
+          />
+        )}
+        {isCommandOptionVisible && (
+          <CommandOption
+            id={focusedBlockId}
+            blocks={blocks}
+            setIsCommandOptionVisible={setIsCommandOptionVisible}
+          />
+        )}
+      </div>
        
     </div>
   );
