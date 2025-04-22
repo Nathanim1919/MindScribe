@@ -57,15 +57,15 @@ export function ImageBlock({
         aria-label="Image block"
         className="flex relative flex-col items-center gap-2 hover:opacity-75"
       >
-        {/* <img
+        <img
           src={imageUrl}
           alt="Image block"
           className={`rounded-lg relative max-w-full cursor-pointer`}
           onClick={onImageClick}
-        /> */}
-        <div className='w-10 h-10 bg-dark-500'>
+        />
+        {/* <div className='w-10 h-10 bg-dark-500'>
 
-        </div>
+        </div> */}
         {caption && (
           <div className="text-sm text-gray-500 dark:text-gray-400 w-full text-center">
             {caption}

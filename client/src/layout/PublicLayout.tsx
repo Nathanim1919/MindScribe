@@ -3,7 +3,7 @@ import { PublicPage } from '../pages/PublicPage';
 import { CiLight } from 'react-icons/ci';
 import ThemeContext from '../contexts/ThemeContext';
 import { WhyMindScribeExists } from '../pages/Mission';
-import { FeatureShowcase } from '../pages/Features';
+import { FeatureShowcase, MindCore, NeuroFeatureGrid } from '../pages/Features';
 import { RealVoices } from '../pages/TestimoniaPage';
 import { EmotionalJourney } from '../pages/EmotionalJourney';
 import { Plans } from '../pages/PlanSimplicity';
@@ -47,7 +47,7 @@ export function PublicLayout() {
       </header>
       <main className="flex-1">
         <PublicPage />
-        <FeatureShowcase/>
+        <MindCore/>
         <WhyMindScribeExists />
         <RealVoices />
         <EmotionalJourney/>

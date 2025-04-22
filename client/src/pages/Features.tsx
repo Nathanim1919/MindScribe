@@ -1,123 +1,183 @@
-// sections/FeatureShowcase.tsx
-import { FeatureCard } from '../components/FeatureCard';
-import darkMoodIllustrationImage from '../assets/feature/darkMoodIllustrationImage.png';
-import lightMoodIllustrationImage from '../assets/feature/lightMoodIllustrationImage.png';
-import DarkGalleryImage from '../assets/dark-gallery.png';
-import LightGalleryImage from '../assets/gallery.png';
-import darkBlockPreviewImage from '../assets/feature/darkBlockPreviewImage.png';
-import lightBlockPreviewImage from '../assets/feature/lightBlockPreviewImage.png';
-import { motion } from 'motion/react';
-import ThemeContext from '../contexts/ThemeContext';
+import { motion } from 'framer-motion';
+import { 
+  FaBrain, 
+  FaHeartbeat,
+  FaFire,
+  FaLayerGroup,
+  FaHistory
+} from 'react-icons/fa';
 import { useContext } from 'react';
-import { LuGalleryVerticalEnd } from 'react-icons/lu';
+import ThemeContext from '../contexts/ThemeContext';
 
-export const FeatureShowcase = () => {
+export const MindCore = () => {
   const { theme } = useContext(ThemeContext);
-  const GalleryImage = theme === 'dark' ? DarkGalleryImage : LightGalleryImage;
-  const features = [
+  const isDark = theme === 'dark';
+
+  const mindFeatures = [
     {
-      lightImage: lightMoodIllustrationImage,
-      darkImage: darkMoodIllustrationImage,
-      title: 'Smart Entries',
-      description:
-        'Your thoughts, structured effortlessly. Just write, mindScribe gets you.',
+      icon: <FaBrain />,
+      title: "Thought Stream",
+      description: "Continuous capture of your consciousness flow",
+      highlights: ["Zero-input logging", "Context-aware", "Always private"]
     },
     {
-      lightImage: lightMoodIllustrationImage,
-      darkImage: darkMoodIllustrationImage,
-      title: 'Mood Tracker',
-      description:
-        'Spot emotional patterns and trends without overthinking it.',
+      icon: <FaHeartbeat />,
+      title: "Emotion Waves",
+      description: "Visualize your emotional patterns over time",
+      highlights: ["Biometric sync", "Non-judgmental", "Growth tracking"]
     },
     {
-      lightImage: lightMoodIllustrationImage,
-      darkImage: darkMoodIllustrationImage,
-      title: 'Streak Journal',
-      description: 'Consistency counts. Get subtle nudges, not guilt trips.',
+      icon: <FaFire />,
+      title: "Focus Chains",
+      description: "Build consistency without pressure",
+      highlights: ["Adaptive reminders", "Process-focused", "Guilt-free"]
     },
     {
-      lightImage: lightBlockPreviewImage,
-      darkImage: darkBlockPreviewImage,
-      title: 'Block-Based Writing',
-      description: 'Headers, lists, quotes, dividers. Your page, your flow.',
-    },
-    // {
-    //   lightImage: lightBlockPreviewImage,
-    //   darkImage: darkBlockPreviewImage,
-    //   title: 'Visual Journaling',
-    //   description:
-    //     'Enhance entries with images and revisit memories in your private gallery',
-    // },
-    // {
-    //   lightImage: lightMoodIllustrationImage,
-    //   darkImage: darkMoodIllustrationImage,
-    //   title: 'Private by Default',
-    //   description:
-    //     'What you write is yours. No likes. No shares. Just expression.',
-    // },
+      icon: <FaLayerGroup />,
+      title: "Modular Thoughts",
+      description: "Organize ideas in dynamic blocks",
+      highlights: ["Fluid reorganization", "Multi-dimensional", "Self-sorting"]
+    }
   ];
 
   return (
-    <section className="w-[100%] mx-auto py-24 grid grid-cols-1 gap-2 relative backdrop-blur-[3rem] z-100 dark:bg-dark-base bg-light-base">
-      <motion.div
-        initial={{ opacity: 0, y: 50 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.1 }}
-        className="text-center mb-12 w-[70%] mx-auto"
-      >
-        <h2 className="text-8xl text-left  font-bold text-light-950 dark:text-dark-950 mb-4">
-          What Makes <span className="text-violet-500">mindScribe</span>{' '}
-          Different
-        </h2>
-        <p className="text-light-700  text-left text-2xl dark:text-dark-700 w-[80%]">
-          Dive into a space built for you, not your followers. Every feature is
-          crafted with care and a touch of the future.
-        </p>
-      </motion.div>
-
-      <div className="grid grid-cols-1 h-full m-auto sm:grid-cols-2 lg:grid-cols-2 gap-4">
-        {features.map((feature, idx) => (
-          <FeatureCard index={idx} key={idx} {...feature} />
+    <section className={`relative w-full overflow-hidden dark:bg-dark-base z-999 bg-light-base py-32 px-6 transition-colors duration-500`}>
+      {/* Animated grid lines */}
+      <div className="absolute inset-0 overflow-hidden z-0">
+        {[...Array(20)].map((_, i) => (
+          <motion.div
+            key={i}
+            className={`absolute ${isDark ? 'border-white/5' : 'border-black/5'}`}
+            style={{
+              width: `${Math.random() * 100 + 50}%`,
+              height: "1px",
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+              borderBottom: `1px solid ${isDark ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.05)'}`,
+              transform: `rotate(${Math.random() * 10 - 5}deg)`,
+            }}
+            animate={{
+              x: [0, (Math.random() - 0.5) * 100],
+              opacity: [0.1, 0.3, 0.1]
+            }}
+            transition={{
+              duration: Math.random() * 30 + 20,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+          />
         ))}
       </div>
-      <div
-        className="relative mt-16 w-[100%] mx-auto rounded-xl overflow-hidden
-               before:absolute before:top-0 before:left-0 before:w-[20%] before:h-full before:bg-gradient-to-r before:from-light-base dark:before:from-dark-base
-                              after:absolute after:top-0 after:right-0 after:w-[20%] after:h-full after:bg-gradient-to-l after:from-light-base dark:after:from-dark-base
-      "
-      >
-        <img
-          src={GalleryImage}
-          alt="Gallery"
-          className="w-full h-auto object-cover rounded-xl mt-10"
-          loading="lazy"
-        />
-        <div
-          className="absolute bottom-0 py-10 left-0 w-full h-full flex flex-col items-center justify-end rounded-xl
-       before:absolute before:bottom-0 before:left-0 before:w-full before:h-[50%] before:bg-gradient-to-t dark:before:from-dark-base before:from-light-base
-          after:absolute after:top-0 after:left-0 after:w-full after:h-full after:bg-gradient-to-b dark:after:from-dark-base after:from-light-base
-       "
-        >
-          <h2 className="text-5xl md:text-6xl text-center md:text-left relative z-10 font-bold text-light-950 dark:text-dark-950 mb-4 leading-tight">
-            Memories that <span className="text-violet-500">stay</span> just for{' '}
-            <span className="text-violet-500">you</span>.
-          </h2>
-          <p className="text-lg md:text-xl w-[90%] md:w-[60%] text-center md:text-left relative z-10 dark:text-dark-950 text-light-950 mb-6">
-            Your private gallery is more than just images — it’s a reflection of
-            your moments, frozen in time. Snap, store, and revisit the emotions
-            only *you* truly understand.
-          </p>
 
-          <motion.button
-            // whileHover={{ scale: 1.05 }}
-            // whileTap={{ scale: 0.97 }}
-            // transition={{ type: 'spring', stiffness: 300 }}
-            className="z-10 cursor-pointer flex items-center gap-2 relative px-8 py-3 rounded-full bg-violet-500 text-white font-semibold text-lg  hover:bg-violet-600 transition"
+      <div className="relative z-10 max-w-6xl mx-auto">
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className="mb-20"
+        >
+          <motion.div 
+            className={`inline-block mb-6 px-4 py-1 ${isDark ? 'text-white/60' : 'text-black/60'} font-mono text-sm border ${isDark ? 'border-white/20' : 'border-black/20'} rounded-full`}
+            initial={{ scale: 0.9 }}
+            whileInView={{ scale: 1 }}
           >
-            <LuGalleryVerticalEnd />
-            Open My Gallery
-          </motion.button>
+            COGNITIVE ARCHITECTURE
+          </motion.div>
+          
+          <h1 className={`text-5xl md:text-7xl font-bold ${isDark ? 'text-white' : 'text-black'} mb-6 leading-tight`}>
+            The mind's <br />
+            <span className={`${isDark ? 'text-white' : 'text-black'} underline underline-offset-8 decoration-4 ${isDark ? 'decoration-blue-400' : 'decoration-blue-600'}`}>
+              operating system
+            </span>
+          </h1>
+          
+          <p className={`${isDark ? 'text-white/60' : 'text-black/60'} max-w-3xl text-xl`}>
+            Not another app. A fundamental layer for how your consciousness interacts with itself.
+          </p>
+        </motion.div>
+
+        {/* Feature Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {mindFeatures.map((feature, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: index * 0.1 }}
+              whileHover={{ 
+                y: -5,
+                borderColor: isDark ? 'rgba(100, 200, 255, 0.3)' : 'rgba(0, 100, 255, 0.3)'
+              }}
+              className={`border rounded-xl p-8 transition-all duration-300 ${isDark ? 'border-white/10 bg-black/50' : 'border-black/10 bg-white/50'} backdrop-blur-lg`}
+            >
+              <div className="flex items-center gap-4 mb-6">
+                <motion.div 
+                  className={`p-3 rounded-full ${isDark ? 'bg-white/5 text-blue-300' : 'bg-black/5 text-blue-600'}`}
+                  animate={{
+                    rotate: [0, 5, -5, 0],
+                    transition: {
+                      duration: 8,
+                      repeat: Infinity,
+                      ease: "easeInOut"
+                    }
+                  }}
+                >
+                  {feature.icon}
+                </motion.div>
+                <h3 className={`text-2xl font-bold ${isDark ? 'text-white' : 'text-black'}`}>
+                  {feature.title}
+                </h3>
+              </div>
+              
+              <p className={`mb-6 ${isDark ? 'text-white/70' : 'text-black/70'}`}>
+                {feature.description}
+              </p>
+              
+              <ul className="space-y-2">
+                {feature.highlights.map((spec, i) => (
+                  <li key={i} className={`flex items-start gap-2 text-sm ${isDark ? 'text-white/80' : 'text-black/80'}`}>
+                    <span className={`w-1.5 h-1.5 rounded-full mt-1.5 ${isDark ? 'bg-blue-400' : 'bg-blue-600'}`} />
+                    {spec}
+                  </li>
+                ))}
+              </ul>
+            </motion.div>
+          ))}
         </div>
+
+        {/* Memory Core */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ delay: 0.4 }}
+          className={`mt-32 p-12 rounded-2xl ${isDark ? 'bg-white/5' : 'bg-black/5'} border ${isDark ? 'border-white/10' : 'border-black/10'} backdrop-blur-lg`}
+        >
+          <div className="max-w-3xl">
+            <h2 className={`text-4xl md:text-5xl font-bold mb-6 ${isDark ? 'text-white' : 'text-black'}`}>
+              Your <span className={`${isDark ? 'text-blue-300' : 'text-blue-600'}`}>entire mind</span>, <br />
+              perfectly preserved
+            </h2>
+            
+            <p className={`text-lg mb-8 ${isDark ? 'text-white/70' : 'text-black/70'}`}>
+              Unlike social media that distorts memories into performances, 
+              MindScribe maintains your consciousness in its pure state - 
+              private, unfiltered, and evolving.
+            </p>
+            
+            <motion.button
+              whileHover={{ 
+                scale: 1.02,
+                boxShadow: isDark ? "0 0 20px rgba(100, 200, 255, 0.2)" : "0 0 20px rgba(0, 100, 255, 0.1)"
+              }}
+              whileTap={{ scale: 0.98 }}
+              className={`px-8 py-4 rounded-full font-bold flex items-center gap-3 ${isDark ? 'bg-blue-400 text-black' : 'bg-blue-600 text-white'}`}
+            >
+              <FaHistory />
+              Begin Consciousness Log
+            </motion.button>
+          </div>
+        </motion.div>
       </div>
     </section>
   );

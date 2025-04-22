@@ -126,7 +126,7 @@ export const SentimentPicker: React.FC = () => {
               }}
               className={`capitalize text-sm flex items-center gap-1 font-semibold text-light-900 dark:text-dark-900`}
             >
-              <span className="text-md w-6 h-6 grid place-items-center border-3 border-light-300 bg-light-200 dark:border-dark-300 dark:bg-dark-100 rounded-full">
+              <span className="text-md w-6 h-6 grid place-items-center bg-light-200 dark:border-dark-300 dark:bg-dark-200 rounded-full">
                 {selected.emoji}
               </span>
               {selected.label}
