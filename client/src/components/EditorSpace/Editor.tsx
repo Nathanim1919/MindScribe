@@ -296,7 +296,27 @@ export function Editor() {
       <EditorToolbar />
 
       {/*  */}
-        <EditorSkeleton/>
+        {/* <EditorSkeleton/> */}
+
+        <div>
+          {blocks.map((block, index) => {
+            const isFocused = focusedBlockId === block.id;
+            return (
+              <div
+                key={block.id}
+                ref={refMap.get(block.id)}
+                data-block-id={block.id}
+                className={`relative ${isFocused ? 'outline-none' : ''}`}
+              >
+                {renderSingleBlock({
+                  block,
+                  id: block.id,
+                  isFocused,
+                })}
+              </div>
+            );
+          })}
+        </div>
        
     </div>
   );
