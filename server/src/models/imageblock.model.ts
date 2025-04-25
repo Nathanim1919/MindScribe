@@ -6,6 +6,8 @@ const ImageBlockSchema = new mongoose.Schema({
     type: String,
     default: "",
   },
+  // what if i want to change the metadata for the specific image, with what unique field can i search it? url?, may be their might have dublicate images (same urls).
+  // their need to have unique field or we might handles these by separating the image model and creating its own schema and using the reference mechanism.
   urls: [
     {
       url: { type: String, required: true },
@@ -20,7 +22,4 @@ const ImageBlockSchema = new mongoose.Schema({
   ],
 });
 
-export const ImageBlock = BlockModel.discriminator(
-  "image",
-  ImageBlockSchema
-);
+export const ImageBlock = BlockModel.discriminator("image", ImageBlockSchema);
