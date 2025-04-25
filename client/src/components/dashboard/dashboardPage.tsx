@@ -37,26 +37,26 @@ export const DashboardPage: React.FC = () => {
   };
 
   return (
-    <div className="grid grid-cols-[.7fr_.3fr]">
-      <div>
+    <div className="grid lg:grid-cols-[.7fr_.3fr] w-full">
+      <div className='w-full'>
         <Outlet/>
       </div>
-      <div className="h-full p-2 flex flex-col gap-2">
+      <div className="h-full w-full hidden p-2 lg:flex flex-col gap-2">
         {/* <AipromptcardSkeleton/>
         <AiSummerySkeleton/> */}
         {/* <Aipromptcard />
         <Userstats /> */}
          {/* <div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 p-4 max-w-6xl mx-auto"> */}
+         {/* <Aipromptcard /> */}
       <StreakTracker 
         currentStreak={userData.streak.current} 
         longestStreak={userData.streak.longest} 
       />
-      
       <MoodSummary 
         dominantMood={userData.mood.dominant}
       />
       
-      <div className="space-y-3 md:col-span-2 lg:col-span-1 mt-6">
+      <div className="space-y-3 md:col-span-2 lg:col-span-1 mt-6 ">
         <h3 className="font-medium text-gray-900 dark:text-white">Your Journey</h3>
         {userData.milestones.map((milestone) => (
           <MilestoneCard key={milestone.title} {...milestone} />

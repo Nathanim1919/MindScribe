@@ -10,7 +10,7 @@ interface MoodSummaryProps {
   export const MoodSummary = ({ dominantMood }: MoodSummaryProps) => {
   
     return (
-      <div className="bg-white overflow-hidden relative dark:bg-dark-50 rounded-xl p-4 dark:shadow-sm border border-light-300 dark:border-dark-100">
+      <div className="bg-white overflow-hidden relative w-full dark:bg-dark-50 rounded-xl p-4 dark:shadow-sm border border-light-300 dark:border-dark-100">
         <h3 className="font-medium text-gray-900 dark:text-white mb-3">Your Recent <span className="font-bold text-violet-500">Vibes</span></h3>
         
         <div className="flex items-center gap-2">

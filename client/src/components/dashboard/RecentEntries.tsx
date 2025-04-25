@@ -194,19 +194,19 @@ export const RecentEntries: React.FC = () => {
             </h2>
             <div className="flex items-center gap-1">
               <div className='dark:border-dark-200 flex items-center gap-1 rounded-md'>
-                <button className="text-light-500 text-[20px] cursor-pointer hover:text-light-700 dark:text-dark-400 dark:hover:text-dark-700 hover:bg-light-200 hover:dark:bg-dark-100 px-1 py-1 rounded-md">
+                <button className="text-light-500 text-[20px] cursor-pointer hover:text-light-700 dark:text-dark-400 dark:hover:text-dark-700 hover:bg-transparent border-0 bg-light-200 dark:bg-dark-100 px-1 py-1 rounded-md">
                   <IoIosHeartEmpty />
                 </button>
                 <button
                   onClick={toggleListStyle}
-                  className="text-light-500 text-[20px] cursor-pointer hover:text-light-700 dark:text-dark-400 dark:hover:text-dark-700 hover:bg-light-200 hover:dark:bg-dark-100 px-1 py-1 rounded-md"
+                  className="text-light-500 text-[20px] cursor-pointer hover:text-light-700 dark:text-dark-400 dark:hover:text-dark-700 hover:bg-transparent border-0 bg-light-200 dark:bg-dark-100 px-1 py-1 rounded-md"
                 >
                   {listStyle !== 'grid' ? <MdGridView /> : <IoIosList />}
                 </button>
               </div>
               <Link
                 to="/in/new"
-                className="bg-transparent border-0 hover:bg-light-200 hover:dark:bg-dark-100 text-light-950 dark:text-dark-700 rounded-lg px-1 py-1 flex items-center gap-1"
+                className="hover:bg-transparent border-0 bg-light-200 dark:bg-dark-100 text-light-950 dark:text-dark-700 rounded-lg px-1 py-1 flex items-center gap-1"
               >
                 <BiPlus className='text-[20px]'/>
                 
@@ -215,7 +215,7 @@ export const RecentEntries: React.FC = () => {
           </div>
 
           <div
-            className={`grid ${listStyle === 'grid' ? 'grid-cols-3 gap-2' : 'grid-cols-1 gap-1'} rounded-sm p-4 py-2 max-h-[85vh] overflow-y-auto scrollb`}
+            className={`grid ${listStyle === 'grid' ? 'md:grid-cols-2 lg:grid-cols-3 gap-2' : 'grid-cols-1 gap-1'} rounded-sm p-4 py-2 max-h-[85vh] overflow-y-auto scrollb`}
           >
             {diaries?.map((entry) =>
               // <EntriecardSkeleton key={entry.id}/>

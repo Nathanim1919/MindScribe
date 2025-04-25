@@ -1,5 +1,4 @@
 import { CardDecoration } from '../components/publicPageComponents/CardDecoration';
-import { motion } from 'framer-motion';
 import { LoginForm } from '../components/forms/LoginForm';
 
 export const LoginPage: React.FC = () => {

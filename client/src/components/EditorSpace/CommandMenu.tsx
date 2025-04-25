@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo, useRef } from 'react';
 import { PiTextHBold } from 'react-icons/pi';
 import { RiText } from 'react-icons/ri';
 import { BlockType } from '../../types/block.interface';
@@ -66,6 +66,25 @@ export function CommandMenu({
   position,
   menuRef,
 }: CommandMenuProps) {
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+
+  const handleImageClick = () => {
+    fileInputRef.current?.click();
+  };
+
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const meta = {
+        src: URL.createObjectURL(file),
+        name: file.name,
+      };
+      onSelect('image', meta); // Assuming your image block expects a `src` and maybe `name`
+    }
+  };
+
   const filteredBlocks = useMemo(
     () =>
       blockTypes.filter((block) =>
@@ -75,6 +94,15 @@ export function CommandMenu({
   );
 
   return (
+    <>
+     <input
+        type="file"
+        accept="image/*"
+        ref={fileInputRef}
+        style={{ display: 'none' }}
+        onChange={handleFileChange}
+      />
+   
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
@@ -95,10 +123,14 @@ export function CommandMenu({
             className="command-item flex text-[17px] items-center gap-1 py-1 rounded-none px-2 hover:bg-light-100 hover:dark:bg-dark-100 dark:text-dark-500 text-light-500 hover:text-light-600 hover:dark:text-dark-700 cursor-pointer border-t dark:border-dark-200/50 border-light-200/50"
             onClick={(e) => {
               e.stopPropagation();
-              onSelect(
-                block.type as BlockType['type'],
-                block.meta as BlockMeta,
-              );
+              if (block.type === 'image') {
+                handleImageClick();
+              } else {
+                onSelect(
+                  block.type as BlockType['type'],
+                  block.meta as BlockMeta,
+                );
+              }
             }}
           >
             {block.icon}
@@ -107,5 +139,6 @@ export function CommandMenu({
         ))}
       </div>
     </motion.div>
+    </>
   );
 }

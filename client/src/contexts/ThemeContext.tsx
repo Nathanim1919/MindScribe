@@ -2,12 +2,15 @@ import React, { createContext, useState, useEffect } from 'react';
 
 export type Theme = 'light' | 'dark';
 export type entrieListStyle = 'grid' | 'list';
+export type sideBar = 'hide' | 'show';
 
 export type ThemeContextType = {
   theme: Theme;
   setTheme: (theme: Theme) => void;
   listStyle: entrieListStyle;
   setListStyle: (listStyle: entrieListStyle) => void;
+  sideBar: sideBar;
+  setSideBar: (sideBar: sideBar) => void;
 };
 
 export const ThemeContext = createContext<ThemeContextType>({
@@ -15,6 +18,8 @@ export const ThemeContext = createContext<ThemeContextType>({
   setTheme: () => {},
   listStyle: 'grid',
   setListStyle: () => {},
+  sideBar: 'hide',
+  setSideBar: () => {},
 });
 
 export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({
@@ -26,9 +31,13 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({
   });
 
   const [listStyle, setListStyle] = useState<entrieListStyle>(() => {
-    const savedListStyle = localStorage.getItem('listStyle') as entrieListStyle | null;
+    const savedListStyle = localStorage.getItem(
+      'listStyle',
+    ) as entrieListStyle | null;
     return savedListStyle || 'grid';
   });
+
+  const [sideBar, setSideBar] = useState<sideBar>('hide');
 
   useEffect(() => {
     localStorage.setItem('theme', theme);
@@ -48,7 +57,9 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({
   }, [theme, listStyle]);
 
   return (
-    <ThemeContext.Provider value={{ theme, setTheme, listStyle, setListStyle }}>
+    <ThemeContext.Provider
+      value={{ theme, setTheme, listStyle, setListStyle, sideBar, setSideBar }}
+    >
       {children}
     </ThemeContext.Provider>
   );

@@ -13,11 +13,3 @@ export function mergeBlockUpdate<T extends BlockType>(
     },
   };
 }
-
-export const applyBlockUpdate = <T extends BlockType>(
-  block: T,
-  updates: Partial<T>,
-): T => ({
-  ...block,
-  ...mergeBlockUpdate(block, updates),
-});

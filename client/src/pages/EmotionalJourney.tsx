@@ -2,57 +2,58 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useEffect, useState } from 'react';
 
 const journeyPhases = [
-  { 
-    text: 'You hold it in.',
-    gradient: 'from-purple-500 via-violet-600 to-blue-500',
-    bgGradient: 'from-indigo-900/30 via-purple-900/20 to-black'
-  },
-  { 
-    text: 'Then you write.',
-    gradient: 'from-cyan-400 via-sky-500 to-blue-600',
-    bgGradient: 'from-sky-900/30 via-blue-900/20 to-black'
-  },
-  { 
-    text: 'It softens.',
-    gradient: 'from-emerald-400 via-teal-500 to-green-600',
-    bgGradient: 'from-emerald-900/30 via-teal-900/20 to-black'
-  },
-  { 
-    text: 'You feel lighter.',
-    gradient: 'from-amber-400 via-yellow-500 to-orange-600',
-    bgGradient: 'from-amber-900/30 via-yellow-900/20 to-black'
-  },
-  { 
-    text: "It's still yours. Always.",
-    gradient: 'from-rose-400 via-pink-500 to-fuchsia-600',
-    bgGradient: 'from-rose-900/30 via-pink-900/20 to-black'
-  },
-  { 
-    text: 'Memories, kept like constellations.',
-    gradient: 'from-indigo-400 via-cyan-500 to-teal-600',
-    bgGradient: 'from-cyan-900/30 via-teal-900/20 to-black'
-  },
-  { 
-    text: 'Designed not just to remember, but to feel.',
-    gradient: 'from-blue-400 via-purple-500 to-pink-600',
-    bgGradient: 'from-blue-900/30 via-indigo-900/20 to-black'
+  {
+    text: "You carry it quietly.",
+    gradient: "from-slate-500 via-indigo-600 to-purple-500",
+    bgGradient: "from-slate-900/40 via-indigo-900/20 to-black",
   },
   {
-    text: 'A diary from the next dimension.',
-    gradient: 'from-fuchsia-400 via-violet-500 to-indigo-600',
-    bgGradient: 'from-violet-900/30 via-indigo-900/20 to-black'
+    text: "Then you begin to write.",
+    gradient: "from-cyan-400 via-sky-500 to-blue-600",
+    bgGradient: "from-sky-900/30 via-blue-900/20 to-black",
   },
   {
-    text: 'Built for minds that dream forward.',
-    gradient: 'from-lime-400 via-green-500 to-emerald-600',
-    bgGradient: 'from-lime-900/30 via-green-900/20 to-black'
+    text: "The weight shifts.",
+    gradient: "from-teal-400 via-emerald-500 to-green-600",
+    bgGradient: "from-emerald-900/30 via-teal-900/20 to-black",
   },
   {
-    text: 'Welcome to MindScribe, Your Consciousness, Eternal.',
-    gradient: 'from-[#ffd700] via-[#ffffff] to-[#ffaa00]', // Radiant gold to white to amber
-    bgGradient: 'from-[#1a1a33]/70 via-[#ffffff]/10 to-[#1a1a33]/70', // Radiant white core with dark edges
+    text: "A breath you didn’t know you needed.",
+    gradient: "from-yellow-400 via-amber-500 to-orange-600",
+    bgGradient: "from-amber-900/30 via-yellow-900/20 to-black",
+  },
+  {
+    text: "The page listens without judgment.",
+    gradient: "from-rose-400 via-pink-500 to-fuchsia-600",
+    bgGradient: "from-rose-900/30 via-pink-900/20 to-black",
+  },
+  {
+    text: "Memories become meaning.",
+    gradient: "from-indigo-400 via-cyan-500 to-teal-600",
+    bgGradient: "from-cyan-900/30 via-teal-900/20 to-black",
+  },
+  {
+    text: "Emotions find form. Then freedom.",
+    gradient: "from-blue-400 via-purple-500 to-pink-600",
+    bgGradient: "from-blue-900/30 via-indigo-900/20 to-black",
+  },
+  {
+    text: "A diary that grows with your soul.",
+    gradient: "from-fuchsia-400 via-violet-500 to-indigo-600",
+    bgGradient: "from-violet-900/30 via-indigo-900/20 to-black",
+  },
+  {
+    text: "Built for healing. Made for humans.",
+    gradient: "from-lime-400 via-green-500 to-emerald-600",
+    bgGradient: "from-lime-900/30 via-green-900/20 to-black",
+  },
+  {
+    text: "Welcome to MindScribe — where your story becomes timeless.",
+    gradient: "from-[#ffd700] via-[#ffffff] to-[#ffaa00]",
+    bgGradient: "from-[#1a1a33]/70 via-[#ffffff]/10 to-[#1a1a33]/70",
   },
 ];
+
 
 
 export const EmotionalJourney = () => {

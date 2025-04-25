@@ -19,7 +19,7 @@ export const StreakTracker = ({
   longestStreak,
 }: StreakTrackerProps) => {
   return (
-    <div className="bg-white dark:bg-dark-50 rounded-xl p-4 dark:shadow-sm border border-light-300 dark:border-dark-100">
+    <div className="bg-white dark:bg-dark-50 rounded-xl p-4 dark:shadow-sm border w-full border-light-300 dark:border-dark-100">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
           <FaFireFlameCurved className="w-6 h-6 rounded-full bg-light-100 dark:bg-dark-100  p-[3px] border border-light-200 dark:border-dark-200 text-orange-500 text-xl" />
@@ -39,8 +39,8 @@ export const StreakTracker = ({
 
       <div className="rounded-lg mt-4 flex flex-col gap-4 items-start">
         <div className="flex justify-between items-center gap-2">
-          <div className="flex justify-between items-center gap-1">
-            {[...Array(9)].map((_, i) => (
+          <div className="flex justify-between w-full items-center gap-1">
+            {[...Array(6)].map((_, i) => (
               <motion.div
               initial={{opacity:0, translateX:"-30px"}}
               animate={{opacity:1, translateX:"0px"}}

@@ -20,7 +20,7 @@ export const PublicPage: React.FC = () => {
           initial={{ opacity: 0, translateX: '100px' }}
           animate={{ opacity: 0.2, translateX: '0' }}
           transition={{ duration: 1 }}
-          className="absolute opacity-60 max-w-[300px] bottom-[40%] left-[5%] transform translate-[-50% -50%]"
+          className="absolute opacity-60 max-w-[300px] bottom-[10%] md:bottom-[40%] left-[5%] transform translate-[-50% -50%]"
         >
           <CardDecoration />
         </motion.div>
@@ -29,12 +29,12 @@ export const PublicPage: React.FC = () => {
         
         "
         >
-          <div className="flex justify-center w-[60%] ml-32 relative flex-col p-4 gap-4">
+          <div className="flex justify-center w-full md:w-[60%] ml-8 md:ml-32 relative z-999 flex-col p-4 gap-4">
             <motion.h1
               initial={{ opacity: 0, translateX: '-50px' }}
               animate={{ opacity: 1, translateX: '0' }}
               transition={{ duration: 0.5 }}
-              className="font-bold text-7xl w-[70%] text-light-950 dark:text-dark-950"
+              className="font-bold text-5xl lg:text-7xl w-[70%] text-light-950 dark:text-dark-950"
             >
               Where your <span className="text-violet-">silence</span>{' '}
               <span className="text-violet-500">speaks</span> volumes.
@@ -56,8 +56,8 @@ export const PublicPage: React.FC = () => {
           animate={{ opacity: 1, translateY: '0' }}
           transition={{ duration: 0.5 }}
           className="absolute
-           before:absolute before:top-0 before:left-0 before:w-full before:h-full before:bg-gradient-to-b dark:before:to-dark-base before:to-light-50 before:z-999
-        top-32 right-0 w-[55%]"
+           before:absolute before:top-0 before:left-0 before:w-full before:h-full before:bg-gradient-to-b dark:before:to-dark-base before:to-light-50 before:z-998 top-20
+        md:top-32 right-0 mx-auto w-[95%] md:w-[55%]"
         >
           <img src={Image} alt="" className="w-full relative z-10" />
         </motion.div>

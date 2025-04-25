@@ -9,8 +9,10 @@ import { LoginFormData } from '../../types/form';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 import { useNavigate } from '@tanstack/react-router';
 import { Link } from '@tanstack/react-router';
+import { useAuth } from '../../contexts/authContext';
 
 export const LoginForm: React.FC = () => {
+  const {signIn} = useAuth();
   const [submitError, setSubmitError] = useState('');
   const navigate = useNavigate();
   const {
@@ -25,8 +27,8 @@ export const LoginForm: React.FC = () => {
     async (data: LoginFormData) => {
       try {
         setSubmitError('');
-        const res = await authClient.signIn.email(data);
-
+        const res = await signIn(data);
+        console.log(res);
         if (res?.error) {
           setSubmitError(res.error.message || 'Failed to sign up.');
           return;

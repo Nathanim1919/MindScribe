@@ -1,8 +1,8 @@
-import { BlockType } from '../../types/block.interface';
+import { BlockType, ImageType } from '../../types/block.interface';
 
 export function createBlock<T extends BlockType['type']>(
   type: T,
-  content?: string,
+  content?: string | ImageType[],
   meta?: Record<string, unknown>,
 ): Extract<BlockType, { type: T }> {
   if (type === 'header') {
@@ -27,16 +27,32 @@ export function createBlock<T extends BlockType['type']>(
     } as Extract<BlockType, { type: T }>;
   } 
   else if (type === 'image') {
+    // Ensure content is an array of ImageType
+    const imageUrls: ImageType[] = Array.isArray(content) ? content : [{
+      url: content || '', // fallback to empty string if content is not provided
+      caption: 'Default caption', // default caption
+      alt: 'Image', // default alt text
+      meta: {
+        width: (meta?.width as number), // default width
+        height: (meta?.height as number), // default height
+        alignment: (meta?.alignment as 'left' | 'center' | 'right') || 'center', // default alignment
+      },
+    }];
+
+    console.log('🧪 Image URLs', imageUrls);
+    
     return {
       id: generateId(),
       type: 'image',
-      url:content, // can be a URL or empty initially
-      caption: 'this is image caption',
+      urls: imageUrls,
+      caption: 'this is image caption', // default caption
       meta: {
-        // alt: meta?.alt || '',
-        width: meta?.width || 'auto',
+        width: (meta?.width as number | string) || 'auto',
+        alignment: (meta?.alignment as 'left' | 'center' | 'right') || 'center', // default alignment
       },
     } as Extract<BlockType, { type: T }>;
+
+
   }
   
   else {

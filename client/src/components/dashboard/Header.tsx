@@ -35,7 +35,7 @@ export const Header: React.FC<HeaderProps> = ({
    
     <div
       role="banner"
-      className="border-b relative z-100 border-light-100 dark:border-dark-50 flex justify-between items-center px-4 py-2 bg-white dark:bg-gradient-to-b from-dark-50 to-dark-base backdrop-blur-2xl"
+      className="border-b relative z-100 border-light-100 dark:border-dark-50 flex justify-between items-center px-4 py-2 bg-white dark:bg-dark-50 backdrop-blur-2xl"
     >
       <div>
         <h2 className="font-bold text-2xl text-gray-800 dark:text-dark-950">

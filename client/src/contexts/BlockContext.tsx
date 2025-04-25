@@ -8,17 +8,25 @@ import {
   useMemo,
   useRef,
 } from 'react';
-import {
-  BlockType,
-} from '../types/block.interface';
+import { BlockType, ImageType } from '../types/block.interface';
 import { createBlock } from '../components/utils/blockFactory';
-import { applyBlockUpdate } from '../utils/mergeUpdate';
+import { mergeBlockUpdate } from '../utils/mergeUpdate';
 import { blockTypeDefaults } from '../utils/blockTypeDefaults';
 import { findIndexById } from '../utils/block.utils';
 import { BlockMeta } from '../types/meta.type';
 
 interface addBlockPayLoad {
   type: BlockType['type'];
+  urls?: {
+    url: string;
+    caption: string;
+    alt: string;
+    meta?: {
+      width: number;
+      height: number;
+      alignment?: 'left' | 'center' | 'right';
+    };
+  }[];
   content: string;
   afterId?: string;
   beforeId?: string;
@@ -35,6 +43,7 @@ type Action =
         block: BlockType;
         afterId?: string;
         beforeId?: string;
+        urls?: ImageType[]; 
       };
     }
   | {
@@ -64,7 +73,9 @@ type Action =
 const blockReducer = (state: BlockType[], action: Action): BlockType[] => {
   switch (action.type) {
     case 'ADD_BLOCK': {
-      const { block, afterId, beforeId } = action.payload;
+      const { block, afterId, beforeId, urls } = action.payload;
+      console.log("THE NEW BLOCK IS: ", block);
+
 
       if (afterId) {
         const index = state.findIndex((b) => b.id === afterId);
@@ -86,7 +97,7 @@ const blockReducer = (state: BlockType[], action: Action): BlockType[] => {
       const { id, updates } = action.payload;
 
       return state.map((block) =>
-        block.id === id ? applyBlockUpdate(block, updates) : block,
+        block.id === id ? mergeBlockUpdate(block, updates) : block,
       );
     }
 
@@ -115,7 +126,7 @@ const blockReducer = (state: BlockType[], action: Action): BlockType[] => {
       const { sourceId, targetId } = action.payload;
       if (sourceId === targetId) return state;
 
-      const sourceIndex = findIndexById(state, sourceId)
+      const sourceIndex = findIndexById(state, sourceId);
       const targetIndex = findIndexById(state, targetId);
 
       if (sourceIndex === -1 || targetIndex === -1) return state;
@@ -165,10 +176,116 @@ export const BlockContext = createContext<BlockContextType | undefined>(
 // -------------------
 export const BlockProvider = ({ children }: { children: ReactNode }) => {
   const [blocks, dispatch] = useReducer(blockReducer, [
-    createBlock('header', '', { level: 1, spacing: 'large' }),
+    createBlock('header', 'The First Header Here!!', {
+      level: 1,
+      spacing: 'large', 
+    }),
+    createBlock(
+      'image',
+      [ 
+        {
+          url: 'https://i.pinimg.com/564x/8c/b5/21/8cb5214b9f341c97a08cb55be379a519.jpg',
+          caption: 'this is image caption',
+          alt: 'Image',
+          meta: {
+            width: 100,
+            height: 100,
+            alignment: 'center',
+          },
+        },
+        {
+          url: 'https://i.pinimg.com/564x/e8/0d/47/e80d47df67b12faba6cf16372b7afb81.jpg',
+          caption: 'this is image caption',
+          alt: 'Image',
+          meta: {
+            width: 100,
+            height: 100,
+            alignment: 'center',
+          },
+        },
+        {
+          url: 'https://i.pinimg.com/1200x/c5/10/9d/c5109d9be955064067eae5b7373ce88c.jpg',
+          caption: 'this is image caption',
+          alt: 'Image',
+          meta: {
+            width: 100,
+            height: 100,
+            alignment: 'center',
+          },
+        },
+        {
+          url: 'https://i.pinimg.com/736x/1c/e7/52/1ce752f0947ea6ab60f8a6240592f41a.jpg',
+          caption: 'this is image caption',
+          alt: 'Image',
+          meta: {
+            width: 100,
+            height: 100,
+            alignment: 'center',
+          },
+        },
+        {
+          url: 'https://i.pinimg.com/474x/f8/39/4a/f8394a4abb51f94a44e37d71bd41ffb5.jpg',
+          caption: 'this is image caption',
+          alt: 'Image',
+          meta: {
+            width: 100,
+            height: 100,
+            alignment: 'center',
+          },
+        },
+        {
+          url: 'https://i.pinimg.com/736x/27/c8/42/27c8423c098036304aa9541d10fe4f6a.jpg',
+          caption: 'this is image caption',
+          alt: 'Image',
+          meta: {
+            width: 100,
+            height: 100,
+            alignment: 'center',
+          },
+        },
+        {
+          url: 'https://images.pexels.com/photos/15377954/pexels-photo-15377954/free-photo-of-girl-sticking-her-head-out-of-a-moving-car.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
+          caption: 'this is image caption',
+          alt: 'Image',
+          meta: {
+            width: 100,
+            height: 100,
+            alignment: 'center',
+          },
+        },
+        {
+          url: 'https://i.pinimg.com/474x/4f/5c/a8/4f5ca85bd4eca287e8888f83f8928c1d.jpg',
+          caption: 'this is image caption',
+          alt: 'Image',
+          meta: {
+            width: 100,
+            height: 100,
+            alignment: 'center',
+          },
+        },
+        {
+          url: 'https://i.pinimg.com/736x/aa/e0/13/aae01378bfbe97281276c142d1a8a7f5.jpg',
+          caption: 'this is image caption',
+          alt: 'Image',
+          meta: {
+            width: 100,
+            height: 100,
+            alignment: 'center',
+          },
+        },
+      ],
+      {
+        width: 100,
+        alignment: 'center',
+      },
+    ),
+    createBlock('header', 'The First Header Here!!', {
+      level: 1,
+      spacing: 'large',
+    }),
   ]);
 
-  console.log("🧪 Initial Blocks", blocks);
+  console.log('🧪 Initial Blocks', blocks);
 
   const cursorPositions = useRef<Record<string, number>>({});
   const refMap = useMemo(
@@ -184,19 +301,27 @@ export const BlockProvider = ({ children }: { children: ReactNode }) => {
   );
 
   const addBlock = useCallback((payload: addBlockPayLoad): string => {
-    const newBlock = createBlock(payload.type, payload.content, payload.meta);
-
+    console.log('🧪 Add Block Payload', payload);
+  
+    const newBlock = createBlock(
+      payload.type,
+      payload.type === 'image' ? payload.urls || [] : payload.content,
+      payload.meta
+    );
+  
     dispatch({
       type: 'ADD_BLOCK',
       payload: {
         block: newBlock,
+        urls: payload.urls,
         afterId: payload.afterId,
         beforeId: payload.beforeId,
       },
     });
-
+  
     return newBlock.id;
   }, []);
+  
 
   const updateBlock = useCallback((id: string, updates: Partial<BlockType>) => {
     dispatch({ type: 'UPDATE_BLOCK', payload: { id, updates } });

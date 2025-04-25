@@ -7,6 +7,16 @@ export function useCommandMenu(
   addBlock: (payload: {
     type: BlockType['type'];
     content: string;
+    urls?: {
+      url: string;
+      caption: string;
+      alt: string;
+      meta?: {
+        width: number;
+        height: number;
+        alignment?: 'left' | 'center' | 'right';
+      };
+    }[];
     afterId?: string;
     beforeId?: string;
     meta?: BlockMeta;
@@ -23,7 +33,6 @@ export function useCommandMenu(
   });
 
   const showMenu = useCallback((id: string) => {
-    alert('Command Menu Opened, with id: ' + id);
     const blockElement = refMap.get(id)?.current;
     if (!blockElement) return;
 
@@ -40,43 +49,62 @@ export function useCommandMenu(
   const handleSelect = useCallback(
     async (type: BlockType['type'], meta?: BlockMeta) => {
       if (targetBlockId === null) return;
-
+  
+      // We only need to add one block, based on the type
+      let newBlock = null;
+  
+      // Check if the selected block type is 'image'
       if (type === 'image') {
-        console.log('🧪 Image Payload', {
+        console.log("WE ARE GOING TO ADD AN IMAGE BLOCK WITH BLOC DATA OF", type);
+        // Add the image block
+        newBlock = addBlock({
           type,
-          content: '',
+          content: '', // Not needed for image, since we're using `urls`
           afterId: targetBlockId,
-          meta: {
-            width: 600,
-            alignment: 'center',
-          },
-          imageUrl:
-            'https://images.supersport.com/media/3t2hfy10/soc_080425_uefa_arsvrma_hd5.png?width=1000',
-          caption: 'Test image',
+          meta,
+          urls: [
+            {
+              url: 'https://images.supersport.com/media/3t2hfy10/soc_080425_uefa_arsvrma_hd5.png?width=1000',
+              caption: 'Test image',
+              alt: 'Image description',
+              meta: {
+                width: 600, // Can be dynamic based on meta
+                height: 400, // Can be dynamic based on meta
+                alignment: 'center',
+              },
+            },
+          ],
+        });
+      } else {
+        // Add any other block (e.g., paragraph, header, quote)
+        newBlock = addBlock({
+          type,
+          content: '', // Assuming no content needed for other block types
+          afterId: targetBlockId,
+          meta,
         });
       }
-
-      const newBlock = addBlock({
-        type,
-        content:'',
-        afterId: targetBlockId,
-        meta,
-      });
+  
+      // If no new block was created, exit
       if (!newBlock) return;
+  
       setTargetBlockId(newBlock);
       await new Promise((resolve) => setTimeout(resolve, 0));
       const targetEl = refMap.get(newBlock)?.current;
-
+  
       if (targetEl) {
         requestAnimationFrame(() => {
           placeCaretAtStart(targetEl);
           targetEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         });
       }
+  
+      // Hide the menu after selection
       hideMenu();
     },
     [addBlock, targetBlockId],
   );
+  
 
   const hideMenu = useCallback(() => {
     setIsVisible(false);

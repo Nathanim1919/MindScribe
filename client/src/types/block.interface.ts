@@ -1,6 +1,6 @@
 // Base interface for all block types
 
-import { HeaderMeta, ParagraphMeta, QuoteMeta } from "./meta.type";
+import { HeaderMeta, ParagraphMeta, QuoteMeta } from './meta.type';
 
 export interface IBaseBlock {
   id: string; // Unique identifier for the block
@@ -14,37 +14,49 @@ export interface IBaseBlock {
 // Specific block types
 export interface IHeaderBlock extends IBaseBlock {
   type: 'header'; // Type of the block
-  meta: HeaderMeta
+  meta: HeaderMeta;
 }
 
 export interface IParagraphBlock extends IBaseBlock {
   type: 'paragraph';
-  meta:ParagraphMeta
+  meta: ParagraphMeta;
 }
 
 export interface IQuoteBlock extends IBaseBlock {
   type: 'quote';
-  meta?: QuoteMeta
+  meta?: QuoteMeta;
 }
 
+export interface ImageType {
+  url: string;
+  caption: string;
+  alt: string;
+  meta?: {
+    width: number;
+    height: number;
+    alignment?: 'left' | 'center' | 'right';
+  };
+}
 
 export interface IImageBlock {
   id: string;
   type: 'image';
   caption?: string;
-  url: string;
+  urls: ImageType[];
   prevId: string | null;
   nextId: string | null;
   meta?: {
     width: number;
     alignment?: 'left' | 'center' | 'right';
+  };
 }
-
-}
-
 
 // Union type of all possible blocks
-export type BlockType = IHeaderBlock | IParagraphBlock | IQuoteBlock | IImageBlock;
+export type BlockType =
+  | IHeaderBlock
+  | IParagraphBlock
+  | IQuoteBlock
+  | IImageBlock;
 
 // type guard helpers
 export const isHeaderBlock = (block: BlockType): block is IHeaderBlock =>

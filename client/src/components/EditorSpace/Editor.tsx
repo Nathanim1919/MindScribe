@@ -198,7 +198,6 @@ export function Editor() {
   }, [focusedBlockId, refMap]);
 
   const onAddButtonClick = (id: string) => {
-    alert('Add Button Clicked................');
     if (focusedBlockId !== id) {
       setFocusedBlockId(id);
     }
@@ -291,7 +290,7 @@ export function Editor() {
   return (
     <div
       ref={editorRef}
-      className="bg-light-50 relative dark:bg-dark-50 left-[-2rem] w-[95%] mx-auto h-[98vh] overflow-hidden overflow-y-auto mt-2 rounded-md border border-light-200 dark:border-dark-100"
+      className="bg-light-50 relative dark:bg-dark-50 md:left-[-2rem] md:w-[95%] mx-auto h-[98vh] overflow-hidden overflow-y-auto md:mt-2 rounded-md border border-light-200 dark:border-dark-100"
     >
       <EditorToolbar />
 
@@ -299,7 +298,7 @@ export function Editor() {
         {/* <EditorSkeleton/> */}
 
         {/* 📌 Render Blocks */}
-      <div className="relative w-full max-w-4xl mx-auto px-4 pb-[4rem]">
+      <div className="relative w-full mx-auto md:px-4 pb-[4rem]">
         <EditorBlocks
           blocks={blocks}
           focusedBlockId={focusedBlockId}

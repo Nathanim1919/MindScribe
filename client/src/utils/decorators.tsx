@@ -45,7 +45,6 @@ export const getActionDecorators = (
     component: () => (
       <button
         onClick={(e) => {
-          alert('Add button clicked');
           e.preventDefault();
           e.stopPropagation();
           onAddClick();
@@ -75,7 +74,6 @@ export const getActionDecorators = (
     component: () => (
       <button
         onClick={(e) => {
-          alert('Drag handle clicked');
           e.preventDefault();
           e.stopPropagation();
           onDragClick();

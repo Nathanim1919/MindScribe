@@ -5,15 +5,18 @@ import App from './App.tsx';
 import { ThemeProvider } from './contexts/ThemeContext.tsx';
 import { BlockProvider } from './contexts/BlockContext.tsx';
 import { PreferencesProvider } from './contexts/PreferencesContext.tsx';
+import { AuthProvider } from './contexts/authContext.tsx';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <ThemeProvider>
-      <BlockProvider>
         <PreferencesProvider>
-          <App />
-        </PreferencesProvider>
+      <BlockProvider>
+          <AuthProvider>
+            <App />
+          </AuthProvider>
       </BlockProvider>
+        </PreferencesProvider>
     </ThemeProvider>
   </StrictMode>,
 );

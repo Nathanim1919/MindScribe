@@ -1,15 +1,18 @@
-// components/blocks/ImageBlock.tsx
-
-import { useMemo } from 'react';
-import { BlockType } from '../../../types/block.interface';
+import { useEffect, useMemo, useRef } from 'react';
+import {
+  IImageBlock,
+  ImageType,
+} from '../../../types/block.interface';
 import { getActionDecorators } from '../../../utils/decorators';
 import { BlockWrapper } from './BlockWrapper';
 import { motion } from 'motion/react';
+import { FaPlus } from 'react-icons/fa6';
+import { useBlockContext } from '../../../contexts/BlockContext';
 
 type ImageBlockProps = {
-  block: BlockType;
+  block: IImageBlock;
   blockId: string;
-  imageUrl: string;
+  urls: ImageType[];
   caption?: string;
   isFocused: boolean;
   onAddClick: () => void;
@@ -21,7 +24,7 @@ type ImageBlockProps = {
 export function ImageBlock({
   block,
   blockId,
-  imageUrl,
+  urls,
   caption = '',
   isFocused,
   onAddClick,
@@ -32,13 +35,48 @@ export function ImageBlock({
     () => [...getActionDecorators(onAddClick, onDragClick)],
     [onAddClick, onDragClick],
   );
+  const { updateBlock } = useBlockContext();
+
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
+
+  const updateImageBlock = (url: ImageType) => {
+    // Prevent duplicates by checking URL match
+    const isDuplicate = urls.some((img) => img.url === url.url);
+    if (isDuplicate) return;
+
+    updateBlock(blockId, {
+      ...block,
+      urls: [...urls, url],
+    } as Partial<IImageBlock>);
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const objectUrl = URL.createObjectURL(file);
+
+    updateImageBlock({
+      url: objectUrl,
+      alt: file.name,
+      caption: file.name,
+    });
+
+    // Clear file input value to allow re-selection of the same file
+    e.target.value = '';
+  };
+
+
+  useEffect(()=> {
+    console.log(block.urls)
+  }, [block.urls])
 
   return (
     <BlockWrapper
       block={block}
       blockId={blockId}
       isFocused={isFocused}
-      className={`p-1 rounded-md text-gray-500 dark:text-dark-500 relative`}
+      className="p-1 rounded-md group text-gray-500 dark:text-dark-500 relative"
       decorators={decorators}
     >
       <motion.div
@@ -55,23 +93,42 @@ export function ImageBlock({
         tabIndex={0}
         role="button"
         aria-label="Image block"
-        className="flex relative flex-col items-center gap-2 hover:opacity-75"
+        className="columns-2 md:columns-3 lg:columns-4 hover:bg-light-100 hover:dark:bg-dark-100 p-4 rounded-2xl gap-2 space-y-2"
       >
-        <img
-          src={imageUrl}
-          alt="Image block"
-          className={`rounded-lg relative max-w-full cursor-pointer`}
-          onClick={onImageClick}
-        />
-        {/* <div className='w-10 h-10 bg-dark-500'>
+        {urls?.length > 0 &&
+          urls.map((url, index) => (
+            <img
+              key={index}
+              src={url.url}
+              alt={url.alt || 'Image'}
+              className="rounded-lg hover:opacity-60 h-auto w-full relative cursor-pointer"
+              onClick={onImageClick}
+            />
+          ))}
 
-        </div> */}
         {caption && (
           <div className="text-sm text-gray-500 dark:text-gray-400 w-full text-center">
             {caption}
           </div>
         )}
       </motion.div>
+
+      {/* Hidden file input */}
+      <input
+        type="file"
+        accept="image/*"
+        ref={fileInputRef}
+        className="hidden"
+        onChange={handleFileChange}
+      />
+
+      {/* Add image button */}
+      <div
+        onClick={() => fileInputRef.current?.click()}
+        className="group-hover:grid hidden absolute -top-1 -right-1 w-6 border border-dark-200 h-6 rounded-lg bg-light-200 dark:bg-dark-200 items-center justify-center cursor-pointer hover:bg-transparent"
+      >
+        <FaPlus />
+      </div>
     </BlockWrapper>
   );
 }

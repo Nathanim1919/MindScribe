@@ -92,7 +92,7 @@ const TestimonialCard = ({
   name: string;
   role: string;
 }) => (
-  <div className="min-w-[300px] max-w-[300px] p-6 bg-light-base dark:bg-dark-base rounded-xl border border-light-300 dark:border-dark-100 mx-2">
+  <div className="min-w-[300px] max-w-[300px] p-2 md:p-6 bg-light-base dark:bg-dark-base rounded-xl border border-light-300 dark:border-dark-100 mx-2">
     <p className="text-base italic text-light-900 dark:text-dark-900 mb-3">
       “{quote}”
     </p>
@@ -107,9 +107,9 @@ export const RealVoices = () => {
   const secondRow = testimonials.slice(5, 10);
 
   return (
-    <section className="w-[70%] mx-auto py-24 overflow-hidden dark:bg-dark-base bg-light-base relative z-999">
+    <section className="md:w-[70%] mx-auto py-24 overflow-hidden dark:bg-dark-base bg-light-base relative z-999 p-4">
       <div className="tflex felx-col mb-8">
-        <h1 className="text-6xl capitalize font-bold text-light-950 dark:text-dark-950">
+        <h1 className="text-3xl md:text-6xl capitalize font-bold text-light-950 dark:text-dark-950">
           They found a <span className="text-violet-500">place</span> to feel
           again.
         </h1>

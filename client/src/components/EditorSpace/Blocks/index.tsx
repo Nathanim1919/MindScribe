@@ -74,10 +74,10 @@ export const renderBlock = (props: BlockComponentProps) => {
         const imageBlock = block as IImageBlock;
         return (
           <ImageBlock
-            key={block.id}
-            block={block}
-            blockId={block.id}
-            imageUrl={imageBlock.url}
+            key={imageBlock.id}
+            block={imageBlock}
+            blockId={imageBlock.id}
+            urls={imageBlock.urls}
             caption={imageBlock.caption}
             isFocused={props.isFocused}
             onAddClick={onAddClick}
