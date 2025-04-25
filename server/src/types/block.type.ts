@@ -10,7 +10,11 @@ export enum BlockType {
 
 export type Block = {
   type: BlockType;
-  entry: ObjectId; // Assuming entry is a string, adjust as necessary
+  entry: ObjectId;
+  nextId?: ObjectId; // Optional, as it may not always be present
+  previousId?: ObjectId; // Optional, as it may not always be present
+  position: number;
+  metadata?:Record<string, any>;
   content: string;
   createdAt: Date;
   updatedAt: Date;
