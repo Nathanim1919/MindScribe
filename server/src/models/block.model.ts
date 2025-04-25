@@ -35,4 +35,4 @@ const BaseBlockSchema = new mongoose.Schema(
   baseOptions
 );
 
-const BlockModel = mongoose.model("Block", BaseBlockSchema);
+export const BlockModel = mongoose.model("Block", BaseBlockSchema);

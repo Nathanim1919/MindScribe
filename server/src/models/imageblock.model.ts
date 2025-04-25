@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { BlockModel } from "./block.model";
 
 const ImageBlockSchema = new mongoose.Schema({
   caption: {
@@ -18,3 +19,8 @@ const ImageBlockSchema = new mongoose.Schema({
     },
   ],
 });
+
+export const ImageBlock = BlockModel.discriminator(
+  "image",
+  ImageBlockSchema
+);
