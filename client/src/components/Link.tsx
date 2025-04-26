@@ -29,7 +29,7 @@ export const LinkElement: React.FC<LinkProps> = ({
   };
 
   return isLink && to ? (
-    <li className={`${!isUserMenu && 'mb-4'} list-none`}>
+    <li className={`${!isUserMenu && 'md:mb-4'} list-none`}>
       <Link
         to={to}
         onClick={handleClick}

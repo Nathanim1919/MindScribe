@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import {
   IImageBlock,
   ImageType,
@@ -8,6 +8,7 @@ import { BlockWrapper } from './BlockWrapper';
 import { motion } from 'motion/react';
 import { FaPlus } from 'react-icons/fa6';
 import { useBlockContext } from '../../../contexts/BlockContext';
+import { SingleImagePreview } from '../../SingleImagePreview';
 
 type ImageBlockProps = {
   block: IImageBlock;
@@ -38,6 +39,7 @@ export function ImageBlock({
   const { updateBlock } = useBlockContext();
 
   const fileInputRef = useRef<HTMLInputElement | null>(null);
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
 
   const updateImageBlock = (url: ImageType) => {
     // Prevent duplicates by checking URL match
@@ -72,6 +74,7 @@ export function ImageBlock({
   }, [block.urls])
 
   return (
+
     <BlockWrapper
       block={block}
       blockId={blockId}
@@ -79,6 +82,7 @@ export function ImageBlock({
       className="p-1 rounded-md group text-gray-500 dark:text-dark-500 relative"
       decorators={decorators}
     >
+      <SingleImagePreview url={previewUrl}/>
       <motion.div
         initial={{ opacity: 0, translateY: '2px' }}
         animate={{ opacity: 1, translateY: '0px' }}
@@ -102,7 +106,9 @@ export function ImageBlock({
               src={url.url}
               alt={url.alt || 'Image'}
               className="rounded-lg hover:opacity-60 h-auto w-full relative cursor-pointer"
-              onClick={onImageClick}
+              onClick={
+                () => setPreviewUrl(url.url)
+              }
             />
           ))}
 

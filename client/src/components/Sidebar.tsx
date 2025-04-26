@@ -29,24 +29,26 @@ export const Sidebar: React.FC = () => {
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       role="navigation"
-      className={`absolute -left-16  md:left-0 md:relative z-999 w-16 h-screen dark:bg-dark-base`}
+      className={`
+        fixed bottom-0 md:top-0 left-0 w-full bg-dark-base grid place-items-center
+        md:relative z-999 md:w-16 md:h-screen`}
     >
       <div
         role="navigation"
         className="
-      bg-[#f2f3f5] dark:bg-dark-base/80 h-screen flex flex-col justify backdrop-blur-lg gap-10 p-4 relative items-center"
+      bg-[#f2f3f5] dark:bg-dark-base/80 md:h-screen flex flex-col justify-center md:justify-start items-center backdrop-blur-lg gap-10 md:p-4 relative"
       >
-        <RiBarChartLine className="dark:text-dark-600" />
-        {!(hideSidebar === true && isHovered === false) && (
+        <RiBarChartLine className="hidden md:block dark:text-dark-600" />
+        {(!hideSidebar || window.innerWidth < 768 || isHovered) && (
           <motion.ul
             initial={{ translateX: '-100%' }}
             animate={{ translateX: '0px', scale: 1 }}
             exit={{ opacity: 0, scale: 0.05 }}
             transition={{ duration: 0.2 }}
-            className="flex flex-col gap-10"
+            className="flex md:flex-col gap-10 justify-between w-full items-center p-2"
           >
             <div
-              className={`flex flex-col bg-light-100 dark:bg-dark-50/0  border-gray-300 items-center gap-2`}
+              className={`flex md:flex-col w-full h-full bg-light-100 dark:bg-dark-50/0  border-gray-300  gap-4 md:gap-2`}
             >
               {TopsidebarElements.map((element) => (
                 <SidebarElement key={element.redirectTo} metadata={element} />
@@ -55,7 +57,7 @@ export const Sidebar: React.FC = () => {
             {(hideSidebar || hideHeader) && (
               <button
                 onClick={toggleTheme}
-                className={`flex text-2xl cursor-pointer group mt-10 relative items-center w-10 h-10 p-1 justify-center hover:bg-light-100 hover:dark:bg-dark-100 rounded-full dark:text-white transition-colors`}
+                className={`flex text-2xl cursor-pointer group md:mt-10 relative items-center w-10 h-10 p-1 justify-center hover:bg-light-100 hover:dark:bg-dark-100 rounded-full dark:text-white transition-colors`}
                 aria-label={'Theme'}
               >
                 {icon}

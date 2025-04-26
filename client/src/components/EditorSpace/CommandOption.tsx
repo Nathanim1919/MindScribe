@@ -45,7 +45,7 @@ export const CommandOption: React.FC<CommandOptionPropType> = ({
     const blockRect = blockElement.getBoundingClientRect();
 
     setMenuPosition({
-      top: blockRect.top + window.scrollY - 90,  // Adjust for the viewport scroll
+      top: blockRect.top + window.scrollY,  // Adjust for the viewport scroll
       left: blockRect.left + window.scrollX,
     });
   }, [id]);
@@ -79,7 +79,7 @@ export const CommandOption: React.FC<CommandOptionPropType> = ({
       transition={{ duration: 0.3 }}
       ref={commandMenuRef}
       style={{ top: `${menuPosition.top}px`, left: `${menuPosition.left + 2}px` }}
-      className="bg-light-base/20 transition-all z-50 duration-300 ease-in-out dark:bg-dark-100/20 backdrop-blur-2xl border max-w-[180px] border-light-200 border-b-0 overflow-visible dark:border-dark-200 fixed shadow-lg shadow-dark-800 dark:shadow-dark-50 rounded-lg"
+      className="bg-light-base transition-all z-50 duration-300 ease-in-out dark:bg-dark-100/20 backdrop-blur-2xl border max-w-[180px] border-light-200 border-b-0 overflow-visible dark:border-dark-200 fixed shadow-lg dark:shadow-dark-50 rounded-lg"
     >
       <h2 className="font-bold text-[14px] p-2 border-b w-full border-light-200 dark:border-dark-200/50 text-light-700 dark:text-dark-700">
         Basic Options
@@ -114,7 +114,12 @@ export const CommandOption: React.FC<CommandOptionPropType> = ({
 
           {/* Submenu */}
           {showSubmenu && (
-            <div className="absolute top-0 left-[100%] ml-2 bg-white dark:bg-dark-200 border rounded-lg shadow-md p-2 w-40 z-50">
+            <motion.div
+            initial={{x:"-30px"}}
+            animate={{x:"0px"}}
+            exit={{x:"-30px"}}
+            transition={{duration:.4}}
+             className="absolute left-[100%] overflow-hidden border-b-0 ml-2 bg-white dark:bg-dark-100 border border-light-300 dark:border-dark-200 rounded-md shadow-md z-50">
               {turnIntoOptions.map(({ type, label, icon: TypeIcon }) => (
                 <div
                   key={type}
@@ -122,7 +127,7 @@ export const CommandOption: React.FC<CommandOptionPropType> = ({
                     handleBlockTypeChange(type);  // Change block type on click
                     toggleSubmenu(false);  // Hide submenu after selection
                   }}
-                  className="flex items-center gap-2 p-2 text-sm hover:bg-light-100 dark:hover:bg-dark-100 rounded-md cursor-pointer"
+                  className="flex items-center border-b hover:bg-light-100 hover:text-dark-400 dark:hover:text-dark-600 border-light-300 dark:border-dark-200 gap-2 px-2 py-1 text-sm dark:hover:bg-dark-100 cursor-pointer"
                   role="menuitem"
                   tabIndex={0}
                 >
@@ -130,7 +135,7 @@ export const CommandOption: React.FC<CommandOptionPropType> = ({
                   <span>{label}</span>
                 </div>
               ))}
-            </div>
+            </motion.div>
           )}
         </div>
       </div>

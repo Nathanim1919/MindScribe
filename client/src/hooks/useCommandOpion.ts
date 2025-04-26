@@ -41,9 +41,11 @@ export function useCommandOption(
         return;
       }
 
-      if (parsedBlock && parsedBlock.type && parsedBlock.content) {
+      if (parsedBlock && parsedBlock.type) {
         const newBlock = { ...parsedBlock, id: Date.now().toLocaleString() }; // Assign a new ID
         console.log('Update the block at index: ', id);
+
+        console.log("The block being pasted is: ", newBlock);
 
         
         if (!block) return;

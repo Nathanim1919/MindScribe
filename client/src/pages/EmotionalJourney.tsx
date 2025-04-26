@@ -48,10 +48,11 @@ const journeyPhases = [
     bgGradient: "from-lime-900/30 via-green-900/20 to-black",
   },
   {
-    text: "Welcome to MindScribe — where your story becomes timeless.",
-    gradient: "from-[#ffd700] via-[#ffffff] to-[#ffaa00]",
-    bgGradient: "from-[#1a1a33]/70 via-[#ffffff]/10 to-[#1a1a33]/70",
-  },
+    text: "Welcome to MindScribe, the future of your inner world.",
+    gradient: "from-cyan-400 via-sky-500 to-blue-600",
+    bgGradient: "from-sky-900/30 via-blue-900/20 to-black",
+  }
+  
 ];
 
 

@@ -17,14 +17,14 @@ export const TopsidebarElements: SidebarElementPropType[] = [
     redirectTo: '/in/home',
   },
   {
-    title:"Entry",
-    icon:<IoMdAdd />,
-    redirectTo: '/in/new',
-  },
-  {
     title: 'Entries',
     icon: <FaBook />,
     redirectTo: '/in/home/entries',
+  },
+  {
+    title:"Entry",
+    icon:<IoMdAdd />,
+    redirectTo: '/in/new',
   },
   {
     title:"Activity",
