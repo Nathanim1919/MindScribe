@@ -182,7 +182,7 @@ export const RecentEntries: React.FC = () => {
     setListStyle(listStyle === 'grid' ? 'list' : 'grid');
   };
   return (
-    <div>
+    <div className=''>
       {diaries.length === 0 ? (
         <EmptyCollectionBoard />
       ) : (
@@ -215,7 +215,7 @@ export const RecentEntries: React.FC = () => {
           </div>
 
           <div
-            className={`grid ${listStyle === 'grid' ? 'md:grid-cols-2 lg:grid-cols-3 gap-2' : 'grid-cols-1 gap-1'} rounded-sm p-4 py-2 max-h-[85vh] overflow-y-auto scrollb`}
+            className={`grid ${listStyle === 'grid' ? 'md:grid-cols-2 lg:grid-cols-3 gap-2' : 'grid-cols-1 gap-1'} rounded-sm p-4 pb-24 md:py-2 max-h-[85vh] overflow-y-auto scrollb `}
           >
             {diaries?.map((entry) =>
               // <EntriecardSkeleton key={entry.id}/>

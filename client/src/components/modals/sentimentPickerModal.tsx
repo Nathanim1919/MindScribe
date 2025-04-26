@@ -75,7 +75,7 @@ export const SentimentPicker: React.FC = () => {
   }, []);
 
   return (
-    <div className="absolute right-0 top-0 flex flex-col items-center p-2 gap-2">
+    <div className={`absolute ${!isOpen?"h-12":""} right-0 top-0 flex flex-col items-center p-2 gap-2`}>
       <button
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
@@ -167,7 +167,7 @@ export const SentimentPicker: React.FC = () => {
         aria-expanded={isOpen}
         aria-hidden={!isOpen}
       >
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-1">
+        <div className="grid grid-cols-2 gap-1">
           {SENTIMENTS.map((sentiment) => (
             <SentimentButton
               key={sentiment.label}

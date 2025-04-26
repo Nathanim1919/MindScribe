@@ -292,8 +292,8 @@ export function Editor() {
       ref={editorRef}
       className="bg-light-50 relative dark:bg-dark-50 md:left-[-2rem] md:w-[95%] mx-auto h-[98vh] overflow-hidden overflow-y-auto md:mt-2 rounded-md border border-light-200 dark:border-dark-100"
     >
-      <EditorToolbar />
 
+      <EditorToolbar />
       {/*  */}
         {/* <EditorSkeleton/> */}
 

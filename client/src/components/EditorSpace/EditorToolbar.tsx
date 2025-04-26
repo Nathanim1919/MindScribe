@@ -12,7 +12,6 @@ export const EditorToolbar = React.memo(() => {
       <div>
       <SentimentPicker
       />
-
       </div>
     </div>
   );

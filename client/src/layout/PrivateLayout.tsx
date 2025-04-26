@@ -17,7 +17,7 @@ export function AuthenticatedLayout() {
       <UserMenu display={displayUserMenu} />
       <div className="flex overflow-hidden">
         <Sidebar />
-        <main className="flex-1 bg-light-100 dark:bg-dark-base">
+        <main className="flex-1 bg-light-100 dark:bg-dark-base pb-8">
           <Outlet />
         </main>
       </div>
