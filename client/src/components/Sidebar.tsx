@@ -1,28 +1,22 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { SidebarElement } from './sideBar/sideBarElement';
 import { TopsidebarElements } from './sideBar/sideBarElements';
 import { RiBarChartLine } from 'react-icons/ri';
-import { useRouterState } from '@tanstack/react-router';
+import { useMatches } from '@tanstack/react-router';
 import { motion } from 'motion/react';
-import { CiLight } from 'react-icons/ci';
-import ThemeContext from '../contexts/ThemeContext';
-import { MdNightlight } from 'react-icons/md';
 
-export const Sidebar: React.FC = () => {
+interface SidebarProps {
+  handleUserMenuClick?: (event: React.MouseEvent) => void;
+}
+
+export const Sidebar: React.FC<SidebarProps> = ({
+  handleUserMenuClick,
+}) => {
   const [isHovered, setIsHovered] = React.useState(false);
-  const currentMatch = useRouterState({ select: (s: any) => s.matches.at(-1) });
-  const { hideSidebar, hideHeader } = currentMatch.staticData || {};
+  const matches = useMatches();
+  const currentMatch = matches[matches.length - 1] || {};
+  const { hideSidebar } = currentMatch.staticData || {};
 
-  const { setTheme, theme, setSideBar, sideBar } = useContext(ThemeContext);
-  const isDarkMode = theme === 'dark'; // Check if the current theme is dark mode
-  const icon = isDarkMode ? (
-    <MdNightlight className="text-gray-800 dark:text-white" />
-  ) : (
-    <CiLight className="text-gray-800 dark:text-white" />
-  ); // Use the appropriate icon based on the theme
-  const toggleTheme = () => {
-    setTheme(theme === 'light' ? 'dark' : 'light'); // Correctly toggle the theme
-  };
 
   return (
     <main
@@ -54,15 +48,22 @@ export const Sidebar: React.FC = () => {
                 <SidebarElement key={element.redirectTo} metadata={element} />
               ))}
             </div>
-            {(hideSidebar || hideHeader) && (
+
+            <div>
+              
               <button
-                onClick={toggleTheme}
-                className={`flex text-2xl cursor-pointer group md:mt-10 relative items-center w-10 h-10 p-1 justify-center hover:bg-light-100 hover:dark:bg-dark-100 rounded-full dark:text-white transition-colors`}
-                aria-label={'Theme'}
+                onClick={(e) => {
+                  if (handleUserMenuClick) {
+                    handleUserMenuClick(e as React.MouseEvent);
+                  }
+                }}
+                className="cursor-pointer w-10 h-10 p-1 bg-gray-200 dark:bg-dark-100 border border-light-300 dark:border-dark-200 hover:border-light-400 hover:dark:border-dark-300 rounded-full flex items-center justify-center"
               >
-                {icon}
+                <span className="text-md font-semibold dark:bg-dark-50 w-full h-full grid place-items-center rounded-full text-gray-700 dark:text-dark-500">
+                  N
+                </span>
               </button>
-            )}
+            </div>
           </motion.ul>
         )}
       </div>

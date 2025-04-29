@@ -10,6 +10,7 @@ interface LinkProps {
   icon?: React.ReactNode;
   isLink?: boolean;
   isUserMenu?: boolean;
+  setDisplayUserMenu?: (value: boolean) => void;
 }
 
 export const LinkElement: React.FC<LinkProps> = ({
@@ -21,14 +22,19 @@ export const LinkElement: React.FC<LinkProps> = ({
   icon,
   isLink = true,
   isUserMenu = false,
+  setDisplayUserMenu,
 }) => {
   const handleClick = () => {
     if (onClick) {
       onClick();
     }
+
+    if (isUserMenu && setDisplayUserMenu) {
+      setDisplayUserMenu(false);
+    }
   };
 
-  return isLink && to ? (
+  return (isLink && to) ? (
     <li className={`${!isUserMenu && 'md:mb-4'} list-none`}>
       <Link
         to={to}
@@ -36,8 +42,7 @@ export const LinkElement: React.FC<LinkProps> = ({
         className={`group relative ${className}`}
         aria-label={ariaLabel}
         activeProps={{
-          className:
-            'bg-light-200 dark:bg-dark-100 text-[23px] font-bold text-violet-600 dark:text-violet-600',
+          className: `bg-light-200 dark:bg-dark-100 ${!isUserMenu ? 'text-[23px]' : ''} font-bold text-violet-600 dark:text-violet-600`,
         }}
         activeOptions={{ exact: true }}
       >

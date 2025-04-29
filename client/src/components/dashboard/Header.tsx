@@ -3,18 +3,10 @@ import { CiLight } from 'react-icons/ci';
 import ThemeContext from '../../contexts/ThemeContext';
 import { MdNightlight } from "react-icons/md";
 import { useRouterState } from '@tanstack/react-router';
+import { Link } from '@tanstack/react-router';
 
 
-interface HeaderProps {
-  setDisplayUserMenu: (value: boolean) => void;
-  displayUserMenu: boolean;
-
-}
-
-export const Header: React.FC<HeaderProps> = ({
-  setDisplayUserMenu,
-  displayUserMenu
-}) => {
+export const Header: React.FC = () => {
  
   const { setTheme, theme } = useContext(ThemeContext);
   const isDarkMode = theme === 'dark'; // Check if the current theme is dark mode
@@ -43,12 +35,12 @@ export const Header: React.FC<HeaderProps> = ({
         </h2>
       </div>
       <div className="flex items-center gap-2">
-        {/* <Link
+         <Link
           to={'/in'}
           className="bg-light-900 text-light-100 dark:text-dark-100 cursor-pointer dark:bg-dark-900 hover:dark:bg-dark-700 hover:bg-light-700 p-2 px-4 rounded-full font-bold"
         >
           Explore Premium
-        </Link> */}
+        </Link> 
         <button
           onClick={toggleTheme}
           className={`flex cursor-pointer group relative items-center w-10 h-10 p-1 justify-center bg-light-200 hover:bg-light-100 dark:bg-dark-100 rounded-full hover:dark:bg-dark-200 dark:text-white transition-colors`}
@@ -56,14 +48,7 @@ export const Header: React.FC<HeaderProps> = ({
         >
          {icon}
         </button>
-        <button
-          onClick={() => setDisplayUserMenu(!displayUserMenu)}
-          className="cursor-pointer w-10 h-10 p-1 bg-gray-200 dark:bg-dark-100 border border-light-300 dark:border-dark-200 hover:border-light-400 hover:dark:border-dark-300 rounded-full flex items-center justify-center"
-        >
-          <span className="text-md font-semibold dark:bg-dark-50 w-full h-full grid place-items-center rounded-full text-gray-700 dark:text-dark-500">
-            N
-          </span>
-        </button>
+       
       </div>
     </div>
   );

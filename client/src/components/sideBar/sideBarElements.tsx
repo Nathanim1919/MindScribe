@@ -72,9 +72,12 @@ export const UserMenuElements = [
     icon: <FiArrowUpRight />,
     to: '/upgrade',
   },
+
   {
     title: 'Logout',
     icon: <FiLogOut />,
+    to: '/login',
     onClick: handleLogout,
+
   },
 ];
