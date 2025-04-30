@@ -2,10 +2,11 @@ import { Outlet } from '@tanstack/react-router';
 import { Header } from '../components/dashboard/Header';
 import { Sidebar } from '../components/Sidebar';
 import { UserMenu } from '../components/UserMenu';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export function AuthenticatedLayout() {
   const [displayUserMenu, setDisplayUserMenu] = useState(false);
+  
   const [position, setPosition] = useState({
     top: 0,
     left: '0px',
@@ -23,13 +24,23 @@ export function AuthenticatedLayout() {
     });
     setDisplayUserMenu((prev) => !prev);
   };
-  // const handleOutsideClick = (event: MouseEvent) => {
-  //   const target = event.target as HTMLElement;
-  //   const userMenu = document.querySelector('.user-menu') as HTMLElement;
-  //   if (userMenu && !userMenu.contains(target)) {
-  //     setDisplayUserMenu(false);
-  //   }
-  // };
+
+  const handleOutsideClick = (event: MouseEvent) => {
+    const target = event.target as HTMLElement;
+    const userMenu = document.querySelector('.user-menu') as HTMLElement;
+    if (userMenu && !userMenu.contains(target)) {
+      setDisplayUserMenu(false);
+    }
+  };
+
+
+  // Add event listener for outside clicks
+  useEffect(() => {
+    document.addEventListener('click', handleOutsideClick);
+    return () => {
+      document.removeEventListener('click', handleOutsideClick);
+    };
+  }, []);
 
   return (
     <div className="flex flex-col overflow-hidden h-screen">

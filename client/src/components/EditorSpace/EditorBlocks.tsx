@@ -1,6 +1,7 @@
 import React, { JSX } from 'react';
 import { BlockType } from '../../types/block.interface';
 import { EditorBlock } from './EditorBlock';
+import { motion } from 'motion/react';
 
 export const EditorBlocks = React.memo(
   ({
@@ -25,7 +26,10 @@ export const EditorBlocks = React.memo(
     return (
       <div className="relative w-full max-w-4xl mx-auto px-4 pb-[4rem]">
         {blocks.map((block) => (
-        <div
+        <motion.div
+          initial={{ opacity: 0, translateY: 10 }}
+          animate={{ opacity: 1, translateY: 0 }}
+          transition={{ duration: 0.02 * (blocks.indexOf(block) + 1) }}
           key={block.id}
           onClick={() => onClickBlock(block.id)}
           className={`flex group w-full max-w-[800px] ${
@@ -40,7 +44,7 @@ export const EditorBlocks = React.memo(
             isFocused={focusedBlockId === block.id}
             renderBlock={renderBlock}
           />
-        </div>
+        </motion.div>
       ))}
       </div>
     );

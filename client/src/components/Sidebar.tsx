@@ -3,20 +3,18 @@ import { SidebarElement } from './sideBar/sideBarElement';
 import { TopsidebarElements } from './sideBar/sideBarElements';
 import { RiBarChartLine } from 'react-icons/ri';
 import { useMatches } from '@tanstack/react-router';
+import { IoMdMore } from 'react-icons/io';
 import { motion } from 'motion/react';
 
 interface SidebarProps {
   handleUserMenuClick?: (event: React.MouseEvent) => void;
 }
 
-export const Sidebar: React.FC<SidebarProps> = ({
-  handleUserMenuClick,
-}) => {
+export const Sidebar: React.FC<SidebarProps> = ({ handleUserMenuClick }) => {
   const [isHovered, setIsHovered] = React.useState(false);
   const matches = useMatches();
   const currentMatch = matches[matches.length - 1] || {};
   const { hideSidebar } = currentMatch.staticData || {};
-
 
   return (
     <main
@@ -39,7 +37,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
             animate={{ translateX: '0px', scale: 1 }}
             exit={{ opacity: 0, scale: 0.05 }}
             transition={{ duration: 0.2 }}
-            className="flex md:flex-col gap-10 justify-between w-full items-center p-2 md:p-0"
+            className="flex md:flex-col md:gap-10 gap-2 justify-between w-full items-center p-2 md:p-0"
           >
             <div
               className={`flex md:flex-col w-full h-full bg-light-base dark:bg-dark-50/0  border-gray-300  gap-4 md:gap-2`}
@@ -49,21 +47,16 @@ export const Sidebar: React.FC<SidebarProps> = ({
               ))}
             </div>
 
-            <div>
-              
-              <button
-                onClick={(e) => {
-                  if (handleUserMenuClick) {
-                    handleUserMenuClick(e as React.MouseEvent);
-                  }
-                }}
-                className="cursor-pointer w-10 h-10 p-1 bg-gray-200 dark:bg-dark-100 border border-light-300 dark:border-dark-200 hover:border-light-400 hover:dark:border-dark-300 rounded-full flex items-center justify-center"
-              >
-                <span className="text-md font-semibold dark:bg-dark-50 w-full h-full grid place-items-center rounded-full text-gray-700 dark:text-dark-500">
-                  N
-                </span>
-              </button>
-            </div>
+            <button
+              onClick={(e) => {
+                if (handleUserMenuClick) {
+                  handleUserMenuClick(e as React.MouseEvent);
+                }
+              }}
+              className="flex cursor-pointer text-[20px] duration-150 bg-light-200 dark:bg-dark-100 relative items-center p-2 rounded-[13px] justify-center dark:text-dark-600 transition-colors h-full"
+            >
+              <IoMdMore />
+            </button>
           </motion.ul>
         )}
       </div>

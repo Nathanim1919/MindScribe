@@ -7,6 +7,7 @@ import {
   useCallback,
   useMemo,
   useRef,
+  useEffect,
 } from 'react';
 import { BlockType, ImageType } from '../types/block.interface';
 import { createBlock } from '../components/utils/blockFactory';
@@ -175,117 +176,33 @@ export const BlockContext = createContext<BlockContextType | undefined>(
 // PROVIDER
 // -------------------
 export const BlockProvider = ({ children }: { children: ReactNode }) => {
-  const [blocks, dispatch] = useReducer(blockReducer, [
-    createBlock('header', 'The First Header Here!!', {
-      level: 1,
-      spacing: 'large', 
-    }),
-    createBlock(
-      'image',
-      [ 
-        {
-          url: 'https://i.pinimg.com/564x/8c/b5/21/8cb5214b9f341c97a08cb55be379a519.jpg',
-          caption: 'this is image caption',
-          alt: 'Image',
-          meta: {
-            width: 100,
-            height: 100,
-            alignment: 'center',
-          },
-        },
-        {
-          url: 'https://i.pinimg.com/564x/e8/0d/47/e80d47df67b12faba6cf16372b7afb81.jpg',
-          caption: 'this is image caption',
-          alt: 'Image',
-          meta: {
-            width: 100,
-            height: 100,
-            alignment: 'center',
-          },
-        },
-        {
-          url: 'https://i.pinimg.com/1200x/c5/10/9d/c5109d9be955064067eae5b7373ce88c.jpg',
-          caption: 'this is image caption',
-          alt: 'Image',
-          meta: {
-            width: 100,
-            height: 100,
-            alignment: 'center',
-          },
-        },
-        {
-          url: 'https://i.pinimg.com/736x/1c/e7/52/1ce752f0947ea6ab60f8a6240592f41a.jpg',
-          caption: 'this is image caption',
-          alt: 'Image',
-          meta: {
-            width: 100,
-            height: 100,
-            alignment: 'center',
-          },
-        },
-        {
-          url: 'https://i.pinimg.com/474x/f8/39/4a/f8394a4abb51f94a44e37d71bd41ffb5.jpg',
-          caption: 'this is image caption',
-          alt: 'Image',
-          meta: {
-            width: 100,
-            height: 100,
-            alignment: 'center',
-          },
-        },
-        {
-          url: 'https://i.pinimg.com/736x/27/c8/42/27c8423c098036304aa9541d10fe4f6a.jpg',
-          caption: 'this is image caption',
-          alt: 'Image',
-          meta: {
-            width: 100,
-            height: 100,
-            alignment: 'center',
-          },
-        },
-        {
-          url: 'https://images.pexels.com/photos/15377954/pexels-photo-15377954/free-photo-of-girl-sticking-her-head-out-of-a-moving-car.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
-          caption: 'this is image caption',
-          alt: 'Image',
-          meta: {
-            width: 100,
-            height: 100,
-            alignment: 'center',
-          },
-        },
-        {
-          url: 'https://i.pinimg.com/474x/4f/5c/a8/4f5ca85bd4eca287e8888f83f8928c1d.jpg',
-          caption: 'this is image caption',
-          alt: 'Image',
-          meta: {
-            width: 100,
-            height: 100,
-            alignment: 'center',
-          },
-        },
-        {
-          url: 'https://i.pinimg.com/736x/aa/e0/13/aae01378bfbe97281276c142d1a8a7f5.jpg',
-          caption: 'this is image caption',
-          alt: 'Image',
-          meta: {
-            width: 100,
-            height: 100,
-            alignment: 'center',
-          },
-        },
-      ],
-      {
-        width: 100,
-        alignment: 'center',
-      },
-    ),
-    createBlock('header', 'The First Header Here!!', {
-      level: 1,
-      spacing: 'large',
-    }),
-  ]);
+  const initialBlocks = () => {
+    const blocksFromLocalStorage = localStorage.getItem('blocks');
+    if (blocksFromLocalStorage) {
+      try {
+        const parsedBlocks = JSON.parse(blocksFromLocalStorage);
+        return parsedBlocks.map((block: any) =>
+          createBlock(block.type, block.content, block.meta)
+        );
+      } catch (e) {
+        console.error('Failed to parse blocks from localStorage:', e);
+      }
+    }
+  
+    return [
+      createBlock('header', '', {
+        level: 1,
+        spacing: 'large',
+      }),
+    ];
+  };
+  
+  const [blocks, dispatch] = useReducer(blockReducer, [], initialBlocks);
 
-  console.log('🧪 Initial Blocks', blocks);
+  useEffect(() => {
+    localStorage.setItem('blocks', JSON.stringify(blocks));
+  }, [blocks]);
+
 
   const cursorPositions = useRef<Record<string, number>>({});
   const refMap = useMemo(
