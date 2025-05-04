@@ -1,11 +1,13 @@
 import { MdNightlight } from 'react-icons/md';
 import { CiLight } from 'react-icons/ci';
 import { motion } from 'framer-motion';
-import { useContext } from 'react';
+import { useCallback, useContext } from 'react';
 import ThemeContext from '../contexts/ThemeContext';
 import { LinkElement } from './Link';
-import { UserMenuElements } from './sideBar/sideBarElements';
 import { useIsMobile } from '../hooks/useIsMobile';
+import { useUserMenuElements } from './sideBar/sideBarElements';
+import { useNavigate } from '@tanstack/react-router';
+
 
 interface UserMenuProps {
   setDisplayUserMenu: (value: boolean) => void;
@@ -21,23 +23,26 @@ export const UserMenu: React.FC<UserMenuProps> = ({
   display,
   position,
 }) => {
-  if (!display) return null;
-
-  const { top, left } = position;
-  const { setTheme, theme } = useContext(ThemeContext);
+  const { setTheme, theme } = useContext(ThemeContext); 
   const isDarkMode = theme === 'dark';
-  const isMobile = useIsMobile();
+  const navigate = useNavigate();
+  const isMobile = useIsMobile(); 
+  const userMenuItems = useUserMenuElements(navigate); 
 
+  const toggleTheme = useCallback(() => {
+    setTheme(theme === 'light' ? 'dark' : 'light');
+    setDisplayUserMenu(false);
+  }, [theme, setTheme, setDisplayUserMenu]);
+
+  
+  if (!display) return null;
+  
+  const { top, left } = position;
   const icon = isDarkMode ? (
     <MdNightlight className="text-gray-800 dark:text-white" />
   ) : (
     <CiLight className="text-gray-800 dark:text-white" />
   );
-
-  const toggleTheme = () => {
-    setTheme(theme === 'light' ? 'dark' : 'light');
-    setDisplayUserMenu(false);
-  };
 
   const menuStyles = {
     top: isMobile ? '70%' : `${top + 20}px`,
@@ -55,7 +60,7 @@ export const UserMenu: React.FC<UserMenuProps> = ({
       className="absolute z-1999 transition-all duration-200
         border bg-light-100/60 border-light-300 dark:border-dark-100 rounded-md border-b-0 overflow-hidden backdrop-blur-lg dark:bg-dark-50/40"
     >
-      {UserMenuElements.map(({ title, icon, to, onClick }) => (
+      {userMenuItems.map(({ title, icon, to, onClick }) => (
         <LinkElement
           setDisplayUserMenu={setDisplayUserMenu}
           key={title}

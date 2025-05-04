@@ -5,6 +5,7 @@ import { RiBarChartLine } from 'react-icons/ri';
 import { useMatches } from '@tanstack/react-router';
 import { IoMdMore } from 'react-icons/io';
 import { motion } from 'motion/react';
+import { useTopSidebarElements } from './sideBar/sideBarElements';
 
 interface SidebarProps {
   handleUserMenuClick?: (event: React.MouseEvent) => void;
@@ -15,6 +16,9 @@ export const Sidebar: React.FC<SidebarProps> = ({ handleUserMenuClick }) => {
   const matches = useMatches();
   const currentMatch = matches[matches.length - 1] || {};
   const { hideSidebar } = currentMatch.staticData || {};
+
+ const topSidebarItems = useTopSidebarElements();
+
 
   return (
     <main
@@ -42,7 +46,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ handleUserMenuClick }) => {
             <div
               className={`flex md:flex-col w-full h-full bg-light-base dark:bg-dark-50/0  border-gray-300  gap-4 md:gap-2`}
             >
-              {TopsidebarElements.map((element) => (
+              {topSidebarItems.map((element) => (
                 <SidebarElement key={element.redirectTo} metadata={element} />
               ))}
             </div>

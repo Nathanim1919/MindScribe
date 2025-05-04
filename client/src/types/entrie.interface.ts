@@ -1,7 +1,26 @@
+import { BlockType } from "./block.interface";
+
 export type EntryType = {
-    id: number;
+    id: string;
     title: string;
-    content: string;
-    date: string;
+    description?: string;
+    content: BlockType[];
+    createdAt: string;
+    updatedAt: string;
     mood: string;
   };
+
+
+interface Entry {
+  id: string;
+  title: string;
+  description?: string;
+  content: BlockType[];
+  createdAt: string;
+  updatedAt: string;
+  mood: string;
+}
+
+
+type EntryMap = Record<string, Entry>;
+export type { Entry, EntryMap };

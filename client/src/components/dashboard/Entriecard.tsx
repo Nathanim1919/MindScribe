@@ -9,10 +9,11 @@ import { Link } from '@tanstack/react-router';
 
 type EntriecardPropType = {
   entries: EntryType;
+  setSelectEntry: (entry: string) => void;
 };
 
-export const Entriecard: React.FC<EntriecardPropType> = ({ entries }) => {
-  const { title, content, date, mood } = entries;
+export const Entriecard: React.FC<EntriecardPropType> = ({ entries, setSelectEntry }) => {
+  const { title, description, mood, content } = entries;
 
   function deleteEntry() {
     console.log('Delete button clicked');
@@ -27,7 +28,11 @@ export const Entriecard: React.FC<EntriecardPropType> = ({ entries }) => {
   }
 
   return (
-    <Link to={'/in/new'}>
+    <Link 
+      to="/in/entries/$entryId" 
+      params={{ entryId: entries.id }}
+      onClick={() => setSelectEntry(entries.id)}
+    >
     <motion.div
       initial={{opacity:0, translateY:"10px"}}
       animate={{opacity:1, translateY:"0px"}}
@@ -52,13 +57,13 @@ export const Entriecard: React.FC<EntriecardPropType> = ({ entries }) => {
          className="px-4 grid gap-1">
           <h3 className="text-1xl font-bold dark:text-dark-700">{title}</h3>
           <p className="text-[14px] text-light-600 dark:text-dark-500 w-full">
-            {content}
+            {description}
           </p>
         </motion.div>
         <div className="flex px-4 bg-gray-100 dark:bg-dark-100 py-2 justify-between items-center border-t border-gray-200 dark:border-dark-100">
           <span className="relative text-[13px] w-full text-light-600 flex items-center gap-1">
             <CiCalendarDate className="relative h-4 w-4 grid place-items-center" />
-            {date}
+            12, March 2025
           </span>
           <div className="flex items-center gap-2">
             <button

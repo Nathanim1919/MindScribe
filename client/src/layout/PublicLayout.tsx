@@ -30,7 +30,7 @@ export function PublicLayout() {
       <header className="flex  items-center fixed z-1000 w-full justify-between p-4">
         <div>
           <h2 className="text-3xl font-bold text-light-950 dark:text-dark-950">
-            freelly.
+            Feelink.
           </h2>
         </div>
         <nav className="flex items-center gap-2">

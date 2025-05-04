@@ -44,7 +44,7 @@ type Action =
         block: BlockType;
         afterId?: string;
         beforeId?: string;
-        urls?: ImageType[]; 
+        urls?: ImageType[];
       };
     }
   | {
@@ -75,8 +75,7 @@ const blockReducer = (state: BlockType[], action: Action): BlockType[] => {
   switch (action.type) {
     case 'ADD_BLOCK': {
       const { block, afterId, beforeId, urls } = action.payload;
-      console.log("THE NEW BLOCK IS: ", block);
-
+      console.log('THE NEW BLOCK IS: ', block);
 
       if (afterId) {
         const index = state.findIndex((b) => b.id === afterId);
@@ -163,6 +162,7 @@ export type BlockContextType = {
   reorderBlocks: (sourceId: string, targetId: string) => void;
   changeBlockType: (id: string, newType: BlockType['type']) => void;
   setBlocks: (blocks: BlockType[]) => void;
+  clearBlocks: () => void;
 };
 
 // -------------------
@@ -182,13 +182,13 @@ export const BlockProvider = ({ children }: { children: ReactNode }) => {
       try {
         const parsedBlocks = JSON.parse(blocksFromLocalStorage);
         return parsedBlocks.map((block: any) =>
-          createBlock(block.type, block.content, block.meta)
+          createBlock(block.type, block.content, block.meta),
         );
       } catch (e) {
         console.error('Failed to parse blocks from localStorage:', e);
       }
     }
-  
+
     return [
       createBlock('header', '', {
         level: 1,
@@ -196,13 +196,12 @@ export const BlockProvider = ({ children }: { children: ReactNode }) => {
       }),
     ];
   };
-  
+
   const [blocks, dispatch] = useReducer(blockReducer, [], initialBlocks);
 
   useEffect(() => {
     localStorage.setItem('blocks', JSON.stringify(blocks));
   }, [blocks]);
-
 
   const cursorPositions = useRef<Record<string, number>>({});
   const refMap = useMemo(
@@ -219,13 +218,13 @@ export const BlockProvider = ({ children }: { children: ReactNode }) => {
 
   const addBlock = useCallback((payload: addBlockPayLoad): string => {
     console.log('🧪 Add Block Payload', payload);
-  
+
     const newBlock = createBlock(
       payload.type,
       payload.type === 'image' ? payload.urls || [] : payload.content,
-      payload.meta
+      payload.meta,
     );
-  
+
     dispatch({
       type: 'ADD_BLOCK',
       payload: {
@@ -235,10 +234,9 @@ export const BlockProvider = ({ children }: { children: ReactNode }) => {
         beforeId: payload.beforeId,
       },
     });
-  
+
     return newBlock.id;
   }, []);
-  
 
   const updateBlock = useCallback((id: string, updates: Partial<BlockType>) => {
     dispatch({ type: 'UPDATE_BLOCK', payload: { id, updates } });
@@ -247,6 +245,22 @@ export const BlockProvider = ({ children }: { children: ReactNode }) => {
   const deleteBlock = useCallback((id: string) => {
     dispatch({ type: 'DELETE_BLOCK', payload: { id } });
   }, []);
+
+
+  const clearBlocks = useCallback(() => {
+    dispatch({ type: 'SET_BLOCKS', payload: { blocks: [{
+      id: '1',
+      type: 'header',
+      content: '',
+      meta: {
+        level: 1,
+        spacing: 'large',
+      },
+      prevId: null,
+      nextId: null,
+    }] } });
+  }
+  , []);
 
   const changeBlockType = useCallback(
     (id: string, newType: BlockType['type']) => {
@@ -275,6 +289,7 @@ export const BlockProvider = ({ children }: { children: ReactNode }) => {
       changeBlockType,
       reorderBlocks,
       setBlocks,
+      clearBlocks,
     }),
     [
       blocks,
@@ -286,6 +301,7 @@ export const BlockProvider = ({ children }: { children: ReactNode }) => {
       changeBlockType,
       reorderBlocks,
       setBlocks,
+      clearBlocks,
       updateCursorPosition,
     ],
   );

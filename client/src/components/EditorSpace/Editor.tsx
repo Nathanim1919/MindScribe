@@ -16,14 +16,19 @@ import { useCommandMenu } from '../../hooks/useCommandMenu';
 import { EditorToolbar } from './EditorToolbar';
 import { EditorBlocks } from './EditorBlocks';
 import { EditorSkeleton } from '../LoadingSkeletons/EntrieSkeleton';
+import { useMatches } from '@tanstack/react-router';
+import { Entry } from '../../types/entrie.interface';
+import { useEntryContext } from '../../contexts/EntryContext';
 
 export function Editor() {
   const {
     blocks,
     refMap,
     addBlock,
+    setBlocks,
     updateBlock,
     deleteBlock,
+    clearBlocks,
     updateCursorPosition,
   } = useBlockContext();
 
@@ -32,6 +37,16 @@ export function Editor() {
 
   const cursorPosition = useRef<Record<string, number>>({});
   const [isCommandOptionVisible, setIsCommandOptionVisible] = useState(false);
+
+  // console static data from the route
+  const matches = useMatches();
+  const currentMatch = matches[matches.length - 1] || {};
+  const { staticData } = currentMatch;
+  const { intent } = staticData || {};
+  const { params } = currentMatch;
+  const entryId = params?.entryId;
+
+  const { setEntries } = useEntryContext();
 
   const {
     isVisible,
@@ -58,20 +73,6 @@ export function Editor() {
     [focusedBlockId, isVisible, isCommandOptionVisible, hideMenu],
   );
 
-  const handleCursorPosition = useCallback((id: string | null) => {
-    if (id && refMap.has(id)) {
-      const element = refMap.get(id)?.current;
-      if (element) {
-        const position = cursorPosition.current[id];
-        if (position !== undefined) {
-          placeCaretAtPosition(element, position);
-        } else {
-          placeCaretAtEnd(element);
-        }
-      }
-    }
-  }, [refMap]);
-
   const handleInput = useCallback(
     (blockId: string, e: React.FormEvent<HTMLDivElement>) => {
       const target = e.currentTarget;
@@ -94,7 +95,6 @@ export function Editor() {
     [blocks, updateBlock],
   );
 
-  // 📌 Lifecycle: Focus First Block on Load
   useEffect(() => {
     if (editorRef.current) {
       const firstBlock = editorRef.current.querySelector(
@@ -103,11 +103,53 @@ export function Editor() {
       if (firstBlock) {
         firstBlock.focus();
         placeCaretAtEnd(firstBlock);
-        setFocusedBlockId(blocks[0].id);
-        // Set initial cursor position
+        setFocusedBlockId(blocks[0]?.id || null);
       }
     }
   }, []);
+
+  useEffect(() => {
+    const storedEntries = localStorage.getItem('entries');
+    if (storedEntries) {
+      const parsed: Entry[] = JSON.parse(storedEntries);
+      setEntries(parsed);
+    }
+  }, []);
+
+ // Load entry on mount or when entryId changes
+useEffect(() => {
+  if (intent === 'view' && entryId) {
+    const storedEntries = localStorage.getItem('entries');
+    if (storedEntries) {
+      const parsed: Entry[] = JSON.parse(storedEntries);
+      const entry = parsed.find((entry) => entry.id === entryId);
+      setBlocks(entry?.content || []);
+      setFocusedBlockId(entry?.content[0]?.id || null);
+    }
+  } else {
+    clearBlocks();
+  }
+}, [entryId, intent]);
+
+// Save to localStorage when blocks change, but debounce
+useEffect(() => {
+  if (intent !== 'view' || !entryId) return;
+  
+  const handler = setTimeout(() => {
+    const storedEntries = localStorage.getItem('entries');
+    if (storedEntries) {
+      const parsed: Entry[] = JSON.parse(storedEntries);
+      const updatedEntries = parsed.map(entry => 
+        entry.id === entryId ? { ...entry, content: blocks } : entry
+      );
+      localStorage.setItem('entries', JSON.stringify(updatedEntries));
+      setEntries(updatedEntries);
+    }
+  }, 500); // Debounce to avoid frequent writes
+
+  return () => clearTimeout(handler);
+}, [blocks, entryId, intent, setEntries]);
+  
 
   // Focus management
   useEffect(() => {
@@ -151,35 +193,23 @@ export function Editor() {
     }
   }, [blocks, focusedBlockId]);
 
-  const handleBlockClick = useCallback((id: string) => {
-    // Save selection before any state changes
-    const selection = window.getSelection();
-    if (selection?.rangeCount) {
-      const range = selection.getRangeAt(0);
-      cursorPosition.current[id] = range.startOffset;
-    }
-  
-    if (focusedBlockId !== id) {
-      setFocusedBlockId(id);
-    }
-    setIsCommandOptionVisible(false);
-    hideMenu();
-  }, [focusedBlockId, hideMenu]);
-
-  const getCurrentFocusedBlockElement = useCallback(() => {
-    if (focusedBlockId !== null) {
-      const element = refMap.get(focusedBlockId)?.current;
-      if (element) {
-        // Only place caret if we have a saved position
-        const position = cursorPosition.current[focusedBlockId];
-        if (position !== undefined) {
-          placeCaretAtPosition(element, position);
-        } else {
-          placeCaretAtEnd(element);
-        }
+  const handleBlockClick = useCallback(
+    (id: string) => {
+      // Save selection before any state changes
+      const selection = window.getSelection();
+      if (selection?.rangeCount) {
+        const range = selection.getRangeAt(0);
+        cursorPosition.current[id] = range.startOffset;
       }
-    }
-  }, [focusedBlockId, refMap]);
+
+      if (focusedBlockId !== id) {
+        setFocusedBlockId(id);
+      }
+      setIsCommandOptionVisible(false);
+      hideMenu();
+    },
+    [focusedBlockId, hideMenu],
+  );
 
   useLayoutEffect(() => {
     if (focusedBlockId !== null) {
@@ -187,7 +217,7 @@ export function Editor() {
       if (element) {
         // Focus the element
         element.focus();
-        
+
         // Only restore position if we have one saved
         const position = cursorPosition.current[focusedBlockId];
         if (position !== undefined) {
@@ -210,7 +240,7 @@ export function Editor() {
   }, [focusedBlockId]);
 
   function getPlaceholder(block: BlockType, id: string): string {
-    if (block.type === 'image') 
+    if (block.type === 'image')
       return block.caption?.trim() ? '' : 'Add a caption...';
     if (block.content?.trim() === '' && focusedBlockId !== id) {
       return '';
@@ -225,19 +255,6 @@ export function Editor() {
     }
     return index === 0 ? 'Start writing...' : 'Continue writing...';
   }
-
-  console.log('It is Re-Rendering ...');
-
-  const handleImageReplace = (file: File, id: string) => {
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      updateBlock(id, {
-        url: reader.result as string,
-      });
-    };
-    reader.readAsDataURL(file);
-  };
-  
 
   const renderSingleBlock = useCallback(
     ({
@@ -268,13 +285,6 @@ export function Editor() {
         setIsCommandOptionVisible,
         hideMenu,
         showMenu,
-
-        // onImageReplace: (file: File) => handleImageReplace(file, id),
-        // onRemove: () => {
-        //   deleteBlock(id);
-        //   setFocusedBlockId(null);
-        //   setIsCommandOptionVisible(false);
-        // }
       });
     },
     [
@@ -292,12 +302,11 @@ export function Editor() {
       ref={editorRef}
       className="bg-light-50 relative dark:bg-dark-50 md:left-[-2rem] md:w-[95%] mx-auto h-[98vh] overflow-hidden overflow-y-auto md:mt-2 rounded-md border border-light-200 dark:border-dark-100"
     >
-
       <EditorToolbar />
       {/*  */}
-        {/* <EditorSkeleton/> */}
+      {/* <EditorSkeleton/> */}
 
-        {/* 📌 Render Blocks */}
+      {/* 📌 Render Blocks */}
       <div className="relative w-full mx-auto md:px-4 pb-[4rem]">
         <EditorBlocks
           blocks={blocks}
@@ -323,7 +332,6 @@ export function Editor() {
           />
         )}
       </div>
-       
     </div>
   );
 }

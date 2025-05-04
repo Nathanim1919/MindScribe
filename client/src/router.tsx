@@ -106,8 +106,25 @@ const EditorRoute = createRoute({
   staticData: {
     hideHeader: true,
     hideSidebar: true,
+    intent: 'create',
   }
 });
+
+
+const entryRoute = createRoute({
+  getParentRoute: () => authenticatedRoute,
+  path: '/entries/$entryId',
+  component: Editor,
+  staticData: {
+    hideHeader: true,
+    hideSidebar: true,
+    intent: 'view',
+  },
+});
+
+
+
+
 
 const ProgressRoute = createRoute({
   getParentRoute: () => authenticatedRoute,
@@ -137,6 +154,7 @@ const routeTree = rootRoute.addChildren([
   walkThrough,
   publicRoute,
   authenticatedRoute.addChildren([
+    entryRoute,
     EditorRoute,
     GalleryRoute,
     ProgressRoute,

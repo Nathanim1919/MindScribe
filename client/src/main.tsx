@@ -6,17 +6,20 @@ import { ThemeProvider } from './contexts/ThemeContext.tsx';
 import { BlockProvider } from './contexts/BlockContext.tsx';
 import { PreferencesProvider } from './contexts/PreferencesContext.tsx';
 import { AuthProvider } from './contexts/authContext.tsx';
+import { EntryProvider } from './contexts/EntryContext.tsx';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <ThemeProvider>
-        <PreferencesProvider>
-      <BlockProvider>
+      <PreferencesProvider>
+        <BlockProvider>
           <AuthProvider>
-            <App />
+            <EntryProvider>
+              <App />
+            </EntryProvider>
           </AuthProvider>
-      </BlockProvider>
-        </PreferencesProvider>
+        </BlockProvider>
+      </PreferencesProvider>
     </ThemeProvider>
   </StrictMode>,
 );
