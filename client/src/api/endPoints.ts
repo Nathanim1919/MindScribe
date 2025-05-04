@@ -1,4 +1,4 @@
-export const endPoints = {
+export const endpoints = {
   user: {
     getUserProfile: '/user/profile',
     updateUserProfile: '/user/profile',
