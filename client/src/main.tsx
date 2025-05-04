@@ -7,19 +7,23 @@ import { BlockProvider } from './contexts/BlockContext.tsx';
 import { PreferencesProvider } from './contexts/PreferencesContext.tsx';
 import { AuthProvider } from './contexts/authContext.tsx';
 import { EntryProvider } from './contexts/EntryContext.tsx';
+import { queryClient } from './api/queryClient.ts';
+import { QueryClientProvider } from '@tanstack/react-query';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <ThemeProvider>
-      <PreferencesProvider>
-        <BlockProvider>
-          <AuthProvider>
-            <EntryProvider>
-              <App />
-            </EntryProvider>
-          </AuthProvider>
-        </BlockProvider>
-      </PreferencesProvider>
+      <QueryClientProvider client={queryClient}>
+        <PreferencesProvider>
+          <BlockProvider>
+            <AuthProvider>
+              <EntryProvider>
+                <App />
+              </EntryProvider>
+            </AuthProvider>
+          </BlockProvider>
+        </PreferencesProvider>
+      </QueryClientProvider>
     </ThemeProvider>
   </StrictMode>,
 );
