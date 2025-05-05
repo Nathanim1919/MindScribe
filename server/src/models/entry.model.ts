@@ -6,6 +6,11 @@ const EntrySchema = new mongoose.Schema({
     required: true,
     trim: true,
   },
+  description: {
+    type: String,
+    // required: true,
+    trim: true,
+  },
   blocks: [
     {
       type: mongoose.Schema.Types.ObjectId,
@@ -19,12 +24,12 @@ const EntrySchema = new mongoose.Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
-    required: true,
+    // required: true,
   },
   sentiment: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Sentiment",
-    required: true,
+    // required: true,
   },
   createdAt: {
     type: Date,

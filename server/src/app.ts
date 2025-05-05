@@ -6,6 +6,9 @@ import { auth } from "./lib/auth.ts";
 import { toNodeHandler } from "better-auth/node";
 import { connectMongo } from "./lib/db.ts";
 
+// Import routes
+import entryRoutes from "./routes/entry.controller.ts";
+
 const app = express();
 
 connectMongo();
@@ -39,9 +42,7 @@ app.use(morgan("dev"));
 app.use(express.json());
 
 // Health check endpoint
-app.get("/api/v1/health", (req, res) => {
-  res.status(200).json({ status: "ok" });
-});
+app.use("/v1/api/entries", entryRoutes); // ✅ correct
 
 // Export the app
 export default app;
