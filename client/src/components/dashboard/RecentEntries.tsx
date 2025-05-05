@@ -45,7 +45,7 @@ export const RecentEntries: React.FC = () => {
   if (isLoading) {
     return (
       <div className={`grid p-4 ${listStyle === 'grid' ? 'md:grid-cols-2 lg:grid-cols-3 gap-2' : 'grid-cols-1 gap-1'}`}>
-        {[...Array(6)].map((_, i) =>
+        {[...Array(9)].map((_, i) =>
           listStyle === 'grid' ? (
             <EntriecardSkeleton key={i} />
           ) : (
