@@ -3,17 +3,16 @@ import { CiEdit } from 'react-icons/ci';
 import { MdDeleteOutline } from 'react-icons/md';
 import { CiCalendarDate } from 'react-icons/ci';
 import { IoIosHeartEmpty } from 'react-icons/io';
-import { EntryType } from '../../types/entrie.interface';
 import { motion } from 'motion/react';
 import { Link } from '@tanstack/react-router';
+import { Entry } from '../../types/entrie.interface';
 
 type EntriecardPropType = {
-  entries: EntryType;
-  setSelectEntry: (entry: string) => void;
+  entry: Entry;
 };
 
-export const Entriecard: React.FC<EntriecardPropType> = ({ entries, setSelectEntry }) => {
-  const { title, description, mood, content } = entries;
+export const Entriecard: React.FC<EntriecardPropType> = ({ entry }) => {
+  const { title, description, mood, content } = entry;
 
   function deleteEntry() {
     console.log('Delete button clicked');
@@ -30,8 +29,7 @@ export const Entriecard: React.FC<EntriecardPropType> = ({ entries, setSelectEnt
   return (
     <Link 
       to="/in/entries/$entryId" 
-      params={{ entryId: entries.id }}
-      onClick={() => setSelectEntry(entries.id)}
+      params={{ entryId: entry.id }}
     >
     <motion.div
       initial={{opacity:0, translateY:"10px"}}

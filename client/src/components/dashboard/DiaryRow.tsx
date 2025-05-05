@@ -1,4 +1,3 @@
-import { EntryType } from '../../types/entrie.interface';
 import { BsEmojiSmileFill } from 'react-icons/bs';
 import { CiEdit } from 'react-icons/ci';
 import { MdDeleteOutline } from 'react-icons/md';
@@ -8,12 +7,13 @@ import { GoShareAndroid } from 'react-icons/go';
 import { FaBook } from 'react-icons/fa6';
 import { motion } from 'motion/react';
 import { Link } from '@tanstack/react-router';
+import { Entry } from '../../types/entrie.interface';
 
 interface DiaryRowPropType {
-  entrie: EntryType;
+  entry: Entry;
 }
 
-export const DiaryRow: React.FC<DiaryRowPropType> = ({ entrie }) => {
+export const DiaryRow: React.FC<DiaryRowPropType> = ({ entry }) => {
   return (
     <Link to={'/in/new'}>
     <motion.div
@@ -27,16 +27,16 @@ export const DiaryRow: React.FC<DiaryRowPropType> = ({ entrie }) => {
           <FaBook className="dark:text-dark-400 group-hover:dark:text-dark-950 text-[16px] cursor-pointer dark:hover:text-dark-300 text-light-400 group-hover:text-light-600" />
         </button>
         <h3 className="text-light-500 w-full group-hover:text-light-950 group-hover:dark:text-dark-950">
-          {entrie.title.slice(0, 30)} ...
+          {entry.title.slice(0, 30)} ...
         </h3>
       {/* </div> */}
       <span className="dark:text-dark-700 rounded-3xl w-[100%] p-[1px] border-gray-300 dark:border-dark-200 px-1 pr-2 flex items-center gap-1">
         <BsEmojiSmileFill className="text-orange-400 dark:text-amber-300 text-2xl dark:bg-dark-100 bg-light-100 border dark:border-dark-200 border-light-200 rounded-full p-1" />
-        {entrie.mood}
+        {entry.mood}
       </span>
       <span className="relative text-[13px] w-full text-light-600 flex items-center gap-1">
         <CiCalendarDate className="relative h-4 w-4 grid place-items-center" />
-        {entrie.date}
+        {entry.date}
       </span>
       </div>
       <div className='flex items-center gap-2'>

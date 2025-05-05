@@ -2,7 +2,7 @@ import { api } from '../api/axios';
 import { endpoints } from '../api/endPoints';
 import { Entry } from '../types/entrie.interface';
 
-export const fetchEntries = async (): Promise<Entry[]> => {
+export const getEntries = async (): Promise<Entry[]> => {
   const { data } = await api.get(endpoints.entries.getAll);
   return data;
 };
