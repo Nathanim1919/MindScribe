@@ -7,7 +7,6 @@ import {
   useCallback,
   useMemo,
   useRef,
-  useEffect,
 } from 'react';
 import { BlockType, ImageType } from '../types/block.interface';
 import { createBlock } from '../components/utils/blockFactory';
@@ -74,7 +73,7 @@ type Action =
 const blockReducer = (state: BlockType[], action: Action): BlockType[] => {
   switch (action.type) {
     case 'ADD_BLOCK': {
-      const { block, afterId, beforeId, urls } = action.payload;
+      const { block, afterId, beforeId } = action.payload;
       console.log('THE NEW BLOCK IS: ', block);
 
       if (afterId) {
@@ -162,7 +161,6 @@ export type BlockContextType = {
   reorderBlocks: (sourceId: string, targetId: string) => void;
   changeBlockType: (id: string, newType: BlockType['type']) => void;
   setBlocks: (blocks: BlockType[]) => void;
-  clearBlocks: () => void;
 };
 
 // -------------------
@@ -176,28 +174,7 @@ export const BlockContext = createContext<BlockContextType | undefined>(
 // PROVIDER
 // -------------------
 export const BlockProvider = ({ children }: { children: ReactNode }) => {
-  const initialBlocks = () => {
-    const blocksFromLocalStorage = localStorage.getItem('blocks');
-    if (blocksFromLocalStorage) {
-      try {
-        const parsedBlocks = JSON.parse(blocksFromLocalStorage);
-        return parsedBlocks.map((block: any) =>
-          createBlock(block.type, block.content, block.meta),
-        );
-      } catch (e) {
-        console.error('Failed to parse blocks from localStorage:', e);
-      }
-    }
-
-    return [
-      createBlock('header', '', {
-        level: 1,
-        spacing: 'large',
-      }),
-    ];
-  };
-
-  const [blocks, dispatch] = useReducer(blockReducer, [], initialBlocks);
+  const [blocks, dispatch] = useReducer(blockReducer, []);
 
   const cursorPositions = useRef<Record<string, number>>({});
   const refMap = useMemo(
@@ -242,22 +219,6 @@ export const BlockProvider = ({ children }: { children: ReactNode }) => {
     dispatch({ type: 'DELETE_BLOCK', payload: { id } });
   }, []);
 
-
-  const clearBlocks = useCallback(() => {
-    dispatch({ type: 'SET_BLOCKS', payload: { blocks: [{
-      id: '1',
-      type: 'header',
-      content: '',
-      meta: {
-        level: 1,
-        spacing: 'large',
-      },
-      prevId: null,
-      nextId: null,
-    }] } });
-  }
-  , []);
-
   const changeBlockType = useCallback(
     (id: string, newType: BlockType['type']) => {
       dispatch({ type: 'CHANGE_BLOCK_TYPE', payload: { id, newType } });
@@ -285,7 +246,6 @@ export const BlockProvider = ({ children }: { children: ReactNode }) => {
       changeBlockType,
       reorderBlocks,
       setBlocks,
-      clearBlocks,
     }),
     [
       blocks,
@@ -297,7 +257,6 @@ export const BlockProvider = ({ children }: { children: ReactNode }) => {
       changeBlockType,
       reorderBlocks,
       setBlocks,
-      clearBlocks,
       updateCursorPosition,
     ],
   );
