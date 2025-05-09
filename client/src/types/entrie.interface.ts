@@ -1,10 +1,10 @@
 import { BlockType } from "./block.interface";
 
 interface Entry {
-  id: string;
+  _id: string;
   title: string;
   description?: string;
-  content: BlockType[];
+  blocks: BlockType[];
   createdAt: string;
   updatedAt: string;
   mood: string;

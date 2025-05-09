@@ -6,12 +6,31 @@ import { FaBook } from 'react-icons/fa';
 import { IoMdAdd } from 'react-icons/io';
 import { MdOutlineSelfImprovement } from 'react-icons/md';
 import { authClient } from '../../lib/authClient';
-import { useEntryContext } from '../../contexts/EntryContext';
 import { useNavigate } from '@tanstack/react-router';
+import { createNewDraft } from '../../storage/entryStorage';
+import { useBlockContext } from '../../contexts/BlockContext';
+import { Entry } from '../../types/entrie.interface';
+import { createEntry } from '../../services/entry.service';
+import { useEntryContext } from '../../contexts/EntryContext';
 
 // Sidebar elements with context-safe hook
 export const useTopSidebarElements = (): SidebarElementPropType[] => {
-  const { addEntry } = useEntryContext();
+  const { setBlocks } = useBlockContext();
+    const { setSelectedEntryDetail } = useEntryContext();
+  
+  const navigate = useNavigate();
+
+  const handleCreateNewDraft = async () => {
+    const newEntry = await createEntry();
+    console.log('New entry created:------------', newEntry);
+
+    if (newEntry && newEntry._id) {
+      createNewDraft(newEntry._id);
+      navigate({ to: `/in/entries/${newEntry._id}` });
+    } else {
+      alert('Failed to create a new entry');
+    }
+  };
 
   return [
     {
@@ -27,8 +46,7 @@ export const useTopSidebarElements = (): SidebarElementPropType[] => {
     {
       title: 'Entry',
       icon: <IoMdAdd />,
-      redirectTo: '/in/new',
-      onClick: addEntry,
+      onClick: handleCreateNewDraft,
     },
     {
       title: 'Activity',
@@ -43,7 +61,9 @@ export const useTopSidebarElements = (): SidebarElementPropType[] => {
   ];
 };
 
-export const useUserMenuElements = (navigate: ReturnType<typeof useNavigate>) => {
+export const useUserMenuElements = (
+  navigate: ReturnType<typeof useNavigate>,
+) => {
   const handleLogout = async () => {
     try {
       const res = await authClient.signOut();

@@ -12,8 +12,8 @@ export const fetchEntryById = async (id: string): Promise<Entry> => {
   return data;
 };
 
-export const createEntry = async (payload: Partial<Entry>): Promise<Entry> => {
-  const { data } = await api.post(endpoints.entries.create, payload);
+export const createEntry = async (): Promise<Entry> => {
+  const { data } = await api.post(endpoints.entries.create);
   return data;
 };
 

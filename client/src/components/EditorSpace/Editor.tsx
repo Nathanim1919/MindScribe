@@ -19,6 +19,11 @@ import { EditorSkeleton } from '../LoadingSkeletons/EntrieSkeleton';
 import { useMatches } from '@tanstack/react-router';
 import { Entry } from '../../types/entrie.interface';
 import { useEntryContext } from '../../contexts/EntryContext';
+import { useQuery } from '@tanstack/react-query';
+import { fetchEntryById } from '../../services/entry.service';
+import { useAutoSaveDraft } from '../../hooks/useAutoSaveDraft';
+import { useInactivitySync } from '../../hooks/useInactivitySync';
+import { useBeforeUnloadSync } from '../../hooks/useBeforeUnloadSync';
 
 export function Editor() {
   const {
@@ -28,7 +33,6 @@ export function Editor() {
     setBlocks,
     updateBlock,
     deleteBlock,
-    clearBlocks,
     updateCursorPosition,
   } = useBlockContext();
 
@@ -46,7 +50,32 @@ export function Editor() {
   const { params } = currentMatch;
   const entryId = params?.entryId;
 
-  const { setEntries } = useEntryContext();
+  const { setEntries, setSelectedEntryDetail,selectedEntryDetail } = useEntryContext();
+
+  const {
+    data: entryData,
+    isPending,
+    error,
+    isError,
+  } = useQuery({
+    queryKey: ['entry', entryId],
+    queryFn: () => fetchEntryById(entryId),
+    enabled: !!entryId,
+  });
+
+
+  // alert(`This is a draft editor. You can add blocks, edit them, and delete them. But you cannot publish or save the entry yet. ${entryData?._id}`)
+
+  useEffect(() => {
+    if (entryData) {
+      setSelectedEntryDetail(entryData);
+      if (selectedEntryDetail){
+        setBlocks(selectedEntryDetail?.blocks);
+      }
+    }
+  }, [entryData]); // ← fix here
+
+  console.log('Entry Data:', selectedEntryDetail);
 
   const {
     isVisible,
@@ -116,44 +145,9 @@ export function Editor() {
     }
   }, []);
 
- // Load entry on mount or when entryId changes
-useEffect(() => {
-  if (intent === 'view' && entryId) {
-    const storedEntries = localStorage.getItem('entries');
-    if (storedEntries) {
-      const parsed: Entry[] = JSON.parse(storedEntries);
-      const entry = parsed.find((entry) => entry.id === entryId);
-      setBlocks(entry?.content || []);
-      setFocusedBlockId(entry?.content[0]?.id || null);
-    }
-  } else {
-    clearBlocks();
-  }
-}, [entryId, intent]);
-
-// Save to localStorage when blocks change, but debounce
-useEffect(() => {
-  if (intent !== 'view' || !entryId) return;
-  
-  const handler = setTimeout(() => {
-    const storedEntries = localStorage.getItem('entries');
-    if (storedEntries) {
-      const parsed: Entry[] = JSON.parse(storedEntries);
-      const updatedEntries = parsed.map(entry => 
-        entry.id === entryId ? { ...entry, content: blocks } : entry
-      );
-      localStorage.setItem('entries', JSON.stringify(updatedEntries));
-      setEntries(updatedEntries);
-    }
-  }, 500); // Debounce to avoid frequent writes
-
-  return () => clearTimeout(handler);
-}, [blocks, entryId, intent, setEntries]);
-  
-
   // Focus management
   useEffect(() => {
-    if (editorRef.current && blocks.length > 0 && focusedBlockId !== null) {
+    if (editorRef.current && blocks?.length > 0 && focusedBlockId !== null) {
       const targetEl = refMap.get(focusedBlockId)?.current;
       if (targetEl) {
         targetEl.focus();
@@ -235,10 +229,6 @@ useEffect(() => {
     setIsCommandOptionVisible(false);
   };
 
-  useEffect(() => {
-    console.log('Focused Block Index:', focusedBlockId);
-  }, [focusedBlockId]);
-
   function getPlaceholder(block: BlockType, id: string): string {
     if (block.type === 'image')
       return block.caption?.trim() ? '' : 'Add a caption...';
@@ -246,7 +236,7 @@ useEffect(() => {
       return '';
     }
 
-    const index = blocks.findIndex((b) => b.id === id);
+    const index = blocks?.findIndex((b) => b.id === id);
     if (index === 0) {
       return block.content?.trim() ? '' : 'Untitled';
     }
@@ -255,6 +245,10 @@ useEffect(() => {
     }
     return index === 0 ? 'Start writing...' : 'Continue writing...';
   }
+
+  useAutoSaveDraft(entryData); // 👈 Auto-save on any entry data changes
+  useInactivitySync(entryData); // 👈 Sync on inactivity
+  useBeforeUnloadSync(entryData); // 👈 Sync on before unload
 
   const renderSingleBlock = useCallback(
     ({
@@ -304,34 +298,35 @@ useEffect(() => {
     >
       <EditorToolbar />
       {/*  */}
-      {/* <EditorSkeleton/> */}
-
-      {/* 📌 Render Blocks */}
-      <div className="relative w-full mx-auto md:px-4 pb-[4rem]">
-        <EditorBlocks
-          blocks={blocks}
-          focusedBlockId={focusedBlockId}
-          renderBlock={renderSingleBlock}
-          onClickBlock={handleBlockContainerClick}
-          isCommandOptionVisible={isCommandOptionVisible}
-        />
-        {/* 📌 Command Menu */}
-        {isVisible && (
-          <CommandMenu
-            filter={filter}
-            onSelect={handleSelect}
-            position={position}
-            menuRef={menuRef}
-          />
-        )}
-        {isCommandOptionVisible && (
-          <CommandOption
-            id={focusedBlockId}
+      {isPending && intent === 'view' ? (
+        <EditorSkeleton />
+      ) : (
+        <div className="relative w-full  mx-auto md:px-4 pb-[4rem]">
+          <EditorBlocks
             blocks={blocks}
-            setIsCommandOptionVisible={setIsCommandOptionVisible}
+            focusedBlockId={focusedBlockId}
+            renderBlock={renderSingleBlock}
+            onClickBlock={handleBlockContainerClick}
+            isCommandOptionVisible={isCommandOptionVisible}
           />
-        )}
-      </div>
+
+          {isVisible && (
+            <CommandMenu
+              filter={filter}
+              onSelect={handleSelect}
+              position={position}
+              menuRef={menuRef}
+            />
+          )}
+          {isCommandOptionVisible && (
+            <CommandOption
+              id={focusedBlockId}
+              blocks={blocks}
+              setIsCommandOptionVisible={setIsCommandOptionVisible}
+            />
+          )}
+        </div>
+      )}
     </div>
   );
 }

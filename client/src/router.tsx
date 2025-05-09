@@ -123,6 +123,18 @@ const entryRoute = createRoute({
 });
 
 
+const newEntryRoute = createRoute({
+  getParentRoute: () => authenticatedRoute,
+  path:'/entries/create',
+  component: Editor,
+  staticData: {
+    hideHeader: true,
+    hideSidebar: true,
+    intent: 'create',
+  }
+})
+
+
 
 
 
@@ -155,6 +167,7 @@ const routeTree = rootRoute.addChildren([
   publicRoute,
   authenticatedRoute.addChildren([
     entryRoute,
+    newEntryRoute,
     EditorRoute,
     GalleryRoute,
     ProgressRoute,

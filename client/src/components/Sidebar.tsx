@@ -1,6 +1,5 @@
 import React from 'react';
 import { SidebarElement } from './sideBar/sideBarElement';
-import { TopsidebarElements } from './sideBar/sideBarElements';
 import { RiBarChartLine } from 'react-icons/ri';
 import { useMatches } from '@tanstack/react-router';
 import { IoMdMore } from 'react-icons/io';

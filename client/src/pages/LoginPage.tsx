@@ -1,5 +1,6 @@
 import { CardDecoration } from '../components/publicPageComponents/CardDecoration';
 import { LoginForm } from '../components/forms/LoginForm';
+import { motion } from 'motion/react';
 
 export const LoginPage: React.FC = () => {
   return (
@@ -8,10 +9,18 @@ export const LoginPage: React.FC = () => {
         <div className="grid grid-cols-2 w-[70%] h-[90%] m-auto overflow-hidden">
           <div className="relative p-4 flex flex-col items-center gap-4 rounded-lg">
             <div className="bg-sky-400/20 relative w-full h-full rounded-lg overflow-hidden">
-              <div className="absolute opacity-50 left-0 bottom-[20%] w-[60%] h-[50%] grid place-items-center">
+              <motion.div 
+              initial={{ opacity: 0, translateY: 50 }}
+              animate={{ opacity: .5, translateY: 0 }}
+              transition={{ duration: 0.5 }}
+              className="absolute opacity-50 left-0 bottom-[20%] w-[60%] h-[50%] grid place-items-center">
                 <CardDecoration />
-              </div>
-              <div className="bg-gradient-to-b from-transparent dark:to-dark-50 to-light-50 absolute w-full h-[50%] py-12 px-4 bottom-0">
+              </motion.div>
+              <motion.div
+                initial={{ opacity: 0, translateY: 200 }}
+                animate={{ opacity: 1, translateY: 0 }}
+                transition={{ duration: .8 }}
+               className="bg-gradient-to-b from-transparent dark:to-dark-50 to-light-50 absolute w-full h-[50%] py-12 px-4 bottom-0">
                 <h2 className="text-6xl font-bold mb-2">
                   Your mind's <span className="text-violet-500">journey</span>{' '}
                   matters
@@ -19,7 +28,7 @@ export const LoginPage: React.FC = () => {
                 <p className="opacity-90">
                   Every login is a step in self-discovery
                 </p>
-              </div>
+              </motion.div >
             </div>
           </div>
 

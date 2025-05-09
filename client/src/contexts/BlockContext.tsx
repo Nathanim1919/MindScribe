@@ -199,10 +199,6 @@ export const BlockProvider = ({ children }: { children: ReactNode }) => {
 
   const [blocks, dispatch] = useReducer(blockReducer, [], initialBlocks);
 
-  useEffect(() => {
-    localStorage.setItem('blocks', JSON.stringify(blocks));
-  }, [blocks]);
-
   const cursorPositions = useRef<Record<string, number>>({});
   const refMap = useMemo(
     () => new Map<string, React.RefObject<HTMLElement>>(),

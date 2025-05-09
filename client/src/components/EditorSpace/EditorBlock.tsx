@@ -22,7 +22,7 @@ export const EditorBlock = React.memo(
       <div
         data-block-id={id}
         // data-block-index={index}
-        className="flex group w-full max-w-[800px] relative rounded-md cursor-text"
+        className="flex group w-full relative rounded-md cursor-text"
       >
         {renderBlock({
           block,

@@ -8,7 +8,7 @@ export const useCreateEntry = () => {
   return useMutation({
     mutationFn: (payload: Partial<Entry>) => createEntry(payload),
     onSuccess: (data) => {
-      queryClient.setQueryData(['entries', data.id], data);
+      queryClient.setQueryData(['entries', data._id], data);
       queryClient.invalidateQueries({ queryKey: ['entries'] });
     },
     onError: (error) => {

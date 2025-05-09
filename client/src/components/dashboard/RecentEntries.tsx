@@ -19,6 +19,10 @@ export const RecentEntries: React.FC = () => {
   const { setListStyle, listStyle } = useContext(ThemeContext);
   const { entries, setEntries } = useEntryContext();
   const { data, isLoading, error } = useEntries();
+
+  console.log('Entries:', entries);
+  console.log('Data:', data);
+  console.log('Is Loading:', isLoading);
   const queryClient = useQueryClient();
 
   // Set entries from fetched data
@@ -44,13 +48,15 @@ export const RecentEntries: React.FC = () => {
 
   if (isLoading) {
     return (
-      <div className={`grid p-4 ${listStyle === 'grid' ? 'md:grid-cols-2 lg:grid-cols-3 gap-2' : 'grid-cols-1 gap-1'}`}>
+      <div
+        className={`grid p-4 ${listStyle === 'grid' ? 'md:grid-cols-2 lg:grid-cols-4 gap-2' : 'grid-cols-1 gap-1'}`}
+      >
         {[...Array(9)].map((_, i) =>
           listStyle === 'grid' ? (
             <EntriecardSkeleton key={i} />
           ) : (
             <DiaryRowSekeleton key={i} />
-          )
+          ),
         )}
       </div>
     );
@@ -104,14 +110,14 @@ export const RecentEntries: React.FC = () => {
       </div>
 
       <div
-        className={`grid ${listStyle === 'grid' ? 'md:grid-cols-2 lg:grid-cols-3 gap-2' : 'grid-cols-1 gap-1'} rounded-sm p-4 pb-24 md:py-2 max-h-[85vh] overflow-y-auto scrollb`}
+        className={`grid ${listStyle === 'grid' ? 'md:grid-cols-2 lg:grid-cols-3 gap-2' : 'grid-cols-1 gap-1'} rounded-sm p-2 pb-24 md:py-2 max-h-[85vh] overflow-y-auto scrollb`}
       >
-         {entries?.map((entry) =>
+        {entries?.map((entry) =>
           listStyle === 'grid' ? (
-            <Entriecard key={entry.id} entry={entry} />
+            <Entriecard key={entry._id} entry={entry} />
           ) : (
-            <DiaryRow key={entry.id} entry={entry} />
-          )
+            <DiaryRow key={entry._id} entry={entry} />
+          ),
         )}
       </div>
     </div>
