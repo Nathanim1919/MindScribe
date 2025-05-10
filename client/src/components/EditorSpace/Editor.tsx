@@ -75,7 +75,6 @@ export function Editor() {
     }
   }, [entryData]); // ← fix here
 
-  console.log('Entry Data:', selectedEntryDetail);
 
   const {
     isVisible,

@@ -2,6 +2,7 @@ export type SidebarElementPropType = {
   title: string;
   icon: React.ReactNode;
   redirectTo?: string;
+  active?: boolean;
   onClick?: () => void; // Optional click handler for logout
 };
 

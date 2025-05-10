@@ -8,22 +8,14 @@ import { MdOutlineSelfImprovement } from 'react-icons/md';
 import { authClient } from '../../lib/authClient';
 import { useNavigate } from '@tanstack/react-router';
 import { createNewDraft } from '../../storage/entryStorage';
-import { useBlockContext } from '../../contexts/BlockContext';
-import { Entry } from '../../types/entrie.interface';
 import { createEntry } from '../../services/entry.service';
-import { useEntryContext } from '../../contexts/EntryContext';
 
 // Sidebar elements with context-safe hook
 export const useTopSidebarElements = (): SidebarElementPropType[] => {
-  const { setBlocks } = useBlockContext();
-    const { setSelectedEntryDetail } = useEntryContext();
-  
   const navigate = useNavigate();
 
   const handleCreateNewDraft = async () => {
     const newEntry = await createEntry();
-    console.log('New entry created:------------', newEntry);
-
     if (newEntry && newEntry._id) {
       createNewDraft(newEntry._id);
       navigate({ to: `/in/entries/${newEntry._id}` });
@@ -46,6 +38,7 @@ export const useTopSidebarElements = (): SidebarElementPropType[] => {
     {
       title: 'Entry',
       icon: <IoMdAdd />,
+      active: true,
       onClick: handleCreateNewDraft,
     },
     {

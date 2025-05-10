@@ -42,7 +42,7 @@ export const LinkElement: React.FC<LinkProps> = ({
         className={`group relative ${className}`}
         aria-label={ariaLabel}
         activeProps={{
-          className: `bg-light-200 dark:bg-dark-100 ${!isUserMenu ? 'text-[23px]' : ''} font-bold text-violet-600 dark:text-violet-600`,
+          className: `${!isUserMenu ? 'text-[23px]' : ''} font-bold text-violet-600 dark:text-violet-600`,
         }}
         activeOptions={{ exact: true }}
       >

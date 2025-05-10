@@ -43,7 +43,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ handleUserMenuClick }) => {
             className="flex md:flex-col md:gap-10 gap-2 justify-between w-full items-center p-2 md:p-0"
           >
             <div
-              className={`flex md:flex-col w-full h-full bg-light-base dark:bg-dark-50/0  border-gray-300  gap-4 md:gap-2`}
+              className={`flex md:flex-col w-full h-full bg-light-base dark:bg-dark-50/0  border-gray-300  gap-8 md:gap-2`}
             >
               {topSidebarItems.map((element) => (
                 <SidebarElement key={element.redirectTo} metadata={element} />
@@ -56,7 +56,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ handleUserMenuClick }) => {
                   handleUserMenuClick(e as React.MouseEvent);
                 }
               }}
-              className="flex cursor-pointer text-[20px] duration-150 bg-light-200 dark:bg-dark-100 relative items-center p-2 rounded-[13px] justify-center dark:text-dark-600 transition-colors h-full"
+              className="flex cursor-pointer text-[20px] duration-150 hover:bg-light-200 hover:dark:bg-dark-100 relative items-center p-2 rounded-[13px] justify-center dark:text-dark-600 transition-colors h-full"
             >
               <IoMdMore />
             </button>

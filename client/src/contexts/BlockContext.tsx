@@ -93,11 +93,15 @@ const blockReducer = (state: BlockType[], action: Action): BlockType[] => {
     }
 
     case 'UPDATE_BLOCK': {
-      const { id, updates } = action.payload;
 
-      return state.map((block) =>
-        block.id === id ? mergeBlockUpdate(block, updates) : block,
-      );
+      const { id, updates } = action.payload;
+      
+      return state.map((block) => {
+        if (block.id === id) {
+          console.log('🧪 Block Update Payload', updates);
+        } 
+        return block.id === id ? mergeBlockUpdate(block, updates) : block;
+      });
     }
 
     case 'DELETE_BLOCK': {

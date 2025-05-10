@@ -6,7 +6,7 @@ import { LinkElement } from '../Link';
 export const SidebarElement: React.FC<{ metadata: SidebarElementPropType }> = ({
   metadata,
 }) => {
-  const { title, icon, redirectTo, onClick } = metadata;
+  const { title, icon, redirectTo, active, onClick } = metadata;
 
   const handleClick = () => {
     if (onClick) {
@@ -23,7 +23,7 @@ export const SidebarElement: React.FC<{ metadata: SidebarElementPropType }> = ({
       icon={icon}
       to={redirectTo}
       onClick={handleClick}
-      className="flex text-[20px] duration-150 hover:bg-light-200 dark:hover:bg-dark-100 relative items-center p-2 rounded-[13px] justify-center dark:text-dark-600 transition-colors h-full"
+      className={`flex text-[20px] duration-150 ${active?"dark:bg-dark-100 bg-light-200":""} hover:text-violet-500 relative items-center p-2 rounded-[13px] justify-center dark:text-dark-600 transition-colors h-full`}
     />
   );
 };

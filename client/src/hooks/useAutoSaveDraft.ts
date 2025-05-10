@@ -13,15 +13,19 @@ import { updateDraft } from '../storage/entryStorage';
  */
 
 export function useAutoSaveDraft(entry: Entry | undefined, delay = 1000) {
-  console.log('AutoSaveDraft Hook:', entry);
+  useEffect(() => {
+    console.log('📦 entryData.blocks changed', entry?.blocks);
+  }, [JSON.stringify(entry?.blocks)]);
+  
+  
   useEffect(() => {
     if (!entry || !entry._id || !entry.blocks || !Array.isArray(entry.blocks))
       return;
-
+    
     const saveDraft = debounce(() => {
       updateDraft(entry);
+      console.log('AutoSaveDraft Hook:', entry);
       console.log('Full entry auto-saved');
-      alert('Draft auto-saved');
     }, delay);
 
     saveDraft();
@@ -29,5 +33,5 @@ export function useAutoSaveDraft(entry: Entry | undefined, delay = 1000) {
     return () => {
       saveDraft.cancel();
     };
-  }, [entry, delay]);
+  }, [entry, delay, [JSON.stringify(entry?.blocks)]]);
 }
