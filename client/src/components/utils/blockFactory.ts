@@ -1,4 +1,5 @@
 import { BlockType, ImageType } from '../../types/block.interface';
+import { generateId } from './blockUtils';
 
 export function createBlock<T extends BlockType['type']>(
   type: T,
@@ -39,7 +40,6 @@ export function createBlock<T extends BlockType['type']>(
       },
     }];
 
-    console.log('🧪 Image URLs', imageUrls);
     
     return {
       id: generateId(),
@@ -60,6 +60,4 @@ export function createBlock<T extends BlockType['type']>(
   }
 }
 
-const generateId = (): string => {
-  return `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
-};
+
