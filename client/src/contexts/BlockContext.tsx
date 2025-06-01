@@ -7,6 +7,7 @@ import {
   useCallback,
   useMemo,
   useRef,
+  useEffect,
 } from 'react';
 import { BlockType, ImageType } from '../types/block.interface';
 import { createBlock } from '../components/utils/blockFactory';
@@ -95,6 +96,8 @@ const blockReducer = (state: BlockType[], action: Action): BlockType[] => {
     case 'UPDATE_BLOCK': {
 
       const { id, updates } = action.payload;
+
+      if (id === undefined) return state;
       
       return state.map((block) => {
         if (block.id === id) {
@@ -180,6 +183,10 @@ export const BlockContext = createContext<BlockContextType | undefined>(
 export const BlockProvider = ({ children }: { children: ReactNode }) => {
   const [blocks, dispatch] = useReducer(blockReducer, []);
 
+  useEffect(() => {
+    console.log('🧪 Blocks State', blocks);
+  }, [blocks]);
+
   const cursorPositions = useRef<Record<string, number>>({});
   const refMap = useMemo(
     () => new Map<string, React.RefObject<HTMLElement>>(),
@@ -216,6 +223,8 @@ export const BlockProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   const updateBlock = useCallback((id: string, updates: Partial<BlockType>) => {
+    console.log("The ID of the block being updated", id);
+    console.log("The updates of the block being updated", updates);
     dispatch({ type: 'UPDATE_BLOCK', payload: { id, updates } });
   }, []);
 
