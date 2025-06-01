@@ -13,9 +13,7 @@ import { updateDraft } from '../storage/entryStorage';
  */
 
 export function useAutoSaveDraft(entry: Entry | undefined, delay = 1000) {
-  useEffect(() => {
-    console.log('📦 entryData.blocks changed', entry?.blocks);
-  }, [JSON.stringify(entry?.blocks)]);
+
   
   
   useEffect(() => {
@@ -33,5 +31,5 @@ export function useAutoSaveDraft(entry: Entry | undefined, delay = 1000) {
     return () => {
       saveDraft.cancel();
     };
-  }, [entry, delay, [JSON.stringify(entry?.blocks)]]);
+  }, [entry, delay]);
 }
