@@ -50,7 +50,7 @@ export function Editor() {
   const { params } = currentMatch;
   const entryId = params?.entryId;
 
-  const { setEntries, setSelectedEntryDetail,selectedEntryDetail } = useEntryContext();
+  const { setEntries, setSelectedEntryDetail } = useEntryContext();
 
   const {
     data: entryData,
@@ -64,18 +64,16 @@ export function Editor() {
   });
 
 
-  // alert(`This is a draft editor. You can add blocks, edit them, and delete them. But you cannot publish or save the entry yet. ${entryData?._id}`)
 
   useEffect(() => {
     if (entryData) {
-      setSelectedEntryDetail(entryData);
-      if (selectedEntryDetail){
-        setBlocks(selectedEntryDetail?.blocks);
-      }
+      console.log('Entry data:', entryData);
+      setSelectedEntryDetail(entryData); // keep this if needed elsewhere
+      setBlocks(entryData.blocks);       // ✅ use entryData directly
     }
-  }, [entryData]); // ← fix here
+  }, [entryData]);
 
-
+  
   const {
     isVisible,
     filter,
@@ -101,6 +99,7 @@ export function Editor() {
     [focusedBlockId, isVisible, isCommandOptionVisible, hideMenu],
   );
 
+
   const handleInput = useCallback(
     (blockId: string, e: React.FormEvent<HTMLDivElement>) => {
       const target = e.currentTarget;
@@ -114,6 +113,7 @@ export function Editor() {
       }
 
       const block = blocks.find((block) => block.id === blockId);
+      console.log("The block being updated", block);
 
       // Only update if content changed
       if (content !== block?.content) {
@@ -128,6 +128,7 @@ export function Editor() {
       const firstBlock = editorRef.current.querySelector(
         '[contenteditable]',
       ) as HTMLDivElement;
+      alert('This is a draft editor. You can add blocks, edit them, and delete them. But you cannot publish or save the entry yet.');
       if (firstBlock) {
         firstBlock.focus();
         placeCaretAtEnd(firstBlock);
@@ -245,9 +246,9 @@ export function Editor() {
     return index === 0 ? 'Start writing...' : 'Continue writing...';
   }
 
-  useAutoSaveDraft(entryData); // 👈 Auto-save on any entry data changes
-  useInactivitySync(entryData); // 👈 Sync on inactivity
-  useBeforeUnloadSync(entryData); // 👈 Sync on before unload
+  // useAutoSaveDraft(entryData); // 👈 Auto-save on any entry data changes
+  // useInactivitySync(entryData); // 👈 Sync on inactivity
+  // useBeforeUnloadSync(entryData); // 👈 Sync on before unload
 
   const renderSingleBlock = useCallback(
     ({

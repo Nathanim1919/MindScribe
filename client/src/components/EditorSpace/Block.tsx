@@ -16,6 +16,7 @@ interface BaseTextBlockProps {
   onBlur: (e: React.FormEvent<HTMLDivElement>) => void;
 }
 
+
 export const BaseTextBlock = React.forwardRef<
   HTMLDivElement,
   BaseTextBlockProps
@@ -34,6 +35,9 @@ export const BaseTextBlock = React.forwardRef<
     const internalRef = useRef<HTMLDivElement>(null);
     const resolvedRef = (ref || internalRef) as React.RefObject<HTMLDivElement>;
     const { refMap } = useBlockContext();
+    console.log("The block content is: ", content);
+
+    console.log("The refMap is: ", refMap);
 
     // Content synchronization
     useEffect(() => {
